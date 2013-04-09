@@ -1,12 +1,22 @@
-SWP TollCollect
+MME 2 SS 2013
 
-Date: SoSe 2013
-Authorized Persons:
-* Vivien Bast
-* Sascha Feldmann
-* Martin Schultz
-* Marco Seidler
-* Christian Kaus
-* Bastian Globig
-* Nils Brinkmann
-* Pascal Schön
+----------------
+Authors:
+Sascha Feldmann
+Martin Schultz
+----------------
+This repo contains an eclipse project.
+
+The usage of the Zend PDT is recommend. The PDT contains all the required plugins for PHP developers.
+
+Download at: http://www.zend.com/community/pdt/downloads
+
+----------------
+Project-Dir:
+de.bht.fb6.mme2.mfg
+| - lib (contains Zend Framework 2.1)
+| - public (the only dir which should be accessible via HTTP)
+| - module 
+  | - MfgTestModul (our first small test module -> call /public/hello/world to see, how the world action in the hello controller reacts
+
+----------------

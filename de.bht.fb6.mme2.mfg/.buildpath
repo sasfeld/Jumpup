@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path=""/>
+	<buildpathentry external="false" kind="lib" path="lib/ZendFramework-2.1.4/library"/>
+	<!--
+	  changed by Sascha
+	<buildpathentry external="true" kind="lib" path="C:/Users/slash/Google Drive/Software/ZendFramework-2.1.4/ZendFramework-2.1.4/library"/>!-->
+</buildpath>

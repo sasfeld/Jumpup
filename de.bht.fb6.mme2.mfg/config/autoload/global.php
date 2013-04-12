@@ -13,4 +13,40 @@
 
 return array(
     // ...
-);
+    /*
+     * Sascha: 
+     * 
+     * we define our navigation here. 
+     * You can use it in any layout file:
+     * 
+     * echo $this->navigation('navigation')->menu(); 
+     */
+    'navigation' => array(
+         'default' => array(
+             array(
+                 'label' => 'Home',
+                 'route' => 'home',
+             ),
+             array(
+                 'label' => 'Page #1',
+                 'route' => 'page-1',
+                 'pages' => array(
+                     array(
+                         'label' => 'Child #1',
+                         'route' => 'page-1-child',
+                     ),
+                 ),
+             ),
+             array(
+                 'label' => 'Page #2',
+                 'route' => 'page-2',
+             ),
+         ),
+     ),
+     'service_manager' => array(
+         'factories' => array(
+             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+         ),
+     ),
+     // ...
+ );

@@ -1,0 +1,15 @@
+<h1>Registration!</h1>
+
+<div class="form registration">
+<?php 
+    use JumpUpUser\Forms\RegistrationForm;
+    $form = $this->form;
+    
+   // echo $this->form()->openTag($form) . PHP_EOL; 
+    //echo $this->formRow($form->get(RegistrationForm::FIELD_USERNAME));   
+    echo $this->renderForm($form);
+   // echo $this->form()->closeTag($form) . PHP_EOL;
+?>
+
+</div>
+

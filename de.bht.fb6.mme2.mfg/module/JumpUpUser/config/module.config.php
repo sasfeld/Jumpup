@@ -3,60 +3,30 @@
 return array(
     'router' => array(
         'routes' => array(
-            'mfg-test-modul-hello-world' => array(
+            'jump-up-user-register-index' => array(
                 'type'    => 'Literal',
                     'options' => array(
-                    'route' => '/hello/world',
+                    'route' => '/register',
                     'defaults' => array(
-                        'controller' => 'mfg-test-modul\Controller\Hello',
-                        'action'     => 'world',
+                        'controller' => 'jump-up-user\Controller\Register',
+                        'action'     => 'showform',
                     ),
                 ),
-            ),
-            'page-1' => array(
-                'type'    => 'Literal',
-                    'options' => array(
-                    'route' => '/hello/world',
-                    'defaults' => array(
-                        'controller' => 'mfg-test-modul\Controller\Hello',
-                        'action'     => 'world',
-                    ),
-                ),
-            ),
-            'page-1-child' => array(
-                'type'    => 'Literal',
-                    'options' => array(
-                    'route' => '/hello/world',
-                    'defaults' => array(
-                        'controller' => 'mfg-test-modul\Controller\Hello',
-                        'action'     => 'world',
-                    ),
-                ),
-            ),
-             'page-2' => array(
-                'type'    => 'Literal',
-                    'options' => array(
-                    'route' => '/hello/world',
-                    'defaults' => array(
-                        'controller' => 'mfg-test-modul\Controller\Hello',
-                        'action'     => 'world',
-                    ),
-                ),
-            ),
-        ),
+            ),  
+         ),         
     ),
     'controllers' => array(
         'invokables' => array(
-            'MfgTestModul\Controller\Index' => 'MfgTestModul\Controller\IndexController',
-            'MfgTestModul\Controller\Hello' => 'MfgTestModul\Controller\HelloController',
+            'JumpUpUser\Controller\Index' => 'JumpUpUser\Controller\IndexController',
+            'JumpUpUser\Controller\Register' => 'JumpUpUser\Controller\RegisterController',
         ),
     ),
-    'mfg-test-modul' => array(
+    'jump-up-user' => array(
         'type'    => 'Literal',
         'options' => array(
-            'route'    => '/mfg-test-modul',
+            'route'    => '/jump-up-user',
             'defaults' => array(
-                'controller'    => 'MfgTestModul\Controller\Index',
+                'controller'    => 'JumpUpUser\Controller\Index',
                 'action'        => 'index',
             ),
         ),
@@ -80,7 +50,7 @@ return array(
         'template_path_stack' => array(
             'mfg-test-modul' => __DIR__ . '/../view'
         ),
-    ),  
+    ),   
 );
 
 /*

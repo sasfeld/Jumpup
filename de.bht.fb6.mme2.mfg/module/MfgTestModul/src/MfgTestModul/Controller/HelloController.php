@@ -8,7 +8,7 @@ class HelloController extends AbstractActionController
 {
     public function worldAction()
     {
-        $message = $this->params()->fromQuery('message', 'foo');
+        $message = $this->params()->fromQuery('message', 'foo');            
         return new ViewModel(array('message' => $message));
     }
 }

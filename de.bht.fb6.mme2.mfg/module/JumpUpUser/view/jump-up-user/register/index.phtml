@@ -1,0 +1,22 @@
+<h1>Registration!</h1>
+
+<?php 
+    $form = $this->form();
+    
+    echo $this->form()->openTag($form) . PHP_EOL;
+    
+   
+?>
+<div class="form_element">
+<?php
+    echo get_class($form);
+
+  
+    echo $formLabel->openTag() . $name->getOption('label');
+    echo $this->formInput($name);
+    echo $this->formElementErrors($name);
+    echo $formLabel->closeTag();
+    
+  
+?></div>
+

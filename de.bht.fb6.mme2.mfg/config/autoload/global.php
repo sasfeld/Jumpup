@@ -46,7 +46,20 @@ return array(
      'service_manager' => array(
          'factories' => array(
              'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+             'Zend\Db\Adapter\Adapter'  => 'Zend\Db\Adapter\AdapterServiceFactory',
          ),
      ),
+     /*
+      * Database connectivity goes here.
+      */
+      'db' => array(
+        'driver'         => 'Pdo',
+        'dsn'            => 'mysql:dbname=jumpup;host=localhost',
+        'driver_options' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+        ),
+        'username' => 'jumpup',
+        'password' => 'dummypw',
+    ),
      // ...
  );

@@ -1,5 +1,11 @@
 <?php
 namespace JumpUpUser\Filters;
+use Zend\Filter\Decrypt;
+
+use Zend\Filter\Encrypt;
+
+use Application\src\Application\Util\String_Util;
+
 use Zend\Validator\Identical;
 
 use Zend\Validator\EmailAddress;
@@ -47,6 +53,11 @@ class RegistrationFormFilter extends InputFilter {
      * @var int
      */
     const PASSWORD_MAX_CHARS = 30;
+    /**
+     * The encryption key used by the encryption strategy.
+     * @var String
+     */
+    const ENCRYPTION_KEY = "imastring";
 
     /**
      * 
@@ -121,7 +132,8 @@ class RegistrationFormFilter extends InputFilter {
             'name' => RegistrationForm::FIELD_PASSWORD,
             'required' => true,
             'filters' => array(
-                array('name' => 'StripTags')),
+                array('name' => 'StripTags'),
+               ),
             'validators' => array(
                 array(
                     'name' => 'NotEmpty',
@@ -219,4 +231,43 @@ class RegistrationFormFilter extends InputFilter {
               )
           );    
     }
+    
+    /**
+     * Encrypt a password. This should be done after the validation.
+     * @param String $password
+     * @return String the encrypted password
+     * @throws IllegalArgumentException if the password is not a string
+     */
+    public function encryptPassword($password) {       
+        if(is_string($password)) {
+            $filter = new Encrypt();
+            $filter->setOptions( array (
+                        'adapter' => 'BlockCipher', 
+                        //'key' => self::ENCRYPTION_KEY,
+                ));           
+            $filter->setKey(self::ENCRYPTION_KEY);
+            $encryptedPw = $filter->filter($password);
+            return $encryptedPw;
+        }
+     }
+     
+     /**
+      * Decrypt a password. This should be done while authentification.    
+      * @param String $encryptedPassword
+      * @return the decrypted password
+      * @throws IllegalArgumentException if the password is not a string
+      */
+     public function decryptPassword($encryptedPassword) {
+         if(is_string($encryptedPassword)) {
+            $filter = new Decrypt();
+            $filter->setOptions( array (
+                        'adapter' => 'BlockCipher', 
+                        //'key' => self::ENCRYPTION_KEY,
+                ));           
+            $filter->setKey(self::ENCRYPTION_KEY);
+            $decryptedPw = $filter->filter($encryptedPassword);
+            return $decryptedPw;
+         }
+     }
+    
 }

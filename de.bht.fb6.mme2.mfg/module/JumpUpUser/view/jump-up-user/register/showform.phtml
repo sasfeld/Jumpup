@@ -1,4 +1,4 @@
-<h1>Registration!</h1>
+<h1><?php echo $this->translate("Registration") ?></h1>
 
 <div class="form registration">
 <?php 
@@ -9,9 +9,15 @@
      * See Application\View\Helper\RenderForm.php
      */
     use JumpUpUser\Forms\RegistrationForm;
-    $form = $this->form;    
+    if(null !== $this->form) { // form is exported by the controller
+        $form = $this->form;   
+         echo $this->renderForm($form); 
+    }
+    else { // a message shall be shown
+        echo $this->translate($this->message);
+    }
   
-    echo $this->renderForm($form);
+   
 ?>
 
 </div>

@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpUser\Forms; 
 
+use Zend\Stdlib\Hydrator\ObjectProperty;
+
 use JumpUpUser\Filters\RegistrationFormFilter;
 
 use Zend\I18n\Translator\Translator;
@@ -21,11 +23,45 @@ use Zend\Form\Element;
 * @since      12.04.2013
  */
 class RegistrationForm extends Form {
+    /*
+     * Consider that the following identifiers must be equal to the attributes' names in the User entity.
+     * This is because the data will be binded automaticly.
+     */
+    /**
+     * identifier for the form field. Used by other instances (e.g. Filter)
+     * @var String
+     */
     const FIELD_USERNAME = "username";
+     /**
+     * identifier for the form field. Used by other instances (e.g. Filter)
+     * @var String
+     */
     const FIELD_SUBMIT = "submit";
+     /**
+     * identifier for the form field. Used by other instances (e.g. Filter)
+     * @var String
+     */
     const FIELD_PASSWORD = "password";
+     /**
+     * identifier for the form field. Used by other instances (e.g. Filter)
+     * @var String
+     */
     const FIELD_REPEAT_PASSWORD = "repeat_password";
+     /**
+     * identifier for the form field. Used by other instances (e.g. Filter)
+     * @var String
+     */
     const FIELD_EMAIL = "email";
+     /**
+     * identifier for the form field. Used by other instances (e.g. Filter)
+     * @var String
+     */
+    const FIELD_PRENAME = "prename";
+     /**
+     * identifier for the form field. Used by other instances (e.g. Filter)
+     * @var String
+     */
+    const FIELD_LASTNAME = "lastname";
     
     /**
      * Constrcut a new registration form. 
@@ -34,6 +70,8 @@ class RegistrationForm extends Form {
      */
     public function __construct($formname, Translator $translator) {
         parent::__construct($formname);
+        $this->setHydrator(new ObjectProperty());
+        
         /*
          * Input Field: username
          */

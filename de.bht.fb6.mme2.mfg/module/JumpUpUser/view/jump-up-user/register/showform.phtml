@@ -2,13 +2,16 @@
 
 <div class="form registration">
 <?php 
+    /*
+     * author: Sascha Feldmann
+     * 
+     * what a nice view. we just delegate the form to our view helper object.
+     * See Application\View\Helper\RenderForm.php
+     */
     use JumpUpUser\Forms\RegistrationForm;
-    $form = $this->form;
-    
-   // echo $this->form()->openTag($form) . PHP_EOL; 
-    //echo $this->formRow($form->get(RegistrationForm::FIELD_USERNAME));   
+    $form = $this->form;    
+  
     echo $this->renderForm($form);
-   // echo $this->form()->closeTag($form) . PHP_EOL;
 ?>
 
 </div>

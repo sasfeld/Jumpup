@@ -1,6 +1,10 @@
 <?php
 namespace JumpUpUser\Forms; 
 
+use JumpUpUser\Filters\RegistrationFormFilter;
+
+use Zend\I18n\Translator\Translator;
+
 use Zend\Form\Form;
 use Zend\Form\Element;
 
@@ -18,22 +22,74 @@ use Zend\Form\Element;
  */
 class RegistrationForm extends Form {
     const FIELD_USERNAME = "username";
+    const FIELD_SUBMIT = "submit";
+    const FIELD_PASSWORD = "password";
+    const FIELD_REPEAT_PASSWORD = "repeat_password";
+    const FIELD_EMAIL = "email";
     
     /**
      * Constrcut a new registration form. 
      * @param $formname the name of the form as rendered in the view
+     * @param $translator the Zend translator
      */
-    public function __construct($formname) {
+    public function __construct($formname, Translator $translator) {
         parent::__construct($formname);
+        /*
+         * Input Field: username
+         */
         $fieldUsername = new Element\Text(); 
-        $fieldUsername->setLabel('Username')
+        $fieldUsername->setLabel($translator->translate('Username'))
             ->setAttributes(array(
-                'class' => 'input_username',
-                'size'  => '30',
+                'class' => 'reg_form_input',
+                'size'  => RegistrationFormFilter::USERNAME_MAX_CHARS,
                ))
             ->setName(self::FIELD_USERNAME);
+         /*
+         * Input Field: password
+         */
+        $fieldPassword = new Element\Password(); 
+        $fieldPassword->setLabel($translator->translate('Password'))
+            ->setAttributes(array(
+                'class' => 'reg_form_input',
+                'size'  => '20',
+               ))
+            ->setName(self::FIELD_PASSWORD);    
+         /*
+         * Input Field: repeat password
+         */
+        $fieldRepeatPassword = new Element\Password(); 
+        $fieldRepeatPassword->setLabel($translator->translate('Repeat password'))
+            ->setAttributes(array(
+                'class' => 'reg_form_input',
+                'size'  => '20',
+               ))
+            ->setName(self::FIELD_REPEAT_PASSWORD);  
+        /*
+         * Input Field: eMail adress
+         */
+        $fieldEMail = new Element\Email(); 
+        $fieldEMail->setLabel($translator->translate('eMail adress'))
+            ->setAttributes(array(
+                'class' => 'reg_form_input',
+                'size'  => '30',
+               ))
+            ->setName(self::FIELD_EMAIL);          
+        /*
+         * Submit button
+         */
+        $fieldSubmit = new Element\Submit();
+        $fieldSubmit->setAttributes(array(
+                'class' => 'reg_form_submit',
+                'value' => $translator->translate('Submit'),
+                ))
+            ->setName(self::FIELD_SUBMIT);
         
-        $this->add($fieldUsername);
+        // the order is important for the view -> FIFO
+        $this->add($fieldUsername);       
+        $this->add($fieldPassword);
+        $this->add($fieldRepeatPassword);
+        $this->add($fieldEMail);
+        $this->add($fieldSubmit);
     }
     
 }

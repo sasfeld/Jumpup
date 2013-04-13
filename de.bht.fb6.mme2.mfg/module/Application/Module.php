@@ -26,8 +26,8 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         
-        // test of personal listener
-       
+        // we configure globally available objects here
+                
     }
 
     public function getConfig()

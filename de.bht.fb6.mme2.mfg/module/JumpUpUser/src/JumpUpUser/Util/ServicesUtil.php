@@ -1,5 +1,6 @@
 <?php
 namespace JumpUpUser\Util;
+use JumpUpUser\Util\Messages\ConcreteControllerMessages;
 
 /**
  * 
@@ -21,6 +22,11 @@ class ServicesUtil {
      * @var String 
      */
     const CLASSPATH_USERTABLE = 'JumpUpUser\Models\UserTable';
+    /**
+     * fully qualified name (classpath) of the ConcreteConrtollerMessages class
+     * @var String 
+     */
+    const CLASSPATH_CONTROLLER_MESSAGES = 'JumpUpUser\Util\Messages\ConcreteControllerMessages';
     
     /**
      * Get the UserTable instance from the ServiceManager.
@@ -30,4 +36,12 @@ class ServicesUtil {
     static public function getUserTable(ServiceManager $sm) {
         return $sm->get(self::CLASSPATH_USERTABLE);        
     }    
+    /**
+     * Get the ConcreteControllerMessages instance from the ServiceManager.
+     * @see ConcreteControllerMessages
+     * @param ServiceManager $sm
+     */
+    static public function getControllerMessages(ServiceManager $sm) {
+        return $sm->get(self::CLASSPATH_CONTROLLER_MESSAGES);
+    }
 }

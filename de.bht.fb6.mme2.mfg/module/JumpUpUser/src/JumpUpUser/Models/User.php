@@ -55,6 +55,11 @@ class User {
      * @var String
      */
     public $password;
+    /**
+     * property confirmation_state (did the user confirm is registration).
+     * @var boolean.
+     */
+    public $confirmation_state;
     
     
     public function User() {
@@ -77,6 +82,7 @@ class User {
         $this->lastname = (isset($data['lastname'])) ? $data['lastname'] : null;
         $this->eMail   = (isset($data['email'])) ? $data['email'] : null;
         $this->password   = (isset($data['password'])) ? $data['password'] : null;      
+        $this->confirmation_state = (isset($data['confirmation_state'])) ? $data['confirmation_state'] : null;      
     }
     
     /**
@@ -129,6 +135,23 @@ class User {
         if(is_string($password)) {
             $this->password = $password;
         }
+    }
+     /**
+     * 
+     * Enter description here ...
+     * @param boolean $password
+     */
+    public function setConfirmationState($confirmationState) {
+        if(is_bool($confirmationState)) {
+            $this->confirmation_state = $confirmationState;
+        }
+    }
+    
+    /**
+     * @return boolean
+     */
+    public function getConfirmationState() {
+        return $this->confirmation_state;
     }
     
     /**

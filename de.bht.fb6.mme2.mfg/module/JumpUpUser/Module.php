@@ -9,6 +9,8 @@
 
 namespace JumpUpUser;
 
+use JumpUpUser\Util\Messages\ConcreteControllerMessages;
+
 use Zend\Db\TableGateway\TableGateway;
 
 use JumpUpUser\Models\User;
@@ -45,6 +47,11 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
     {
         return array(
             'factories' => array(
+                 'JumpUpUser\Util\Messages\ConcreteControllerMessages' =>  function($sm) {
+                    $translator = $sm->get('Translator');                 
+                    $concreteContrMessages = new ConcreteControllerMessages($translator);
+                    return $concreteContrMessages;
+                },
                 'JumpUpUser\Models\UserTable' =>  function($sm) {
                     $tableGateway = $sm->get('UserTableGateway');
                     $table = new UserTable($tableGateway);

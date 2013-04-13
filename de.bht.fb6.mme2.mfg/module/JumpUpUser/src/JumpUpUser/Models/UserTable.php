@@ -76,6 +76,7 @@ class UserTable {
             'lastname'  => $user->getLastname(),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
+            'confirmation_state' => $user->getConfirmationState(),
         );
 
         $username = (string) $user->getUsername();      

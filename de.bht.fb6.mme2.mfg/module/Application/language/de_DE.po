@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-04-13 19:12+0100\n"
+"PO-Revision-Date: 2013-04-13 19:55+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -259,3 +259,38 @@ msgid ""
 msgstr ""
 "Du wurdest erfolgreich registriert. Bitte überprüfe deine eMails, da du den "
 "Account noch aktivieren musst."
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid "Hello"
+msgstr "Hallo"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid "We are glad to have you now aboard the greatest car pooling community."
+msgstr "Cool, dich hier auf jumpup an Bord zu haben!"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid ""
+"Before you can use your account, we have to check if your eMail is correct."
+msgstr ""
+"Bevor du deinen Account nutzen kannst, musst du nur noch deine eMail-Adresse "
+"bestätigen."
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid "Please click on the confirmation link below"
+msgstr "Klicke dazu bitte auf den Link weiter unten"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid "Have a great stay on jumpup.me!"
+msgstr "Schönen Aufenthalt auf jumpup.me!"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid "Greetings"
+msgstr "Grüße"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid "Your jumup.me team"
+msgstr "Dein jumup.me team"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
+msgid "jumup.me | Please confirm your registration"
+msgstr "jumup.me | Bitte bestätige deine Registrierung"

@@ -26,6 +26,16 @@ interface IControllerMessages {
      */
     const CONFIRM_MAIL_SUBJECT = "jumup.me | Please confirm your registration";
     /**
+     * Message shown after an unsucessfull confirmation.
+     * @var String
+     */
+    const UNSUCCESS_CONFIRM = "The confirmation wasn't successfull. Maybe the user doesn't exist or the confirmation key is wrong. Please contact the support.";
+    /**
+     * Message shown after a sucessfull confirmation (the user recieves an eMail with the confirmation link in it).
+     * @var String
+     */
+    const SUCCESS_CONFIRM = "You were successfully confirmed. You can now log in with using your credentials and have fun!";
+    /**
      * Generate the confirmation mail for the given user.
      * @param User $user
      * @param String $confirmationLink the link to confirm the user

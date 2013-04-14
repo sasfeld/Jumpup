@@ -41,6 +41,21 @@ class UserTable {
     }
     
     /**
+     * Check if a user exists.
+     * @param String $username
+     * @return true if the user exits
+     */
+    public function userExits($username) {
+        try {
+            $this->getUser($username);
+            return true;
+        }
+        catch (RuntimeException $e) { // we except that, see getUser()
+            return false;
+        }
+    }
+    
+    /**
      * Fetch a single user.
      * The user is identified by his username.
      * @param String $username
@@ -76,7 +91,7 @@ class UserTable {
             'lastname'  => $user->getLastname(),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
-            'confirmation_state' => $user->getConfirmationState(),
+            'confirmation_key' => $user->getConfirmationKey(),
         );
 
         $username = (string) $user->getUsername();      

@@ -83,6 +83,26 @@ class RegistrationForm extends Form {
                ))
             ->setName(self::FIELD_USERNAME);
          /*
+          * Input Field: prename        
+          */
+        $fieldPrename = new Element\Text(); 
+        $fieldPrename->setLabel($translator->translate('Prename'))
+            ->setAttributes(array(
+                'class' => 'reg_form_input',
+                'size'  => '30',
+               ))
+            ->setName(self::FIELD_PRENAME);   
+        /*
+          * Input Field: lastname     
+          */
+        $fieldLastname = new Element\Text(); 
+        $fieldLastname->setLabel($translator->translate('Lastname'))
+            ->setAttributes(array(
+                'class' => 'reg_form_input',
+                'size'  => '30',
+               ))
+            ->setName(self::FIELD_LASTNAME);       
+         /*
          * Input Field: password
          */
         $fieldPassword = new Element\Password(); 
@@ -106,7 +126,7 @@ class RegistrationForm extends Form {
          * Input Field: eMail adress
          */
         $fieldEMail = new Element\Email(); 
-        $fieldEMail->setLabel($translator->translate('eMail adress'))
+        $fieldEMail->setLabel($translator->translate('eMail address'))
             ->setAttributes(array(
                 'class' => 'reg_form_input',
                 'size'  => '30',
@@ -123,7 +143,9 @@ class RegistrationForm extends Form {
             ->setName(self::FIELD_SUBMIT);
         
         // the order is important for the view -> FIFO
-        $this->add($fieldUsername);       
+        $this->add($fieldUsername);      
+        $this->add($fieldPrename);
+        $this->add($fieldLastname); 
         $this->add($fieldPassword);
         $this->add($fieldRepeatPassword);
         $this->add($fieldEMail);

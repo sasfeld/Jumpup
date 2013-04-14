@@ -28,8 +28,8 @@ return array(
                  'route' => 'home',
              ),
              array(
-                 'label' => 'Page #1',
-                 'route' => 'page-1',
+                 'label' => 'Registrierung',
+                 'route' => 'jump-up-user',
                  'pages' => array(
                      array(
                          'label' => 'Child #1',

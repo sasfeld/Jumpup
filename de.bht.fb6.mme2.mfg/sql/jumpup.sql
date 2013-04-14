@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 13. Apr 2013 um 19:23
+-- Erstellungszeit: 14. Apr 2013 um 21:33
 -- Server Version: 5.5.27
 -- PHP-Version: 5.4.7
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `lastname` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `confirmation_state` tinyint(1) NOT NULL,
+  `confirmation_key` int(11) DEFAULT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -40,10 +40,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`username`, `prename`, `lastname`, `email`, `password`, `confirmation_state`) VALUES
-('sascha1990', NULL, NULL, 'tortenfresser@gmx.de', '9163cb9902995da2d6750c98a453683ad4b05204ea7acff94b96cd843591bb610VOnU/u+JbNzXDV/Wj/j4hbxNLvgsMjpTBr49+ZrUjg=', 0),
-('test2test', NULL, NULL, 'test@test.de', '4668e3286285e8bcb4df8dbc2cbe7b0d95ab9b7de384739026ff60d1ae3d7f20q2MZ6OdybkWrJQ6IOHa7YXoXf+UnY/6H0sefwuNDleg=', 0),
-('testtest', NULL, NULL, 'slash@gmx.com', '8b24c6774381e302956dd3f4092309f13bd0a81ce0b44f7e971233c4edc882cciQZxA/40E15kK4OSgCfl1vZ4WG5QZLIO+R5ytDWd/Jc=', 0);
+INSERT INTO `user` (`username`, `prename`, `lastname`, `email`, `password`, `confirmation_key`) VALUES
+('imatester2', 'Test', 'Chucker', '', 'bce48a58edc4aa7ce83c6c7e26789f61c02208301586095743f59b87123b3b4cfrecOYkilYizVBqNc4oW4trOCC6rbIrqbJUAC4GG0dQ=', 0),
+('testtester', 'Sascha', 'Feldmann', 'sascha.feldmann@gmx.de', '72ea606b2e6ab62e71fd234cad6284c04e969ead784fab700135fdc05199b61544GdrA8viMU8Ad+Qoxlx+vC78EKNU6xwqh0/6p5qy0A=', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

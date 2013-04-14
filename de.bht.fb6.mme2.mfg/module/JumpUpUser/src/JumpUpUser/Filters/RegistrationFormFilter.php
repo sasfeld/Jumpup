@@ -1,5 +1,11 @@
 <?php
 namespace JumpUpUser\Filters;
+use Zend\Validator\AbstractValidator;
+
+use JumpUpUser\Validators\UserExists;
+
+use JumpUpUser\Models\UserTable;
+
 use Zend\Filter\Decrypt;
 
 use Zend\Filter\Encrypt;
@@ -64,7 +70,7 @@ class RegistrationFormFilter extends InputFilter {
      * Construct the RegistrationFormFilter.
      * @param Zend\I18n\Translator\Translator $translator which translates the messages
      */
-    public function __construct(Translator $translator) {        
+    public function __construct(Translator $translator, UserTable $userTable) {        
         /*
          * usage of validators, see
          * http://framework.zend.com/manual/2.1/en/modules/zend.validator.set.html#stringlength
@@ -85,6 +91,12 @@ class RegistrationFormFilter extends InputFilter {
         $invalidMxMsg = $translator->translate("The DNS configuration for the given hostname doesn't offer an MX record.");
         $invalideMailMsg = $translator->translate("The eMail adress must be in the form xy@hostname.tld .");
         $passwordsNotSameMsg = $translator->translate("The boths passwords aren't identical.");
+        $userAlreadyExistsMsg = $translator->translate("This user already exists. Please choose another username.");
+        $emptyPrenameMsg = $translator->translate("Please fill in your prename");
+        $emptyLastnameMsg = $translator->translate("Please fill in your lastname");
+        $expectedPrenameMessage = $translator->translate("The prename may only contain letters.");
+        $expectedLastnameMessage = $translator->translate("The lastname may only contain letters.");
+        
         
         // wow, a lot of code. The framework will call all this stuff and instanciate the validators and so on
 
@@ -101,6 +113,15 @@ class RegistrationFormFilter extends InputFilter {
                     'options' => array (
                         'messages' => array (
                             NotEmpty::IS_EMPTY => $emptyUsernameMsg )
+                    ),
+                ),
+                array( // check if user already exists
+                    'name' => 'JumpUpUser\Validators\UserExists', 
+                    'options' => array (
+                        'userTable' => $userTable,
+                        'messages' => array (
+                            UserExists::USER_ALDREADY_EXISTS => $userAlreadyExistsMsg,                            
+                        ),
                     ),
                 ),
                 array(
@@ -126,6 +147,62 @@ class RegistrationFormFilter extends InputFilter {
                  )
               )
           );
+          
+          // prename         
+          $this->add(array(
+            'name' => RegistrationForm::FIELD_PRENAME,
+            'required' => true,
+            'filters' => array(
+                array('name' => 'StringTrim')),
+            'validators' => array(
+                array(
+                    'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => array (
+                        'messages' => array (
+                            NotEmpty::IS_EMPTY => $emptyPrenameMsg )
+                    ),
+                ),
+                array(
+                	 'name' => 'Regex',
+                	 'options' => array (
+                       'pattern' => '/^[A-Za-z]+/',  
+                       'messages' => array (
+                            Regex::NOT_MATCH => $expectedPrenameMessage,
+                        ),                    
+                     )                     
+                   ),
+               )
+             )
+           );
+          
+          // lastname
+           $this->add(array(
+            'name' => RegistrationForm::FIELD_LASTNAME,
+            'required' => true,
+            'filters' => array(
+                array('name' => 'StringTrim')),
+            'validators' => array(
+                array(
+                    'name' => 'NotEmpty',
+                    'break_chain_on_failure' => true,
+                    'options' => array (
+                        'messages' => array (
+                            NotEmpty::IS_EMPTY => $emptyLastnameMsg )
+                    ),
+                ),
+                array(
+                	 'name' => 'Regex',
+                	 'options' => array (
+                       'pattern' => '/^[A-Za-z]+/',  
+                       'messages' => array (
+                            Regex::NOT_MATCH => $expectedLastnameMessage,
+                        ),                    
+                     )                     
+                   ),
+               )
+             )
+           );
           
           // password
           $this->add(array(
@@ -224,6 +301,9 @@ class RegistrationFormFilter extends InputFilter {
                             EmailAddress::INVALID_HOSTNAME => $invalideMailMsg,
                             EmailAddress::INVALID_SEGMENT => $invalideMailMsg,
                             EmailAddress::INVALID_FORMAT => $invalideMailMsg,
+                            EmailAddress::QUOTED_STRING => $invalideMailMsg,
+                            EmailAddress::DOT_ATOM => $invalideMailMsg,
+                            EmailAddress::LENGTH_EXCEEDED => $invalideMailMsg,                           
                         )
                      )                     
                    ),            

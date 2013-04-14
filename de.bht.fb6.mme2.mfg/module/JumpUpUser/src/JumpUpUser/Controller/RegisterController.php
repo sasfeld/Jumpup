@@ -17,6 +17,8 @@ use JumpUpUser\Forms\RegistrationForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use JumpUpUser\Forms;
 
+use Zend\Db\TableGateway\Exception\RuntimeException;
+
 
 class RegisterController extends AbstractActionController 
 {
@@ -32,6 +34,7 @@ class RegisterController extends AbstractActionController
      */    
     public function showformAction()
     {                
+        $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
          // we grab the only existing ControllerMessages instance here from the service manager
         $this->controllerMessages = ServicesUtil::getControllerMessages($this->getServiceLocator());
         
@@ -39,7 +42,7 @@ class RegisterController extends AbstractActionController
         $translator = $this->getServiceLocator()->get('translator');
         $form = new RegistrationForm('register', $translator);  
         $form->bind($user); // bind the property class user
-        $filter = new RegistrationFormFilter($translator);
+        $filter = new RegistrationFormFilter($translator, $userTable);
         $form->setInputFilter($filter);
         $form->setAttribute('action', 'register'); // the default action itself
 
@@ -48,13 +51,12 @@ class RegisterController extends AbstractActionController
         if($request->isPost()) { // form filled?
             $form->setData($request->getPost()); // set data to be validated
             if($form->isValid()) {
-                // set confirmation to false (user needs to confirm in an eMail)
-                $user->setConfirmationState(false);
+                // set confirmation key (user needs to confirm it on the eMail)                
+                $user->setConfirmationKey(time()); // we use the UNIX timestamp
                 // encrypt password and bind it manually
                 $encryptedPw = $filter->encryptPassword($user->getPassword());
                 $user->setPassword($encryptedPw);     
-                // persist user           
-                $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
+                // persist user                         
                 $userTable->saveUser($user);
                 // send eMail with confirmation link
                 $this->sendConfirmationMail($user);                
@@ -70,18 +72,76 @@ class RegisterController extends AbstractActionController
         return array('form' => $form);
     } 
     
+    
+    /**
+     * This function defines the confirm action. 
+     * The user recieves an eMail with the confirmation link. We except the get parameter to be the confirmation key.
+     * Enter description here ...
+     */
+    public function confirmAction() {    
+        $message = ""; // pseudo declaration of the string message to be exported to the frontend    
+        $queryConfirmKey = $this->getRequest()->getQuery()->key;
+        $queryConfirmUser = $this->getRequest()->getQuery()->u;
+        if(null !== $queryConfirmKey && null !== $queryConfirmUser) {
+            $queryConfirmKey = (string) $queryConfirmKey;
+            $queryConfirmUser = (string) $queryConfirmUser;
+            // get the DAO object
+            $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
+            try {
+                $user = $userTable->getUser($queryConfirmUser);
+                if($user->getConfirmationKey() === $queryConfirmKey) { // compare input key with the randomly generated in the database
+                    $this->confirmUser($user); // success
+                    $message = IControllerMessages::SUCCESS_CONFIRM;
+                }
+                else { // keys in db and by user input aren't equal
+                    $message = IControllerMessages::UNSUCCESS_CONFIRM;
+                }
+            }
+            catch (RuntimeException $e) { // user doesn't exist in database
+                $message = IControllerMessages::UNSUCCESS_CONFIRM;
+            }
+        }
+        else { // illegal request
+          $message = IControllerMessages::UNSUCCESS_CONFIRM;  
+        }
+        
+        return array('message' => $message);
+    }
+    
+    /**
+     * Confirm a user. Set the confirmation flag in the user instance and persist the user.
+     * @param User $user
+     */
+    private function confirmUser(User $user) {
+        $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
+        $user->setConfirmationKey(0); // 0 indicates, that the user is confirmed
+        $userTable->saveUser($user); // update the user entity        
+    }
+    
     /**
      * 
      * Send the confirmation mail which contains the confirmation link.
      * @param User $user
      */
     private function sendConfirmationMail(User $user) {
-        $confirmationLink = "test";
+        $translator = $this->getServiceLocator()->get('translator');
+        
+        /*
+         * The confirmation link needs to refernce to the confirmAction().
+         * That means for our default configuration, that it's relative to the
+         * Register/ controller.
+         * 
+         * The confirm action needs to HTTP get parameters:
+         * -key (the confirmation key to confirm the user)
+         * -u (the username)
+         */
+        $confirmationLink = $this->getRequest()->getUriString() 
+            . "/confirm?key={$user->getConfirmationKey()}&u={$user->getUsername()}";
         
         $mail = new Message();
         $mail->setFrom('info@jumup.me', 'JumpUp');
         $mail->addTo($user->getEmail());
-        $mail->setSubject(IControllerMessages::CONFIRM_MAIL_SUBJECT);
+        $mail->setSubject($translator->translate(IControllerMessages::CONFIRM_MAIL_SUBJECT));
         $mail->setBody($this->controllerMessages->generateConfirmationMailBody($user, $confirmationLink));
         
         

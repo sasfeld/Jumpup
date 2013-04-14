@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-04-13 19:55+0100\n"
+"PO-Revision-Date: 2013-04-14 21:44+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -207,6 +207,26 @@ msgstr ""
 msgid "Username"
 msgstr "Benutzername"
 
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
+msgid "Prename"
+msgstr "Vorname"
+
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
+msgid "Lastname"
+msgstr "Nachname"
+
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
+msgid "Password"
+msgstr "Passwort"
+
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
+msgid "Repeat password"
+msgstr "Passwort wiederholen"
+
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
+msgid "eMail address"
+msgstr "eMail-Adresse"
+
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:47
 msgid "Submit"
 msgstr "Absenden"
@@ -252,6 +272,10 @@ msgstr "Die eMail-Adresse muss in der Form xy@hostname.tld angeben werden."
 msgid "The boths passwords aren't identical."
 msgstr "Die beiden Passwörter sind nicht identisch."
 
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
+msgid "This user already exists. Please choose another username."
+msgstr "Dieser Benutzername ist schon vergeben. Bitte nimm einen anderen."
+
 #: JumpUpUser/view/jump-up-user/register/showform.phtml
 msgid ""
 "You were successfully registered! Please check your eMails to confirm the "
@@ -294,3 +318,23 @@ msgstr "Dein jumup.me team"
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
 msgid "jumup.me | Please confirm your registration"
 msgstr "jumup.me | Bitte bestätige deine Registrierung"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
+msgid ""
+"The confirmation wasn't successfull. Maybe the user doesn't exist or the "
+"confirmation key is wrong. Please contact the support."
+msgstr ""
+"Die Bestätigung war nicht erfolgreich. Vielleicht existiert der Benutzer "
+"nicht oder der Bestätigungskey ist falsch. Bitte kontaktiere den Support."
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
+msgid ""
+"You were successfully confirmed. You can now log in with using your "
+"credentials and have fun!"
+msgstr ""
+"Du wurdest erfolgreich bestätigt. Du kannst dich nun mit deinen Zugangsdaten "
+"einloggen und loslegen!"
+
+#: JumpUpUser/view/jump-up-user/register/confirm.phtml
+msgid "Confirmation"
+msgstr "Bestätigung"

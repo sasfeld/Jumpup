@@ -56,17 +56,17 @@ class User {
      */
     public $password;
     /**
-     * property confirmation_state (did the user confirm is registration).
-     * @var boolean.
+     * property confirmation_key
+     * @var int (maybe long int).
      */
-    public $confirmation_state;
+    public $confirmation_key;
     
     
     public function User() {
         $this->username = "";
         $this->prename = "";
         $this->lastname = "";
-        $this->eMail = "";
+        $this->email = "";
         $this->password = "";
     }
     
@@ -80,9 +80,9 @@ class User {
         $this->username = (isset($data['username'])) ? $data['username'] : null;
         $this->prename = (isset($data['prename'])) ? $data['prename'] : null;
         $this->lastname = (isset($data['lastname'])) ? $data['lastname'] : null;
-        $this->eMail   = (isset($data['email'])) ? $data['email'] : null;
+        $this->email   = (isset($data['email'])) ? $data['email'] : null;
         $this->password   = (isset($data['password'])) ? $data['password'] : null;      
-        $this->confirmation_state = (isset($data['confirmation_state'])) ? $data['confirmation_state'] : null;      
+        $this->confirmation_key = (isset($data['confirmation_key'])) ? $data['confirmation_key'] : null;      
     }
     
     /**
@@ -139,19 +139,19 @@ class User {
      /**
      * 
      * Enter description here ...
-     * @param boolean $password
+     * @param int $confirmationKey
      */
-    public function setConfirmationState($confirmationState) {
-        if(is_bool($confirmationState)) {
-            $this->confirmation_state = $confirmationState;
+    public function setConfirmationKey($confirmationKey) {      
+        if(is_int($confirmationKey)) {
+            $this->confirmation_key = $confirmationKey;
         }
     }
     
     /**
      * @return boolean
      */
-    public function getConfirmationState() {
-        return $this->confirmation_state;
+    public function getConfirmationKey() {
+        return $this->confirmation_key;
     }
     
     /**

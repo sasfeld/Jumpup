@@ -38,8 +38,8 @@ return array(
                  ),
              ),
              array(
-                 'label' => 'Page #2',
-                 'route' => 'page-2',
+                 'label' => 'Login',
+                 'route' => 'login',
              ),
          ),
      ),

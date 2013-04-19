@@ -26,5 +26,10 @@ interface IRouteStore {
      * @var String
      */
     const LOGIN_SUCCESS = "success";
+    /**
+     * Route to the register controller.
+     * @var String
+     */
+    const REGISTER = "jump-up-user";
     
 }

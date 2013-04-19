@@ -9,6 +9,16 @@
 
 namespace JumpUpUser;
 
+use JumpUpUser\Util\Routes\IRouteStore;
+
+use JumpUpUser\Util\ServicesUtil;
+
+use JumpUpUser\Util\Routes\AuthorizationUtil;
+
+use Zend\Mvc\Router\RouteMatch;
+
+use Zend\Mvc\MvcEvent;
+
 use Zend\Authentication\AuthenticationService;
 
 use Zend\Authentication\Adapter\DbTable;
@@ -25,6 +35,23 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface
 {
+    /**
+     * 
+     * This event method will be called on each request (bootsstrap).
+     * @param MvcEvent $e
+     */
+    public function onBootstrap(MvcEvent $e) {        
+        $requestUrl = $e->getRequest()->getUriString();
+        $sm = $e->getApplication()->getServiceManager();
+        $as = ServicesUtil::getAuthService($sm);    
+        $isAuthorized = AuthorizationUtil::isAuthorized($as, $requestUrl);
+        if(!$isAuthorized) {           
+            //$e->getController()->redirect()->toRoute(IRouteStore::LOGIN);
+            echo "you are not authorized";
+            exit;
+        }
+    }
+    
     public function getAutoloaderConfig()
     {
         return array(
@@ -67,7 +94,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
                      
                    
                     
-                    $authService = new AuthenticationService();             
+                    $authService = new AuthenticationService();                          
                     $authService->setAdapter($dbTableAuthAdapter);
                     $authService->setStorage($sm->get('JumpUpUser\Session\AuthenticationStorage'));
                       

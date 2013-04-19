@@ -113,7 +113,8 @@ class RegistrationFormFilter extends InputFilter {
             'name' => RegistrationForm::FIELD_USERNAME,
             'required' => true,
             'filters' => array(
-                array('name' => 'StringTrim')),
+                array('name' => 'StringTrim'),
+                array('name' => 'StripTags')),
             'validators' => array(
                 array(
                     'name' => 'NotEmpty',
@@ -161,7 +162,8 @@ class RegistrationFormFilter extends InputFilter {
             'name' => RegistrationForm::FIELD_PRENAME,
             'required' => true,
             'filters' => array(
-                array('name' => 'StringTrim')),
+                array('name' => 'StringTrim'),
+                array('name' => 'StripTags')),
             'validators' => array(
                 array(
                     'name' => 'NotEmpty',
@@ -189,7 +191,9 @@ class RegistrationFormFilter extends InputFilter {
             'name' => RegistrationForm::FIELD_LASTNAME,
             'required' => true,
             'filters' => array(
-                array('name' => 'StringTrim')),
+                array('name' => 'StringTrim'),
+                array('name' => 'StripTags'),
+                ), 
             'validators' => array(
                 array(
                     'name' => 'NotEmpty',

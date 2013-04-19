@@ -12,7 +12,7 @@ namespace JumpUpUser\Util;
 * @version    1.0
 * @since      06.04.2013
  */
-class String_Util {
+class StringUtil {
     /**
      * Generate a unique string showing all attributes' names and their values.
      * @param string $className
@@ -40,5 +40,23 @@ class String_Util {
             throw Exception_Util::throwInvalidArgument("", "string", $eMail);
         }
         return true;
+    }
+    
+    /**
+     * 
+     * Check whether the string ends with a specified char sequence.
+     * @param String $string the given string
+     * @param String $endOfString the end of the string to be checked
+     * @return true if the string ends with the $endofString
+     */
+    static public function endsWith($string, $endOfString) {
+        if(!is_string($string)) {
+            throw Exception_Util::throwInvalidArgument("", "string", $string);
+        }
+        $end = substr($string, strlen($string) - strlen($endOfString));
+        if(false != $end) {
+            return ($end === $endOfString);
+        }
+        return false;
     }
 }

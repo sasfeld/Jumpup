@@ -1,5 +1,7 @@
 <?php
 namespace JumpUpUser\Filters;
+use JumpUpUser\Util\Messages\IControllerMessages;
+
 use Zend\Validator\AbstractValidator;
 
 use JumpUpUser\Validators\UserExists;
@@ -76,26 +78,32 @@ class RegistrationFormFilter extends InputFilter {
          * http://framework.zend.com/manual/2.1/en/modules/zend.validator.set.html#stringlength
          */
         // these messages are shown when the validation fails
-        $emptyUsernameMsg = $translator->translate("Please fill in an username.");
-        $expectedUsernameMessage = $translator->translate("The username may only contain alphanumeric characters. It must begin with letter.");
+        $emptyUsernameMsg = $translator->translate(IControllerMessages::REGISTER_EMPTY_USERNAME);
+        $expectedUsernameMessage = $translator->translate(IControllerMessages::REGISTER_EXPECTED_USERNAME);
         $minimum = self::USERNAME_MIN_CHARS;
         $maximum = self::USERNAME_MAX_CHARS;
-        $expectedUsernameLengthMsg = $translator->translate("The username's length must be a mimimum of {$minimum} and a maximum of {$maximum} characters");
-        $emptyPasswordMsg = $translator->translate("Please fill in a password.");
-        $emptyRepeatPasswordMsg = $translator->translate("Please fill in the repeat password.");
-        $expectedPasswordMessage = $translator->translate("The password must contain at least on special character.");
+        $fillInMsg = IControllerMessages::REGISTER_SIZE_USERNAME;
+        $fillInMsg = str_replace(IControllerMessages::MIN, $minimum, $fillInMsg);
+        $fillInMsg = str_replace(IControllerMessages::MAX, $maximum, $fillInMsg);
+        $expectedUsernameLengthMsg = $translator->translate($fillInMsg);
+        $emptyPasswordMsg = $translator->translate(IControllerMessages::REGISTER_EMPTY_PASSWORD);
+        $emptyRepeatPasswordMsg = $translator->translate(IControllerMessages::REGISTER_EMPTY_REPEAT_PASSWORD);
+        $expectedPasswordMessage = $translator->translate(IControllerMessages::REGISTER_EXPECTED_PASSWORD);
         $minimum = self::PASSWORD_MIN_CHARS;
         $maximum = self::PASSWORD_MAX_CHARS;
-        $expectedPasswordLengthMsg = $translator->translate("The password's length must be a mimimum of {$minimum} and a maximum of {$maximum} characters");
-        $emptyeMailMsg = $translator->translate("Please fill in an eMail adress.");
-        $invalidMxMsg = $translator->translate("The DNS configuration for the given hostname doesn't offer an MX record.");
-        $invalideMailMsg = $translator->translate("The eMail adress must be in the form xy@hostname.tld .");
-        $passwordsNotSameMsg = $translator->translate("The boths passwords aren't identical.");
-        $userAlreadyExistsMsg = $translator->translate("This user already exists. Please choose another username.");
-        $emptyPrenameMsg = $translator->translate("Please fill in your prename");
-        $emptyLastnameMsg = $translator->translate("Please fill in your lastname");
-        $expectedPrenameMessage = $translator->translate("The prename may only contain letters.");
-        $expectedLastnameMessage = $translator->translate("The lastname may only contain letters.");
+        $fillInMsg = IControllerMessages::REGISTER_SIZE_PASSWORD;
+        $fillInMsg = str_replace(IControllerMessages::MIN, $minimum, $fillInMsg);
+        $fillInMsg = str_replace(IControllerMessages::MAX, $maximum, $fillInMsg);
+        $expectedPasswordLengthMsg = $translator->translate($fillInMsg);
+        $emptyeMailMsg = $translator->translate(IControllerMessages::REGISTER_EMPTY_EMAIL);
+        $invalidMxMsg = $translator->translate(IControllerMessages::REGISTER_INVALID_MX);
+        $invalideMailMsg = $translator->translate(IControllerMessages::REGISTER_INVALID_MAIL);
+        $passwordsNotSameMsg = $translator->translate(IControllerMessages::REGISTER_PASSWORDS_NOT_EQUAL);
+        $userAlreadyExistsMsg = $translator->translate(IControllerMessages::REGISTER_USER_ALREADY_EXISTS);
+        $emptyPrenameMsg = $translator->translate(IControllerMessages::REGISTER_EMPTY_PRENAME);
+        $emptyLastnameMsg = $translator->translate(IControllerMessages::REGISTER_EMPTY_LASTNAME);
+        $expectedPrenameMessage = $translator->translate(IControllerMessages::REGISTER_EXPECTED_PRENAME);
+        $expectedLastnameMessage = $translator->translate(IControllerMessages::REGISTER_EMPTY_LASTNAME);
         
         
         // wow, a lot of code. The framework will call all this stuff and instanciate the validators and so on

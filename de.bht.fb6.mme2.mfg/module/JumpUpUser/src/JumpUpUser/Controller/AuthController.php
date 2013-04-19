@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpUser\Controller;
 
+use JumpUpUser\Util\Routes\IRouteStore;
+
 use Zend\Filter\Encrypt;
 
 use JumpUpUser\Filters\RegistrationFormFilter;
@@ -69,7 +71,7 @@ class AuthController extends AbstractActionController {
     {
         // login already performed?
         if($this->getAuthService()->hasIdentity()) {
-            return $this->redirect()->toRoute('success');
+            return $this->redirect()->toRoute(IRouteStore::LOGIN_SUCCESS);
         }
         else { // export login form
             $form = $this->getForm();
@@ -79,27 +81,7 @@ class AuthController extends AbstractActionController {
             );
         }
         
-    }
-    
-     /**
-     * Encrypt a password. This should be done after the validation.
-     * @param String $password
-     * @return String the encrypted password
-     * @throws IllegalArgumentException if the password is not a string
-     */
-    public function encryptPassword($password) {       
-        if(is_string($password)) {
-           
-            $filter = new Encrypt();
-            $filter->setOptions( array (
-                        'adapter' => 'BlockCipher', 
-                        //'key' => self::ENCRYPTION_KEY,
-                ));           
-            $filter->setKey("imastring");
-            $encryptedPw = $filter->filter($password);
-            return $encryptedPw;
-        }
-     }
+    }   
      
 
      
@@ -110,7 +92,7 @@ class AuthController extends AbstractActionController {
     public function authenticateAction() 
     {
         $form = $this->getForm();
-        $redirect = 'login';
+        $redirect = IRouteStore::LOGIN;
         
         $request = $this->getRequest();
         if($request->isPost()) { // authenticate user      
@@ -127,7 +109,7 @@ class AuthController extends AbstractActionController {
                     $this->flashMessenger()->addMessage($message);
                 }
                 if($result->isValid()) { // successful authentication
-                    $redirect = 'success';
+                    $redirect = RouteStore::LOGIN_SUCCESS;
                     // save username on the client
                     if(1 == $request->getPost(LoginDumb::FIELD_REMEMBER_ME)) {
                         $this->getSessionStorage()->setRememberMe(1);
@@ -139,8 +121,7 @@ class AuthController extends AbstractActionController {
                 }
             }
         }
-        // redirect to login action
-        echo $request->getPost(LoginDumb::FIELD_PASSWORD);
+        // redirect to login action        
        $this->redirect()->toRoute($redirect);
     }
     

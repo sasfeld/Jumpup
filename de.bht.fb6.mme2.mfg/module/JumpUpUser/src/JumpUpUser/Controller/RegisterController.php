@@ -2,6 +2,8 @@
 namespace JumpUpUser\Controller;
 
     
+use JumpUpUser\Util\Routes\IRouteStore;
+
 use Zend\Mail\Transport\Sendmail;
 
 use JumpUpUser\Util\ServicesUtil;
@@ -92,6 +94,9 @@ class RegisterController extends AbstractActionController
                 if($user->getConfirmationKey() === $queryConfirmKey) { // compare input key with the randomly generated in the database
                     $this->confirmUser($user); // success
                     $message = IControllerMessages::SUCCESS_CONFIRM;
+                    // redirect to login action  and add message in session realm
+                    $this->flashMessenger()->addMessage($message); 
+                    $this->redirect()->toRoute(IRouteStore::LOGIN);
                 }
                 else { // keys in db and by user input aren't equal
                     $message = IControllerMessages::UNSUCCESS_CONFIRM;

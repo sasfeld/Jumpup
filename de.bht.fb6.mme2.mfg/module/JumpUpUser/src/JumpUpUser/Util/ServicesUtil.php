@@ -1,6 +1,12 @@
 <?php
 namespace JumpUpUser\Util;
+
+use JumpUpUser\Session\AuthenticationStorage;
+
+
+use Zend\Authentication\AuthenticationService;
 use JumpUpUser\Util\Messages\ConcreteControllerMessages;
+
 
 /**
  * 
@@ -27,7 +33,16 @@ class ServicesUtil {
      * @var String 
      */
     const CLASSPATH_CONTROLLER_MESSAGES = 'JumpUpUser\Util\Messages\ConcreteControllerMessages';
-    
+    /**
+     * name of the AuthService as configured in the Module.php
+     * @var String
+     */
+    const CLASSPATH_AUTH_SERVICE = 'AuthService';
+    /**
+     * full< qualified name of the SessionStorage as configured in the Module.php
+     * @var String
+     */
+    const CLASSPATH_AUTH_STORAGE_ERVICE = 'JumpUpUser\Session\AuthenticationStorage';
     /**
      * Get the UserTable instance from the ServiceManager.
      * @see UserTable
@@ -44,4 +59,22 @@ class ServicesUtil {
     static public function getControllerMessages(ServiceManager $sm) {
         return $sm->get(self::CLASSPATH_CONTROLLER_MESSAGES);
     }
+    
+    /**
+     * Get the AuthService instance.
+     * @see AuthenticationService
+     */
+    static public function getAuthService(ServiceManager $sm) {
+        return $sm->get(self::CLASSPATH_AUTH_SERVICE);
+    }
+    
+    /**
+     * Get the SessionStorage instance.
+     * @see
+     */
+    static public function getSessionStorageService(ServiceManager $sm) {
+        return $sm->get(self::CLASSPATH_AUTH_STORAGE_SERVICE);
+    }
+    
+    
 }

@@ -320,13 +320,7 @@ class RegistrationFormFilter extends InputFilter {
      */
     public function encryptPassword($password) {       
         if(is_string($password)) {
-            $filter = new Encrypt();
-            $filter->setOptions( array (
-                        'adapter' => 'BlockCipher', 
-                        //'key' => self::ENCRYPTION_KEY,
-                ));           
-            $filter->setKey(self::ENCRYPTION_KEY);
-            $encryptedPw = $filter->filter($password);
+            $encryptedPw = md5($password);
             return $encryptedPw;
         }
      }

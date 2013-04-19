@@ -3,54 +3,109 @@
 return array(
     'router' => array(
         'routes' => array(
-           /*
-            'jump-up-user-register-index' => array(
-                'type'    => 'Literal',
-                    'options' => array(
-                    'route' => '/',
-                    'defaults' => array(
-                        'controller' => 'jump-up-user\Controller\Register',
-                        'action'     => 'showform',
-                    ),
-                ),
-            ),*/
-        'jump-up-user' => array(
-            'type'    => 'Literal',
-            'options' => array(
-                'route'    => '/register',
-                'defaults' => array(
-                    'controller'    => 'jump-up-user\Controller\Register',
-                    'action'        => 'showform',
-                ),
-            ),
-            'may_terminate' => true,
-            'child_routes' => array(
-                'default' => array(
-                    'type'    => 'Segment',
-                    'options' => array(
-                        //'route'    => '/[:controller[/:action]]',
-                        'route'    => '/[:action]',
-                        'constraints' => array(
-                            'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                   /*
+                    'jump-up-user-register-index' => array(
+                        'type'    => 'Literal',
+                            'options' => array(
+                            'route' => '/',
+                            'defaults' => array(
+                                'controller' => 'jump-up-user\Controller\Register',
+                                'action'     => 'showform',
+                            ),
                         ),
-                        'defaults' => array(                      
+                    ),*/
+                'login' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/auth',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpUser\Controller',
+                            'controller'    => 'Auth',
+                            'action'        => 'login',
                         ),
                     ),
+                    'may_terminate' => true,
+                    'child_routes' => array(
+                        'process' => array(
+                            'type'    => 'Segment',
+                            'options' => array(
+                                'route'    => '/[:action]',
+                                'constraints' => array(
+                                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                ),
+                                'defaults' => array(
+                                ),
+                            ),
+                        ),
+                    ),
                 ),
-            ),
-    ),  
+                 'success' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/success',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpUser\Controller',
+                            'controller'    => 'Success',
+                            'action'        => 'index',
+                        ),
+                    ),
+                    'may_terminate' => true,
+                    'child_routes' => array(
+                        'default' => array(
+                            'type'    => 'Segment',
+                            'options' => array(
+                                'route'    => '/[:action]',
+                                'constraints' => array(
+                                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                ),
+                                'defaults' => array(
+                                ),
+                            ),
+                        ),
+                    ),
+                ), 
+           
+                'jump-up-user' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/register',
+                        'defaults' => array(
+                            'controller'    => 'jump-up-user\Controller\Register',
+                            'action'        => 'showform',
+                        ),
+                    ),
+                    'may_terminate' => true,
+                    'child_routes' => array(
+                        'default' => array(
+                            'type'    => 'Segment',
+                            'options' => array(
+                                //'route'    => '/[:controller[/:action]]',
+                                'route'    => '/[:action]',
+                                'constraints' => array(
+                                    'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                ),
+                                'defaults' => array(                      
+                                ),
+                            ),
+                        ),
+                    ),
+                ),  
          ),         
     ),
     'controllers' => array(
         'invokables' => array(
             'JumpUpUser\Controller\Index' => 'JumpUpUser\Controller\IndexController',
             'JumpUpUser\Controller\Register' => 'JumpUpUser\Controller\RegisterController',
+            'JumpUpUser\Controller\Auth' => 'JumpUpUser\Controller\AuthController',
+            'JumpUpUser\Controller\Success' => 'JumpUpUser\Controller\SuccessController',
         ),
     ), 
     'view_manager' => array(
         'template_path_stack' => array(
-            'mfg-test-modul' => __DIR__ . '/../view'
+            'JumpUpUser' => __DIR__ . '/../view'
         ),
     ),   
 );

@@ -9,18 +9,17 @@
 
 namespace JumpUpUser;
 
+use Zend\Authentication\AuthenticationService;
+
+use Zend\Authentication\Adapter\DbTable;
+
+use JumpUpUser\Session\AuthenticationStorage;
 use JumpUpUser\Validators\UserExists;
-
 use JumpUpUser\Util\Messages\ConcreteControllerMessages;
-
 use Zend\Db\TableGateway\TableGateway;
-
 use JumpUpUser\Models\User;
-
 use Zend\Db\ResultSet\ResultSet;
-
 use JumpUpUser\Models\UserTable;
-
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
@@ -48,8 +47,32 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
     public function getServiceConfig()
     {
         return array(
-            'factories' => array(
-              
+            'factories' => array(            
+                /*
+                 * export our session-based AuthenticationStorage               
+                 */
+                 'JumpUpUser\Session\AuthenticationStorage' => function($sm) {
+                    return new AuthenticationStorage('login');
+                 },
+                 /*
+                  * very basic AuthService
+                  */
+                  'AuthService' => function($sm) {
+                    //My assumption, you've alredy set dbAdapter
+                    //and has users table with columns : user_name and pass_word
+                    //that password hashed with md5
+                    $dbAdapter           = $sm->get('Zend\Db\Adapter\Adapter');
+                     $dbTableAuthAdapter  = new DbTable($dbAdapter, 
+                                              'user','username','password', "MD5(?)");
+                     
+                   
+                    
+                    $authService = new AuthenticationService();             
+                    $authService->setAdapter($dbTableAuthAdapter);
+                    $authService->setStorage($sm->get('JumpUpUser\Session\AuthenticationStorage'));
+                      
+                    return $authService;
+                },
                 /*
                  * export our ConcreteControllerMessages.
                  */

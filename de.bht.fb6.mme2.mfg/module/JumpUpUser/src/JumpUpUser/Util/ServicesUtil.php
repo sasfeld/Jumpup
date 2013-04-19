@@ -42,7 +42,7 @@ class ServicesUtil {
      * full< qualified name of the SessionStorage as configured in the Module.php
      * @var String
      */
-    const CLASSPATH_AUTH_STORAGE_ERVICE = 'JumpUpUser\Session\AuthenticationStorage';
+    const CLASSPATH_AUTH_STORAGE_SERVICE = 'JumpUpUser\Session\AuthenticationStorage';
     /**
      * Get the UserTable instance from the ServiceManager.
      * @see UserTable

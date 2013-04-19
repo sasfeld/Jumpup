@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpUser\Controller;
 
+use JumpUpUser\Forms\LoginForm;
+
 use JumpUpUser\Util\Routes\IRouteStore;
 
 use Zend\Filter\Encrypt;
@@ -57,9 +59,10 @@ class AuthController extends AbstractActionController {
     public function getForm() 
     {
         if(!isset($this->form)) {
-            $loginDumb = new LoginDumb();
+            $loginForm = new LoginForm();
             $builder = new AnnotationBuilder();
-            $this->form = $builder->createForm($loginDumb);
+            $this->form = $builder->createForm($loginForm);
+            $this->form->setAttribute('action', $this->url()->fromRoute(IRouteStore::LOGIN).'/authenticate');
         }
         return $this->form;
     }
@@ -101,23 +104,23 @@ class AuthController extends AbstractActionController {
             
             if($form->isValid()) {                                
                 $this->getAuthService()->getAdapter()
-                                       ->setIdentity($request->getPost(LoginDumb::FIELD_USERNAME))
-                                       ->setCredential($request->getPost(LoginDumb::FIELD_PASSWORD));
+                                       ->setIdentity($request->getPost(LoginForm::FIELD_USERNAME))
+                                       ->setCredential($request->getPost(LoginForm::FIELD_PASSWORD));
                 $result = $this->getAuthService()->authenticate();
                 foreach($result->getMessages() as $message) {
                     // save session-based message
                     $this->flashMessenger()->addMessage($message);
                 }
-                if($result->isValid()) { // successful authentication
-                    $redirect = RouteStore::LOGIN_SUCCESS;
+                if($result->isValid()) { // successful authentication                    
+                    $redirect = IRouteStore::LOGIN_SUCCESS;
                     // save username on the client
-                    if(1 == $request->getPost(LoginDumb::FIELD_REMEMBER_ME)) {
+                    if(1 == $request->getPost(LoginForm::FIELD_REMEMBER_ME)) {
                         $this->getSessionStorage()->setRememberMe(1);
                         // set storage again
+                         // write in cookie
                         $this->getAuthService()->setStorage($this->getSessionStorage());
-                    }
-                    // write in cookie
-                    $this->getAuthService()->getStorage()->write($request->getPost(LoginDumb::FIELD_USERNAME));                    
+                    }                   
+                    $this->getAuthService()->getStorage()->write($request->getPost(LoginForm::FIELD_USERNAME));                    
                 }
             }
         }

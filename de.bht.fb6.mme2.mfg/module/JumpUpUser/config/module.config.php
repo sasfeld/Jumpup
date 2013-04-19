@@ -95,10 +95,18 @@ return array(
                 ),  
          ),         
     ),
-    'controllers' => array(
+    'controllers' => array(           
+        'factories' => array(
+            'JumpUpUser\Controller\Register' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \JumpUpUser\Controller\RegisterController(
+                    $sm->get("doctrine.entitymanager.orm_default")
+                );
+            }
+        ),    
         'invokables' => array(
             'JumpUpUser\Controller\Index' => 'JumpUpUser\Controller\IndexController',
-            'JumpUpUser\Controller\Register' => 'JumpUpUser\Controller\RegisterController',
+           // 'JumpUpUser\Controller\Register' => 'JumpUpUser\Controller\RegisterController',
             'JumpUpUser\Controller\Auth' => 'JumpUpUser\Controller\AuthController',
             'JumpUpUser\Controller\Success' => 'JumpUpUser\Controller\SuccessController',
         ),
@@ -107,7 +115,27 @@ return array(
         'template_path_stack' => array(
             'JumpUpUser' => __DIR__ . '/../view'
         ),
-    ),   
+    ),  
+    /*
+     * ..:: doctrine ::..
+     */
+    'doctrine' => array(
+        'driver' => array(
+            'ApplicationDriver' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/JumpUpUser/Models')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                     'JumpUpUser\Models' => 'ApplicationDriver'
+                )
+            )
+        )
+      ), 
+      /*
+       * ..:::::::::::::...
+       */
 );
 
 /*

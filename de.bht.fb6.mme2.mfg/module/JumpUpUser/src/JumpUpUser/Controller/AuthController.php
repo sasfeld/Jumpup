@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpUser\Controller;
 
+use Zend\I18n\Translator\Translator;
+
 use JumpUpUser\Forms\LoginForm;
 
 use JumpUpUser\Util\Routes\IRouteStore;
@@ -13,6 +15,7 @@ use Zend\Form\Annotation\AnnotationBuilder;
 use JumpUpUser\Models\LoginDumb;
 use JumpUpUser\Util\ServicesUtil;
 use Zend\Mvc\Controller\AbstractActionController;
+use JumpUpUser\Util\Exception_Util;
 /**
  * 
 * The AuthController instance handles the login action and authentication storage.
@@ -29,6 +32,19 @@ class AuthController extends AbstractActionController {
     protected $form;
     protected $storage;
     protected $authservice;
+    protected $translator;
+    
+    
+    /**
+     * 
+     * Fetch the translator instance
+     */
+    public function getTranslatorService() {
+        if(!isset($this->translator)) {
+           $this->translator = ServicesUtil::getTranslatorService($this->getServiceLocator());
+        }
+        return $this->translator;
+    }
     
     /**
      * Fetch the AuthenticationService instance  
@@ -109,7 +125,7 @@ class AuthController extends AbstractActionController {
                 $result = $this->getAuthService()->authenticate();
                 foreach($result->getMessages() as $message) {
                     // save session-based message
-                    $this->flashMessenger()->addMessage($message);
+                    $this->flashMessenger()->addMessage($this->getTranslatorService()->translate($message));
                 }
                 if($result->isValid()) { // successful authentication                    
                     $redirect = IRouteStore::LOGIN_SUCCESS;

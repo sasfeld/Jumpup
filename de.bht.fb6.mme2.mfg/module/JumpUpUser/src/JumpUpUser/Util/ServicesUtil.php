@@ -44,6 +44,12 @@ class ServicesUtil {
      */
     const CLASSPATH_AUTH_STORAGE_SERVICE = 'JumpUpUser\Session\AuthenticationStorage';
     /**
+     * 
+     * name of the translator service
+     * @var String
+     */
+    const CLASSPATH_TRANSLATOR = 'translator';
+    /**
      * Get the UserTable instance from the ServiceManager.
      * @see UserTable
      * @param ServiceManager $sm
@@ -76,5 +82,11 @@ class ServicesUtil {
         return $sm->get(self::CLASSPATH_AUTH_STORAGE_SERVICE);
     }
     
-    
+/**
+     * Get the translator instance.
+     * @see
+     */
+    static public function getTranslatorService(ServiceManager $sm) {
+        return $sm->get(self::CLASSPATH_TRANSLATOR);
+    }
 }

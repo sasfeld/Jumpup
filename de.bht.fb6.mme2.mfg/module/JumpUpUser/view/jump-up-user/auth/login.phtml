@@ -10,7 +10,7 @@
         echo '<ul>';
         foreach($this->messages as $message)
         {
-            echo '<li>'.$message.'</li>';
+            echo '<li>'.$this->translate($message).'</li>';
         }
         echo '</ul>';
     }

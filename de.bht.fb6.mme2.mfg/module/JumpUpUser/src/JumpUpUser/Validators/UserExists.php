@@ -1,6 +1,10 @@
 <?php
 namespace JumpUpUser\Validators;
 
+use JumpUpUser\Util\Exception_Util;
+
+use Doctrine\ORM\EntityManager;
+
 use JumpUpUser\Models\UserTable;
 
 use Zend\I18n\Translator\Translator;
@@ -28,9 +32,9 @@ class UserExists extends AbstractValidator {
     private $translator;
     /**
      * 
-     * @var UserTable
+     * @see EntitiyManager
      */
-    private $userTable;
+    private $entityManager;
     /**
      * Key for the error message that the user already exits.   
      * @var doesn't matter but it's a string
@@ -38,13 +42,18 @@ class UserExists extends AbstractValidator {
     const USER_ALDREADY_EXISTS = 'useralreadyexits';
     
     
+ 
     /**
      * This method is called when you set an option.
-     * You have to set the userTable option before using the validator!
-     * @param UserTable $userTable
+     * You have to set the entityManager option before using the validator!
+     * @param EntityManager $em
+     * @throws InvalidArgumentException if the argument is null
      */
-    public function setUserTable(UserTable $userTable) {
-        $this->userTable = $userTable;
+    public function setEntityManager(EntityManager $em) {
+        if(null === $em) {
+           throw Exception_Util::throwInvalidArgument('$em', EntityManager, 'null');
+        }
+        $this->entityManager = $em;
     }
     
     /**
@@ -60,12 +69,15 @@ class UserExists extends AbstractValidator {
      * @see Zend\Validator.ValidatorInterface::isValid()
      */
     public function isValid($value) {    
-        if(null === $this->userTable)   {
+        if(null === $this->entityManager)   {
             throw new Exception("No UserTable instance specified. You have to set the option userTable to the userTable instance so this method can access the DAO!");
         }
         $this->setValue($value); // insert "magic parameter"    
+        
+        $repoUser = $this->entityManager->getRepository("JumpUpUser\Models\User");
+        $user = $repoUser->findOneBy(array('email' => $value));
 
-        if($this->userTable->userExits($value)) {
+        if(null !== $user) {
             $this->error(self::USER_ALDREADY_EXISTS); // track error message
             return false; // user already exits -> validation fails
         }

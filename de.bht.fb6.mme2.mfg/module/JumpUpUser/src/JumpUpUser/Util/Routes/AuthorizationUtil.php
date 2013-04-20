@@ -22,7 +22,7 @@ class AuthorizationUtil {
           || StringUtil::endsWith($requestUrl, 'auth')
           || StringUtil::endsWith($requestUrl, 'auth/authenticate')
           || StringUtil::endsWith($requestUrl, 'auth/logout')
-          || StringUtil::endsWith($requestUrl, 'register/confirm'  )) {
+          || (false !== strpos($requestUrl, 'register/confirm'  ))) {
               return true;
           }
         /*

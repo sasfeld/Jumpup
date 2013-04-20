@@ -1,5 +1,9 @@
 <?php
 namespace JumpUpUser\Filters;
+use JumpUpUser\Util\Exception_Util;
+
+use Doctrine\ORM\EntityManager;
+
 use JumpUpUser\Util\Messages\IControllerMessages;
 
 use Zend\Validator\AbstractValidator;
@@ -71,8 +75,15 @@ class RegistrationFormFilter extends InputFilter {
      * 
      * Construct the RegistrationFormFilter.
      * @param Zend\I18n\Translator\Translator $translator which translates the messages
+     * @param EntityManager the (doctrine) entityManager
      */
-    public function __construct(Translator $translator, UserTable $userTable) {        
+    public function __construct(Translator $translator, EntityManager $entityManager) {
+        if(null === $translator)  {
+            Exception_Util::throwInvalidArgument('$translator', 'Translator', 'null');
+        }        
+        elseif(null === $entityManager) {
+            Exception_Util::throwInvalidArgument('$entityManager', 'EntityManager', 'null');
+        }
         /*
          * usage of validators, see
          * http://framework.zend.com/manual/2.1/en/modules/zend.validator.set.html#stringlength
@@ -127,7 +138,7 @@ class RegistrationFormFilter extends InputFilter {
                 array( // check if user already exists
                     'name' => 'JumpUpUser\Validators\UserExists', 
                     'options' => array (
-                        'userTable' => $userTable,
+                        'entityManager' => $entityManager,
                         'messages' => array (
                             UserExists::USER_ALDREADY_EXISTS => $userAlreadyExistsMsg,                            
                         ),
@@ -324,36 +335,6 @@ class RegistrationFormFilter extends InputFilter {
           );    
     }
     
-    /**
-     * Encrypt a password. This should be done after the validation.
-     * @param String $password
-     * @return String the encrypted password
-     * @throws IllegalArgumentException if the password is not a string
-     */
-    public function encryptPassword($password) {       
-        if(is_string($password)) {
-            $encryptedPw = md5($password);
-            return $encryptedPw;
-        }
-     }
-     
-     /**
-      * Decrypt a password. This should be done while authentification.    
-      * @param String $encryptedPassword
-      * @return the decrypted password
-      * @throws IllegalArgumentException if the password is not a string
-      */
-     public function decryptPassword($encryptedPassword) {
-         if(is_string($encryptedPassword)) {
-            $filter = new Decrypt();
-            $filter->setOptions( array (
-                        'adapter' => 'BlockCipher', 
-                        //'key' => self::ENCRYPTION_KEY,
-                ));           
-            $filter->setKey(self::ENCRYPTION_KEY);
-            $decryptedPw = $filter->filter($encryptedPassword);
-            return $decryptedPw;
-         }
-     }
+
     
 }

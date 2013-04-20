@@ -28,6 +28,7 @@ class RegisterController extends AbstractActionController
 {
     private $controllerMessages;
     private $em;
+    private $translator;
     
     /**
      * 
@@ -39,6 +40,16 @@ class RegisterController extends AbstractActionController
         $this->em = $em;
     }
     
+	/**
+     * 
+     * Fetch the translator instance
+     */
+    public function getTranslatorService() {
+        if(!isset($this->translator)) {
+           $this->translator = ServicesUtil::getTranslatorService($this->getServiceLocator());
+        }
+        return $this->translator;
+    }
  
     /**
      * This function defines the default action.    
@@ -48,18 +59,15 @@ class RegisterController extends AbstractActionController
      * @return an array of the attributes ('attr_name' => 'attr_value') to be exported for the view.
      */    
     public function showformAction()
-    {                
-        $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
+    {               
+       
          // we grab the only existing ControllerMessages instance here from the service manager
         $this->controllerMessages = ServicesUtil::getControllerMessages($this->getServiceLocator());
         
-        $user = new User();
-        $translator = $this->getServiceLocator()->get('translator');
-        $form = new RegistrationForm('register', $translator);
+        $user = new User();       
+        $form = new RegistrationForm('register', $this->getTranslatorService(), $this->em);
         $form->setHydrator(new ClassMethods());  // data binding (hydrator strategy) -> setters and getters shall be called
-        $form->bind($user); // bind the property class user
-        $filter = new RegistrationFormFilter($translator, $userTable);
-        $form->setInputFilter($filter);
+        $form->bind($user); // bind the property class user   
         $form->setAttribute('action', 'register'); // the default action itself
 
         $request = $this->getRequest();
@@ -70,7 +78,7 @@ class RegisterController extends AbstractActionController
                 // set confirmation key (user needs to confirm it on the eMail)                
                 $user->setConfirmation_key(time()); // we use the UNIX timestamp
                 // encrypt password and bind it manually
-                $encryptedPw = $filter->encryptPassword($user->getPassword());
+                $encryptedPw = $form->encryptPassword($user->getPassword());
                 $user->setPassword($encryptedPw);     
                 // persist user                       
                 $this->em->persist($user);
@@ -102,9 +110,7 @@ class RegisterController extends AbstractActionController
         $queryConfirmUser = $this->getRequest()->getQuery()->u;
         if(null !== $queryConfirmKey && null !== $queryConfirmUser) {
             $queryConfirmKey = (int) $queryConfirmKey;
-            $queryConfirmUser = (string) $queryConfirmUser;
-            // get the DAO object
-            $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
+            $queryConfirmUser = (string) $queryConfirmUser;           
             try {                
                 //$user = $userTable->getUser($queryConfirmUser);
                 // fetch user from entity manager
@@ -147,8 +153,7 @@ class RegisterController extends AbstractActionController
      * Send the confirmation mail which contains the confirmation link.
      * @param User $user
      */
-    private function sendConfirmationMail(User $user) {
-        $translator = $this->getServiceLocator()->get('translator');
+    private function sendConfirmationMail(User $user) {    
         
         /*
          * The confirmation link needs to refernce to the confirmAction().
@@ -165,7 +170,7 @@ class RegisterController extends AbstractActionController
         $mail = new Message();
         $mail->setFrom('info@jumup.me', 'JumpUp');
         $mail->addTo($user->getEmail());
-        $mail->setSubject($translator->translate(IControllerMessages::CONFIRM_MAIL_SUBJECT));
+        $mail->setSubject($this->getTranslatorService()->translate(IControllerMessages::CONFIRM_MAIL_SUBJECT));
         $mail->setBody($this->controllerMessages->generateConfirmationMailBody($user, $confirmationLink));
         
         

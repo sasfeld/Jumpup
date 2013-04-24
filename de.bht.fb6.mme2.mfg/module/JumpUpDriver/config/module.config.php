@@ -14,14 +14,14 @@ return array(
                             ),
                         ),
                     ),*/
-                'login' => array(
+                'addtrip' => array(
                     'type'    => 'Literal',
                     'options' => array(
-                        'route'    => '/auth',
+                        'route'    => '/addtrip',
                         'defaults' => array(
-                            '__NAMESPACE__' => 'JumpUpUser\Controller',
-                            'controller'    => 'Auth',
-                            'action'        => 'login',
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'AddTrip',
+                            'action'        => 'step1',
                         ),
                     ),
                     'may_terminate' => true,
@@ -40,14 +40,14 @@ return array(
                         ),
                     ),
                 ),
-                 'success' => array(
+                 'trips' => array(
                     'type'    => 'Literal',
                     'options' => array(
-                        'route'    => '/success',
+                        'route'    => '/trips',
                         'defaults' => array(
-                            '__NAMESPACE__' => 'JumpUpUser\Controller',
-                            'controller'    => 'Success',
-                            'action'        => 'index',
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Trips',
+                            'action'        => 'list',
                         ),
                     ),
                     'may_terminate' => true,
@@ -67,13 +67,14 @@ return array(
                     ),
                 ), 
            
-                'jump-up-user' => array(
+                'booking' => array(
                     'type'    => 'Literal',
                     'options' => array(
-                        'route'    => '/register',
+                        'route'    => '/bookings',
                         'defaults' => array(
-                            'controller'    => 'jump-up-user\Controller\Register',
-                            'action'        => 'showform',
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Bookings',
+                            'action'        => 'list',
                         ),
                     ),
                     'may_terminate' => true,

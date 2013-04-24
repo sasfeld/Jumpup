@@ -38,8 +38,8 @@ return array(
                  ),
              ),
              array(
-                 'label' => 'Page #2',
-                 'route' => 'page-2',
+                 'label' => 'Login',
+                 'route' => 'login',
              ),
          ),
      ),
@@ -61,5 +61,23 @@ return array(
         'username' => 'jumpup',
         'password' => 'dummypw',
     ),
+    /*
+     * doctrine configuration goes here.
+     */
+     'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\Mysqli\Driver',
+                'params' => array(
+                    'charset' => 'utf8',
+                    'path'    =>  'data/db.sqlite',
+                    'host'     => 'localhost',
+                    'user'	   => 'jumpup',
+                    'password' => 'dummypw',
+                    'dbname'   => 'jumpup',
+                )
+            )
+        )
+    )
      // ...
  );

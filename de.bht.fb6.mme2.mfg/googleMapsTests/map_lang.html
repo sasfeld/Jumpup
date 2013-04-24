@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Localization Demo</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <style type="text/css">
+      html, body {
+        color: #585858;
+        font-family: sans-serif;
+        height: 96%;
+        margin: 2%;
+        padding: 2%;
+      }
+      select {
+        font-size: 1.3em;
+      }
+      #start_div {
+        width: 600px;
+        height: 400px;
+        margin: 0 auto;
+        font-size: 1.5em;
+      }
+      #map_div {
+        height: 100%;
+      }
+      #map_canvas {
+        height: 80%;
+        width: 70%;
+        margin: 10px;
+        box-shadow: 1px 1px 4px 2px rgba(0,0,0 ,0.7);
+        float: left;
+      }
+      #textbox{
+       float: right;
+       width: 25%;
+       height: 80%;
+       overflow: auto;
+      }
+      .hidden{
+       visibility: hidden;
+       display: none
+      }
+      .visible{
+       visibility: visible,
+       display: block
+      }
+    </style>
+
+    <script type="text/javascript" src="js/testMap.js"></script>
+  </head>
+  <body onload="initialize()">
+    <div id="start_div">
+      Check Google Maps JavaScript API v3 i18n. <br> <br>
+      <select id="language"> </select>
+    </div>
+    <div id="map_div" class="hidden">
+      <span id="chosen_lang">You are displaying the map in: </span>
+      <span>
+        (<a id="refresh" href="">refresh</a> the page to change the language)
+      </span>
+      <div id="map_canvas"></div>
+      <div id="textbox">
+       Drag directions and click the map to geocode.<br>
+       <div id="geocoding"> </div>
+       <div id="directions"> </div>
+      </div>
+    </div>
+  </body>
+</html>

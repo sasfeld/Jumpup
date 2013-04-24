@@ -2,6 +2,10 @@
 namespace JumpUpUser\Controller;
 
     
+use Zend\Stdlib\Hydrator\ClassMethods;
+
+use JumpUpUser\Util\Routes\IRouteStore;
+
 use Zend\Mail\Transport\Sendmail;
 
 use JumpUpUser\Util\ServicesUtil;
@@ -23,7 +27,29 @@ use Zend\Db\TableGateway\Exception\RuntimeException;
 class RegisterController extends AbstractActionController 
 {
     private $controllerMessages;
+    private $em;
+    private $translator;
     
+    /**
+     * 
+     * This constructor is designed for dependency injection.
+     * @param \Doctrine\ORM\EntityManager $em
+     */
+    public function __construct(\Doctrine\ORM\EntityManager $em)    
+    {
+        $this->em = $em;
+    }
+    
+	/**
+     * 
+     * Fetch the translator instance
+     */
+    public function getTranslatorService() {
+        if(!isset($this->translator)) {
+           $this->translator = ServicesUtil::getTranslatorService($this->getServiceLocator());
+        }
+        return $this->translator;
+    }
  
     /**
      * This function defines the default action.    
@@ -33,17 +59,15 @@ class RegisterController extends AbstractActionController
      * @return an array of the attributes ('attr_name' => 'attr_value') to be exported for the view.
      */    
     public function showformAction()
-    {                
-        $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
+    {               
+       
          // we grab the only existing ControllerMessages instance here from the service manager
         $this->controllerMessages = ServicesUtil::getControllerMessages($this->getServiceLocator());
         
-        $user = new User();
-        $translator = $this->getServiceLocator()->get('translator');
-        $form = new RegistrationForm('register', $translator);  
-        $form->bind($user); // bind the property class user
-        $filter = new RegistrationFormFilter($translator, $userTable);
-        $form->setInputFilter($filter);
+        $user = new User();       
+        $form = new RegistrationForm('register', $this->getTranslatorService(), $this->em);
+        $form->setHydrator(new ClassMethods());  // data binding (hydrator strategy) -> setters and getters shall be called
+        $form->bind($user); // bind the property class user   
         $form->setAttribute('action', 'register'); // the default action itself
 
         $request = $this->getRequest();
@@ -52,12 +76,14 @@ class RegisterController extends AbstractActionController
             $form->setData($request->getPost()); // set data to be validated
             if($form->isValid()) {
                 // set confirmation key (user needs to confirm it on the eMail)                
-                $user->setConfirmationKey(time()); // we use the UNIX timestamp
+                $user->setConfirmation_key(time()); // we use the UNIX timestamp
                 // encrypt password and bind it manually
-                $encryptedPw = $filter->encryptPassword($user->getPassword());
+                $encryptedPw = $form->encryptPassword($user->getPassword());
                 $user->setPassword($encryptedPw);     
-                // persist user                         
-                $userTable->saveUser($user);
+                // persist user                       
+                $this->em->persist($user);
+                $this->em->flush(); 
+                //$userTable->saveUser($user);
                 // send eMail with confirmation link
                 $this->sendConfirmationMail($user);                
                 // export sucess message to the view
@@ -83,15 +109,19 @@ class RegisterController extends AbstractActionController
         $queryConfirmKey = $this->getRequest()->getQuery()->key;
         $queryConfirmUser = $this->getRequest()->getQuery()->u;
         if(null !== $queryConfirmKey && null !== $queryConfirmUser) {
-            $queryConfirmKey = (string) $queryConfirmKey;
-            $queryConfirmUser = (string) $queryConfirmUser;
-            // get the DAO object
-            $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
-            try {
-                $user = $userTable->getUser($queryConfirmUser);
-                if($user->getConfirmationKey() === $queryConfirmKey) { // compare input key with the randomly generated in the database
+            $queryConfirmKey = (int) $queryConfirmKey;
+            $queryConfirmUser = (string) $queryConfirmUser;           
+            try {                
+                //$user = $userTable->getUser($queryConfirmUser);
+                // fetch user from entity manager
+                $repoUser = $this->em->getRepository("JumpUpUser\Models\User");
+                $user = $repoUser->findOneBy(array('username' => $queryConfirmUser));
+                if($user->getConfirmation_key() === $queryConfirmKey) { // compare input key with the randomly generated in the database
                     $this->confirmUser($user); // success
                     $message = IControllerMessages::SUCCESS_CONFIRM;
+                    // redirect to login action  and add message in session realm
+                    $this->flashMessenger()->addMessage($message); 
+                    $this->redirect()->toRoute(IRouteStore::LOGIN);
                 }
                 else { // keys in db and by user input aren't equal
                     $message = IControllerMessages::UNSUCCESS_CONFIRM;
@@ -113,9 +143,9 @@ class RegisterController extends AbstractActionController
      * @param User $user
      */
     private function confirmUser(User $user) {
-        $userTable = ServicesUtil::getUserTable($this->getServiceLocator());
-        $user->setConfirmationKey(0); // 0 indicates, that the user is confirmed
-        $userTable->saveUser($user); // update the user entity        
+       $user->setConfirmation_key(0); // 0 indicates, that the user is confirmed   
+       $this->em->persist($user);
+       $this->em->flush();   
     }
     
     /**
@@ -123,8 +153,7 @@ class RegisterController extends AbstractActionController
      * Send the confirmation mail which contains the confirmation link.
      * @param User $user
      */
-    private function sendConfirmationMail(User $user) {
-        $translator = $this->getServiceLocator()->get('translator');
+    private function sendConfirmationMail(User $user) {    
         
         /*
          * The confirmation link needs to refernce to the confirmAction().
@@ -136,12 +165,12 @@ class RegisterController extends AbstractActionController
          * -u (the username)
          */
         $confirmationLink = $this->getRequest()->getUriString() 
-            . "/confirm?key={$user->getConfirmationKey()}&u={$user->getUsername()}";
+            . "/confirm?key={$user->getConfirmation_key()}&u={$user->getUsername()}";
         
         $mail = new Message();
         $mail->setFrom('info@jumup.me', 'JumpUp');
         $mail->addTo($user->getEmail());
-        $mail->setSubject($translator->translate(IControllerMessages::CONFIRM_MAIL_SUBJECT));
+        $mail->setSubject($this->getTranslatorService()->translate(IControllerMessages::CONFIRM_MAIL_SUBJECT));
         $mail->setBody($this->controllerMessages->generateConfirmationMailBody($user, $confirmationLink));
         
         

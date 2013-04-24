@@ -19,71 +19,47 @@ use Zend\Db\TableGateway\TableGateway;
 * @since      13.04.2013
  */
 use Application\Util\String_Util;
-use Doctrine\ORM\Mapping as ORM;
 
-/**
-* @ORM\Entity 
-*/
-class User {    
-     /**     
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+class User {
+    /*
+     * the properties must be public unfortunately. 
+     * otherwise, there will be no data binding possible.
      */
-    protected $id;
     /**
      * 
      * property username
      * @var String
      */
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $username;
+    public $username;
     /**
      * 
      * property prename
      * @var String
      */
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $prename;
+    public $prename;
     /**
      * 
      * property lastname
      * @var String
      */
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $lastname;
+    public $lastname;
     /**
      * 
      * property eMail
      * @var String
      */
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $email;
+    public $email;
     /**
      * 
      * property password. Please ensure that the password is encrypted.
      * @var String
      */
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $password;
+    public $password;
     /**
      * property confirmation_key
      * @var int (maybe long int).
      */
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $confirmation_key;
+    public $confirmation_key;
     
     
     public function User() {
@@ -165,7 +141,7 @@ class User {
      * Enter description here ...
      * @param int $confirmationKey
      */
-    public function setConfirmation_key($confirmationKey) {      
+    public function setConfirmationKey($confirmationKey) {      
         if(is_int($confirmationKey)) {
             $this->confirmation_key = $confirmationKey;
         }
@@ -174,7 +150,7 @@ class User {
     /**
      * @return boolean
      */
-    public function getConfirmation_key() {
+    public function getConfirmationKey() {
         return $this->confirmation_key;
     }
     

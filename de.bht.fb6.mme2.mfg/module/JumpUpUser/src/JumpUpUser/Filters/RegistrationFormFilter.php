@@ -106,6 +106,7 @@ class RegistrationFormFilter extends InputFilter {
             'required' => true,
             'filters' => array(
                 array('name' => 'StringTrim')),
+        		array('name' => 'StripTags'),
             'validators' => array(
                 array(
                     'name' => 'NotEmpty',

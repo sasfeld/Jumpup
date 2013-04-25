@@ -8,11 +8,7 @@ requirejs.config( {
 		'lib/jquery.min' ],
 
 		// async library
-		"async" : [
-		// try content delivery network location first
-		'https://raw.github.com/caolan/async/master/lib/async',
-		// If the load via CDN fails, load locally
-		'lib/async' ]
+		"async" : 'lib/async'
 	}
 } );
 

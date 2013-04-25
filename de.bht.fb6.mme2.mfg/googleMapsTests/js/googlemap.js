@@ -1,5 +1,5 @@
 // define( [ "async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function() {
-define( [ "async!http://maps.google.com/maps/api/js?v=3&sensor=true" ], ( function() {
+define( [ "async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function() {
 
 	/**
 	 * @param divs
@@ -26,20 +26,20 @@ define( [ "async!http://maps.google.com/maps/api/js?v=3&sensor=true" ], ( functi
 		this.infoWindow;
 		this.marker;
 
-		this.loadMap();
+		this.mapsLoaded();
 	}; // GoogleMap constructor
 
 	GoogleMap.prototype.mapsLoaded = function() {
-		directionsService = new this.google.maps.DirectionsService();
-		geocoder = new this.google.maps.Geocoder();
-		infowindow = new this.google.maps.InfoWindow();
-		var torun = new this.google.maps.LatLng( 53.01357, 18.597665 );
-		map = new this.google.maps.Map( this.map_canvas, {
-			mapTypeId : this.google.maps.MapTypeId.ROADMAP,
+		directionsService = new google.maps.DirectionsService();
+		geocoder = new google.maps.Geocoder();
+		infowindow = new google.maps.InfoWindow();
+		var torun = new google.maps.LatLng( 53.01357, 18.597665 );
+		map = new google.maps.Map( this.map_canvas, {
+			mapTypeId : google.maps.MapTypeId.ROADMAP,
 			center : torun,
 			zoom : 5
 		} );
-		this.google.maps.event
+		google.maps.event
 				.addListener( map, 'click', function(e) {
 					geocoder
 							.geocode( {
@@ -70,7 +70,7 @@ define( [ "async!http://maps.google.com/maps/api/js?v=3&sensor=true" ], ( functi
 	}; // mapsLoaded()
 
 	GoogleMap.prototype.showDirections = function() {
-		directionsDisplay = new this.google.maps.DirectionsRenderer( {
+		directionsDisplay = new google.maps.DirectionsRenderer( {
 			map : map,
 			preserveViewport : true,
 			draggable : true
@@ -79,22 +79,15 @@ define( [ "async!http://maps.google.com/maps/api/js?v=3&sensor=true" ], ( functi
 		var sampleRequest = {
 			origin : 'Warschau',
 			destination : 'Berlin, Germany',
-			travelMode : this.google.maps.TravelMode.DRIVING,
-			unitSystem : this.google.maps.UnitSystem.METRIC
+			travelMode : google.maps.TravelMode.DRIVING,
+			unitSystem : google.maps.UnitSystem.METRIC
 		};
 		directionsService.route( sampleRequest, function(response, status) {
-			if ( status == this.google.maps.DirectionsStatus.OK ) {
+			if ( status == google.maps.DirectionsStatus.OK ) {
 				directionsDisplay.setDirections( response );
 			}
 		} );
 	}; // showDirections()
-
-	GoogleMap.prototype.loadMap = function() {
-		google.load( 'maps', '3.7', {
-			'other_params' : 'sensor=false&libraries=places',
-			'callback' : this.mapsLoaded
-		} );
-	}; // loadMap()
 
 	return GoogleMap;
 

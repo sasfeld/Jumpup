@@ -106,15 +106,12 @@ return array(
             }
         ),    
         'invokables' => array(
-            'JumpUpUser\Controller\Index' => 'JumpUpUser\Controller\IndexController',
-           // 'JumpUpUser\Controller\Register' => 'JumpUpUser\Controller\RegisterController',
-            'JumpUpUser\Controller\Auth' => 'JumpUpUser\Controller\AuthController',
-            'JumpUpUser\Controller\Success' => 'JumpUpUser\Controller\SuccessController',
+            'JumpUpDriver\Controller\AddTrip' => 'JumpUpDriver\Controller\AddTripController',
         ),
     ), 
     'view_manager' => array(
         'template_path_stack' => array(
-            'JumpUpUser' => __DIR__ . '/../view'
+            'JumpUpDriver' => __DIR__ . '/../view'
         ),
     ),  
     /*

@@ -41,6 +41,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
      * @param MvcEvent $e
      */
     public function onBootstrap(MvcEvent $e) {        
+      /*
         $requestUrl = $e->getRequest()->getUriString();
         $sm = $e->getApplication()->getServiceManager();
         $as = ServicesUtil::getAuthService($sm);    
@@ -49,7 +50,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
             //$e->getController()->redirect()->toRoute(IRouteStore::LOGIN);
             echo "you are not authorized";
             exit;
-        }
+        } */
     }
     
     public function getAutoloaderConfig()

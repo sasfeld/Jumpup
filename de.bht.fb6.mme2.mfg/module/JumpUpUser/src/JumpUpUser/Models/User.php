@@ -117,7 +117,7 @@ class User {
             $this->username = $username;
         }
     }
-    
+     
     /**
      * Enter description here ...
      * @param String $prename

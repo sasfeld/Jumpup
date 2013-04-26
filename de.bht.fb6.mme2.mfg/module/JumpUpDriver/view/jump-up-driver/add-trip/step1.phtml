@@ -1,0 +1,21 @@
+<h2>Add trip</h2>
+
+<div id="form">
+<?php
+	echo $this->renderForm($this->form);
+?>
+</div>
+
+<div id="inputs">
+  		<input id="startInput" name="Start" type="text" size="30" maxlength="30" value="Berlin">
+  		<input id="endInput" name="Ziel" type="text" size="30" maxlength="30" value="Hamburg">
+  		<button id="sendBt">Senden</button>
+  	</div>
+    <div id="map_div">
+      <?php // ..:: the map will be rendered here ::.. ?>
+      <div id="map_canvas"></div>
+      <div id="textbox">
+       Drag directions and click the map to geocode.<br>
+       <div id="geocoding"> </div>
+      </div>
+</div>

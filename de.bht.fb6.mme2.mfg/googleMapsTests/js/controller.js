@@ -17,8 +17,8 @@ define( [ "jquery", "googlemap" ], ( function($, GoogleMap) {
 
 	Controller.prototype.insertRoute = function() {
 
-		var start;
-		var end;
+		var start = 0;
+		var end = 0;
 
 		var startInput = $( "#startInput" );
 		var endInput = $( "#endInput" );
@@ -40,7 +40,8 @@ define( [ "jquery", "googlemap" ], ( function($, GoogleMap) {
 
 			// - no key ------ mouseclick - enter
 			if ( code == -1 || code == 1 || code == 13 ) {
-				_this.gmap.showRoute( start, end );
+				if ( start && end )
+					_this.gmap.showRoute( start, end );
 			}
 		}
 

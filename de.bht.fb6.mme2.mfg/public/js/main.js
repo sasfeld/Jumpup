@@ -95,7 +95,7 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, Googl
 			if(0 != startPointValue.length && 0 != endPointValue) {
 				console.log("main.js: showing new route");
 				mapCtrl.showSingleRoute(startPointValue, endPointValue);
-			}
+			};
 		}));
 		/* 
 		 * ..:::::::::::::::::::::::::::::::::::::::::::::::::::..

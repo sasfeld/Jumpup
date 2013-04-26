@@ -30,10 +30,11 @@ define(["gmap/googlemap"],
     				throw e;
     			} 
     			
-    	   }
+    	   };
     	   
     	   /*
     	    * Handle the response of Google's DirectionsService.
+    	    * @deprecated
     	    */
     	   MapController.prototype.handleRouteResponse  = function(directionsResult) {
     		   console.log("Map controller -> handling route response");
@@ -62,6 +63,8 @@ define(["gmap/googlemap"],
     		   }
     	   };
     	   
+    	  
+    	   
     	   /*
     	    * Show a single route on the map.
     	    * - param start, the value of the starting point, must be a coordinate or a valid location.
@@ -73,9 +76,12 @@ define(["gmap/googlemap"],
     		   var dirDisplay = this.gmap.directionsDisplay;
     		   if(null != dirDisplay) {
     			   dirDisplay.setMap(null);
-    		   }
+    		   }    		   
+    		    		   
     		   // show new route
-    		   this.gmap.showRoute( start, destination, $( "#sendBt" ), this.handleRouteResponse );  
+//    		   this.gmap.showRoute( start, destination, $( "#sendBt" ), this.handleRouteResponse );  
+    		  
+    		   this.gmap.showRoute( start, destination, this.handleRouteResponse);  
     	   };    	   
     	   return MapController; // return constructor function
        })

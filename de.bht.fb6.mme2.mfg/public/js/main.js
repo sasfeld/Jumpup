@@ -13,6 +13,7 @@ requirejs.config( {
 } );
 
 require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, GoogleMap, MapController) {
+	
 	/* 
 	 * ..:: global config ::..
 	 * 
@@ -28,9 +29,13 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, Googl
 	// --> input fields
 	const REF_ADDTRIP_INPUT_START = 'input[name="startPoint"]';
 	const REF_ADDTRIP_INPUT_END = 'input[name="endPoint"]';
+	const REF_ADDTRIP_INPUT_DATE = 'input[name="startDate"]';
 	// --> hidden input fields which needs to be stored in DB
 	const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
 	const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
+	// --> submit
+	const REF_ADDTRIP_SUBMIT = 'input[name="submit"]';
+	
 	
 	/* 
 	 * ..:::::::::::::::::::..
@@ -59,16 +64,34 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, Googl
 		}
 		/* 
 		 * ..:::::::::::::::::::::::::::::::..
+		 */
+		
+		/* 
+		 * ..:: map events ::..
+		 */	
+		// auto completion for start point
+		mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_START ), function(place) {
+			validStart = place.geometry.location;
+			$( REF_ADDTRIP_INPUT_START ).val(validStart);
+		} );
+		// auto completion for end point
+		mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_END ), function(place) {
+			validEnd = place.geometry.location;
+			$( REF_ADDTRIP_INPUT_END ).val(validEnd);
+		} );
+		
+		/* 
+		 * ..::::::::::::::::..
 		 */	
 		
 		
 		/* 
 		 * ..:: addtrip -> endPoint input field event handler ::..
-		 */	
-		$( REF_ADDTRIP_INPUT_END ).change( ( function() {
-			console.log("main.js: end point changed");
+		 */			
+		$( REF_ADDTRIP_INPUT_DATE ).focus( ( function() {
+			console.log("main.js: date changed");
 			var startPointValue = $( REF_ADDTRIP_INPUT_START ).val();
-			var endPointValue = $( this ).val();
+			var endPointValue = $( REF_ADDTRIP_INPUT_END ).val();
 			if(0 != startPointValue.length && 0 != endPointValue) {
 				console.log("main.js: showing new route");
 				mapCtrl.showSingleRoute(startPointValue, endPointValue);

@@ -23,13 +23,12 @@ define(["gmap/googlemap"],
     	   var MapController = function(mapsOptions, ctrlOptions) {
     		   try {
     				this.gmap = new GoogleMap( mapsOptions );
-    				this.gmap.mapsLoaded(); // initialize maps    				
+    				this.gmap.mapsLoaded(); // initialize maps   	   			
+        			this.inputStartCoord = ctrlOptions.input_start_coord || window.REF_ADDTRIP_INPUT_STARTCOORD;
+        			this.inputEndCoord = ctrlOptions.input_end_coord || window.REF_ADDTRIP_INPUT_ENDCOORD;
     			} catch ( e ) {    				
     				throw e;
-    			}
-    			
-    			this.inputStartCoord = ctrlOptions.input_start_coord;
-    			this.inputEndCoord = ctrlOptions.input_end_coord;
+    			} 
     			
     	   }
     	   
@@ -42,6 +41,9 @@ define(["gmap/googlemap"],
     		   /*
     		    * fetch and store coordinate of points
     		    */ 
+    		   var inputStartCoord =  $ ( window.REF_ADDTRIP_INPUT_STARTCOORD );
+    		   var inputEndCoord = $ (window.REF_ADDTRIP_INPUT_ENDCOORD);
+    		   
     		   var singleRoute = directionsResult.routes[0];
     		   // array of LatLng values > could be interesting for us
     		   var overviewPath = directionsResult.overview_path;
@@ -54,8 +56,8 @@ define(["gmap/googlemap"],
     			   var endLatLng = singleLeg.end_location;
     			   console.log("Map controller -> startLatLng: \n"+startLatLng);
     			   console.log("Map controller -> endLatLng: \n"+endLatLng);
-    			   this.inputStartCoord.val(startLatLng); // fill hidden input field
-    			   this.inputStartCoord.val(endLatLng); // fill hidden input field
+    			   inputStartCoord.val(startLatLng); // fill hidden input field
+    			   inputEndCoord.val(endLatLng); // fill hidden input field
     			   
     		   }
     	   };

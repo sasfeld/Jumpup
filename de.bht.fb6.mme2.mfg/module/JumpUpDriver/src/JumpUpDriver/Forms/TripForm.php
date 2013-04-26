@@ -58,8 +58,7 @@ class TripForm {
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Options({"label":"Start location:"})
    */
-  public $startPoint;
-
+  public $startPoint; 
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
    * @Annotation\Required({"required":"true" })

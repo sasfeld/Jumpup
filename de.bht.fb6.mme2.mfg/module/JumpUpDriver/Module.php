@@ -35,22 +35,7 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface
 {
-    /**
-     * 
-     * This event method will be called on each request (bootsstrap).
-     * @param MvcEvent $e
-     */
-    public function onBootstrap(MvcEvent $e) {        
-        $requestUrl = $e->getRequest()->getUriString();
-        $sm = $e->getApplication()->getServiceManager();
-        $as = ServicesUtil::getAuthService($sm);    
-        $isAuthorized = AuthorizationUtil::isAuthorized($as, $requestUrl);
-        if(!$isAuthorized) {           
-            //$e->getController()->redirect()->toRoute(IRouteStore::LOGIN);
-            echo "you are not authorized";
-            exit;
-        }
-    }
+   
     
     public function getAutoloaderConfig()
     {

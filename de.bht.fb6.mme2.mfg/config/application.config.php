@@ -5,6 +5,7 @@ return array(
         'Application',
         'MfgTestModul',
         'JumpUpUser',
+        'JumpUpDriver',
         // ..:: doctrine ::..        
         'DoctrineModule',
         'DoctrineORMModule',

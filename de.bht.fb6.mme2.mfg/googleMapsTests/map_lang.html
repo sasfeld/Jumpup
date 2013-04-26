@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Google Maps JavaScript API v3 Example: Localization Demo</title>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <style type="text/css">
       html, body {
@@ -48,23 +47,19 @@
       }
     </style>
 
-    <script type="text/javascript" src="js/testMap.js"></script>
+	<script data-main="js/main" src="js/lib/require-jquery.js"></script>
   </head>
-  <body onload="initialize()">
-    <div id="start_div">
-      Check Google Maps JavaScript API v3 i18n. <br> <br>
-      <select id="language"> </select>
-    </div>
-    <div id="map_div" class="hidden">
-      <span id="chosen_lang">You are displaying the map in: </span>
-      <span>
-        (<a id="refresh" href="">refresh</a> the page to change the language)
-      </span>
+  <body>
+  	<div id="inputs">
+  		<input id="startInput" name="Start" type="text" size="30" maxlength="30" value="Berlin">
+  		<input id="endInput" name="Ziel" type="text" size="30" maxlength="30" value="Hamburg">
+  		<button id="sendBt">Senden</button>
+  	</div>
+    <div id="map_div">
       <div id="map_canvas"></div>
       <div id="textbox">
        Drag directions and click the map to geocode.<br>
        <div id="geocoding"> </div>
-       <div id="directions"> </div>
       </div>
     </div>
   </body>

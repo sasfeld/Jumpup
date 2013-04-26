@@ -40,6 +40,28 @@ return array(
                         ),
                     ),
                 ),
+                'addtrip_error'=> array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/addtriperror',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'AddTrip',
+                            'action'        => 'error',
+                        ),
+                    ),
+                  ),
+                  'addtrip_success'=> array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/addtripsuccess',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'AddTrip',
+                            'action'        => 'success',
+                        ),
+                    ),
+                  ),
                  'trips' => array(
                     'type'    => 'Literal',
                     'options' => array(
@@ -98,15 +120,15 @@ return array(
     ),
     'controllers' => array(           
         'factories' => array(
-            'JumpUpUser\Controller\Register' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+            'JumpUpDriver\Controller\AddTrip' => function(Zend\Mvc\Controller\ControllerManager $cm) {
                 $sm = $cm->getServiceLocator();
-                return new \JumpUpUser\Controller\RegisterController(
+                return new \JumpUpDriver\Controller\AddTripController(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
             }
         ),    
         'invokables' => array(
-            'JumpUpDriver\Controller\AddTrip' => 'JumpUpDriver\Controller\AddTripController',
+            //'JumpUpDriver\Controller\AddTrip' => 'JumpUpDriver\Controller\AddTripController',
         ),
     ), 
     'view_manager' => array(
@@ -122,11 +144,11 @@ return array(
             'ApplicationDriver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => array(__DIR__ . '/../src/JumpUpUser/Models')
+                'paths' => array(__DIR__ . '/../src/JumpUpDriver/Models')
             ),
             'orm_default' => array(
                 'drivers' => array(
-                     'JumpUpUser\Models' => 'ApplicationDriver'
+                     'JumpUpDriver\Models' => 'ApplicationDriver'
                 )
             )
         )

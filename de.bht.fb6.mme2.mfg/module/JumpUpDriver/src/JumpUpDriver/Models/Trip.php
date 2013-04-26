@@ -8,6 +8,11 @@ use JumpUpDriver\Util\Exception_Util;
 
 use JumpUpDriver\Util\StringUtil;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne as OneToOne;
+use Doctrine\ORM\Mapping\OneToMany as OneToMany;
+use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+
 /**
  * @ORM\Entity
  */
@@ -23,7 +28,7 @@ class Trip {
     */
    private $startPoint;
    /**
-    * @ORM\Column(type="string")
+    * @ORM\Column(type="string", nullable=true)
     */
    private $startCoordinate;
    /**
@@ -31,23 +36,23 @@ class Trip {
     */
    private $endPoint;
    /**
-    * @ORM\Column(type="string")
+    * @ORM\Column(type="string", nullable=true)
     */
    private $endCoordinate;
    /**
-    * @ORM\Column(type="hash")
-    */
+     * @OneToMany(targetEntity="Waypoint", mappedBy="parentTrip")
+   */
    private $waypoints;
    /**
-    * @ORM\Column(type="date")
+    * @ORM\Column(type="string")
     */
    private $startDate;
    /**
-    * @ORM\Column(type="int")
+    * @ORM\Column(type="integer")
     */
    private $price;
    /**
-   * @OneToOne(targetEntity="JumpUpUser\Models\User")
+   * @ManyToOne(targetEntity="JumpUpUser\Models\User")
    * */
    private $driver;
    
@@ -78,8 +83,8 @@ class Trip {
      $this->driver = $user;
    }
    
-   public function  setStartDate($startDate) {
-     $this->startDate = $startDate;
+   public function  setPrice($price) {
+     $this->price   = $price;
    }
    
    public function getEndPoint() {

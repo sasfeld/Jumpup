@@ -9,6 +9,8 @@
 
 namespace JumpUpUser;
 
+use JumpUpUser\Util\UserUtil;
+
 use JumpUpUser\Util\Routes\IRouteStore;
 
 use JumpUpUser\Util\ServicesUtil;
@@ -75,7 +77,16 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
     public function getServiceConfig()
     {
         return array(
-            'factories' => array(            
+            'factories' => array(    
+                /*
+                 * export our user util
+                 */ 
+               'JumpUpUser\Util\UserUtil' => function($sm) {
+                    $em = $sm->get('doctrine.entitymanager.orm_default');
+                    $authService = $sm->get('AuthService');
+                    $userUtil = new UserUtil($em, $authService);
+                    return $userUtil;
+                 },
                 /*
                  * export our session-based AuthenticationStorage               
                  */

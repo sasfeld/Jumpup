@@ -20,4 +20,15 @@ interface IRouteStore {
      * @var String
      */
     const ADD_TRIP = "addtrip";
+    
+    /**
+     * Route to the error action in the AddTripController 
+     */
+    const ADD_TRIP_ERROR = "addtrip_error";
+    
+    /**
+     * Route to the success action after a successfull adding.
+     */
+    const ADD_TRIP_SUCCESS = "addtrip_success";
+    
 }

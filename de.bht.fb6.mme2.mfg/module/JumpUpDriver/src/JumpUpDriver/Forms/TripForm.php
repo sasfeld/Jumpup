@@ -59,12 +59,7 @@ class TripForm {
    * @Annotation\Options({"label":"Start location:"})
    */
   public $startPoint;
-  /**
-   * @Annotation\Type("Zend\Form\Element\Hidden")
-   * @Annotation\Required({"required":"true" })
-   * @Annotation\Filter({"name":"StripTags"})
-   */
-  public $startCoordinate;
+
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
    * @Annotation\Required({"required":"true" })
@@ -72,12 +67,7 @@ class TripForm {
    * @Annotation\Options({"label":"End location:"})
    */
   public $endPoint;
-  /**
-   * @Annotation\Type("Zend\Form\Element\Hidden")
-   * @Annotation\Required({"required":"true" })
-   * @Annotation\Filter({"name":"StripTags"})
-   */
-  public $endCoordinate;  
+ 
   /**
    * @Annotation\Type("Zend\Form\Element\Date")
    * @Annotation\Required({"required":"true" })

@@ -25,7 +25,15 @@ class Trip {
    /**
     * @ORM\Column(type="string")
     */
+   private $startCoordinate;
+   /**
+    * @ORM\Column(type="string")
+    */
    private $endPoint;
+   /**
+    * @ORM\Column(type="string")
+    */
+   private $endCoordinate;
    /**
     * @ORM\Column(type="hash")
     */

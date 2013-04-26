@@ -27,7 +27,7 @@ class AddTripController extends AbstractActionController {
   public function step1Action() {
        $form = $this->getFormStep1();
        
-       if($this->r)
+       
        
        // Export the form to the view
        return array("form" => $form);

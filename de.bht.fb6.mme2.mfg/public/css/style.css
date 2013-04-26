@@ -1,37 +1,90 @@
 body {
-    padding-top: 60px;
-    padding-bottom: 40px;
+	padding-top: 60px;
+	padding-bottom: 40px;
 }
 
 .zf-green {
-    color: #68b604;
+	color: #68b604;
 }
 
 .btn-success {
-  background-color: #57a900;
-  background-image: -moz-linear-gradient(top, #70d900, #57a900);
-  background-image: -ms-linear-gradient(top, #70d900, #57a900);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
-  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
-  background-image: -o-linear-gradient(top, #70d900, #57a900);
-  background-image: linear-gradient(top, #70d900, #57a900);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+	background-color: #57a900;
+	background-image: -moz-linear-gradient(top, #70d900, #57a900);
+	background-image: -ms-linear-gradient(top, #70d900, #57a900);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900),
+		to(#57a900) );
+	background-image: -webkit-linear-gradient(top, #70d900, #57a900);
+	background-image: -o-linear-gradient(top, #70d900, #57a900);
+	background-image: linear-gradient(top, #70d900, #57a900);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900',
+		endColorstr='#57a900', GradientType=0 );
 }
 
-.btn-success:hover,
-.btn-success:active,
-.btn-success.active,
-.btn-success.disabled,
-.btn-success[disabled] {
-  background-color: #57a900;
+.btn-success:hover,.btn-success:active,.btn-success.active,.btn-success.disabled,.btn-success[disabled]
+	{
+	background-color: #57a900;
 }
 
-.btn-success:active, .btn-success.active {
-  background-color: #57a900;
+.btn-success:active,.btn-success.active {
+	background-color: #57a900;
 }
 
 div.container a.brand {
-    background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
-    margin-left: 0;
-    padding: 8px 20px 12px 40px;
+	background: url("../img/zf2-logo.png") no-repeat scroll 0 10px
+		transparent;
+	margin-left: 0;
+	padding: 8px 20px 12px 40px;
 }
+
+/*
+* ..:: Google maps ::..
+*/
+html,body {
+	color: #585858;
+	font-family: sans-serif;
+	height: 96%;
+	margin: 2%;
+	padding: 2%;
+}
+
+select {
+	font-size: 1.3em;
+}
+
+#start_div {
+	width: 600px;
+	height: 400px;
+	margin: 0 auto;
+	font-size: 1.5em;
+}
+
+#map_div {
+	height: 100%;
+}
+
+#map_canvas {
+	height: 30em;
+	width: 30em;
+	margin: 10px;
+	box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.7);
+	float: left;
+}
+
+#textbox {
+	float: right;
+	width: 25%;
+	height: 80%;
+	overflow: auto;
+}
+
+.hidden {
+	visibility: hidden;
+	display: none
+}
+
+.visible {
+	visibility: visible, display:  block
+}
+/*
+/* * ..::::::::::::::::.. */
+*

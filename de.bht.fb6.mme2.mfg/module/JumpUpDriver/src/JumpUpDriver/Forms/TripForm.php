@@ -18,11 +18,25 @@ class TripForm {
   const FIELD_START_POINT = 'startPoint';
   /**
    *
+   * name of the form field for the property startCoordinate.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_START_COORDINATE = 'startCoordinate';
+  /**
+   *
    * name of the form field for the property endPoint.
    * Should be the name of the property/attribute so the data binding works.
    * @var String
    */
   const FIELD_END_POINT = 'endPoint';
+  /**
+   *
+   * name of the form field for the property endCoordinate.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_END_COORDINATE = 'endCoordinate';
   /**
    *
    * name of the form field for the property startDate.
@@ -46,12 +60,24 @@ class TripForm {
    */
   public $startPoint;
   /**
+   * @Annotation\Type("Zend\Form\Element\Hidden")
+   * @Annotation\Required({"required":"true" })
+   * @Annotation\Filter({"name":"StripTags"})
+   */
+  public $startCoordinate;
+  /**
    * @Annotation\Type("Zend\Form\Element\Text")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Options({"label":"End location:"})
    */
   public $endPoint;
+  /**
+   * @Annotation\Type("Zend\Form\Element\Hidden")
+   * @Annotation\Required({"required":"true" })
+   * @Annotation\Filter({"name":"StripTags"})
+   */
+  public $endCoordinate;  
   /**
    * @Annotation\Type("Zend\Form\Element\Date")
    * @Annotation\Required({"required":"true" })

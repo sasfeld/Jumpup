@@ -22,7 +22,9 @@ require( [ "jquery", "googlemap" ], function($, GoogleMap) {
 		};
 
 		try {
-			new GoogleMap( options );
+			var gmap = new GoogleMap( options );
+			gmap.mapsLoaded();
+			gmap.showRoute( $( "#startInput" ), $( "#endInput" ), $( "#sendBt" ) );
 		} catch ( e ) {
 			// console.log( 'No Map to display: ' + e );
 			throw e;

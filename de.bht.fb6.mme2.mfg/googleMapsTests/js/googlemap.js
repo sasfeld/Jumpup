@@ -1,19 +1,22 @@
-// define( [ "async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function() {
-define( [ "async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function() {
+define( [
+		"jquery",
+		"async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function(
+		$) {
 
 	/**
 	 * @param divs
-	 *          Is a assosiativ array. Avalabile options: 'map_canvas', 'textbox',
-	 *          'geocoding'
+	 *          Is a assosiativ array. Avalabile options: 'mode', 'map_canvas',
+	 *          'textbox', 'geocoding'
 	 */
-	var GoogleMap = function(divs) {
+	var GoogleMap = function(options) {
 
-		this.map_canvas = divs[ 'map_canvas' ];
-		this.textbox = divs[ 'textbox' ];
-		this.geocoding = divs[ 'geocoding' ];
+		this.mode = options[ 'mode' ];
+		this.map_canvas = options[ 'map_canvas' ];
+		this.textbox = options[ 'textbox' ];
+		this.geocoding = options[ 'geocoding' ];
 
 		if ( !this.map_canvas || !this.geocoding )
-			throw "map_canvas and geocoding is required for the map.";
+			throw "mode, map_canvas and geocoding are required for the map.";
 
 		this.map;
 		this.infowindow;
@@ -22,11 +25,15 @@ define( [ "async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPb
 		this.geocoder;
 		this.infoWindow;
 		this.marker;
-
-		this.mapsLoaded();
 	}; // GoogleMap constructor
 
 	GoogleMap.prototype.mapsLoaded = function() {
+		// var input = /** @type {HTMLInputElement} */
+		// ( document.getElementById( 'searchTextField' ) );
+		// var autocomplete = new google.maps.places.Autocomplete( input );
+		//
+		// autocomplete.bindTo( 'bounds', map );
+
 		directionsService = new google.maps.DirectionsService();
 		geocoder = new google.maps.Geocoder();
 		infowindow = new google.maps.InfoWindow();
@@ -36,34 +43,34 @@ define( [ "async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPb
 			center : torun,
 			zoom : 5
 		} );
-		google.maps.event.addListener( map, 'click', function(e) {
-			geocoder.geocode( {
-				'latLng' : e.latLng
-			}, function(results, status) {
-				if ( status == google.maps.GeocoderStatus.OK ) {
-					if ( results[ 0 ] ) {
-						if ( marker ) {
-							marker.setPosition( e.latLng );
-						} else {
-							marker = new google.maps.Marker( {
-								position : e.latLng,
-								map : map
-							} );
-						}
-						infowindow.setContent( results[ 0 ].formatted_address );
-						infowindow.open( map, marker );
-					} else {
-						this.geocoding.innerHTML = 'No results found';
-					}
-				} else {
-					this.geocoding.innerHTML = 'Geocoder failed due to: ' + status;
-				}
-			} );
-		} );
-		this.showDirections();
+		// google.maps.event.addListener( map, 'click', function(e) {
+		// geocoder.geocode( {
+		// 'latLng' : e.latLng
+		// }, function(results, status) {
+		// if ( status == google.maps.GeocoderStatus.OK ) {
+		// if ( results[ 0 ] ) {
+		// if ( marker ) {
+		// marker.setPosition( e.latLng );
+		// } else {
+		// marker = new google.maps.Marker( {
+		// position : e.latLng,
+		// map : map
+		// } );
+		// }
+		// infowindow.setContent( results[ 0 ].formatted_address );
+		// infowindow.open( map, marker );
+		// } else {
+		// this.geocoding.innerHTML = 'No results found';
+		// }
+		// } else {
+		// this.geocoding.innerHTML = 'Geocoder failed due to: ' + status;
+		// }
+		// } );
+		// } );
 	}; // mapsLoaded()
 
-	GoogleMap.prototype.showDirections = function() {
+	GoogleMap.prototype.showRoute = function(startInput, endInput, sendBt) {
+
 		directionsDisplay = new google.maps.DirectionsRenderer( {
 			map : map,
 			preserveViewport : true,
@@ -73,17 +80,37 @@ define( [ "async!http://maps.google.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPb
 		if ( this.textbox )
 			directionsDisplay.setPanel( this.textbox );
 
-		var sampleRequest = {
-			origin : 'Warschau',
-			destination : 'Berlin, Germany',
-			travelMode : google.maps.TravelMode.DRIVING,
-			unitSystem : google.maps.UnitSystem.METRIC
-		};
-		directionsService.route( sampleRequest, function(response, status) {
-			if ( status == google.maps.DirectionsStatus.OK ) {
-				directionsDisplay.setDirections( response );
+		function _showRoute(e) {
+			var code = -1;
+			if ( e )
+				code = ( e.keyCode ? e.keyCode : e.which );
+
+			// - no key ------ mouseclick - enter
+			if ( code == -1 || code == 1 || code == 13 ) {
+				var sampleRequest = {
+					origin : startInput.val(),
+					destination : endInput.val(),
+					travelMode : google.maps.TravelMode.DRIVING,
+					unitSystem : google.maps.UnitSystem.METRIC
+				};
+				directionsService.route( sampleRequest, function(response, status) {
+					if ( status == google.maps.DirectionsStatus.OK ) {
+						directionsDisplay.setDirections( response );
+					}
+				} );
 			}
-		} );
+		}
+		;
+
+		console.log( _showRoute );
+
+		startInput.keyup( _showRoute );
+		endInput.keyup( _showRoute );
+		if ( sendBt )
+			sendBt.click( _showRoute );
+
+		_showRoute();
+
 	}; // showDirections()
 
 	return GoogleMap;

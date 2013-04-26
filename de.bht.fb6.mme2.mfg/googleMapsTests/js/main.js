@@ -12,19 +12,13 @@ requirejs.config( {
 	}
 } );
 
-require( [ "jquery", "googlemap" ], function($, GoogleMap) {
+require( [ "controller" ], function(Controller) {
 	$( document ).ready( ( function() {
-		var options = {
-			"map_canvas" : $( "#map_canvas" )[ 0 ],
-			"textbox" : $( "#textbox" )[ 0 ],
-			"geocoding" : $( "#geocoding" )[ 0 ],
-			"directions" : $( "#directions" )[ 0 ]
-		};
 
 		try {
-			var gmap = new GoogleMap( options );
-			gmap.mapsLoaded();
-			gmap.showRoute( $( "#startInput" ), $( "#endInput" ), $( "#sendBt" ) );
+			var ctrl = new Controller();
+
+			ctrl.insertRoute();
 		} catch ( e ) {
 			// console.log( 'No Map to display: ' + e );
 			throw e;

@@ -89,7 +89,8 @@ class TripForm {
    * @Annotation\Type("Zend\Form\Element\Number")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
-   * @Annotation\Options({"label":"Price:"})
+   * @Annotation\Attributes({"addtrip_form"})
+   * @Annotation\Options({"label":"Price:","attributes":{"size":"5"}})
    */
   public $price;
   /**

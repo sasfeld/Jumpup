@@ -69,17 +69,24 @@ define( [
 		// } );
 	}; // mapsLoaded()
 
-	GoogleMap.prototype.showRoute = function(startInput, endInput, sendBt) {
+	/*
+	 * Show a route.
+	 * - param startInput, the value of the start location
+	 * - param endInput, the value of the end location
+	 * - param callbackFnc, the callback function which will be called after a successfull route request
+	 */
+	GoogleMap.prototype.showRoute = function(startInput, endInput, sendBt, callbackFnc) {
 
-		directionsDisplay = new google.maps.DirectionsRenderer( {
+		this.directionsDisplay = new google.maps.DirectionsRenderer( {
 			map : map,
 			preserveViewport : true,
 			draggable : true
 		} );
 
 		if ( this.textbox )
-			directionsDisplay.setPanel( this.textbox );
+			this.directionsDisplay.setPanel( this.textbox );
 
+		var _this = this; // closure
 		function _showRoute(e) {
 			var code = -1;
 			if ( e )
@@ -88,8 +95,8 @@ define( [
 			// - no key ------ mouseclick - enter
 			if ( code == -1 || code == 1 || code == 13 ) {
 				var sampleRequest = {
-					origin : startInput.val(),
-					destination : endInput.val(),
+					origin : startInput,
+					destination : endInput,
 					travelMode : google.maps.TravelMode.DRIVING,
 					unitSystem : google.maps.UnitSystem.METRIC
 				};
@@ -97,7 +104,11 @@ define( [
 					console.log( response );
 
 					if ( status == google.maps.DirectionsStatus.OK ) {
-						directionsDisplay.setDirections( response );
+						_this.directionsDisplay.setDirections( response );
+						// call callback function
+						if(undefined != callbackFnc && 'function' == typeof callbackFnc) {
+							callbackFnc(response);
+						}
 					}
 				} );
 			}
@@ -106,8 +117,8 @@ define( [
 
 		console.log( _showRoute );
 
-		startInput.keyup( _showRoute );
-		endInput.keyup( _showRoute );
+		//startInput.keyup( _showRoute );
+		//endInput.keyup( _showRoute );
 		if ( sendBt )
 			sendBt.click( _showRoute );
 

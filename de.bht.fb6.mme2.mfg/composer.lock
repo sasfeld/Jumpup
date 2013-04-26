@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3098d9e0d52cdb9bb38d30149f54a0e7",
+    "hash": "c8d7975f45c679260f75f7c2f7590ed4",
     "packages": [
         {
             "name": "doctrine/common",
@@ -223,16 +223,16 @@
         },
         {
             "name": "doctrine/doctrine-orm-module",
-            "version": "dev-master",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/DoctrineORMModule.git",
-                "reference": "9c1a81dbbdce60159da82cd3723eabdea9ace646"
+                "url": "git://github.com/doctrine/DoctrineORMModule.git",
+                "reference": "0.7.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineORMModule/zipball/9c1a81dbbdce60159da82cd3723eabdea9ace646",
-                "reference": "9c1a81dbbdce60159da82cd3723eabdea9ace646",
+                "url": "https://github.com/doctrine/DoctrineORMModule/archive/0.7.0.zip",
+                "reference": "0.7.0",
                 "shasum": ""
             },
             "require": {
@@ -299,7 +299,7 @@
                 "orm",
                 "zf2"
             ],
-            "time": "2013-04-16 12:00:34"
+            "time": "2013-01-13 19:47:34"
         },
         {
             "name": "doctrine/orm",
@@ -537,9 +537,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "doctrine/doctrine-orm-module": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.3.3"
     },

@@ -94,6 +94,8 @@ define( [
 					unitSystem : google.maps.UnitSystem.METRIC
 				};
 				directionsService.route( sampleRequest, function(response, status) {
+					console.log( response );
+
 					if ( status == google.maps.DirectionsStatus.OK ) {
 						directionsDisplay.setDirections( response );
 					}

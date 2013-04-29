@@ -3,7 +3,13 @@
 <div id="form">
 <?php
     if(null !== $this->form) {
-	    echo $this->renderForm($this->form);
+        // do a rendering process
+        $form = $this->form;
+        $fields = $this->fields;
+        $renderingString = $this->renderForm()->startRendering($form)
+                              ->appendFields($fields)
+                              ->stopRendering($form);
+	    echo $renderingString;
     }
     else {
         echo $this->translate($this->message);

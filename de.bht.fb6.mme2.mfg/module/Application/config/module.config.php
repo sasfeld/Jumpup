@@ -89,6 +89,10 @@ return array(
         ),
     ),
       'view_helpers' => array(
+      /*
+        'factories' => array(
+            'renderForm' => 'Application\View\Helper\RenderForm',
+        ),*/
         'invokables'=> array(
             'renderForm' => 'Application\View\Helper\RenderForm' , 
         )

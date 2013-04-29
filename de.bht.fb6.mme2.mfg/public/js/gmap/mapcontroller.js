@@ -11,8 +11,11 @@
 * since      26.04.2013
  */
 
-define(["gmap/googlemap"], 
-       (function(GoogleMap) {
+define(["gmap/googlemap","jquery"], 
+       (function(GoogleMap, $) {
+    	// --> hidden input fields which needs to be stored in DB
+    		const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
+    		const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
     	   
     	   /*
     	    * Constructor function for this module.
@@ -28,7 +31,7 @@ define(["gmap/googlemap"],
         			this.inputEndCoord = ctrlOptions.input_end_coord || window.REF_ADDTRIP_INPUT_ENDCOORD;
     			} catch ( e ) {    				
     				throw e;
-    			} 
+    			}; 
     			
     	   };
     	   
@@ -42,8 +45,8 @@ define(["gmap/googlemap"],
     		   /*
     		    * fetch and store coordinate of points
     		    */ 
-    		   var inputStartCoord =  $ ( window.REF_ADDTRIP_INPUT_STARTCOORD );
-    		   var inputEndCoord = $ (window.REF_ADDTRIP_INPUT_ENDCOORD);
+    		   var inputStartCoord =  $ ( REF_ADDTRIP_INPUT_STARTCOORD );
+    		   var inputEndCoord = $ ( 	REF_ADDTRIP_INPUT_ENDCOORD);
     		   
     		   var singleRoute = directionsResult.routes[0];
     		   // array of LatLng values > could be interesting for us
@@ -59,7 +62,7 @@ define(["gmap/googlemap"],
     			   console.log("Map controller -> endLatLng: \n"+endLatLng);
     			   inputStartCoord.val(startLatLng); // fill hidden input field
     			   inputEndCoord.val(endLatLng); // fill hidden input field
-    			   
+    			   console.log("value of input field: "+inputStartCoord.val());
     		   }
     	   };
     	   

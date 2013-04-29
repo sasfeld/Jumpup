@@ -14,6 +14,7 @@ requirejs.config( {
 
 require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, GoogleMap, MapController) {
 	
+	
 	/* 
 	 * ..:: global config ::..
 	 * 

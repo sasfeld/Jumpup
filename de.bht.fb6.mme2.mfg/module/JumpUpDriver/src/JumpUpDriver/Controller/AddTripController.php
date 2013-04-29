@@ -80,6 +80,12 @@ class AddTripController extends AbstractActionController {
        $form->setHydrator(new ClassMethods());
        $form->bind($trip);
        
+       // Create hard-coded inputFields
+       $inputFields = array(
+           '<input type="hidden" name="'.TripForm::FIELD_START_COORDINATE.'" />',           
+           '<input type="hidden" name="'.TripForm::FIELD_END_COORDINATE.'" />',
+           );
+       
        $request = $this->getRequest();
        
        if($request->isPost()) {
@@ -91,19 +97,23 @@ class AddTripController extends AbstractActionController {
                    $this->redirect()->toRoute(IRouteStore::ADD_TRIP_ERROR);
                }
                else { // success & user is logged in 
+                   $startCoord = $request->getPost(TripForm::FIELD_START_COORDINATE);
+                   $endCoord = $request->getPost(TripForm::FIELD_END_COORDINATE);
+                   echo $startCoord . " " . $endCoord;
                    $trip->setDriver($user);
                    $this->em->persist($trip);
                    $this->em->flush();
                    $this->flashMessenger()->clearCurrentMessages();
                    $this->flashMessenger()->addMessage(IControllerMessages::SUCCESS_ADD_TRIP);
-                   $this->redirect()->toRoute(IRouteStore::ADD_TRIP_SUCCESS);                 
+                  // $this->redirect()->toRoute(IRouteStore::ADD_TRIP_SUCCESS);                 
                }
            }
        }       
        
        
-       // Export the form to the view
-       return array("form" => $form);
+       // Export the form and the input fields to the view
+       return array("form" => $form,
+                   "fields" => $inputFields);
   }
   
   /**

@@ -192,10 +192,10 @@ class User {
     }
     
     /**
-     * @return boolean
+     * @return integer
      */
     public function getConfirmation_key() {
-        return $this->confirmation_key;
+        return (int) $this->confirmation_key;
     }
     
     /**

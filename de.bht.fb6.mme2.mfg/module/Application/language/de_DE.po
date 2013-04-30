@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-04-30 14:00+0100\n"
+"PO-Revision-Date: 2013-04-30 17:36+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -346,3 +346,36 @@ msgstr "Bestätigung"
 #: Application/Navigation
 msgid "Add a trip"
 msgstr "Neue Fahrt anlegen"
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
+msgid ""
+"You aren't confirmed yet. Please check your eMails for the confirmation link "
+"before you try to login."
+msgstr ""
+"Du wurdest noch nicht bestätigt. Bitte überprüfe deine eMails, um die "
+"Bestätigung erfolgreich abzuschließen. Erst dann kannst du auch wirklich "
+"loslegen."
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
+msgid "You've been successfully logged out."
+msgstr "Du wurdest erfolgreich ausgelogged."
+
+#: JumpUpUser/src/JumpUpUser/Utils/Messages/ILabels:
+msgid "Registration"
+msgstr "Registrierung"
+
+#: JumpUpDriver/src/JumpUpDriver/Forms/TripForm
+msgid "Start location:"
+msgstr "Startort:"
+
+#: JumpUpDriver/src/JumpUpDriver/Forms/TripForm
+msgid "End location:"
+msgstr "Zielort:"
+
+#: JumpUpDriver/src/JumpUpDriver/Forms/TripForm
+msgid "Date:"
+msgstr "Abfahrtsdatum:"
+
+#: JumpUpDriver/src/JumpUpDriver/Forms/TripForm
+msgid "Price:"
+msgstr "Preis:"

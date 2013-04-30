@@ -1,7 +1,9 @@
 <?php
   namespace Application\View\Helper;
   
-  use Zend\Form\Form;
+  use Zend\I18n\Translator\Translator;
+
+use Zend\Form\Form;
 
 use Zend\Form\View\Helper\AbstractHelper;
 
@@ -58,11 +60,13 @@ use \Exception;
        */
       private $renderingString;
       
+      
+      
       /**
        * We follow the Zend View Helper idea here. The magic function __invoke is called by the ServiceManager (because he uses it like a function) with the expected parameter.
        * @param form any Zend\Form\Form
        */
-      public function __invoke($form = null) {   
+      public function __invoke($form = null) {       
         if(null == $form) { 
           $this->renderState = IRenderFormState::FINISHED;
           return $this;  // process mode (builder pattern)
@@ -81,13 +85,16 @@ use \Exception;
        * @return String the prepared body
        */
       private function _prepareBody($form) {
+        $formRow = $this->_getViewHelper('formRow');
+        // set translator for formRow     
+        
         $form->prepare();
         $output = "";
         $output .= $this->view->form()->openTag($form) . PHP_EOL;
         $elements = $form->getElements();
         foreach($elements as $element) {
-          $output .= $this->view->formRow($element) . PHP_EOL;
-        }
+          $output .= $formRow($element) . PHP_EOL;
+        }       
         return $output;
       }
       
@@ -148,6 +155,10 @@ use \Exception;
         $this->renderingString .= $this->_endForm($form);
         $this->renderState = IRenderFormState::FINISHED;
         return $this->renderingString; // finally return the rendering string
+      }
+      
+      private function _getViewHelper($plugin) {
+          return $this->getView()->getHelperPluginManager()->get($plugin);
       }
   }
 

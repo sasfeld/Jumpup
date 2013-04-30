@@ -68,7 +68,7 @@ class AddTripController extends AbstractActionController implements IAuthenticat
             $step1Form = new TripForm();
             $builder = new AnnotationBuilder();
             $this->form_step1 = $builder->createForm($step1Form);
-            $this->form_step1->setAttribute('action', $this->url()->fromRoute(IRouteStore::ADD_TRIP).'/step1');
+            $this->form_step1->setAttribute('action', $this->url()->fromRoute(IRouteStore::ADD_TRIP));
         }
         return $this->form_step1;
     }

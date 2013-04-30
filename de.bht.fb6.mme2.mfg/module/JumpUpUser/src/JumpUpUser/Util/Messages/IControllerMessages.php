@@ -41,10 +41,15 @@ interface IControllerMessages {
      */
     const UNSUCCESS_CONFIRM = "The confirmation wasn't successfull. Maybe the user doesn't exist or the confirmation key is wrong. Please contact the support.";
     /**
-     * Message shown after a sucessfull confirmation (the user recieves an eMail with the confirmation link in it).
+     * Message shown when the user tries to login but isn't confirmed yet.
      * @var String
      */
-    
+    const NOT_CONFIRMED_YET = "You aren't confirmed yet. Please check your eMails for the confirmation link before you try to login.";
+    /**
+     * Message is shown when the user was successfully logged out.
+     * @var String
+     */
+    const SUCCESS_LOGGING_OUT = "You've been successfully logged out.";
     /*
      * ..:: used in JumpUpUser\Filters\RegistrationFormFilter. ::..
      */

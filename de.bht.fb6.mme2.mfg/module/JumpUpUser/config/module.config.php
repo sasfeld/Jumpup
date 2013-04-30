@@ -40,6 +40,17 @@ return array(
                         ),
                     ),
                 ),
+                'logout' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/logout',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpUser\Controller',
+                            'controller'    => 'Auth',
+                            'action'        => 'logout',
+                        ),
+                    ),
+                    ),
                  'success' => array(
                     'type'    => 'Literal',
                     'options' => array(

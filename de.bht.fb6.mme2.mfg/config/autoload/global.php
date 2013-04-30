@@ -21,6 +21,7 @@ return array(
      * 
      * echo $this->navigation('navigation')->menu(); 
      */
+    /*
     'navigation' => array(
          'default' => array(
              array(
@@ -42,10 +43,10 @@ return array(
                  'route' => 'login',
              ),
          ),
-     ),
+     ),*/
      'service_manager' => array(
          'factories' => array(
-             'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+             /*'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',*/
              'Zend\Db\Adapter\Adapter'  => 'Zend\Db\Adapter\AdapterServiceFactory',
          ),
      ),

@@ -27,6 +27,12 @@ interface IRouteStore {
      */
     const LOGIN_SUCCESS = "success";
     /**
+     * 
+     * Route to the logout action within the AuthController.
+     * @var String
+     */
+    const LOGOUT = "logout";
+    /**
      * Route to the register controller.
      * @var String
      */

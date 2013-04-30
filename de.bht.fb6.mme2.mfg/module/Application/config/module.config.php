@@ -7,7 +7,40 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManager;
 return array(
+    /*
+     * Sascha: 
+     * 
+     * we define our navigation here. 
+     * You can use it in any layout file:
+     * 
+     * echo $this->navigation('navigation')->menu(); 
+     */
+/*
+    'navigation' => array(
+         'default' => array(
+             array(
+                 'label' => 'Home',
+                 'route' => 'home',
+             ),
+             array(
+                 'label' => 'Registrierung',
+                 'route' => 'jump-up-user',
+                 'pages' => array(
+                     array(
+                         'label' => 'Child #1',
+                         'route' => 'page-1-child',
+                     ),
+                 ),
+             ),
+             array(
+                 'label' => 'Login',
+                 'route' => 'login',
+             ),
+         ),
+     ),*/
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -55,6 +88,10 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'navigation' => function(ServiceLocatorInterface $sm) {                  
+                $authNav = new \Application\Navigation\AuthNavigation($sm, null);
+                return $authNav;               
+            },
         ),
     ),
     'translator' => array(

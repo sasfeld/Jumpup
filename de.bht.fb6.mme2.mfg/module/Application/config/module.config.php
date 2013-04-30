@@ -7,6 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
+use Zend\View\Helper\Navigation;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
 return array(
@@ -43,6 +44,32 @@ return array(
      ),*/
     'router' => array(
         'routes' => array(
+            'setlang' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/setlang',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'SetLang',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -104,9 +131,10 @@ return array(
             ),
         ),
     ),
-    'controllers' => array(
+    'controllers' => array(      
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\SetLang' => 'Application\Controller\SetLangController',
         ),
     ),
     'view_manager' => array(
@@ -125,11 +153,7 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
-      'view_helpers' => array(
-      /*
-        'factories' => array(
-            'renderForm' => 'Application\View\Helper\RenderForm',
-        ),*/
+      'view_helpers' => array(     
         'invokables'=> array(
             'renderForm' => 'Application\View\Helper\RenderForm' , 
         )

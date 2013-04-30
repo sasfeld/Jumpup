@@ -84,6 +84,15 @@ class User {
      * @ORM\Column(type="integer")
      */
     protected $confirmation_key;
+    /**
+     * 
+     * property locale (the preferred language setting)
+     * @var String
+     */
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $locale;
     
     
     public function User() {
@@ -171,6 +180,17 @@ class User {
         }
     }
     
+     /**
+     * 
+     * Enter description here ...
+     * @param int $confirmationKey
+     */
+    public function setLocale($locale) {      
+      if(is_string($locale)) {
+            $this->locale = $locale;
+        }
+    }
+    
     /**
      * @return boolean
      */
@@ -211,6 +231,13 @@ class User {
      */
     public function getPassword() {
         return $this->password;
+    }   
+    
+     /**
+     * @return String     
+     */
+    public function getLocale() {
+        return $this->locale;
     }   
     
     /*

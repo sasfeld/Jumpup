@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpUser\Controller;
 
+use Zend\Session\Storage\SessionStorage;
+
 use Zend\I18n\Translator\Translator;
 
 use JumpUpUser\Forms\LoginForm;
@@ -131,7 +133,7 @@ class AuthController extends AbstractActionController {
                     $redirect = IRouteStore::LOGIN_SUCCESS;
                     // save username on the client
                     if(1 == $request->getPost(LoginForm::FIELD_REMEMBER_ME)) {
-                        $this->getSessionStorage()->setRememberMe(1);
+                        $this->getSessionStorage()->setRememberMe(1);                       
                         // set storage again
                          // write in cookie
                         $this->getAuthService()->setStorage($this->getSessionStorage());

@@ -12,6 +12,10 @@ namespace Application;
 
 
 
+use JumpUpUser\Util\Auth\CheckAuthentication;
+
+use Application\Util\ServicesUtil;
+
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -26,9 +30,28 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         
-        // we configure globally available objects here
-                
+        $this->_setLangSelection($e);                
     }
+    
+    /**
+     * Set the prefered language (locale) depending on if the user is logged in or not.
+     * @param MvcEvent $e
+     */
+    private function _setLangSelection(MvcEvent $e) {
+        $sm = $e->getApplication()->getServiceManager();
+        $authService = ServicesUtil::getAuthService($sm);
+        if(CheckAuthentication::isAuthorized($authService, "")) {
+            $userUtil = \JumpUpUser\Util\ServicesUtil::getUserUtil($sm);
+            $loggedInUser = $userUtil->getCurrentUser();
+            $localStr = $loggedInUser->getLocale();
+            if(null !== $localStr) { // perform selection of local file
+                $translator = ServicesUtil::getTranslatorService($sm);
+                $translator->setLocale($localStr);
+            }
+        }
+    }
+    
+
 
     public function getConfig()
     {

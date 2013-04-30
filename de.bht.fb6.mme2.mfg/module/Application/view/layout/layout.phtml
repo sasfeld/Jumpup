@@ -1,4 +1,5 @@
-<?php echo $this->doctype(); ?>
+<?php use Application\Util\Routes\IRouteStore;
+echo $this->doctype(); ?>
 
 <html lang="en">
     <head>
@@ -37,6 +38,8 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                            <li><a href="<?php echo $this->url(IRouteStore::SET_LANG). '/de' ?>"><?php echo $this->translate('Set german') ?></a></li>
+                            <li><a href="<?php echo $this->url(IRouteStore::SET_LANG). '/en' ?>"><?php echo $this->translate('Set english') ?></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

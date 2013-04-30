@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpUser\Controller;
 
+use JumpUpUser\Util\Routes\IRouteStore;
+
 use Zend\View\Helper\ViewModel;
 
 use JumpUpUser\Util\ServicesUtil;
@@ -35,8 +37,8 @@ class SuccessController extends AbstractActionController {
     public function indexAction() {       
        if(!$this->getAuthService()->hasIdentity()) {
            // we need to redirect to the login form because of missing authentication
-           return $this->redirect()->toRoute('login');
+           return $this->redirect()->toRoute(IRouteStore::LOGIN);
        } 
-       return new ViewModel();
+       return array('messages' => $this->flashMessenger()->getMessages());
     }
 }

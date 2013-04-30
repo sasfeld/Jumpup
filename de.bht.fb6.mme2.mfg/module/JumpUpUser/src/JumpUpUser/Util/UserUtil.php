@@ -14,6 +14,8 @@ namespace JumpUpUser\Util;
 * @version    1.0
 * @since      26.04.2013
  */
+use JumpUpUser\Models\User;
+
 use Zend\Authentication\AuthenticationService;
 
 use Doctrine\ORM\EntityManager;
@@ -49,6 +51,15 @@ class UserUtil {
           }
       }
       return null;
+    }
+    
+    /**
+     * Perform an update on the DB for the given user.
+     * @param User $user
+     */
+    public function updateUser(User $user) {      
+        $this->em->merge($user); // update DB
+        $this->em->flush(); 
     }
     
 }

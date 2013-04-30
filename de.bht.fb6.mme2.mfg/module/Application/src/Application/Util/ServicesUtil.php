@@ -1,11 +1,11 @@
 <?php
-namespace JumpUpUser\Util;
+namespace Application\Util;
 
-use JumpUpUser\Session\AuthenticationStorage;
+use \JumpUpUser\Session\AuthenticationStorage;
 
 
 use Zend\Authentication\AuthenticationService;
-use JumpUpUser\Util\Messages\ConcreteControllerMessages;
+use \JumpUpUser\Util\Messages\ConcreteControllerMessages;
 
 
 /**
@@ -50,12 +50,6 @@ class ServicesUtil {
      */
     const CLASSPATH_TRANSLATOR = 'translator';
     /**
-     * 
-     * name of the UserUtil service
-     * @var String
-     */
-    const CLASSPATH_USERUTIL = 'JumpUpUser\Util\UserUtil';
-    /**
      * Get the UserTable instance from the ServiceManager.
      * @see UserTable
      * @param ServiceManager $sm
@@ -88,19 +82,11 @@ class ServicesUtil {
         return $sm->get(self::CLASSPATH_AUTH_STORAGE_SERVICE);
     }
     
-	/**
+/**
      * Get the translator instance.
      * @see
      */
     static public function getTranslatorService(ServiceManager $sm) {
         return $sm->get(self::CLASSPATH_TRANSLATOR);
-    }
-    
-	/**
-     * Get the translator instance.
-     * @see
-     */
-    static public function getUserUtil(ServiceManager $sm) {
-        return $sm->get(self::CLASSPATH_USERUTIL);
     }
 }

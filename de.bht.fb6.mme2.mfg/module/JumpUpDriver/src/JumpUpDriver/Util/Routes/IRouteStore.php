@@ -38,5 +38,13 @@ interface IRouteStore {
      * Route to the list vehicles route.
      */    
     const LIST_VEHICLES = "listvehicles";
+    /**
+     * Route to the remove vehicle.
+     */    
+    const REMOVE_VEHICLE = "removevehicle";
+    /**
+     * Route to the edit vehicle.
+     */    
+    const EDIT_VEHICLE = "editvehicle";
     
 }

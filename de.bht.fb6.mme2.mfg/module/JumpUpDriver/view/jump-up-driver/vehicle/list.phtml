@@ -1,4 +1,4 @@
-<h1><?php echo $this->translate("Add vehicle") ?></h1>
+<h1><?php echo $this->translate("List vehicles") ?></h1>
 
 <div class="form registration">
 <?php 
@@ -9,17 +9,33 @@
      * See Application\View\Helper\RenderForm.php
      */
     use JumpUpUser\Forms\RegistrationForm;
+    if(null !== $this->messages) {
+        foreach ($this->messages as $message) {
+            echo $this->translate($message) . "<br />";
+        }
+    }
+    
+    $addUrl = $this->addUrl;
+    echo "<a href=\"${addUrl}\">Add vehicle</a><br /><br />";
     if(null !== $this->vehicles) { // form is exported by the controller
         if(0 == sizeof($this->vehicles)) {
             echo $this->translate("No vehicles.");
-        }
+        }        
         foreach ($this->vehicles as $vehicle) {
-            echo $vehicle->getBrand();
+            $removeUrl = $this->removeUrl . "?".$this->identifierParam."=".$vehicle->getId();
+            $editUrl = $this->editUrl . "?".$this->identifierParam."=".$vehicle->getId();
+            
+            echo "brand: ".$vehicle->getBrand(). "<br />";
+            echo "type: ".$vehicle->getType(). "<br />";
+            echo "wastage (l/100km): ".$vehicle->getWastage(). "<br />";
+            echo "avg speed (km/h): ".$vehicle->getAvgspeed(). "<br />";
+            echo "seats: ".$vehicle->getNumberseats(). "<br />";
+            echo "leg space: ".$vehicle->getLegspace(). "<br />";
+            echo "<a href=\"${removeUrl}\">Remove</a>";
+            echo "<a href=\"${editUrl}\">Edit</a>";
+            echo "<br /><br />";
         }
-    }
-    else { // a message shall be shown
-        echo $this->translate($this->message);
-    }
+    } 
   
    
 ?>

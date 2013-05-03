@@ -14,6 +14,17 @@ return array(
                             ),
                         ),
                     ),*/
+                'editvehicle' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/editvehicle',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Vehicle',
+                            'action'        => 'edit',
+                        ),
+                    ),                    
+                ),
                 'addvehicle' => array(
                     'type'    => 'Literal',
                     'options' => array(
@@ -22,6 +33,17 @@ return array(
                             '__NAMESPACE__' => 'JumpUpDriver\Controller',
                             'controller'    => 'Vehicle',
                             'action'        => 'add',
+                        ),
+                    ),                    
+                ),
+                'removevehicle' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/removevehicle',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Vehicle',
+                            'action'        => 'remove',
                         ),
                     ),                    
                 ),

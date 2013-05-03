@@ -76,6 +76,7 @@ class RegistrationForm extends Form {
      */
     public function __construct($formname, Translator $translator, EntityManager $entityManager) {
         parent::__construct($formname);
+      
         if(null === $translator)  {
             Exception_Util::throwInvalidArgument('$translator', 'Translator', 'null');
         }        

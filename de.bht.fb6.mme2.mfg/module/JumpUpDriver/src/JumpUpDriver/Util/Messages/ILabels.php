@@ -14,4 +14,5 @@ namespace JumpUpDriver\Util\Messages;
  */
 interface ILabels {     
     const MAINNAV_ADDTRIP = "Add a trip";    
+    const MAINNAV_MANAGEPROFILE = "Edit profile";    
 }

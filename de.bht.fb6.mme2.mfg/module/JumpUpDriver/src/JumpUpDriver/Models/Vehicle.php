@@ -2,6 +2,8 @@
 namespace JumpUpDriver\Models;
 
 
+use Application\Util\StringUtil;
+
 use JumpUpDriver\Util\ExceptionUtil;
 
 use JumpUpUser\Models\User;
@@ -39,25 +41,34 @@ class Vehicle {
     /**
      * @ORM\Column(type="integer")
      */
-    protected $numberSeats;
+    protected $numberseats;
     /**
      * @ORM\Column(type="string")
      */
-    protected $legSpace;
+    protected $legspace;
     /**
      * @ORM\Column(type="integer")
      */
-    protected $avgSpeed;
+    protected $avgspeed;
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $picPath;
+    protected $picpath;
     
     public function Vehicle() {
         $this->brand = "";
         $this->type = "";
         $this->legSpace = "";
         $this->picPath = "";
+    }
+    
+    public function setId($val) {
+        $intVal = (int) $val;
+        
+        if(!is_int($intVal)) {
+           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+        }
+        $this->id = $intVal;
     }
     
   /**
@@ -95,49 +106,53 @@ class Vehicle {
         if(!is_int($intVal)) {
            throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }
-        $this->wastage = $val;
+        $this->wastage = $intVal;
     }
     
    /**
      * Set the number of seats
      */
-    public function setNumberSeats($val) {
+    public function setNumberseats($val) {
         $intVal = (int) $val;
         
         if(!is_int($intVal)) {
            throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }      
-        $this->numberSeats = $val;
+        $this->numberseats = $intVal;
         
     }
     
   /**
      * Set the leg space
      */
-    public function setLegSpace($val) {
+    public function setLegspace($val) {
         if(is_string($val)) {
-            $this->legSpace = $val;
+            $this->legspace = $val;
         }
     }
     
   /**
      * Set the avg speed
      */
-    public function setAvgSpeed($val) {
+    public function setAvgspeed($val) {
         $intVal = (int) $val;        
         if(!is_int($intVal)) {
            throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }       
-        $this->avgSpeed = $val;        
+        $this->avgspeed = $intVal;        
     }
     
   /**
      * Set the path to the corresponding pic.
      */
-    public function setPicPath($val) {
+    public function setPicpath($val) {
         if(is_string($val)) {
-            $this->picPath = $val;
+            $this->picpath = $val;
         }
+    }
+    
+    public function getId() {
+        return $this->id;
     }
     
     public function getBrand() {
@@ -156,21 +171,22 @@ class Vehicle {
         return $this->wastage;
     }
     
-    public function getNumberSeats() {
-        return $this->numberSeats;
+    public function getNumberseats() {
+        return $this->numberseats;
     }
     
-    public function getLegSpace() {
-        return $this->legSpace;
+    public function getLegspace() {
+        return $this->legspace;
     }
     
-    public function getAvgSpeed() {
-        return $this->avgSpeed;
+    public function getAvgspeed() {
+        return $this->avgspeed;
     }
     
-    public function getPicPath() {
-        return $this->picPath;
+    public function getPicpath() {
+        return $this->picpath;
     }  
     
+   
     
 }

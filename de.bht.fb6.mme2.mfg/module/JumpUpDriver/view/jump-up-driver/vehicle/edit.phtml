@@ -1,0 +1,32 @@
+<h1><?php echo $this->translate("Edit vehicle") ?></h1>
+
+<div class="form registration">
+<?php 
+    /*
+     * author: Sascha Feldmann
+     * 
+     * what a nice view. we just delegate the form to our view helper object.
+     * See Application\View\Helper\RenderForm.php
+     */   
+    if(null !== $this->form) { // form is exported by the controller
+        $form = $this->form;   
+        if(null === $this->fields) {
+            echo $this->renderForm($form);
+        }
+        else {
+            $fields = $this->fields;
+            $renderingString = $this->renderForm()->startRendering($form)
+                                  ->appendFields($fields)
+                                  ->stopRendering($form);
+    	    echo $renderingString;     
+        }  
+    }
+    else { // a message shall be shown
+        echo $this->translate($this->message);
+    }
+  
+   
+?>
+
+</div>
+

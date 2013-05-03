@@ -36,21 +36,21 @@ class VehicleForm {
    * Should be the name of the property/attribute so the data binding works.
    * @var String
    */
-  const FIELD_NUMBER_SEATS = 'numberSeats';
+  const FIELD_NUMBER_SEATS = 'number_seats';
   /**
    *
    * name of the form field for the property legSpace.
    * Should be the name of the property/attribute so the data binding works.
    * @var String
    */
-  const FIELD_LEG_SPACE = 'legSpace';
+  const FIELD_LEG_SPACE = 'leg_space';
   /**
    *
    * name of the form field for the property avg speed.
    * Should be the name of the property/attribute so the data binding works.
    * @var String
    */
-  const FIELD_AVG_SPEED = 'avgSpeed';
+  const FIELD_AVG_SPEED = 'avg_speed';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
@@ -80,22 +80,21 @@ class VehicleForm {
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Options({"label":"Number of seats:","attributes":{"size":"5"}})
    */
-  public $numberSeats;
+  public $numberseats;
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Options({"label":"Leg space:"})
    */
-  public $legSpace;
+  public $legspace;
    /**
    * @Annotation\Type("Zend\Form\Element\Number")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Options({"label":"Average speed (km/h):","attributes":{"size":"5"}})
    */
-  public $avgSpeed;
-  
+  public $avgspeed;  
   /**
    * @Annotation\Type("Zend\Form\Element\Submit")
    * @Annotation\Attributes({"value":"Submit"})

@@ -71,6 +71,18 @@ class AuthNavigation extends Navigation {
             if(CheckAuthentication::isAuthorized($this->_authService, "")) {
                 // show pages within the authentication area
                 /*
+                 * ..:: Module JumpUpDriver -> list vehicles page ::..
+                 */
+                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
+                'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_MANAGEPROFILE),
+                'route' => \JumpUpDriver\Util\Routes\IRouteStore::LIST_VEHICLES,
+                ));
+                $this->_injectPage($page, $routeMatch, $router);
+                $this->addPage($page);
+                /*
+                 * ..::::::::::::::::::::::::::::::::::::::::::::::::..
+                 */
+                /*
                  * ..:: Module JumpUpDriver -> addtrip page ::..
                  */
                 $page = \Zend\Navigation\Page\AbstractPage::factory(array(

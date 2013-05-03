@@ -12,7 +12,7 @@ namespace Application\Util;
 * @version    1.0
 * @since      06.04.2013
  */
-class String_Util {
+class StringUtil {
     /**
      * Generate a unique string showing all attributes' names and their values.
      * @param string $className
@@ -40,5 +40,21 @@ class String_Util {
             throw Exception_Util::throwInvalidArgument("", "string", $eMail);
         }
         return true;
+    }
+    /**
+     * Generate a dynamice toString showing all attributes by php methods.
+     * @param StdClass $object the object which's attributes will be printed.
+     */
+    static public function generateDynamicToString($object) {
+       $attr = get_class_vars($object);
+       $retStr = "Object ".get_class($object)." [";
+       if(0 != count($attr)) {
+           foreach ($attr as $attribute => $value) {
+               $retStr .= "{$attribute} : {$value} <br />\n";
+           }
+       }
+       $retStr .= "]";
+       return $retStr;
+       
     }
 }

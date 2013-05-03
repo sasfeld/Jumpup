@@ -22,48 +22,11 @@ use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Mvc\Controller\AbstractActionController;
 
 
-class AddTripController extends AbstractActionController implements IAuthenticationRequired{
-    protected $form_step1;
-    protected $em;
-
-    /**
-     *
-     * This constructor is designed for dependency injection.
-     * @param \Doctrine\ORM\EntityManager $em
-     */
-    public function __construct(\Doctrine\ORM\EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
-    /**
-     * (non-PHPdoc)
-     * @see JumpUpUser\Export.IAuthenticationRequired::_checkAuthentication()
-     */
-    public function _checkAuthentication() {
-        $authenticated = CheckAuthentication::isAuthorized($this->getAuthService(), $this->url());
-        if(!$authenticated) {
-            CheckAuthentication::redirectToLogin($this); // redirect to login page here
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    /**
-     * Fetch the AuthenticationService instance
-     */
-    private function getAuthService()
-    {
-        if(!isset($this->authservice)) {
-            $this->authservice = ServicesUtil::getAuthService($this->getServiceLocator());
-        }
-        return $this->authservice;
-    }
+class AddTripController extends ANeedsAuthenticationController {
+    protected $form_step1;    
 
 
-    private function  getFormStep1() {
+    private function getFormStep1() {
         if(!isset($this->form_step1)) {
             $step1Form = new TripForm();
             $builder = new AnnotationBuilder();
@@ -138,14 +101,7 @@ class AddTripController extends AbstractActionController implements IAuthenticat
         }
     }
 
-    /**
-     * Fetch the current logged in user.
-     * Enter description here ...
-     */
-    protected function getCurrentUser() {
-        $userUtil = ServicesUtil::getUserUtil($this->getServiceLocator());
-        return $userUtil->getCurrentUser();
-    }
+   
 
 
 

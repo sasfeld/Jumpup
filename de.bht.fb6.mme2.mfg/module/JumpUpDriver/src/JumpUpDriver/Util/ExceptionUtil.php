@@ -12,7 +12,7 @@ namespace JumpUpDriver\Util;
 * @version    1.0
 * @since      06.04.2013
  */
-class Exception_Util {
+class ExceptionUtil {
     /**
      * Throw a new unique InvalidArgumentException.
      * @param string $argName the name of the argument in the method header.
@@ -20,8 +20,8 @@ class Exception_Util {
      * @param unknown_type $givenValue the given value.
      * @return a new instance of InvalidArgumentException
      */
-    static public function throwInvalidArgument($argName, $expectedType, $givenValue) {        
-        return new InvalidArgumentException("The type of the parameter {$argName} must be a {$expectedType}! Your value was: {$givenValue}");
+    static public function throwInvalidArgument($argName, $expectedType, $givenValue) {     
+        return new \InvalidArgumentException("The type of the parameter {$argName} must be a {$expectedType}! Your value was: {$givenValue}");
     }
     
    

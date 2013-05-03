@@ -30,5 +30,13 @@ interface IRouteStore {
      * Route to the success action after a successfull adding.
      */
     const ADD_TRIP_SUCCESS = "addtrip_success";
+    /**
+     * Route to the add vehicle action
+     */
+    const ADD_VEHICLE = "addvehicle";
+    /**
+     * Route to the list vehicles route.
+     */    
+    const LIST_VEHICLES = "listvehicles";
     
 }

@@ -1,0 +1,28 @@
+<h1><?php echo $this->translate("Add vehicle") ?></h1>
+
+<div class="form registration">
+<?php 
+    /*
+     * author: Sascha Feldmann
+     * 
+     * what a nice view. we just delegate the form to our view helper object.
+     * See Application\View\Helper\RenderForm.php
+     */
+    use JumpUpUser\Forms\RegistrationForm;
+    if(null !== $this->vehicles) { // form is exported by the controller
+        if(0 == sizeof($this->vehicles)) {
+            echo $this->translate("No vehicles.");
+        }
+        foreach ($this->vehicles as $vehicle) {
+            echo $vehicle->getBrand();
+        }
+    }
+    else { // a message shall be shown
+        echo $this->translate($this->message);
+    }
+  
+   
+?>
+
+</div>
+

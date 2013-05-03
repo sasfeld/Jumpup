@@ -14,6 +14,28 @@ return array(
                             ),
                         ),
                     ),*/
+                'addvehicle' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/addvehicle',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Vehicle',
+                            'action'        => 'add',
+                        ),
+                    ),                    
+                ),
+                'listvehicles' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/listvehicles',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Vehicle',
+                            'action'        => 'list',
+                        ),
+                    ),                   
+                ),
                 'addtrip' => array(
                     'type'    => 'Literal',
                     'options' => array(
@@ -125,7 +147,13 @@ return array(
                 return new \JumpUpDriver\Controller\AddTripController(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
-            }
+            },
+           'JumpUpDriver\Controller\Vehicle' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \JumpUpDriver\Controller\VehicleController(
+                    $sm->get("doctrine.entitymanager.orm_default")
+                );
+            }, 
         ),    
         'invokables' => array(
             //'JumpUpDriver\Controller\AddTrip' => 'JumpUpDriver\Controller\AddTripController',

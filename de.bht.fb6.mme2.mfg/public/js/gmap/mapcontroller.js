@@ -63,7 +63,7 @@ define(["gmap/googlemap","jquery"],
     			   inputStartCoord.val(startLatLng); // fill hidden input field
     			   inputEndCoord.val(endLatLng); // fill hidden input field
     			   console.log("value of input field: "+inputStartCoord.val());
-    		   }
+    		   } 
     	   };
     	   
     	  

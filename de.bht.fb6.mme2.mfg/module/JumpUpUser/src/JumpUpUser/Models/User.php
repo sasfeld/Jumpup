@@ -1,6 +1,10 @@
 <?php 
 namespace JumpUpUser\Models;
+use JumpUpDriver\Models\Vehicle;
+
 use Zend\Db\TableGateway\TableGateway;
+
+use Doctrine\ORM\Mapping\OneToMany as OneToMany;
  
 
 /**
@@ -93,6 +97,42 @@ class User {
      * @ORM\Column(type="string", nullable=true)
      */
     protected $locale;
+    /**
+     * 
+     * property birthDate 
+     * @var String
+     */
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $birthDate;
+    /**
+     * 
+     * property memberSince
+     * @var String
+     */
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    protected $memberSince;
+    /**
+     * 
+     * property location
+     * @var String
+     */
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $location;
+    /**
+     * 
+     * property vehicles
+     * @var array
+     */
+    /**
+     * @OneToMany(targetEntity="JumpUpDriver\Models\Vehicle", mappedBy="owner")
+     */
+    protected $vehicles;
     
     
     public function User() {
@@ -101,6 +141,10 @@ class User {
         $this->lastname = "";
         $this->email = "";
         $this->password = "";
+        $this->confirmation_key = 1;
+        $this->locale = "";
+        $this->location = "";
+        $this->vehicles = array();
     }
     
     /**
@@ -190,6 +234,68 @@ class User {
             $this->locale = $locale;
         }
     }
+    
+ 	/**
+     * 
+     * Enter description here ...
+     * @param date $birthDate
+     */
+    public function setBirthDate($birthDate) {      
+        if(null !== $birthDate) {
+            $this->birthDate = $birthDate;
+        }
+    }
+    
+ 	/**
+     * 
+     * Enter description here ...
+     * @param int $memberSince
+     */
+    public function setMemberSince($memberSince) {      
+        if(null !== $memberSince) {
+            $this->memberSince = $memberSince;
+        }
+    }
+    
+ 	/**
+     * 
+     * Add a vehicle
+     * @param Vehicle $vehicle
+     */
+    public function addVehicle(Vehicle $vehicle) {      
+        if(is_array($this->vehicles)) {
+            array_push($this->vehicles, $vehicle);
+        }
+    }
+    
+    /**
+     * Return the id for identification.
+     */
+    public function getId() {
+        return $this->id;
+    }
+    
+/**
+     * @return the birth date
+     */
+    public function getBirthDate() {
+        return $this->birthDate;
+    }
+    
+	/**
+     * @return the member since date
+     */
+    public function getMemberSince() {
+        return $this->memberSince;
+    }
+    
+	/**
+     * @return array of Vehicle
+     */
+    public function getVehicles() {
+        return $this->vehicles;
+    }
+    
     
     /**
      * @return integer

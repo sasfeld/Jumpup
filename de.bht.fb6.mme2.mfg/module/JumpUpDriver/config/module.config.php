@@ -14,6 +14,17 @@ return array(
                             ),
                         ),
                     ),*/
+               'driverjson' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/driverjson',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Json',
+                            'action'        => 'vehicle',
+                        ),
+                    ),                    
+                ),
                 'editvehicle' => array(
                     'type'    => 'Literal',
                     'options' => array(
@@ -176,14 +187,24 @@ return array(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
             }, 
+           'JumpUpDriver\Controller\Json' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \JumpUpDriver\Controller\JsonController(
+                    $sm->get("doctrine.entitymanager.orm_default")
+                );
+            }, 
         ),    
         'invokables' => array(
+            //'JumpUpDriver\Controller\AddTrip' => 'JumpUpDriver\Controller\AddTripController',
             //'JumpUpDriver\Controller\AddTrip' => 'JumpUpDriver\Controller\AddTripController',
         ),
     ), 
     'view_manager' => array(
         'template_path_stack' => array(
             'JumpUpDriver' => __DIR__ . '/../view'
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),  
     /*

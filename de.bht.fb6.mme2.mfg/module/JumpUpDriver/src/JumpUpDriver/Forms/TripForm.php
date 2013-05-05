@@ -51,6 +51,27 @@ class TripForm {
    * @var String
    */
   const FIELD_PRICE = 'price';
+  /**
+   *
+   * name of the form field for the property vehicle.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_VEHICLE = 'vehicle';
+  /**
+   *
+   * name of the form field for the property duration.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_DURATION = 'duration';
+  /**
+   *
+   * name of the form field for the property duration.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_DISTANCE = 'distance';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")

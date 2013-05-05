@@ -187,6 +187,17 @@ class Vehicle {
         return $this->picpath;
     }  
     
+    public function toJson() {
+        return array("id" => $this->getId(),
+                    "ownerId" => $this->getOwner()->getId(),
+                    "brand" => $this->getBrand(), 
+                    "type" => $this->getType(), 
+                    "legspace" => $this->getLegspace(), 
+                    "wastage" => $this->getWastage(), 
+                    "avgspeed" => $this->getAvgspeed(), 
+                    "numberseats" => $this->getNumberSeats(), );
+    }
+    
    
     
 }

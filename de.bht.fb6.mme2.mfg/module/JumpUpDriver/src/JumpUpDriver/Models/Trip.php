@@ -2,11 +2,12 @@
 namespace JumpUpDriver\Models;
 
 
+use Application\Util\ExceptionUtil;
+
 use JumpUpUser\Models\User;
 
-use JumpUpDriver\Util\Exception_Util;
 
-use JumpUpDriver\Util\StringUtil;
+
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToOne as OneToOne;
@@ -52,21 +53,33 @@ class Trip {
     */
    private $price;
    /**
+    * @ORM\Column(type="integer")
+    */
+   private $duration; // seconds
+   /**
+    * @ORM\Column(type="integer")
+    */
+   private $distance; // meter
+   /**
    * @ManyToOne(targetEntity="JumpUpUser\Models\User")
    * */
    private $driver;
+   /**
+    * @ManyToOne(targetEntity="JumpUpDriver\Models\Vehicle") 
+    */
+   private $vehicle;
    
    
    public function  setStartPoint($startPoint) {
-     if(!StringUtil::isString($startPoint)) {
-       throw Exception_Util::throwInvalidArgument('$startPoint', 'String', $startPoint);
+     if(!is_string($startPoint)) {
+       throw ExceptionUtil::throwInvalidArgument('$startPoint', 'String', $startPoint);
      }
      $this->startPoint = $startPoint;
    }
    
    public function  setEndPoint($endPoint) {
-     if(!StringUtil::isString($endPoint)) {
-       throw Exception_Util::throwInvalidArgument('$endPoint', 'String', $endPoint);
+     if(!is_string($endPoint)) {
+       throw ExceptionUtil::throwInvalidArgument('$endPoint', 'String', $endPoint);
      }
      $this->endPoint = $endPoint;
    }
@@ -85,6 +98,54 @@ class Trip {
    
    public function  setPrice($price) {
      $this->price   = $price;
+   }
+   
+   public function setVehicle(Vehicle $vehicle) {
+     $this->vehicle = $vehicle;
+   }
+   
+    public function setStartCoordinate($startCoord) {        
+     $this->startCoordinate = $startCoord;
+   }
+   
+    public function setEndCoordinate($endCoord) {        
+     $this->endCoordinate = $endCoord;
+   }
+   
+   public function setDuration($val) {
+       $intVal = (int) $val;
+       if(!is_int($intVal)) {
+           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+       }
+       $this->duration = $intVal;
+   }
+   
+   public function setDistance($val) {
+       $intVal = (int) $val;
+       if(!is_int($intVal)) {
+           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+       }
+       $this->distance = $intVal;
+   }
+   
+   public function getDistance() {
+       return $this->distance;
+   }
+   
+   public function getDuration() {
+       return $this->duration;
+   }
+   
+   public function getStartCoord() {
+       return $this->startCoordinate;
+   }
+   
+   public function getEndCoord() {
+       return $this->endCoordinate;
+   }
+   
+   public function getVehicle() {
+     return $this->vehicle;
    }
    
    public function getEndPoint() {

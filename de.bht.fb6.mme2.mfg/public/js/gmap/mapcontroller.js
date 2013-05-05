@@ -16,6 +16,8 @@ define(["gmap/googlemap","jquery"],
     	// --> hidden input fields which needs to be stored in DB
     		const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
     		const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
+    		const REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
+    		const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
     	   
     	   /*
     	    * Constructor function for this module.
@@ -47,6 +49,8 @@ define(["gmap/googlemap","jquery"],
     		    */ 
     		   var inputStartCoord =  $ ( REF_ADDTRIP_INPUT_STARTCOORD );
     		   var inputEndCoord = $ ( 	REF_ADDTRIP_INPUT_ENDCOORD);
+    		   var inputDuration = $ ( 	REF_ADDTRIP_INPUT_DURATION);
+    		   var inputDistance = $ ( 	REF_ADDTRIP_INPUT_DISTANCE);
     		   
     		   var singleRoute = directionsResult.routes[0];
     		   // array of LatLng values > could be interesting for us
@@ -58,12 +62,17 @@ define(["gmap/googlemap","jquery"],
     			   var singleLeg = singleRoute.legs[0];
     			   var startLatLng = singleLeg.start_location;
     			   var endLatLng = singleLeg.end_location;
+    			   var duration = singleLeg.duration.value; // seconds
+    			   var distance = singleLeg.distance.value; // meter
     			   console.log("Map controller -> startLatLng: \n"+startLatLng);
     			   console.log("Map controller -> endLatLng: \n"+endLatLng);
+    			   console.log("Map controller -> duration: \n"+duration);
     			   inputStartCoord.val(startLatLng); // fill hidden input field
     			   inputEndCoord.val(endLatLng); // fill hidden input field
+    			   inputDuration.val(duration);
+    			   inputDistance.val(distance);
     			   console.log("value of input field: "+inputStartCoord.val());
-    		   } 
+    		   }; 
     	   };
     	   
     	  

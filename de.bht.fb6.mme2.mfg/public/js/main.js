@@ -6,13 +6,14 @@ requirejs.config( {
 		'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min',
 		// If the load via CDN fails, load locally
 		'lib/jquery.min' ],
-
 		// async library
-		"async" : 'lib/async'
+		"async" : 'lib/async',		
 	}
 } );
 
-require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, GoogleMap, MapController) {
+require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller", 
+           "ajax/vehicle"], 
+           function($, GoogleMap, MapController, VehicleController) {
 	
 	
 	/* 
@@ -31,6 +32,7 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, Googl
 	const REF_ADDTRIP_INPUT_START = 'input[name="startPoint"]';
 	const REF_ADDTRIP_INPUT_END = 'input[name="endPoint"]';
 	const REF_ADDTRIP_INPUT_DATE = 'input[name="startDate"]';
+	const REF_ADDTRIP_INPUT_VEHICLE = 'select[name="vehicle"]';
 	// --> hidden input fields which needs to be stored in DB
 	const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
 	const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
@@ -65,8 +67,18 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, Googl
 		}
 		/* 
 		 * ..:::::::::::::::::::::::::::::::..
-		 */
-		
+		 */		
+		/* 
+		 * ..:: initialize vehicleController ::..
+		 */	
+		var vehOptions = {
+			"listVehiclesUrl" : "driverjson",	
+			"vehicleParam" : "vehicleId",	
+		};
+		var vehicleCtrl = new VehicleController(vehOptions);		
+		/* 
+		 * ..::::::::::::::::::::::::::::::::::..
+		 */	
 		/* 
 		 * ..:: map events ::..
 		 */	
@@ -89,6 +101,14 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, Googl
 		/* 
 		 * ..:: addtrip -> endPoint input field event handler ::..
 		 */			
+		$( REF_ADDTRIP_INPUT_VEHICLE ).change( ( function() {
+			vehId = $.trim($( REF_ADDTRIP_INPUT_VEHICLE + ' option:selected ').val());
+			console.log('veh id: '+vehId)
+			vehicleCtrl.fetchVehicles(vehId);
+		}));
+		/* 
+		 * ..:: addtrip -> vehicle input field event handler ::..
+		 */			
 		$( REF_ADDTRIP_INPUT_DATE ).focus( ( function() {
 			console.log("main.js: date changed");
 			var startPointValue = $( REF_ADDTRIP_INPUT_START ).val();
@@ -98,9 +118,7 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller" ], function($, Googl
 				mapCtrl.showSingleRoute(startPointValue, endPointValue);
 			};
 		}));
-		/* 
-		 * ..:::::::::::::::::::::::::::::::::::::::::::::::::::..
-		 */	
+		
 
 		
 	} ) );

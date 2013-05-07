@@ -61,8 +61,10 @@ class ViewTripsController extends ANeedsAuthenticationController{
            if($form->isValid()) {
                $findTripStrategy = $this->_getFindTripStrategy();
                $trips = $this->_getAllTrips();
-               $location = $request->getPost(LookUpTripsForm::FIELD_START_POINT);
-               $destination = $request->getPost(LookUpTripsForm::FIELD_END_POINT);
+               $locationName = $request->getPost(LookUpTripsForm::FIELD_START_POINT);
+               $destinationName = $request->getPost(LookUpTripsForm::FIELD_END_POINT);
+               $location = $request->getPost(LookUpTripsForm::FIELD_START_COORD);
+               $destination = $request->getPost(LookUpTripsForm::FIELD_END_COORD);
                $dateFrom = $request->getPost(LookUpTripsForm::FIELD_START_DATE);
                $dateTo = $request->getPost(LookUpTripsForm::FIELD_END_DATE);
                $priceFrom = $request->getPost(LookUpTripsForm::FIELD_PRICE_FROM);
@@ -84,10 +86,17 @@ class ViewTripsController extends ANeedsAuthenticationController{
      */
     public function lookUpAction() {
             $user = $this->_checkAndRedirect();
-            $request = $this->getRequest();               
+            $request = $this->getRequest();     
+
+            // hard-coded hidden input fields to be bind by javascript
+            $inputFields = array(
+           '<input type="hidden" name="'.LookUpTripsForm::FIELD_START_COORD.'" />',           
+           '<input type="hidden" name="'.LookUpTripsForm::FIELD_END_COORD.'" />',           
+            );
             // GET method -> only return the input form            
             return array('form' => $this->_getForm(),
-                        'messages' => $this->flashMessenger()->getMessages());
+                        'messages' => $this->flashMessenger()->getMessages(),
+                        'inputFields' => $inputFields);
      }
     
     

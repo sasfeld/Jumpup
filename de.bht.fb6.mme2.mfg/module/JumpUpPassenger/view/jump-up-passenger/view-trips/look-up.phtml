@@ -10,7 +10,13 @@
     
     if(null !== $this->form) {
         // do a rendering process
-        echo $this->renderForm($this->form);
+        $form = $this->form;
+        $fields = $this->inputFields;
+        $renderingString = $this->renderForm()->startRendering($form)
+                              ->appendFields($fields)
+                              ->stopRendering($form);
+	    echo $renderingString;       
+	    // @TODO autocompletion for users inputs start and end location -> binding of gmap coordinates on the hidden input fields
     } 
 ?>
 </div>

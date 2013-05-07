@@ -18,11 +18,25 @@ class LookUpTripsForm {
   const FIELD_START_POINT = 'startPoint';
   /**
    *
+   * name of the form field for the property startCoord.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_START_COORD = 'startCoord';
+  /**
+   *
    * name of the form field for the property endPoint.
    * Should be the name of the property/attribute so the data binding works.
    * @var String
    */
   const FIELD_END_POINT = 'endPoint';  
+  /**
+   *
+   * name of the form field for the property endCoord.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_END_COORD = 'endCoord';  
   /**
    *
    * name of the form field for the property startDate.

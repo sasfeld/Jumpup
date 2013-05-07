@@ -1,5 +1,10 @@
 <?php
 namespace JumpUpPassenger\Controller;
+use \JumpUpDriver\Models\Trip;
+use JumpUpPassenger\Util\Messages\IControllerMessages;
+
+use JumpUpPassenger\Strategies\DumbRouteStrategy;
+
 use Zend\Stdlib\Hydrator\ClassMethods;
 
 use JumpUpPassenger\Util\Routes\IRouteStore;
@@ -21,6 +26,7 @@ use JumpUpPassenger\Forms\LookUpTripsForm;
  */
 class ViewTripsController extends ANeedsAuthenticationController{
     protected $form;
+    protected $findTripStrategy;
     
     protected function _getForm() {
         if(!isset($this->form)) {
@@ -28,19 +34,48 @@ class ViewTripsController extends ANeedsAuthenticationController{
             $builder = new AnnotationBuilder();
             $this->form = $builder->createForm($lookUpForm);
             $this->form->setHydrator(new ClassMethods());
+            $this->form->setAttribute('action', $this->url()->fromRoute(IRouteStore::SHOW_TRIPS));
         }
         return $this->form;
     }
     
+    protected function _getFindTripStrategy() {
+        if(!isset($this->findTripStrategy)) {
+            $strategy = new DumbRouteStrategy();
+            $this->findTripStrategy = $strategy;
+        }
+        return $this->findTripStrategy;
+    }
   /**
      * Show results of a find trips strategy.
      * @return an array of trips. Those trips shall be rendered by the view / javascript / google map.
      */
     public function showTripsAction() {
-       $user = $this->_checkAndRedirect();
-       
+       $user = $this->_checkAndRedirect();       
        // @TODO the view needs to send the coordinates for the user's input
-       
+       $request = $this->getRequest();
+       if($request->isPost()) {
+           $form = $this->_getForm();
+           $form->setData($request->getPost());
+           
+           if($form->isValid()) {
+               $findTripStrategy = $this->_getFindTripStrategy();
+               $trips = $this->_getAllTrips();
+               $location = $request->getPost(LookUpTripsForm::FIELD_START_POINT);
+               $destination = $request->getPost(LookUpTripsForm::FIELD_END_POINT);
+               $dateFrom = $request->getPost(LookUpTripsForm::FIELD_START_DATE);
+               $dateTo = $request->getPost(LookUpTripsForm::FIELD_END_DATE);
+               $priceFrom = $request->getPost(LookUpTripsForm::FIELD_PRICE_FROM);
+               $priceTo = $request->getPost(LookUpTripsForm::FIELD_PRICE_TO);
+               $matchedTrips = $findTripStrategy->findNearTrips($location, $destination, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips);
+               
+               return array(
+                   'matchedTrips' => $matchedTrips);
+           }
+       }
+       $this->flashMessenger()->clearMessages();
+       $this->flashMessenger()->addMessage(IControllerMessages::ERROR_LOOKUP_FORM);
+       $this->redirect()->toRoute(IRouteStore::LOOKUP_TRIPS);
        
     }
     /**
@@ -51,7 +86,8 @@ class ViewTripsController extends ANeedsAuthenticationController{
             $user = $this->_checkAndRedirect();
             $request = $this->getRequest();               
             // GET method -> only return the input form            
-            return array('form' => $this->_getForm());
+            return array('form' => $this->_getForm(),
+                        'messages' => $this->flashMessenger()->getMessages());
      }
     
     
@@ -69,4 +105,16 @@ class ViewTripsController extends ANeedsAuthenticationController{
             return $user; 
         }
     }
+    
+    /**
+     * Fetch all trips from the DB / entity manager.
+     * @return an array of Trip.
+     */
+    protected function _getAllTrips() {
+        $tripsRepo = $this->em->getRepository('JumpUpDriver\Models\Trip');        
+        $trips = $tripsRepo->findAll();
+        return $trips;
+    }
+    
+    
 }

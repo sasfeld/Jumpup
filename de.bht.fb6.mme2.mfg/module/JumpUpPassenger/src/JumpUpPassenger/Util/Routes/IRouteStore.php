@@ -20,5 +20,7 @@ interface IRouteStore {
      * @var String
      */
     const LOOKUP_ERROR = "lookuperror";  
+    const SHOW_TRIPS = "showtrips";
+    const LOOKUP_TRIPS = "lookuptrips";
     
 }

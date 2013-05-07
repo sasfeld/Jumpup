@@ -1,0 +1,17 @@
+<h2>Show trips</h2>
+
+<div id="form">
+<?php
+    if(null !== $this->matchedTrips) {
+        $matchedTrips = $this->matchedTrips;
+
+        foreach ($matchedTrips as $matchedTrip) {
+            echo $matchedTrip . "<br />"; 
+            // We need to call our map controller in javascript from here....
+        }        
+    }
+  
+?>
+</div>
+
+

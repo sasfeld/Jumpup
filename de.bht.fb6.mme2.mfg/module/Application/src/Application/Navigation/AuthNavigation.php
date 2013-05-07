@@ -95,6 +95,18 @@ class AuthNavigation extends Navigation {
                  * ..:::::::::::::::::::::::::::::::::::::::::..
                  */
                 /*
+                 * ..:: Module JumpUpPassenger -> LookUpTrips page ::..
+                 */
+                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
+                'label' =>  $translator->translate(\JumpUpPassenger\Util\Messages\ILabels::MAINNAV_LOOKUP_TRIPS),
+                'route' => \JumpUpPassenger\Util\Routes\IRouteStore::LOOKUP_TRIPS,
+                ));
+                $this->_injectPage($page, $routeMatch, $router);
+                $this->addPage($page);
+                /*
+                 * ..:::::::::::::::::::::::::::::::::::::::::..
+                 */
+                /*
                  * ..:: Module JumpUpUser -> logout page ::..
                  */
                 $page = \Zend\Navigation\Page\AbstractPage::factory(array(

@@ -2,13 +2,16 @@
 
 <div id="form">
 <?php
+    if(null != $this->messages) {
+        foreach ($this->messages as $message) {
+            echo $message . "<br />";
+        }    
+    }
+    
     if(null !== $this->form) {
         // do a rendering process
         echo $this->renderForm($this->form);
-    }
-    else {
-        echo $this->translate($this->message);
-    }
+    } 
 ?>
 </div>
 

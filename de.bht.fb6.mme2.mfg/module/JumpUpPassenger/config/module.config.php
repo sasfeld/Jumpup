@@ -14,6 +14,17 @@ return array(
                         ),
                     ),                    
                 ),
+            'showtrips' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/showtrips',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                            'controller'    => 'ViewTrips',
+                            'action'        => 'showTrips',
+                        ),
+                    ),                    
+                ),
          ),         
     ),
     'controllers' => array(           

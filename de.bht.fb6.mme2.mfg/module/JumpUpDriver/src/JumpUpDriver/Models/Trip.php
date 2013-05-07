@@ -6,6 +6,8 @@ use Application\Util\ExceptionUtil;
 
 use JumpUpUser\Models\User;
 
+use Application\Util\StringUtil;
+
 
 
 
@@ -199,11 +201,14 @@ class Trip {
    public function __toString() {
      return StringUtil::generateToString(get_class($this),
           array ('startPoint' => $this->startPoint,
-                 'endPoint' => $this->endPoint,
-                 'waypoints' => $this->waypoints,
+                 'endPoint' => $this->endPoint,                
                  'startDate' => $this->startDate,
                  'price'  => $this->price,
-                 'driver'  => $this->driver,
+                 'driver'  => $this->driver->getPrename() . " " . $this->driver->getLastname(),
+                  'startCoord' => $this->getStartCoord(),
+                  'endCoord' => $this->getEndCoord(),
+                  'overviewPath' => $this->getOverviewPath(),
+                  
               ));
    }
    

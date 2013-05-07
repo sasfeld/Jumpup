@@ -60,18 +60,25 @@ class TripForm {
   const FIELD_VEHICLE = 'vehicle';
   /**
    *
-   * name of the form field for the property duration.
+   * name of the form field for the property duration (googlemap).
    * Should be the name of the property/attribute so the data binding works.
    * @var String
    */
   const FIELD_DURATION = 'duration';
   /**
    *
-   * name of the form field for the property duration.
+   * name of the form field for the property distance (googlemap).
    * Should be the name of the property/attribute so the data binding works.
    * @var String
    */
   const FIELD_DISTANCE = 'distance';
+  /**
+   *
+   * name of the form field for the property overviewPath (googlemap).
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_OVERVIEW_PATH = 'overviewPath';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")

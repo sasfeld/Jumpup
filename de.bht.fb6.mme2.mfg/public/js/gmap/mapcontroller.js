@@ -11,13 +11,14 @@
 * since      26.04.2013
  */
 
-define(["gmap/googlemap","jquery"], 
-       (function(GoogleMap, $) {
+define(["gmap/googlemap","jquery","gmap/overviewPathStrategy"], 
+       (function(GoogleMap, $, OverviewPathStrategy) {
     	// --> hidden input fields which needs to be stored in DB
     		const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
     		const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
     		const REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
     		const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
+    		const REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
     	   
     	   /*
     	    * Constructor function for this module.
@@ -51,11 +52,9 @@ define(["gmap/googlemap","jquery"],
     		   var inputEndCoord = $ ( 	REF_ADDTRIP_INPUT_ENDCOORD);
     		   var inputDuration = $ ( 	REF_ADDTRIP_INPUT_DURATION);
     		   var inputDistance = $ ( 	REF_ADDTRIP_INPUT_DISTANCE);
+    		   var inputOverviewPath = $ ( 	REF_ADDTRIP_INPUT_OVERVIEW_PATH);
     		   
-    		   var singleRoute = directionsResult.routes[0];
-    		   // array of LatLng values > could be interesting for us
-    		   var overviewPath = directionsResult.overview_path;
-    		   console.log("Map controller -> overviewPath: \n"+overviewPath);
+    		   var singleRoute = directionsResult.routes[0];    		 
     		   
     		   
     		   if(1 == singleRoute.legs.length) { // no waypoints, only start and endpoint
@@ -64,13 +63,33 @@ define(["gmap/googlemap","jquery"],
     			   var endLatLng = singleLeg.end_location;
     			   var duration = singleLeg.duration.value; // seconds
     			   var distance = singleLeg.distance.value; // meter
+    			   var overviewPath = singleRoute.overview_path;     			 
+    			   /*
+    			    * ..:: OverviewPath strategy ::..
+    			    */
+    			   // change: active strategy in module overviewPathStrategy (return type)
+    			   var overviewStrategy = new OverviewPathStrategy();
+    			   var overviewString = overviewStrategy.execute(overviewPath);
+    			   /*
+    			    * ..::::::::::::::::::::::::::::..
+    			    */
+    			   
     			   console.log("Map controller -> startLatLng: \n"+startLatLng);
     			   console.log("Map controller -> endLatLng: \n"+endLatLng);
     			   console.log("Map controller -> duration: \n"+duration);
-    			   inputStartCoord.val(startLatLng); // fill hidden input field
-    			   inputEndCoord.val(endLatLng); // fill hidden input field
+    			   console.log("Map controller -> overviewPath: \n"+overviewString);
+    			   
+    			   /*
+    			    * ..:: fill hidden input fields ::..
+    			    */
+    			   inputStartCoord.val(startLatLng); 
+    			   inputEndCoord.val(endLatLng); 
     			   inputDuration.val(duration);
     			   inputDistance.val(distance);
+    			   inputOverviewPath.val(overviewString);
+    			   /*
+    			    * ..::::::::::::::::::::::::::::::..
+    			    */
     			   console.log("value of input field: "+inputStartCoord.val());
     		   }; 
     	   };

@@ -68,6 +68,10 @@ class Trip {
     * @ManyToOne(targetEntity="JumpUpDriver\Models\Vehicle") 
     */
    private $vehicle;
+   /**
+    * @ORM\Column(type="text", nullable=true)
+    */
+   private $overviewPath;
    
    
    public function  setStartPoint($startPoint) {
@@ -128,6 +132,25 @@ class Trip {
        $this->distance = $intVal;
    }
    
+   /**
+    * Set the overview path which is string of semicolon separated coordinates by google map. 
+    * @param String $val
+    */
+   public function setOverviewPath($val) {
+       $strVal = (string) $val;
+       if(!is_string($val)) {
+           throw ExceptionUtil::throwInvalidArgument('$val', 'string', $val);
+       }
+       $this->overviewPath = $strVal;
+   }
+   
+   /**
+    * Get the overview path which is string of semicolon separated coordinates.
+    * @return String
+    */
+   public function getOverviewPath() {
+       return $this->overviewPath;
+   }
    public function getDistance() {
        return $this->distance;
    }

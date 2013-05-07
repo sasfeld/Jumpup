@@ -3,11 +3,27 @@
 return array(
     'router' => array(
         'routes' => array(                   
-               
+            'lookuptrips' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/lookuptrips',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                            'controller'    => 'ViewTrips',
+                            'action'        => 'lookUp',
+                        ),
+                    ),                    
+                ),
          ),         
     ),
     'controllers' => array(           
-        'factories' => array(            
+        'factories' => array(          
+             'JumpUpPassenger\Controller\ViewTrips' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \JumpUpPassenger\Controller\ViewTripsController(
+                    $sm->get("doctrine.entitymanager.orm_default")
+                );
+            },   
         ),    
         'invokables' => array(
              ),

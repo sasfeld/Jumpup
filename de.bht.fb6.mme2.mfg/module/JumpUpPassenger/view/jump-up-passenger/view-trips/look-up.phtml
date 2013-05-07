@@ -1,0 +1,15 @@
+<h2>Find trips</h2>
+
+<div id="form">
+<?php
+    if(null !== $this->form) {
+        // do a rendering process
+        echo $this->renderForm($this->form);
+    }
+    else {
+        echo $this->translate($this->message);
+    }
+?>
+</div>
+
+

@@ -6,6 +6,7 @@ return array(
         'MfgTestModul',
         'JumpUpUser',
         'JumpUpDriver',
+        'JumpUpPassenger',
         // ..:: doctrine ::..        
         'DoctrineModule',
         'DoctrineORMModule',

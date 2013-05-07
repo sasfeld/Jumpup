@@ -79,6 +79,13 @@ class TripForm {
    * @var String
    */
   const FIELD_OVERVIEW_PATH = 'overviewPath';
+  /**
+   *
+   * name of the form field for the property viaWaypoints (googlemap).
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_VIA_WAYPOINTS= 'viaWaypoints';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")

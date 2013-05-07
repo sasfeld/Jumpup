@@ -88,6 +88,7 @@ class AddTripController extends ANeedsAuthenticationController {
            '<input type="hidden" name="'.TripForm::FIELD_DURATION.'" />',
            '<input type="hidden" name="'.TripForm::FIELD_DISTANCE.'" />',
            '<input type="hidden" name="'.TripForm::FIELD_OVERVIEW_PATH.'" />',
+           '<input type="hidden" name="'.TripForm::FIELD_VIA_WAYPOINTS.'" />',
             );
             // user's vehicles
             $inputFields = $this->_appendUsersVehicles($inputFields, $user);
@@ -141,6 +142,7 @@ class AddTripController extends ANeedsAuthenticationController {
         $duration = $request->getPost(TripForm::FIELD_DURATION);        
         $distance = $request->getPost(TripForm::FIELD_DISTANCE);
         $overviewPath = $request->getPost(TripForm::FIELD_OVERVIEW_PATH);
+        $viaWaypoints = $request->getPost(TripForm::FIELD_VIA_WAYPOINTS);
 
         // bind data
         $trip->setDriver($user);
@@ -149,6 +151,7 @@ class AddTripController extends ANeedsAuthenticationController {
         $trip->setDuration($duration);
         $trip->setDistance($distance);
         $trip->setOverviewPath($overviewPath);
+        $trip->setViaWaypoints($viaWaypoints);
     }
      
     /**

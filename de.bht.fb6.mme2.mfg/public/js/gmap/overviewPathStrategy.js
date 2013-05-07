@@ -41,7 +41,7 @@ define([],
     		   var stringConcat = "";
     		   for ( var index = 0; index < overviewPath.length; index+=10) {
     			   // kb = latitude / breite; lb = longitude / länge
-				stringConcat += overviewPath[index].kb + "," + overviewPath[index].lb + ";";	
+				stringConcat += overviewPath[index].lat() + "," + overviewPath[index].lng() + ";";	
     		   }
     		   return stringConcat;		   
     		   

@@ -19,6 +19,7 @@ define(["gmap/googlemap","jquery","gmap/overviewPathStrategy"],
     		const REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
     		const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
     		const REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
+    		const REF_ADDTRIP_INPUT_VIA_WAYPOINTS = 'input[name="viaWaypoints"]';
     	   
     	   /*
     	    * Constructor function for this module.
@@ -53,6 +54,7 @@ define(["gmap/googlemap","jquery","gmap/overviewPathStrategy"],
     		   var inputDuration = $ ( 	REF_ADDTRIP_INPUT_DURATION);
     		   var inputDistance = $ ( 	REF_ADDTRIP_INPUT_DISTANCE);
     		   var inputOverviewPath = $ ( 	REF_ADDTRIP_INPUT_OVERVIEW_PATH);
+    		   var inputViaWaypoints = $ ( 	REF_ADDTRIP_INPUT_VIA_WAYPOINTS);
     		   
     		   var singleRoute = directionsResult.routes[0];    		 
     		   
@@ -63,7 +65,8 @@ define(["gmap/googlemap","jquery","gmap/overviewPathStrategy"],
     			   var endLatLng = singleLeg.end_location;
     			   var duration = singleLeg.duration.value; // seconds
     			   var distance = singleLeg.distance.value; // meter
-    			   var overviewPath = singleRoute.overview_path;     			 
+    			   var overviewPath = singleRoute.overview_path;     	
+    			   var viaWaypoints = singleLeg.via_waypoints;
     			   /*
     			    * ..:: OverviewPath strategy ::..
     			    */
@@ -73,11 +76,23 @@ define(["gmap/googlemap","jquery","gmap/overviewPathStrategy"],
     			   /*
     			    * ..::::::::::::::::::::::::::::..
     			    */
+    			   /*
+    			    * ..:: ViaWaypoints ::..
+    			    */
+    			   var waypointsStringConcat = "";
+    			   for ( var waypointIndex = 0; waypointIndex < viaWaypoints.length; waypointIndex++) {
+    				   // kb = latitude / breite; lb = longitude / länge
+    				   waypointsStringConcat += viaWaypoints[waypointIndex].lat() + "," + viaWaypoints[waypointIndex].lng() + ";";
+    			   }
+    			   /*
+    			    * ..::::::::::::::::::..
+    			    */
     			   
     			   console.log("Map controller -> startLatLng: \n"+startLatLng);
     			   console.log("Map controller -> endLatLng: \n"+endLatLng);
     			   console.log("Map controller -> duration: \n"+duration);
     			   console.log("Map controller -> overviewPath: \n"+overviewString);
+    			   console.log("Map controller -> viaWaypoints: \n"+waypointsStringConcat);
     			   
     			   /*
     			    * ..:: fill hidden input fields ::..
@@ -87,6 +102,7 @@ define(["gmap/googlemap","jquery","gmap/overviewPathStrategy"],
     			   inputDuration.val(duration);
     			   inputDistance.val(distance);
     			   inputOverviewPath.val(overviewString);
+    			   inputViaWaypoints.val(waypointsStringConcat);
     			   /*
     			    * ..::::::::::::::::::::::::::::::..
     			    */

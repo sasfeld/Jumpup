@@ -74,6 +74,10 @@ class Trip {
     * @ORM\Column(type="text", nullable=true)
     */
    private $overviewPath;
+   /**
+    * @ORM\Column(type="text", nullable=true)
+    */
+   private $viaWaypoints;
    
    
    public function  setStartPoint($startPoint) {
@@ -147,12 +151,33 @@ class Trip {
    }
    
    /**
+    * Set the via waypoints which is string of semicolon separated coordinates by google map. 
+    * @param String $val
+    */
+   public function setViaWaypoints($val) {
+       $strVal = (string) $val;
+       if(!is_string($val)) {
+           throw ExceptionUtil::throwInvalidArgument('$val', 'string', $val);
+       }
+       $this->viaWaypoints = $strVal;
+   }
+   
+   /**
     * Get the overview path which is string of semicolon separated coordinates.
     * @return String
     */
    public function getOverviewPath() {
        return $this->overviewPath;
    }
+   
+   /**
+    * Get the overview path which is string of semicolon separated coordinates.
+    * @return String
+    */
+   public function getViaWaypoints() {
+       return $this->viaWaypoints;
+   }
+   
    public function getDistance() {
        return $this->distance;
    }
@@ -208,6 +233,7 @@ class Trip {
                   'startCoord' => $this->getStartCoord(),
                   'endCoord' => $this->getEndCoord(),
                   'overviewPath' => $this->getOverviewPath(),
+                  'viaWaypoints' => $this->getViaWaypoints(),
                   
               ));
    }

@@ -3,6 +3,17 @@
 return array(
     'router' => array(
         'routes' => array(                   
+            'tripsjson' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/tripsjson',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                            'controller'    => 'Json',
+                            'action'        => 'trip',
+                        ),
+                    ),                    
+                ),
             'lookuptrips' => array(
                     'type'    => 'Literal',
                     'options' => array(
@@ -35,6 +46,12 @@ return array(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
             },   
+            'JumpUpPassenger\Controller\Json' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+              $sm = $cm->getServiceLocator();
+              return new \JumpUpPassenger\Controller\JsonController(
+                  $sm->get("doctrine.entitymanager.orm_default")
+              );
+            },
         ),    
         'invokables' => array(
              ),
@@ -43,7 +60,8 @@ return array(
         'template_path_stack' => array(
             'JumpUpPassenger' => __DIR__ . '/../view'
         ),
-        'strategies' => array(          
+        'strategies' => array(    
+            'ViewJsonStrategy',
         ),
     ),  
     /*

@@ -238,6 +238,20 @@ class Trip {
               ));
    }
    
+   public function toJson() {
+     return array ('startPoint' => $this->startPoint,
+                 'endPoint' => $this->endPoint,                
+                 'startDate' => $this->startDate,
+                 'price'  => $this->price,
+                 'driver'  => $this->driver->getPrename() . " " . $this->driver->getLastname(),
+                  'startCoord' => $this->getStartCoord(),
+                  'endCoord' => $this->getEndCoord(),
+                  'overviewPath' => $this->getOverviewPath(),
+                  'viaWaypoints' => $this->getViaWaypoints(),
+                  
+              );
+   }
+   
    
    
   

@@ -103,7 +103,7 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 		 */			
 		$( REF_ADDTRIP_INPUT_VEHICLE ).change( ( function() {
 			vehId = $.trim($( REF_ADDTRIP_INPUT_VEHICLE + ' option:selected ').val());
-			console.log('veh id: '+vehId)
+			console.log('veh id: '+vehId);
 			vehicleCtrl.fetchVehicles(vehId);
 		}));
 		/* 
@@ -117,9 +117,9 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 				console.log("main.js: showing new route");
 				mapCtrl.showSingleRoute(startPointValue, endPointValue);
 			};
+			
 		}));
 		
-
 		
 	} ) );
 	

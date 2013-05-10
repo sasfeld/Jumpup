@@ -65,6 +65,12 @@ class LookUpTripsForm {
    * @var String
    */
   const FIELD_PRICE_TO = 'priceTo';
+  /**
+   *
+   * name of the button.
+   * @var String
+   */
+  const BUTTON = 'tripsBtn';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
@@ -108,13 +114,8 @@ class LookUpTripsForm {
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Options({"label":"Price to"})
    */
-  public $priceTo;  
-  
-  /**
-   * @Annotation\Type("Zend\Form\Element\Submit")
-   * @Annotation\Attributes({"value":"Submit"})
-   */
-  public $submit;
+  public $priceTo;   
+ 
   
 }
 

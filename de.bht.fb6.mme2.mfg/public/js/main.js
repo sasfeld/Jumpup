@@ -12,8 +12,8 @@ requirejs.config( {
 } );
 
 require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller", 
-           "ajax/vehicle"], 
-           function($, GoogleMap, MapController, VehicleController) {
+           "ajax/vehicle", "ajax/trips"], 
+           function($, GoogleMap, MapController, VehicleController, TripsController) {
 	
 	
 	/* 
@@ -39,6 +39,17 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 	// --> submit
 	const REF_ADDTRIP_SUBMIT = 'input[name="submit"]';
 	
+	// page ViewTrips
+	const TRIPS_REF_FORM = 'form[name="LookUpTripsForm"]';
+	const REF_TRIPS_START_COORD = TRIPS_REF_FORM + ' > input[name="startCoord"]';
+	const REF_TRIPS_END_COORD = TRIPS_REF_FORM + ' > input[name="endCoord"]';
+	const REF_TRIPS_START_POINT = TRIPS_REF_FORM + ' > input[name="startPoint"]';
+	const REF_TRIPS_END_POINT = TRIPS_REF_FORM + ' > input[name="endPoint"]';
+	const REF_TRIPS_START_DATE = TRIPS_REF_FORM + ' > input[name="startDate"]';
+	const REF_TRIPS_END_DATE = TRIPS_REF_FORM + ' > input[name="endDate"]';
+	const REF_TRIPS_PRICE_FROM = TRIPS_REF_FORM + ' > input[name="priceFrom"]';
+	const REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' > input[name="priceTo"]';
+	const REF_TRIPS_BTN = TRIPS_REF_FORM + ' > input[name="tripsBtn"]';
 	
 	/* 
 	 * ..:::::::::::::::::::..
@@ -60,10 +71,28 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 		};
 
 		try {
-			var mapCtrl = new MapController(mapOptions, ctrlOptions); 			
+			var mapCtrl = new MapController(mapOptions, ctrlOptions); 		
+			
+			/* 
+			 * ..:: map events ::..
+			 */	
+			// auto completion for start point
+			mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_START ), function(place) {
+				validStart = place.geometry.location;
+				$( REF_ADDTRIP_INPUT_START ).val(validStart);
+			} );
+			// auto completion for end point
+			mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_END ), function(place) {
+				validEnd = place.geometry.location;
+				$( REF_ADDTRIP_INPUT_END ).val(validEnd);
+			} );
+			
+			/* 
+			 * ..::::::::::::::::..
+			 */	
 		} catch ( e ) {
 			// console.log( 'No Map to display: ' + e );
-			throw e;
+			//throw e;
 		}
 		/* 
 		 * ..:::::::::::::::::::::::::::::::..
@@ -80,22 +109,16 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 		 * ..::::::::::::::::::::::::::::::::::..
 		 */	
 		/* 
-		 * ..:: map events ::..
+		 * ..:: initialize tripsController ::..
 		 */	
-		// auto completion for start point
-		mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_START ), function(place) {
-			validStart = place.geometry.location;
-			$( REF_ADDTRIP_INPUT_START ).val(validStart);
-		} );
-		// auto completion for end point
-		mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_END ), function(place) {
-			validEnd = place.geometry.location;
-			$( REF_ADDTRIP_INPUT_END ).val(validEnd);
-		} );
-		
+		var tripsOptions = {
+			"getTripsUrl" : "tripsjson",	
+		};
+		var tripsCtrl = new TripsController(tripsOptions);		
 		/* 
-		 * ..::::::::::::::::..
+		 * ..::::::::::::::::::::::::::::::::::..
 		 */	
+	
 		
 		
 		/* 
@@ -118,6 +141,20 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 				mapCtrl.showSingleRoute(startPointValue, endPointValue);
 			};
 			
+		}));
+		
+		/* 
+		 * ..:: lookUpTrips -> button event handler ::..
+		 */	
+		$( REF_TRIPS_BTN ).click( (function() {
+			console.log("lookuptrips ... button clicked...");
+			startCoord = $ ( REF_TRIPS_START_COORD ).val();
+			endCoord = $ ( REF_TRIPS_END_COORD ).val();
+			startDate = $ ( REF_TRIPS_START_DATE ).val();
+			endDate = $ ( REF_TRIPS_END_DATE ).val();
+			priceFrom = $ ( REF_TRIPS_PRICE_FROM ).val();
+			priceTo = $ ( REF_TRIPS_PRICE_TO ).val();
+			tripsCtrl.fetchTrips(startCoord, endCoord, startDate, endDate, priceFrom, priceTo);
 		}));
 		
 		

@@ -92,6 +92,7 @@ class ViewTripsController extends ANeedsAuthenticationController{
             $inputFields = array(
            '<input type="hidden" name="'.LookUpTripsForm::FIELD_START_COORD.'" />',           
            '<input type="hidden" name="'.LookUpTripsForm::FIELD_END_COORD.'" />',           
+           '<input type="button" name="'.LookUpTripsForm::BUTTON.'" />',           
             );
             // GET method -> only return the input form            
             return array('form' => $this->_getForm(),

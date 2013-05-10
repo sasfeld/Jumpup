@@ -25,11 +25,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 * @since      05.05.2013
  */
 class JsonController extends AbstractRestfulController {
-     /**
-     * Key to the parameter name containing the vehId.
-     * @var String
-     */
-    const PARAM_VEHICLE_ID = "vehicleId";
     const PARAM_START_COORD = "startCoord";
     const PARAM_END_COORD = "endCoord";
     const PARAM_DATE_FROM = "dateFrom";

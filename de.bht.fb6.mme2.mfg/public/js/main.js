@@ -28,28 +28,30 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 	const REF_MAP_GEOCODING = "#geocoding";
 	const REF_MAP_DIRECTIONS = "#directions";
 	
+	// page AddTrip
 	// --> input fields
-	const REF_ADDTRIP_INPUT_START = 'input[name="startPoint"]';
-	const REF_ADDTRIP_INPUT_END = 'input[name="endPoint"]';
-	const REF_ADDTRIP_INPUT_DATE = 'input[name="startDate"]';
-	const REF_ADDTRIP_INPUT_VEHICLE = 'select[name="vehicle"]';
+	const ADDTRIP_REF_FORM = 'form[name="AddTripForm"]';
+	const REF_ADDTRIP_INPUT_START = ADDTRIP_REF_FORM + ' input[name="startPoint"]';
+	const REF_ADDTRIP_INPUT_END = ADDTRIP_REF_FORM + ' input[name="endPoint"]';
+	const REF_ADDTRIP_INPUT_DATE = ADDTRIP_REF_FORM + ' input[name="startDate"]';
+	const REF_ADDTRIP_INPUT_VEHICLE = ADDTRIP_REF_FORM + ' select[name="vehicle"]';
 	// --> hidden input fields which needs to be stored in DB
-	const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
-	const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
+	const REF_ADDTRIP_INPUT_STARTCOORD = ADDTRIP_REF_FORM + ' input[name="startCoordinate"]';
+	const REF_ADDTRIP_INPUT_ENDCOORD = ADDTRIP_REF_FORM + ' input[name="endCoordinate"]';
 	// --> submit
-	const REF_ADDTRIP_SUBMIT = 'input[name="submit"]';
+	const REF_ADDTRIP_SUBMIT = ADDTRIP_REF_FORM + ' input[name="submit"]';
 	
 	// page ViewTrips
 	const TRIPS_REF_FORM = 'form[name="LookUpTripsForm"]';
-	const REF_TRIPS_START_COORD = TRIPS_REF_FORM + ' > input[name="startCoord"]';
-	const REF_TRIPS_END_COORD = TRIPS_REF_FORM + ' > input[name="endCoord"]';
-	const REF_TRIPS_START_POINT = TRIPS_REF_FORM + ' > input[name="startPoint"]';
-	const REF_TRIPS_END_POINT = TRIPS_REF_FORM + ' > input[name="endPoint"]';
-	const REF_TRIPS_START_DATE = TRIPS_REF_FORM + ' > input[name="startDate"]';
-	const REF_TRIPS_END_DATE = TRIPS_REF_FORM + ' > input[name="endDate"]';
-	const REF_TRIPS_PRICE_FROM = TRIPS_REF_FORM + ' > input[name="priceFrom"]';
-	const REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' > input[name="priceTo"]';
-	const REF_TRIPS_BTN = TRIPS_REF_FORM + ' > input[name="tripsBtn"]';
+	const REF_TRIPS_START_COORD = TRIPS_REF_FORM + ' input[name="startCoord"]';
+	const REF_TRIPS_END_COORD = TRIPS_REF_FORM + ' input[name="endCoord"]';
+	const REF_TRIPS_START_POINT = TRIPS_REF_FORM + ' input[name="startPoint"]';
+	const REF_TRIPS_END_POINT = TRIPS_REF_FORM + ' input[name="endPoint"]';
+	const REF_TRIPS_START_DATE = TRIPS_REF_FORM + ' input[name="startDate"]';
+	const REF_TRIPS_END_DATE = TRIPS_REF_FORM + ' input[name="endDate"]';
+	const REF_TRIPS_PRICE_FROM = TRIPS_REF_FORM + ' input[name="priceFrom"]';
+	const REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' input[name="priceTo"]';
+	const REF_TRIPS_BTN = TRIPS_REF_FORM + ' input[name="tripsBtn"]';
 	
 	/* 
 	 * ..:::::::::::::::::::..
@@ -71,21 +73,26 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 		};
 
 		try {
-			var mapCtrl = new MapController(mapOptions, ctrlOptions); 		
-			
+			if (undefined != $(ADDTRIP_REF_FORM)) {
+				var mapCtrl = new MapController(mapOptions, ctrlOptions); 		
+			}
 			/* 
 			 * ..:: map events ::..
 			 */	
-			// auto completion for start point
-			mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_START ), function(place) {
-				validStart = place.geometry.location;
-				$( REF_ADDTRIP_INPUT_START ).val(validStart);
-			} );
-			// auto completion for end point
-			mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_END ), function(place) {
-				validEnd = place.geometry.location;
-				$( REF_ADDTRIP_INPUT_END ).val(validEnd);
-			} );
+			if (undefined != $(REF_ADDTRIP_INPUT_START)) {
+				// auto completion for start point
+				mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_START ), function(place) {
+					validStart = place.geometry.location;
+					$( REF_ADDTRIP_INPUT_START ).val(validStart);
+				} );
+			};
+			if (undefined != $(REF_ADDTRIP_INPUT_END)) {
+				// auto completion for end point
+				mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_END ), function(place) {
+					validEnd = place.geometry.location;
+					$( REF_ADDTRIP_INPUT_END ).val(validEnd);
+				} );
+			};
 			
 			/* 
 			 * ..::::::::::::::::..
@@ -93,7 +100,7 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 		} catch ( e ) {
 			// console.log( 'No Map to display: ' + e );
 			//throw e;
-		}
+		};
 		/* 
 		 * ..:::::::::::::::::::::::::::::::..
 		 */		

@@ -51,12 +51,26 @@ define(["jquery"],
 			};
 			
 			/*
+			 * Error-Event method if the ajax request below fails.
+			 */
+			TripsController.prototype.handleError = function(xhr, ajaxOptions, thrownError) {
+				console.log("TripsController: handleError");
+				console.log(xhr);
+			};
+			
+			/*
 			 * Fetch the trips to a given id.
 			 */
 			TripsController.prototype.fetchTrips = function(startCoord, endCoord, dateFrom, dateTo, priceFrom, priceTo) {
 				console.log("TripsController: fetchTrips");
+				console.log("startCoord: "+startCoord);
+				console.log("endCoord: "+endCoord);
+				console.log("startDate: "+startDate);
+				console.log("endDate: "+endDate);
+				console.log("priceFrom: "+priceFrom);
+				console.log("priceTo: "+priceTo);
 				$.ajax( {
-					url: this.options.listVehiclesUrl,
+					url: this.options.getTripsUrl,
 					data: {
 						"startCoord" : startCoord,						
 						"endCoord" : endCoord,						
@@ -68,6 +82,7 @@ define(["jquery"],
 					dataType: 'json',
 					type: "POST",
 					success: this.handleServerResponse,
+					error: this.handleError,
 				});
 			};
 			

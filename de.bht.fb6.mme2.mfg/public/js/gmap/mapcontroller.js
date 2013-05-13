@@ -30,9 +30,11 @@ define(["gmap/googlemap","jquery","gmap/overviewPathStrategy"],
     	   var MapController = function(mapsOptions, ctrlOptions) {
     		   try {
     				this.gmap = new GoogleMap( mapsOptions );
-    				this.gmap.mapsLoaded(); // initialize maps   	   			
-        			this.inputStartCoord = ctrlOptions.input_start_coord || window.REF_ADDTRIP_INPUT_STARTCOORD;
-        			this.inputEndCoord = ctrlOptions.input_end_coord || window.REF_ADDTRIP_INPUT_ENDCOORD;
+    				this.gmap.mapsLoaded(); // initialize maps   	  
+    				if(null != ctrlOptions) {
+    					this.inputStartCoord = ctrlOptions.input_start_coord || window.REF_ADDTRIP_INPUT_STARTCOORD;
+    					this.inputEndCoord = ctrlOptions.input_end_coord || window.REF_ADDTRIP_INPUT_ENDCOORD;
+    				}
     			} catch ( e ) {    				
     				throw e;
     			}; 

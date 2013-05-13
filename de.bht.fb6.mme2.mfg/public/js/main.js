@@ -67,26 +67,47 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 			"geocoding" : $( REF_MAP_GEOCODING )[ 0 ],
 			"directions" : $( REF_MAP_DIRECTIONS )[ 0 ],
 		};
-		var ctrlOptions = {
-			"input_start_coord" : $ ( REF_ADDTRIP_INPUT_STARTCOORD ),
-			"input_end_coord" : $ ( REF_ADDTRIP_INPUT_ENDCOORD ), 
-		};
+		
 
 		try {
-			if (undefined != $(ADDTRIP_REF_FORM)) {
-				var mapCtrl = new MapController(mapOptions, ctrlOptions); 		
-			}
+			var mapCtrl = null;			
+			var vehicleCtrl = null;
 			/* 
 			 * ..:: map events ::..
 			 */	
-			if (undefined != $(REF_ADDTRIP_INPUT_START)) {
+			// page: AddTrip
+			console.log("ref auf add: " + $(ADDTRIP_REF_FORM));
+			if ($(ADDTRIP_REF_FORM).length > 0) { // element exists
+				console.log("main.js: creating map controller for AddTrip");
+				var ctrlOptions = {
+						"input_start_coord" : $ ( REF_ADDTRIP_INPUT_STARTCOORD ),
+						"input_end_coord" : $ ( REF_ADDTRIP_INPUT_ENDCOORD ), 
+					};
+				mapCtrl = new MapController(mapOptions, ctrlOptions); 	
+				
+				/* 
+				 * ..:: initialize vehicleController::..
+				 */	
+				var vehOptions = {
+					"listVehiclesUrl" : "driverjson",	
+					"vehicleParam" : "vehicleId",	
+				};
+				vehicleCtrl = new VehicleController(vehOptions);		
+				/* 
+				 * ..::::::::::::::::::::::::::::::::::..
+				 */	
+			}
+			
+			if ($(REF_ADDTRIP_INPUT_START).length > 0) {
+				console.log("main.js: Binding input field for start in Addtrip");
 				// auto completion for start point
 				mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_START ), function(place) {
 					validStart = place.geometry.location;
 					$( REF_ADDTRIP_INPUT_START ).val(validStart);
 				} );
 			};
-			if (undefined != $(REF_ADDTRIP_INPUT_END)) {
+			if ($(REF_ADDTRIP_INPUT_END).length > 0) {
+				console.log("main.js: Binding input field for end in Addtrip");
 				// auto completion for end point
 				mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_END ), function(place) {
 					validEnd = place.geometry.location;
@@ -94,39 +115,53 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 				} );
 			};
 			
+			// page: LookUpTrips
+			var tripsCtrl = null;
+			if($(TRIPS_REF_FORM).length > 0) {	
+				console.log("main.js: creating map controller for LookUpTrips");
+				mapCtrl = new MapController(mapOptions, null); 		
+				/* 
+				 * ..:: initialize tripsController ::..
+				 */	
+				var tripsOptions = {
+					"getTripsUrl" : "tripsjson",	
+					"mapCtrl" : mapCtrl, 
+				};
+				 tripsCtrl = new TripsController(tripsOptions);		
+				/* 
+				 * ..::::::::::::::::::::::::::::::::::..
+				 */	
+			}
+			
+		    if ($(REF_TRIPS_START_POINT).length > 0) {
+		    	console.log("main.js: Binding input field for start in LookUpTrips");
+				// auto completion for start point
+				mapCtrl.gmap.setAutocomplete( $( REF_TRIPS_START_POINT ), function(place) {
+					validStart = place.geometry.location;
+					$( REF_TRIPS_START_POINT ).val(validStart);
+				} );
+			};
+			if ($(REF_TRIPS_END_POINT).length > 0) {
+				console.log("main.js: Binding input field for end in LookUpTrips");
+				// auto completion for start point
+				mapCtrl.gmap.setAutocomplete( $( REF_TRIPS_END_POINT ), function(place) {
+					validStart = place.geometry.location;
+					$( REF_TRIPS_END_POINT ).val(validStart);
+				} );
+			};
+			
 			/* 
 			 * ..::::::::::::::::..
 			 */	
 		} catch ( e ) {
-			// console.log( 'No Map to display: ' + e );
+			console.log( 'No Map to display: ' + e );
 			//throw e;
 		};
 		/* 
 		 * ..:::::::::::::::::::::::::::::::..
 		 */		
-		/* 
-		 * ..:: initialize vehicleController ::..
-		 */	
-		var vehOptions = {
-			"listVehiclesUrl" : "driverjson",	
-			"vehicleParam" : "vehicleId",	
-		};
-		var vehicleCtrl = new VehicleController(vehOptions);		
-		/* 
-		 * ..::::::::::::::::::::::::::::::::::..
-		 */	
-		/* 
-		 * ..:: initialize tripsController ::..
-		 */	
-		var tripsOptions = {
-			"getTripsUrl" : "tripsjson",	
-		};
-		var tripsCtrl = new TripsController(tripsOptions);		
-		/* 
-		 * ..::::::::::::::::::::::::::::::::::..
-		 */	
-	
 		
+			
 		
 		/* 
 		 * ..:: addtrip -> endPoint input field event handler ::..
@@ -161,7 +196,7 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 			endDate = $ ( REF_TRIPS_END_DATE ).val();
 			priceFrom = $ ( REF_TRIPS_PRICE_FROM ).val();
 			priceTo = $ ( REF_TRIPS_PRICE_TO ).val();
-			tripsCtrl.fetchTrips(startCoord, endCoord, startDate, endDate, priceFrom, priceTo);
+			tripsCtrl.fetchTrips(mapCtrl, startCoord, endCoord, startDate, endDate, priceFrom, priceTo);
 		}));
 		
 		

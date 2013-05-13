@@ -18,6 +18,7 @@ define(["jquery"],
 			 * Create a new TripsController.
 			 * - param options an array:
 			 * 	 getTripsUrl - the url to the json endpoint for the listing of all vehicles
+			 * 	 mapCtrl - the map controller
 			 */
 			var TripsController = function(options) {
 				this.options = options;
@@ -45,6 +46,7 @@ define(["jquery"],
 						var viaWaypoints = trip.viaWaypoints;
 						
 						// TODO show routes on map with the fetched values.
+						console.log("Trips.js: map controller: "+this.mapCtrl);
 					}; 
 					
 				};
@@ -61,7 +63,7 @@ define(["jquery"],
 			/*
 			 * Fetch the trips to a given id.
 			 */
-			TripsController.prototype.fetchTrips = function(startCoord, endCoord, dateFrom, dateTo, priceFrom, priceTo) {
+			TripsController.prototype.fetchTrips = function(mapCtrl, startCoord, endCoord, dateFrom, dateTo, priceFrom, priceTo) {
 				console.log("TripsController: fetchTrips");
 				console.log("startCoord: "+startCoord);
 				console.log("endCoord: "+endCoord);
@@ -69,6 +71,7 @@ define(["jquery"],
 				console.log("endDate: "+endDate);
 				console.log("priceFrom: "+priceFrom);
 				console.log("priceTo: "+priceTo);
+				this.mapCtrl = mapCtrl;
 				$.ajax( {
 					url: this.options.getTripsUrl,
 					data: {

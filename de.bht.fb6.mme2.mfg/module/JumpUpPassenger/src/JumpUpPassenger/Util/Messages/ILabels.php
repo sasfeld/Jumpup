@@ -14,4 +14,5 @@ namespace JumpUpPassenger\Util\Messages;
  */
 interface ILabels {     
     const MAINNAV_LOOKUP_TRIPS = "Look up trips";
+    const LOOKUP_BUTTON = "Look for trips";
 }

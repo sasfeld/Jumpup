@@ -13,6 +13,7 @@
 
 define(["jquery"], 
 		(function($) {
+			var mapCtrl;
 			
 			/*
 			 * Create a new TripsController.
@@ -22,6 +23,7 @@ define(["jquery"],
 			 */
 			var TripsController = function(options) {
 				this.options = options;
+				mapCtrl = options.mapCtrl;
 			};
 			
 			/*
@@ -35,6 +37,7 @@ define(["jquery"],
 				if(data.trips.length > 0) {
 					for(var tripIndex = 0; tripIndex < data.trips.length; tripIndex++) {
 						var trip = data.trips[tripIndex];
+						var id = trip.id;
 						var startPoint = trip.startPoint;
 						var endPoint = trip.endPoint;
 						var startDate = trip.startDate;
@@ -45,8 +48,11 @@ define(["jquery"],
 						var overviewPath = trip.overviewPath;
 						var viaWaypoints = trip.viaWaypoints;
 						
-						// TODO show routes on map with the fetched values.
-						console.log("Trips.js: map controller: "+this.mapCtrl);
+						// TODO get multiple routes working.
+						if(null != startCoord && null != endCoord) {
+							mapCtrl.showSingleRoute(startCoord, endCoord, null, false);
+						}
+						// TODO build selection view for user
 					}; 
 					
 				};
@@ -63,7 +69,7 @@ define(["jquery"],
 			/*
 			 * Fetch the trips to a given id.
 			 */
-			TripsController.prototype.fetchTrips = function(mapCtrl, startCoord, endCoord, dateFrom, dateTo, priceFrom, priceTo) {
+			TripsController.prototype.fetchTrips = function(startCoord, endCoord, dateFrom, dateTo, priceFrom, priceTo) {
 				console.log("TripsController: fetchTrips");
 				console.log("startCoord: "+startCoord);
 				console.log("endCoord: "+endCoord);
@@ -71,7 +77,7 @@ define(["jquery"],
 				console.log("endDate: "+endDate);
 				console.log("priceFrom: "+priceFrom);
 				console.log("priceTo: "+priceTo);
-				this.mapCtrl = mapCtrl;
+				
 				$.ajax( {
 					url: this.options.getTripsUrl,
 					data: {

@@ -1,5 +1,7 @@
 <?php
 namespace JumpUpPassenger\Controller;
+use JumpUpPassenger\Util\Messages\ILabels;
+
 use \JumpUpDriver\Models\Trip;
 use JumpUpPassenger\Util\Messages\IControllerMessages;
 
@@ -92,7 +94,7 @@ class ViewTripsController extends ANeedsAuthenticationController{
             $inputFields = array(
            '<input type="hidden" name="'.LookUpTripsForm::FIELD_START_COORD.'" />',           
            '<input type="hidden" name="'.LookUpTripsForm::FIELD_END_COORD.'" />',           
-           '<input type="button" name="'.LookUpTripsForm::BUTTON.'" />',           
+           '<input type="button" name="'.LookUpTripsForm::BUTTON.'" value="'.ILabels::LOOKUP_BUTTON.'"/>',           
             );
             // GET method -> only return the input form            
             return array('form' => $this->_getForm(),

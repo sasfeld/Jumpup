@@ -239,7 +239,8 @@ class Trip {
    }
    
    public function toJson() {
-     return array ('startPoint' => $this->startPoint,
+     return array ('id' => $this->id,
+                 'startPoint' => $this->startPoint,
                  'endPoint' => $this->endPoint,                
                  'startDate' => $this->startDate,
                  'price'  => $this->price,

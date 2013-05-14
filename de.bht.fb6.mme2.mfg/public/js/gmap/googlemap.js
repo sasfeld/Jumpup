@@ -36,6 +36,12 @@ define( [
 			center : torun,
 			zoom : 5
 		} );
+		
+		this.directionsDisplay = new google.maps.DirectionsRenderer( {
+			map : this.map,
+			preserveViewport : true,
+			draggable : true
+		} );
 	}; // mapsLoaded()
 
 	GoogleMap.prototype.setAutocomplete = function(input, placeChanged) {
@@ -73,7 +79,8 @@ define( [
 	GoogleMap.prototype.showRoute = function(startLatLng, endLatLng, callbackFnc) {
 		var _this = this;
 
-		if ( !_this.directionsDisplay ) {
+		if ( !_this.directionsDisplay ) { // created above : multiple routes
+			console.log("new directions renderer in showRoute");
 			_this.directionsDisplay = new google.maps.DirectionsRenderer( {
 				map : _this.map,
 				preserveViewport : true,

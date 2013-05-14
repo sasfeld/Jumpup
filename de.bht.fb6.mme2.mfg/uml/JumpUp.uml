@@ -780,7 +780,7 @@
 <XPD:REF name="Diagram">lpwiMdxT702f7n9W42nmZAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:ATTR name="#OwnedElements" type="integer">6</XPD:ATTR>
+<XPD:ATTR name="#OwnedElements" type="integer">7</XPD:ATTR>
 <XPD:OBJ name="OwnedElements[0]" type="UMLPackage" guid="hjYKHSlPVEe2KBapohY11gAA">
 <XPD:ATTR name="Name" type="string">JumpUpUser</XPD:ATTR>
 <XPD:REF name="Namespace">q7YIO7WgJkG2lz6PkzBgNgAA</XPD:REF>
@@ -6605,6 +6605,68 @@
 <XPD:REF name="Views[1]">vPrj26avOUG5pS0cB5lUzAAA</XPD:REF>
 <XPD:REF name="Views[2]">mV7uoAGBbkyatsXwyEgWBgAA</XPD:REF>
 <XPD:REF name="Views[3]">9bhJr5FHdEeBtaDzB8F5xAAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedElements[6]" type="UMLPackage" guid="+5oKOkPD3UCORlW4n63CLQAA">
+<XPD:ATTR name="Name" type="string">Frontend</XPD:ATTR>
+<XPD:REF name="Namespace">q7YIO7WgJkG2lz6PkzBgNgAA</XPD:REF>
+<XPD:ATTR name="#OwnedElements" type="integer">2</XPD:ATTR>
+<XPD:OBJ name="OwnedElements[0]" type="UMLPackage" guid="OQmdeGQ8RkikxJyS4lkHuQAA">
+<XPD:ATTR name="Name" type="string">ajax</XPD:ATTR>
+<XPD:REF name="Namespace">+5oKOkPD3UCORlW4n63CLQAA</XPD:REF>
+<XPD:ATTR name="#OwnedElements" type="integer">2</XPD:ATTR>
+<XPD:OBJ name="OwnedElements[0]" type="UMLClass" guid="q8tsXSJBXECrtGmGd8gIhgAA">
+<XPD:ATTR name="Name" type="string">Trips</XPD:ATTR>
+<XPD:REF name="Namespace">OQmdeGQ8RkikxJyS4lkHuQAA</XPD:REF>
+<XPD:ATTR name="#Operations" type="integer">2</XPD:ATTR>
+<XPD:OBJ name="Operations[0]" type="UMLOperation" guid="zLBRCmcG3k2TPoz5XNp+kQAA">
+<XPD:ATTR name="Name" type="string">fetchTrips(startCoord, endCoord, dateFrom, dateTo, priceFrom, priceTo)</XPD:ATTR>
+<XPD:REF name="Owner">q8tsXSJBXECrtGmGd8gIhgAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[1]" type="UMLOperation" guid="hFCApt+ulEO2tpmrgxaLJwAA">
+<XPD:ATTR name="Name" type="string">handleServerResponse(data)</XPD:ATTR>
+<XPD:REF name="Owner">q8tsXSJBXECrtGmGd8gIhgAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedElements[1]" type="UMLClass" guid="zOItk3x7W0mGUfGXnHX62wAA">
+<XPD:ATTR name="Name" type="string">Vehicle</XPD:ATTR>
+<XPD:REF name="Namespace">OQmdeGQ8RkikxJyS4lkHuQAA</XPD:REF>
+<XPD:ATTR name="#Operations" type="integer">2</XPD:ATTR>
+<XPD:OBJ name="Operations[0]" type="UMLOperation" guid="T5lHJETWOE2UTm4Ix7rYoQAA">
+<XPD:ATTR name="Name" type="string">fetchVehicles(vehicleId)</XPD:ATTR>
+<XPD:REF name="Owner">zOItk3x7W0mGUfGXnHX62wAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[1]" type="UMLOperation" guid="RGntXKiy6km6K+DO5e86OwAA">
+<XPD:ATTR name="Name" type="string">handleServerResponse(data)</XPD:ATTR>
+<XPD:REF name="Owner">zOItk3x7W0mGUfGXnHX62wAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedElements[1]" type="UMLPackage" guid="LAc8s2okDkqivqsNmCBE0wAA">
+<XPD:ATTR name="Name" type="string">gmap</XPD:ATTR>
+<XPD:REF name="Namespace">+5oKOkPD3UCORlW4n63CLQAA</XPD:REF>
+<XPD:ATTR name="#OwnedElements" type="integer">3</XPD:ATTR>
+<XPD:OBJ name="OwnedElements[0]" type="UMLClass" guid="ZffB3PmtkEKHgT5DqONaUwAA">
+<XPD:ATTR name="Name" type="string">MapController</XPD:ATTR>
+<XPD:REF name="Namespace">LAc8s2okDkqivqsNmCBE0wAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedElements[1]" type="UMLClass" guid="kugwp4ZQr0arFvFnUEiK7gAA">
+<XPD:ATTR name="Name" type="string">GoogleMap</XPD:ATTR>
+<XPD:REF name="Namespace">LAc8s2okDkqivqsNmCBE0wAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedElements[2]" type="UMLClass" guid="bYeX1C9M90yb/w6ZZSUicQAA">
+<XPD:ATTR name="Name" type="string">OverviewPathStrategy</XPD:ATTR>
+<XPD:REF name="Namespace">LAc8s2okDkqivqsNmCBE0wAA</XPD:REF>
+<XPD:ATTR name="#Operations" type="integer">2</XPD:ATTR>
+<XPD:OBJ name="Operations[0]" type="UMLOperation" guid="PoEmKMGv70iDFU33IlJmugAA">
+<XPD:ATTR name="Name" type="string">showSingleRoute(start,destination, waypoints, multiple)</XPD:ATTR>
+<XPD:REF name="Owner">bYeX1C9M90yb/w6ZZSUicQAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[1]" type="UMLOperation" guid="C01xZ7/4Iky9V58bDabfiwAA">
+<XPD:ATTR name="Name" type="string">handleRouteResponse(directionsResult)</XPD:ATTR>
+<XPD:REF name="Owner">bYeX1C9M90yb/w6ZZSUicQAA</XPD:REF>
+</XPD:OBJ>
 </XPD:OBJ>
 </XPD:OBJ>
 </XPD:OBJ>

@@ -76,6 +76,9 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 			 * ..::------------> page: AddTrip <------------::..
 			 */		
 			if ($(ADDTRIP_REF_FORM).length > 0) { // element exists
+				/* 
+				 * ..:: initialize mapController::..
+				 */
 				console.log("main.js: creating map controller for AddTrip");
 				var ctrlOptions = {
 						"input_start_coord" : $ ( REF_ADDTRIP_INPUT_STARTCOORD ),
@@ -91,20 +94,48 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 					"vehicleParam" : "vehicleId",	
 				};
 				vehicleCtrl = new VehicleController(vehOptions);	
+				
+				/*
+				 * Draw Route and Display 
+				 */
+				function updateRoute() {
+					console.log("main.js: date changed");
+					var startPointValue = $( REF_ADDTRIP_INPUT_START ).val();
+					var endPointValue = $( REF_ADDTRIP_INPUT_END ).val();
+					
+					if(0 != startPointValue.length && 0 != endPointValue) {
+						console.log("main.js: showing new route");
+						mapCtrl.showRoute(startPointValue, endPointValue, null, false);
+					};
+				}
+				
+				/* 
+				 * ..:: AutoComplete Start ::..
+				 */	
 				if ($(REF_ADDTRIP_INPUT_START).length > 0) {
 					console.log("main.js: Binding input field for start in Addtrip");
 					// auto completion for start point
 					mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_START ), function(place) {
+						// start place changed
+						
 						validStart = place.geometry.location;
 						$( REF_ADDTRIP_INPUT_START ).val(validStart);
+						updateRoute();
 					} );
 				};
+				
+				/* 
+				 * ..:: AutoComplete End ::..
+				 */	
 				if ($(REF_ADDTRIP_INPUT_END).length > 0) {
 					console.log("main.js: Binding input field for end in Addtrip");
 					// auto completion for end point
 					mapCtrl.gmap.setAutocomplete( $( REF_ADDTRIP_INPUT_END ), function(place) {
+						// end place changed
+						
 						validEnd = place.geometry.location;
 						$( REF_ADDTRIP_INPUT_END ).val(validEnd);
+						updateRoute();
 					} );
 				};
 				/* 
@@ -118,19 +149,13 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 					console.log('veh id: '+vehId);
 					vehicleCtrl.fetchVehicles(vehId);
 				}));
+				
+				
+				
 				/* 
 				 * ..:: addtrip -> vehicle input field event handler ::..
 				 */			
-				$( REF_ADDTRIP_INPUT_DATE ).focus( ( function() {
-					console.log("main.js: date changed");
-					var startPointValue = $( REF_ADDTRIP_INPUT_START ).val();
-					var endPointValue = $( REF_ADDTRIP_INPUT_END ).val();
-					if(0 != startPointValue.length && 0 != endPointValue) {
-						console.log("main.js: showing new route");
-						mapCtrl.showSingleRoute(startPointValue, endPointValue, null, false);
-					};
-					
-				}));
+				// $( REF_ADDTRIP_INPUT_DATE ).focus( ( updateRoute ));
 			}	
 			/* 
 			 * ..::------------>             <------------::..

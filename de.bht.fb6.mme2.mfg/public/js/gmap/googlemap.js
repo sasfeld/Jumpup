@@ -19,7 +19,7 @@ define( [
 		this.map;
 		this.infowindow;
 		this.directionsService;
-		this.directionsDisplay;
+		this.directionsDisplays = [];
 		this.geocoder;
 		this.infoWindow;
 
@@ -38,6 +38,16 @@ define( [
 		} );
 	}; // mapsLoaded()
 
+	GoogleMap.prototype.removeRoutes = function() {
+		
+		while(this.directionsDisplays.length > 0) {
+			var display = this.directionsDisplays.pop();
+			display.setMap(null);
+			display.setPanel(null);
+		}
+		
+	}; // removeRoutes()
+
 	GoogleMap.prototype.setAutocomplete = function(input, placeChanged) {
 		var autocomplete = new google.maps.places.Autocomplete( input[ 0 ] );
 		google.maps.event.addListener( autocomplete, 'place_changed', function() {
@@ -46,50 +56,25 @@ define( [
 		// autocomplete.bindTo( 'bounds', map );
 	}; // setAutocomplete()
 
-	// GoogleMap.prototype.getLatLng = function(address) {
-	// var latLng;
-	//
-	// this.geocoder.geocode( {
-	// 'address' : start
-	// }, function(results, status) {
-	// if ( status == google.maps.GeocoderStatus.OK ) {
-	// if ( results.length > 0 ) {
-	//
-	// for ( var result in results ) {
-	// console.log( result );
-	// }
-	//
-	// } else {
-	// throw 'No results found for: ' + start;
-	// }
-	// } else {
-	// throw 'Geocoder failed due to: ' + status;
-	// }
-	// } );
-	//
-	// return latLng;
-	// }; // getLatLng()
-
 	GoogleMap.prototype.showRoute = function(startLatLng, endLatLng, callbackFnc) {
 		var _this = this;
+		var display = new google.maps.DirectionsRenderer( {
+			map : _this.map,
+			preserveViewport : true,
+			draggable : true,
+		} );
 
-		if ( !_this.directionsDisplay ) {
-			_this.directionsDisplay = new google.maps.DirectionsRenderer( {
-				map : _this.map,
-				preserveViewport : true,
-				draggable : true
-			} );
+		_this.directionsDisplays.push( display );
 
-			google.maps.event
-					.addListener( _this.directionsDisplay, "directions_changed", function() {
-						console.log( _this.directionsDisplay.getDirections() );
-						// callback
-						callbackFnc(_this.directionsDisplay.getDirections());
-					} );
+		google.maps.event 
+				.addListener( display, "directions_changed", function() {
+					console.log( display.getDirections() );
+					// callback
+					callbackFnc( display.getDirections() );
+				} );
 
-			if ( _this.textbox )
-				_this.directionsDisplay.setPanel( _this.textbox );
-		}
+		if ( _this.textbox )
+			display.setPanel( _this.textbox );
 
 		// map.setCenter( new google.maps.LatLng( start ) );
 
@@ -97,16 +82,16 @@ define( [
 			origin : startLatLng,
 			destination : endLatLng,
 			travelMode : google.maps.TravelMode.DRIVING,
-			unitSystem : google.maps.UnitSystem.METRIC
+			unitSystem : google.maps.UnitSystem.METRIC,
 		};
 		this.directionsService.route( sampleRequest, function(response, status) {
 			if ( status == google.maps.DirectionsStatus.OK ) {
-				_this.directionsDisplay.setDirections( response );
+				display.setDirections( response );
 			}
 		} );
 
-	}; // showDirections()
+	}; // showRoute()
 
 	return GoogleMap;
-
+		
 } ) ); // define module

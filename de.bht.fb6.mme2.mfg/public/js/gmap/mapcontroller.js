@@ -46,8 +46,6 @@ define(
 				} catch (e) {
 					throw e;
 				}
-				;
-
 			};
 
 			/*
@@ -139,15 +137,12 @@ define(
 			 * waypoints, must be coordinates or valid locations - param
 			 * multiple set true if you want several routes to be rendered.
 			 */
-			MapController.prototype.showSingleRoute = function(start,
+			MapController.prototype.showRoute = function(start,
 					destination, waypoints, multiple) {
 
 				// remove rendered routes
-				var dirDisplay = this.gmap.directionsDisplay;
 				if (!multiple) {
-					if (null != dirDisplay) {
-						dirDisplay.setMap(null);
-					}
+					this.gmap.removeRoutes();
 				}
 
 				// show new route

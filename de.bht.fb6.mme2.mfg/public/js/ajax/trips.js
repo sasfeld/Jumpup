@@ -50,7 +50,7 @@ define(["jquery"],
 						
 						// TODO get multiple routes working.
 						if(null != startCoord && null != endCoord) {
-							mapCtrl.showSingleRoute(startCoord, endCoord, null, true);
+							mapCtrl.showRoute(startCoord, endCoord, null, true);
 						}
 						// TODO build selection view for user
 					}; 

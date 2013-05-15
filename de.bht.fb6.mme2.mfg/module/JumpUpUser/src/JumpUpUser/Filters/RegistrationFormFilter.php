@@ -1,5 +1,7 @@
 <?php
 namespace JumpUpUser\Filters;
+use JumpUpUser\Validators\MailExists;
+
 use JumpUpUser\Util\Exception_Util;
 
 use Doctrine\ORM\EntityManager;
@@ -115,7 +117,7 @@ class RegistrationFormFilter extends InputFilter {
         $emptyLastnameMsg = $translator->translate(IControllerMessages::REGISTER_EMPTY_LASTNAME);
         $expectedPrenameMessage = $translator->translate(IControllerMessages::REGISTER_EXPECTED_PRENAME);
         $expectedLastnameMessage = $translator->translate(IControllerMessages::REGISTER_EMPTY_LASTNAME);
-        
+        $eMailAlreadyExistsMsg = $translator->translate(IControllerMessages::REGISTER_EMAIl_ALREADY_EXISTS);
         
         // wow, a lot of code. The framework will call all this stuff and instanciate the validators and so on
 
@@ -309,6 +311,15 @@ class RegistrationFormFilter extends InputFilter {
                     'options' => array (
                         'messages' => array (
                             NotEmpty::IS_EMPTY => $emptyeMailMsg )
+                    ),
+                ),
+                array( // check if user already exists
+                    'name' => 'JumpUpUser\Validators\MailExists',
+                    'options' => array (
+                        'entityManager' => $entityManager,
+                        'messages' => array (
+                            MailExists::MAIL_ALDREADY_EXISTS => $eMailAlreadyExistsMsg,
+                        ),
                     ),
                 ),
                 array(

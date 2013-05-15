@@ -23,38 +23,14 @@ use Zend\Validator\AbstractValidator;
 * @version    1.0
 * @since      14.04.2013
  */
-class UserExists extends AbstractValidator {
-    /**
-     * 
-     * 
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * 
-     * @see EntitiyManager
-     */
-    private $entityManager;
+class UserExists extends AbstractDbValueValidator {
+   
     /**
      * Key for the error message that the user already exits.   
      * @var doesn't matter but it's a string
      */
     const USER_ALDREADY_EXISTS = 'useralreadyexits';
-    
-    
- 
-    /**
-     * This method is called when you set an option.
-     * You have to set the entityManager option before using the validator!
-     * @param EntityManager $em
-     * @throws InvalidArgumentException if the argument is null
-     */
-    public function setEntityManager(EntityManager $em) {
-        if(null === $em) {
-           throw Exception_Util::throwInvalidArgument('$em', EntityManager, 'null');
-        }
-        $this->entityManager = $em;
-    }
+      
     
     /**
      * Predefined messages. %value% is a magic parameter. It will be placed by the user's input.
@@ -75,7 +51,7 @@ class UserExists extends AbstractValidator {
         $this->setValue($value); // insert "magic parameter"    
         
         $repoUser = $this->entityManager->getRepository("JumpUpUser\Models\User");
-        $user = $repoUser->findOneBy(array('email' => $value));
+        $user = $repoUser->findOneBy(array('username' => $value));
 
         if(null !== $user) {
             $this->error(self::USER_ALDREADY_EXISTS); // track error message

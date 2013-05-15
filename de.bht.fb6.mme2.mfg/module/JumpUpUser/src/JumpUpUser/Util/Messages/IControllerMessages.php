@@ -70,6 +70,7 @@ interface IControllerMessages {
     const REGISTER_EMPTY_LASTNAME = "Please fill in your lastname";
     const REGISTER_EXPECTED_PRENAME = "The prename may only contain letters.";
     const REGISTER_EXPECTED_LASTNAME = "The lastname may only contain letters.";
+    const REGISTER_EMAIl_ALREADY_EXISTS = "This eMail address already exists. Use the forgot password function to reboot.";
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */

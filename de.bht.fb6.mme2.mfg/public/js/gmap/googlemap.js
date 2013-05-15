@@ -96,6 +96,9 @@ define( [
 			routeObject[ "polyline" ].setOptions({
 				strokeOpacity : 0,
 			});
+		
+		if( routeObject[ "display" ] )
+			routeObject[ "display" ].setPanel( null );
 
 	}; // deselect()
 

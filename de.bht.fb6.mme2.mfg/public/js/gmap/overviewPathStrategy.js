@@ -11,7 +11,7 @@
  * since      7.05.2013
  */
 
-define( [], ( function() {
+define( [ "lib/vec2" ], ( function(vec2) {
 	/*
 	 * Abstract super class.
 	 */
@@ -47,5 +47,70 @@ define( [], ( function() {
 
 	};
 
-	return EveryTenthStrategy;
+	/**
+	 * Line from a to b. Return distance of p from line.
+	 */
+	function distance(a, b, p) {
+		var vecA = vec2.fromLatLngToVec2( a );
+		var vecB = vec2.fromLatLngToVec2( b );
+		var vecP = vec2.fromLatLngToVec2( p );
+
+		// project point on line, get parameter of that projection point
+		var t = vec2.projectPointOnLine( vecP, vecA, vecB );
+
+		// outside the line segment?
+		// if ( t < 0.0 || t > 1.0 ) {
+		// return false;
+		// }
+
+		// coordinates of the projected point
+		var pp = vec2.add( vecA, vec2.mult( vec2.sub( vecB, vecA ), t ) );
+
+		// distance of the point from the line
+		var d = vec2.length( vec2.sub( pp, vecP ) );
+
+		return d;
+	}
+
+	var ByDistanceStrategy = function() {
+	};
+
+	/*
+	 * Let ByDistanceStrategy extend OverviewPathStrategy
+	 */
+	ByDistanceStrategy.prototype = Object.create( OverviewPathStrategy.prototype );
+
+	/*
+	 * Take when distance is to high.
+	 */
+	ByDistanceStrategy.prototype.execute = function(overviewPath) {
+		var stringConcat = "";
+		var maxDistance = 0.01;
+		var currentA = overviewPath[ 0 ];
+		var currentB = overviewPath[ overviewPath.length - 1 ];
+		var debugLength = 0;
+
+		// add start
+		stringConcat += currentA.lat() + "," + currentA.lng() + ";";
+
+		for ( var index = 1; index < overviewPath.length - 1; ++index ) {
+			if ( distance( currentA, currentB, overviewPath[ index ] ) > maxDistance ) {
+				++debugLength;
+				currentA = overviewPath[ index ];
+				stringConcat += currentA.lat() + "," + currentA.lng() + ";";
+			}
+		}
+
+		// add end
+		stringConcat += currentB.lat() + "," + currentB.lng() + ";";
+
+		console.log( "     before: " + overviewPath.length + " after: "
+				+ debugLength );
+
+		return stringConcat;
+
+	};
+
+	// return EveryTenthStrategy;
+	return ByDistanceStrategy;
 } ) );

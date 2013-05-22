@@ -1,7 +1,8 @@
 define( [
 		"jquery",
+		"gmap/overviewPathStrategy",
 		"async!http://maps.google.com/maps/api/js?libraries=places&key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function(
-		$) {
+		$, OverviewPathStrategy) {
 
 	/**
 	 * @param divs
@@ -71,33 +72,33 @@ define( [
 	GoogleMap.prototype.select = function(i) {
 
 		// deselect all
-		for(var j = 0; j < this.allRouteObjects.length; ++j) {
+		for ( var j = 0; j < this.allRouteObjects.length; ++j ) {
 			this.deselect( j );
 		}
-		
+
 		var routeObject = this.allRouteObjects[ i ];
-		console.log(routeObject);
-		
+		console.log( routeObject );
+
 		if ( this.textbox && routeObject )
 			routeObject[ "display" ].setPanel( this.textbox );
-		
-		if( routeObject[ "polyline" ] )
-			routeObject[ "polyline" ].setOptions({
+
+		if ( routeObject[ "polyline" ] )
+			routeObject[ "polyline" ].setOptions( {
 				strokeOpacity : 0.4,
-			});
+			} );
 
 	}; // select()
-	
+
 	GoogleMap.prototype.deselect = function(i) {
-		
+
 		var routeObject = this.allRouteObjects[ i ];
-		
-		if( routeObject[ "polyline" ] )
-			routeObject[ "polyline" ].setOptions({
+
+		if ( routeObject[ "polyline" ] )
+			routeObject[ "polyline" ].setOptions( {
 				strokeOpacity : 0,
-			});
-		
-		if( routeObject[ "display" ] )
+			} );
+
+		if ( routeObject[ "display" ] )
 			routeObject[ "display" ].setPanel( null );
 
 	}; // deselect()
@@ -115,14 +116,17 @@ define( [
 		} );
 
 		routeObject[ "polyline" ] = new google.maps.Polyline( {
-			strokeOpacity: 0,
-			strokeColor: "red",
-			strokeWeight: 10,
-			map: _this.map,
-			zIndex: 100000,
-		});
+			strokeOpacity : 0,
+			strokeColor : "red",
+			strokeWeight : 10,
+			map : _this.map,
+			zIndex : 0,
+		} );
 
 		_this.allRouteObjects[ i ] = routeObject;
+
+		// comment when not in debug
+		var overviewStrategy = new OverviewPathStrategy();
 
 		// direction changed
 		google.maps.event
@@ -131,8 +135,10 @@ define( [
 					var directions = routeObject[ "display" ].getDirections();
 					callbackFnc( directions );
 
-					routeObject[ "polyline" ]
-							.setPath( directions.routes[ 0 ].overview_path );
+					routeObject[ "polyline" ].setPath( overviewStrategy
+							.execute( directions.routes[ 0 ].overview_path ) );
+					// routeObject[ "polyline" ]
+					// .setPath( directions.routes[ 0 ].overview_path );
 
 				} );
 
@@ -151,7 +157,7 @@ define( [
 			travelMode : google.maps.TravelMode.DRIVING,
 			unitSystem : google.maps.UnitSystem.METRIC,
 		};
-		
+
 		this.directionsService.route( sampleRequest, function(response, status) {
 			if ( status == google.maps.DirectionsStatus.OK ) {
 				routeObject[ "display" ].setDirections( response );
@@ -159,7 +165,7 @@ define( [
 		} );
 
 		_this.select( i );
-		
+
 	}; // showRoute()
 
 	return GoogleMap;

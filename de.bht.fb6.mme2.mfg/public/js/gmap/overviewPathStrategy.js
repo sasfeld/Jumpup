@@ -25,6 +25,22 @@ define( [ "lib/vec2" ], ( function(vec2) {
 		throw new Error( 'Strategy#execute needs to be overridden.' );
 	};
 
+	/**
+	 * Array to String.
+	 * 
+	 * @param overviewPath
+	 *          Array for toString.
+	 * @returns {String} Formatted String.
+	 */
+	OverviewPathStrategy.prototype.toString = function(overviewPath) {
+		var stringConcat = "";
+		for ( var index = 0; index < overviewPath.length; index++ ) {
+			stringConcat += overviewPath[ index ].lat() + ","
+					+ overviewPath[ index ].lng() + ";";
+		}
+		return stringConcat;
+	};
+
 	var EveryTenthStrategy = function() {
 	};
 
@@ -37,13 +53,12 @@ define( [ "lib/vec2" ], ( function(vec2) {
 	 * Take every tenth overviewPath.
 	 */
 	EveryTenthStrategy.prototype.execute = function(overviewPath) {
-		var stringConcat = "";
+		var out = new Array();
 		for ( var index = 0; index < overviewPath.length; index += 10 ) {
 			// kb = latitude / breite; lb = longitude / länge
-			stringConcat += overviewPath[ index ].lat() + ","
-					+ overviewPath[ index ].lng() + ";";
+			out.push( overviewPath[ index ] );
 		}
-		return stringConcat;
+		return out;
 
 	};
 
@@ -85,30 +100,28 @@ define( [ "lib/vec2" ], ( function(vec2) {
 	 * Take when distance is to high.
 	 */
 	ByDistanceStrategy.prototype.execute = function(overviewPath) {
-		var stringConcat = "";
+		var out = new Array();
 		var maxDistance = 0.01;
 		var currentA = overviewPath[ 0 ];
 		var currentB = overviewPath[ overviewPath.length - 1 ];
-		var debugLength = 0;
 
 		// add start
-		stringConcat += currentA.lat() + "," + currentA.lng() + ";";
+		out.push( currentA );
 
 		for ( var index = 1; index < overviewPath.length - 1; ++index ) {
 			if ( distance( currentA, currentB, overviewPath[ index ] ) > maxDistance ) {
-				++debugLength;
 				currentA = overviewPath[ index ];
-				stringConcat += currentA.lat() + "," + currentA.lng() + ";";
+				out.push( currentA );
 			}
 		}
 
 		// add end
-		stringConcat += currentB.lat() + "," + currentB.lng() + ";";
+		out.push( currentB );
 
 		console.log( "     before: " + overviewPath.length + " after: "
-				+ debugLength );
+				+ out.length );
 
-		return stringConcat;
+		return out;
 
 	};
 

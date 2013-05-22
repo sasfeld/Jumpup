@@ -59,9 +59,10 @@ define( [ "lib/vec2" ], ( function(vec2) {
 		var t = vec2.projectPointOnLine( vecP, vecA, vecB );
 
 		// outside the line segment?
-		// if ( t < 0.0 || t > 1.0 ) {
-		// return false;
-		// }
+		if ( t < 0.0 || t > 1.0 ) {
+			// infinite
+			return Number.MAX_VALUE;
+		}
 
 		// coordinates of the projected point
 		var pp = vec2.add( vecA, vec2.mult( vec2.sub( vecB, vecA ), t ) );

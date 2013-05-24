@@ -86,6 +86,13 @@ class TripForm {
    * @var String
    */
   const FIELD_VIA_WAYPOINTS= 'viaWaypoints';
+  /**
+   *
+   * name of the form field for the property numberSeats.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_NUMBER_SEATS = 'maxSeats';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
@@ -116,7 +123,17 @@ class TripForm {
    * @Annotation\Attributes({"addtrip_form"})
    * @Annotation\Options({"label":"Price:","attributes":{"size":"5"}})
    */
-  public $price;
+  public $price;  
+  /**
+   * @Annotation\Type("Zend\Form\Element\Number")
+   * @Annotation\Required({"required":"true" })
+   * @Annotation\Filter({"name":"StripTags"})
+   * @Annotation\Attributes({"addtrip_form"})
+   * @Annotation\Validator({"name":"GreaterThan","options":{"min":"1"}})
+   * @Annotation\Validator({"name":"LessThan","options":{"max":"8"}})
+   * @Annotation\Options({"label":"Number of seats:","attributes":{"size":"5"}})
+   */
+  public $maxSeats;
   /**
    * @Annotation\Type("Zend\Form\Element\Submit")
    * @Annotation\Attributes({"value":"Submit"})

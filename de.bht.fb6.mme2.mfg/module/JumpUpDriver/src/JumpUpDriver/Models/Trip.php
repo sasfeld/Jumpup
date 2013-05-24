@@ -114,10 +114,19 @@ class Trip {
      $this->vehicle = $vehicle;
    }
    
+   /**
+    * Set the coordinate of the trip's start location.
+    * Should be in the form (Longitude,Latitude).
+    * @param String $startCoord
+    */
     public function setStartCoordinate($startCoord) {        
      $this->startCoordinate = $startCoord;
    }
-   
+   /**
+    * Set the coordinate of the trip's end location.
+    * Should be in the form (Longitude,Latitude).
+    * @param String $endCoord
+    */
     public function setEndCoordinate($endCoord) {        
      $this->endCoordinate = $endCoord;
    }

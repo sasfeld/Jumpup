@@ -139,12 +139,12 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 		if ( !multiple ) {
 			this.gmap.removeRoutes();
 		}
-
+		
 		// show new route
 		// this.gmap.showRoute( start, destination, $( "#sendBt" ),
 		// this.handleRouteResponse );
 
-		this.gmap.showRoute( start, destination, this.handleRouteResponse );
+		this.gmap.showRoute( start, destination, waypoints, this.handleRouteResponse );
 	};
 	return MapController; // return constructor function
 } ) );

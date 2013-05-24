@@ -106,7 +106,19 @@ define( [
 
 	}; // deselect()
 
-	GoogleMap.prototype.showRoute = function(startLatLng, endLatLng, callbackFnc) {
+	GoogleMap.prototype.showRoute = function(startLatLng, endLatLng, waypoints,
+			callbackFnc) {
+
+		console.log( google.maps );
+
+		// convert waypoint array
+		if ( waypoints )
+			for ( var i = 0; i < waypoints.length; i++ ) {
+				waypoints[ i ] = {
+					"location" : waypoints[ i ],
+					"stopover" : true,
+				};
+			}
 
 		var _this = this;
 		var routeObject = new Object();
@@ -158,10 +170,12 @@ define( [
 		// map.setCenter( new google.maps.LatLng( start ) );
 
 		var sampleRequest = {
-			origin : startLatLng,
-			destination : endLatLng,
-			travelMode : google.maps.TravelMode.DRIVING,
-			unitSystem : google.maps.UnitSystem.METRIC,
+			"origin" : startLatLng,
+			"destination" : endLatLng,
+			"waypoints" : waypoints,
+			"optimizeWaypoints" : true,
+			"travelMode" : google.maps.TravelMode.DRIVING,
+			"unitSystem" : google.maps.UnitSystem.METRIC,
 		};
 
 		this.directionsService.route( sampleRequest, function(response, status) {

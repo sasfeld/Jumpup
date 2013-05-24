@@ -84,6 +84,10 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 						"input_start_coord" : $ ( REF_ADDTRIP_INPUT_STARTCOORD ),
 						"input_end_coord" : $ ( REF_ADDTRIP_INPUT_ENDCOORD ), 
 					};
+				mapOptions["draggable"] = true;
+				mapOptions["selectable"] = false;
+				mapOptions["showDirectionsPanel"] = true;
+				
 				mapCtrl = new MapController(mapOptions, ctrlOptions); 	
 				
 				/* 
@@ -168,6 +172,10 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 			var tripsCtrl = null;
 			if($(TRIPS_REF_FORM).length > 0) {	
 				console.log("main.js: creating map controller for LookUpTrips");
+				
+				mapOptions["draggable"] = false;
+				mapOptions["selectable"] = true;
+				mapOptions["showDirectionsPanel"] = false;
 				mapCtrl = new MapController(mapOptions, null); 		
 				/* 
 				 * ..:: initialize tripsController ::..

@@ -47,12 +47,15 @@ define(["jquery"],
 						var endCoord = trip.endCoord;
 						var overviewPath = trip.overviewPath;
 						var viaWaypoints = trip.viaWaypoints;
+						var numberBookings = trip.numberBookings;
+						var maxSeats = trip.maxSeats;
 						
 						// TODO get multiple routes working.
 						if(null != startCoord && null != endCoord) {
 							mapCtrl.showRoute(startCoord, endCoord, null, true);
 						}
 						// TODO build selection view for user
+						
 					}; 
 					
 				};

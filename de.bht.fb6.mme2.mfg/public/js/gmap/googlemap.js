@@ -13,6 +13,9 @@ define( [
 
 		this.map_canvas = options[ 'map_canvas' ];
 		this.textbox = options[ 'textbox' ];
+		this.draggable = options["draggable"] || false;
+		this.selectable = options["selectable"] || false;
+		this.showDirectionsPanel = options["showDirectionsPanel"] || false;
 
 		if ( !this.map_canvas )
 			throw "map_canvas is required for the map.";

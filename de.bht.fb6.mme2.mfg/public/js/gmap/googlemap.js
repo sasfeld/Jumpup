@@ -13,9 +13,9 @@ define( [
 
 		this.map_canvas = options[ 'map_canvas' ];
 		this.textbox = options[ 'textbox' ];
-		this.draggable = options["draggable"] || false;
-		this.selectable = options["selectable"] || false;
-		this.showDirectionsPanel = options["showDirectionsPanel"] || false;
+		this.draggable = options[ "draggable" ] || false;
+		this.selectable = options[ "selectable" ] || false;
+		this.showDirectionsPanel = options[ "showDirectionsPanel" ] || false;
 
 		if ( !this.map_canvas )
 			throw "map_canvas is required for the map.";
@@ -49,7 +49,7 @@ define( [
 			var display = routeObject[ "display" ];
 			var polyline = routeObject[ "polyline" ];
 
-			if ( display ) {
+			if ( display && !this.showDirectionsPanel ) {
 				display.setMap( null );
 				display.setPanel( null );
 			}
@@ -82,7 +82,7 @@ define( [
 		var routeObject = this.allRouteObjects[ i ];
 		console.log( routeObject );
 
-		if ( this.textbox && routeObject )
+		if ( this.showDirectionsPanel && this.textbox && routeObject )
 			routeObject[ "display" ].setPanel( this.textbox );
 
 		if ( routeObject[ "polyline" ] )
@@ -115,16 +115,17 @@ define( [
 		routeObject[ "display" ] = new google.maps.DirectionsRenderer( {
 			map : _this.map,
 			preserveViewport : true,
-			draggable : true,
+			draggable : _this.draggable,
 		} );
 
-		routeObject[ "polyline" ] = new google.maps.Polyline( {
-			strokeOpacity : 0,
-			strokeColor : "red",
-			strokeWeight : 10,
-			map : _this.map,
-			zIndex : 0,
-		} );
+		if ( _this.selectable )
+			routeObject[ "polyline" ] = new google.maps.Polyline( {
+				strokeOpacity : 0,
+				strokeColor : "red",
+				strokeWeight : 10,
+				map : _this.map,
+				zIndex : 0,
+			} );
 
 		_this.allRouteObjects[ i ] = routeObject;
 
@@ -138,19 +139,21 @@ define( [
 					var directions = routeObject[ "display" ].getDirections();
 					callbackFnc( directions );
 
-					routeObject[ "polyline" ].setPath( overviewStrategy
-							.execute( directions.routes[ 0 ].overview_path ) );
+					if ( routeObject[ "polyline" ] )
+						routeObject[ "polyline" ].setPath( overviewStrategy
+								.execute( directions.routes[ 0 ].overview_path ) );
 					// routeObject[ "polyline" ]
 					// .setPath( directions.routes[ 0 ].overview_path );
 
 				} );
 
 		// mouseover route
-		google.maps.event
-				.addListener( routeObject[ "polyline" ], "mouseover", function() {
-					console.log( "over" );
-					_this.select( i );
-				} );
+		if ( routeObject[ "polyline" ] )
+			google.maps.event
+					.addListener( routeObject[ "polyline" ], "mouseover", function() {
+						console.log( "over" );
+						_this.select( i );
+					} );
 
 		// map.setCenter( new google.maps.LatLng( start ) );
 
@@ -167,7 +170,8 @@ define( [
 			}
 		} );
 
-		_this.select( i );
+		if ( routeObject[ "polyline" ] )
+			_this.select( i );
 
 	}; // showRoute()
 

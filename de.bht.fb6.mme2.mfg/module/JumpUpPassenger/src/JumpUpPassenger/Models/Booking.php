@@ -49,6 +49,22 @@ class Booking {
    */
   private $trip;
   
+  /**
+   * Create and initialize a new Booking.
+   * It will be initialized with values by the given trip.
+   * We do that to reduce the amount of database JOINS and queries.
+   * @param Trip $relatedTrip
+   * @param User $passenger the user who is currently logged in and who performs the booking.
+   */
+  public function __construct(Trip $relatedTrip, User $passenger) {
+    $driver = $relatedTrip->getDriver();
+    if(null === $driver) {
+      throw ExceptionUtil::throwInvalidArgument('$relatedTrip->getDriver()', 'User', 'null');
+    }
+    $this->driver = $driver;
+    $this->trip = $relatedTrip;
+    $this->passenger = $passenger;
+  }
   
   public function  setStartPoint($startPoint) {
     if(!is_string($startPoint)) {

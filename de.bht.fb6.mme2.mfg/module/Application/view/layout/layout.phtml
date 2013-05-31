@@ -17,9 +17,9 @@ echo $this->doctype(); ?>
         <!-- Scripts -->
         <?php echo $this->headScript()->setAllowArbitraryAttributes(true)
                                       ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js') 
-                                      ->prependFile($this->basePath() . '/js/lib/require-jquery.js', 'text/javascript', array('data-main' => 'js/main')) ?>
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')                          
+                                      ->prependFile($this->basePath() . '/js/lib/require-jquery.js', 'text/javascript', array('data-main' => 'js/main'))                                  
+                                      ?>
 
     </head>
     <body>

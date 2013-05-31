@@ -1,5 +1,7 @@
 <?php
 namespace JumpUpPassenger\Controller;
+use JumpUpPassenger\Util\IEntitiesStore;
+
 use JumpUpPassenger\Util\Messages\ILabels;
 
 use \JumpUpDriver\Models\Trip;
@@ -123,7 +125,7 @@ class ViewTripsController extends ANeedsAuthenticationController{
      * @return an array of Trip.
      */
     protected function _getAllTrips() {
-        $tripsRepo = $this->em->getRepository('JumpUpDriver\Models\Trip');        
+        $tripsRepo = $this->em->getRepository(IEntitiesStore::TRIP);        
         $trips = $tripsRepo->findAll();
         return $trips;
     }

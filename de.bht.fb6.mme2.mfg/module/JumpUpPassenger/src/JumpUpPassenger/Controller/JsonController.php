@@ -17,7 +17,7 @@ use Zend\Mvc\Controller\AbstractActionController;
  * 
 * This controller handles all asynchronous requests in this module.
 *
-* @package    JumpUpDriver\Controller
+* @package    JumpUpPassenger\Controller
 * @subpackage 
 * @copyright  Copyright (c) 2013 Sascha Feldmann (http://saschafeldmann.de)
 * @license    GNU license

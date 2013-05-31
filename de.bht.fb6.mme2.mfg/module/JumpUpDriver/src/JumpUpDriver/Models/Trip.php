@@ -293,6 +293,20 @@ class Trip {
   public function getId() {
     return $this->id;
   }
+  
+  /**
+   * @return int the maximum number of seats or the maximum number of allowed bookings.
+   */
+  public function getMaxSeats() {
+    return (int) $this->maxSeats;
+  }
+  /**
+   * 
+   * @return int the number of bookings
+   */
+  public function getNumberOfBookings() {
+    return (int) sizeof($this->bookings);
+  }
    
    
   public function __toString() {

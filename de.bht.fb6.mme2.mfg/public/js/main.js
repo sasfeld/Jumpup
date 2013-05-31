@@ -7,7 +7,7 @@ requirejs.config( {
 		// If the load via CDN fails, load locally
 		'lib/jquery.min' ],
 		// async library
-		"async" : 'lib/async',		
+		"async" : 'lib/async',
 	}
 } );
 
@@ -219,6 +219,13 @@ require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller",
 							tripsCtrl.fetchTrips(startCoord, endCoord, startDate, endDate, priceFrom, priceTo);
 						}
 					}));
+					
+					/*
+					 * Route information
+					 */
+					$( "#accordion" ).accordion({
+						collapsible: true
+					});
 			};			
 			/* 
 			 * ..::------------>             <------------::..

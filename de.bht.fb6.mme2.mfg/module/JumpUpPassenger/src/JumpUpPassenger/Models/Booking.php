@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpPassenger\Models;
 
+use JumpUpPassenger\Util\IBookingState;
+
 use JumpUpDriver\Models\Trip;
 
 use Application\Util\ExceptionUtil;
@@ -48,6 +50,18 @@ class Booking {
    * @ManyToOne(targetEntity="JumpUpDriver\Models\Trip", inversedBy="bookings")
    */
   private $trip;
+  /**
+   * @ORM\Column(type="integer", nullable=true)
+   */
+  private $driversRecomPrice;
+  /**
+   * @ORM\Column(type="integer", nullable=true)
+   */
+  private $passengersRecomPrice;
+  /**
+   * @ORM\Column(type="integer")
+   */
+  private $state;
   
   /**
    * Create and initialize a new Booking.
@@ -55,15 +69,22 @@ class Booking {
    * We do that to reduce the amount of database JOINS and queries.
    * @param Trip $relatedTrip
    * @param User $passenger the user who is currently logged in and who performs the booking.
+   * @param int  $passengersRecomPrice the passenger's recommended price
    */
-  public function __construct(Trip $relatedTrip, User $passenger) {
+  public function __construct(Trip $relatedTrip, User $passenger, $passengersRecomPrice) {
     $driver = $relatedTrip->getDriver();
     if(null === $driver) {
       throw ExceptionUtil::throwInvalidArgument('$relatedTrip->getDriver()', 'User', 'null');
     }
+    if(!is_int( $passengersRecomPrice)) {
+      throw ExceptionUtil::throwInvalidArgument('$passengersRecomPrice', 'int',  $passengersRecomPrice);
+    }
     $this->driver = $driver;
     $this->trip = $relatedTrip;
     $this->passenger = $passenger;
+    // start state is passenger's recommendation
+    $this->state = IBookingState::OFFER_FROM_PASSENGER;
+    $this->passengersRecomPrice = $passengersRecomPrice;    
   }
   
   public function  setStartPoint($startPoint) {
@@ -126,6 +147,47 @@ class Booking {
     $this->trip = $trip;
   }
   
+  /**
+   * The driver can recommend a price for the booking.
+   * The driver's recommended price will be setted here.
+   * @param int $val
+   */
+  public function setDriversRecomPrice($val) {
+    // check type
+    if(!is_int($val)) {
+      throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+    }
+    
+    // check state
+    if($this->state !== IBookingState::OFFER_FROM_PASSENGER) {
+      throw new InvalidBooingStateException(IBookingState::OFFER_FROM_PASSENGER, $this->state);
+    }   
+     
+     $this->driversRecomPrice = (int) $val;
+     // set next state
+     $this->state = IBookingState::OFFER_FROM_DRIVER;
+  }
+  
+  /**
+   * The passenger can recommend a price for the booking.
+   * The passenger's recommended price will be setted here.
+   * @param int $val
+   */
+  public function setPassengersRecomPrice($val) {
+    if(!is_int($val)) {
+      throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+    }
+    
+    // check state
+    if($this->state !== IBookingState::OFFER_FROM_DRIVER) {
+      throw new InvalidBooingStateException(IBookingState::OFFER_FROM_DRIVER, $this->state);
+    }
+     
+    $this->passengersRecomPrice = (int) $val;
+    // set next state
+    $this->state = IBookingState::OFFER_FROM_PASSENGER;
+  }
+  
   public function getTrip() {
     return $this->trip;
   }
@@ -159,6 +221,30 @@ class Booking {
   
   public function getEndPoint() {
     return $this->endPoint;
+  }
+  
+  /**
+   * 
+   * @return int the recommended price of the driver.
+   */
+  public function getDriversRecomPrice() {
+    return (int) $this->driversRecomPrice;
+  }
+  
+  /**
+   * 
+   * @return int thre recommended price of the passenger
+   */
+  public function getPassengersRecomPrice() {
+    return (int) $this->passengersRecomPrice;
+  }
+  
+  /**
+   * 
+   * @return the IBookingState.
+   */
+  public function getState() {
+    return (int) $this->state;
   }
   
 }

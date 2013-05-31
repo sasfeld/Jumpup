@@ -24,22 +24,31 @@ class BookingController extends ANeedsAuthenticationController{
    * @var String the parameter name
    */
   const POST_TRIP_ID = "tripId";
+  /**
+   * POST-parameter for the recommendedPrice.
+   * @var String the parameter name
+   */
+  const POST_TRIP_RECOMM_PRICE = "recommendedPrice";
   
   
   /**
    * The book trip action reacts to a submit given when a user books a trip.
    * The input parameters are (POST):
    * - the tripid int the ID of the trip entity
+   * - recommendedPrice int the recommendation (by the passenger)
    */
   public function bookTripAction() {
     $request = $this->getRequest();
     if($request->isPost()) {
       $tripId = $request->getPost(self::POST_TRIP_ID);
-      if(null !== $tripId) {
+      $recomPrice = $request->getPost(self::POST_TRIP_RECOMM_PRICE);
+      if(null !== $tripId && null !== $recomPrice) {
         $trip = $this->_getTrip($tripid);
         if(null !== $trip) {
-          $booking = new Booking();
+          $loggedInUser = $this->getCurrentUser();
+          $booking = new Booking(§trip, $loggedInUser, $recomPrice);
           $this->_bookTrip($booking, $trip);
+         
         }
       }
     }
@@ -49,6 +58,7 @@ class BookingController extends ANeedsAuthenticationController{
    * Perform a booking. Create a booking record for the given booking.
    * @param Booking $booking the new Booking record
    * @param Trip $trip the trip to be booked
+   * @throws OverbookException when trying to overbook
    */
   private  function _bookTrip(Booking $booking, Trip $trip) {
     $numberBookings = $trip->getNumberOfBookings();
@@ -61,7 +71,7 @@ class BookingController extends ANeedsAuthenticationController{
     }
     else {
       // raise overbook exception
-     
+       throw new OverbookException($trip, $booking);
     }
   }
   

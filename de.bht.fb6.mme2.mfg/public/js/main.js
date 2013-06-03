@@ -2,18 +2,19 @@ requirejs.config( {
 	paths : {
 		// jquery library
 		"jquery" : [
-		// try content delivery network location first
-		'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min',
-		// If the load via CDN fails, load locally
-		'lib/jquery.min' ],
+			// try content delivery network location first
+			'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
+			// If the load via CDN fails, load locally
+			'lib/jquery-1.9.1' ],
+		"jquery-ui": "lib/jquery-ui-1.10.3.custom",		
 		// async library
 		"async" : 'lib/async',
 	}
 } );
 
-require( [ "jquery", "gmap/googlemap", "gmap/mapcontroller", 
-           "ajax/vehicle", "ajax/trips"], 
-           function($, GoogleMap, MapController, VehicleController, TripsController) {
+require( [ "gmap/googlemap", "gmap/mapcontroller", 
+           "ajax/vehicle", "ajax/trips","jquery", "jquery-ui" ], 
+           function(GoogleMap, MapController, VehicleController, TripsController, $) {
 	
 	
 	/* 

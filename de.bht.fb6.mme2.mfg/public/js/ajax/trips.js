@@ -11,7 +11,8 @@
  * since      05.05.2013
  */
 
-define( [ "jquery" ], ( function($) {
+define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
+	const REF_ACCORDION = "#accordion";
 	var mapCtrl;
 
 	/*
@@ -29,25 +30,19 @@ define( [ "jquery" ], ( function($) {
 	 * data
 	 */
 	TripsController.prototype.handleServerResponse = function(data) {
+		// TripInfo view helper
+		var viewOptions = {
+				"accordion" :  $(REF_ACCORDION),	
+			};
+		var tripInfoView = new TripInfo(viewOptions); 
 		// bad request?
 		console.log( data );
 		// inform gui
 		if ( data.trips.length > 0 ) {
 			for ( var tripIndex = 0; tripIndex < data.trips.length; tripIndex++ ) {
 				var trip = data.trips[ tripIndex ];
-				var id = trip.id;
-				var startPoint = trip.startPoint;
-				var endPoint = trip.endPoint;
-				var startDate = trip.startDate;
-				var price = trip.price;
-				var driver = trip.driver; // currently: prename and
-				// lastname
-				var startCoord = trip.startCoord;
-				var endCoord = trip.endCoord;
-				var overviewPath = trip.overviewPath;
+				
 				var viaWaypoints = trip.viaWaypoints;
-				var numberBookings = trip.numberBookings;
-				var maxSeats = trip.maxSeats;
 
 				var waypointsArray = new Array();
 				if ( viaWaypoints != null ) {
@@ -63,7 +58,7 @@ define( [ "jquery" ], ( function($) {
 					mapCtrl.showRoute( startCoord, endCoord, waypointsArray, true );
 				}
 				// TODO build selection view for user
-
+				tripInfoView.addTrip(trip);				
 			}
 			;
 

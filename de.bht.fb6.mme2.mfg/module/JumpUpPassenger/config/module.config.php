@@ -2,7 +2,29 @@
 
 return array(
     'router' => array(
-        'routes' => array(                   
+        'routes' => array(    
+            'bookerror' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/bookerror',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'error',
+                    ),
+                ),
+            ),
+            'booktrip' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/booktrip',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'bookTrip',
+                    ),
+                ),
+            ),
             'tripsjson' => array(
                     'type'    => 'Literal',
                     'options' => array(
@@ -43,14 +65,17 @@ return array(
              'JumpUpPassenger\Controller\ViewTrips' => function(Zend\Mvc\Controller\ControllerManager $cm) {
                 $sm = $cm->getServiceLocator();
                 return new \JumpUpPassenger\Controller\ViewTripsController(
-                    $sm->get("doctrine.entitymanager.orm_default")
-                );
+                    \Application\Util\ServicesUtil::getDoctrineEm($sm));             
             },   
+            'JumpUpPassenger\Controller\Booking' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+              $sm = $cm->getServiceLocator();
+              return new \JumpUpPassenger\Controller\BookingController(
+                   \Application\Util\ServicesUtil::getDoctrineEm($sm));
+            },
             'JumpUpPassenger\Controller\Json' => function(Zend\Mvc\Controller\ControllerManager $cm) {
               $sm = $cm->getServiceLocator();
               return new \JumpUpPassenger\Controller\JsonController(
-                  $sm->get("doctrine.entitymanager.orm_default")
-              );
+                   \Application\Util\ServicesUtil::getDoctrineEm($sm));
             },
         ),    
         'invokables' => array(

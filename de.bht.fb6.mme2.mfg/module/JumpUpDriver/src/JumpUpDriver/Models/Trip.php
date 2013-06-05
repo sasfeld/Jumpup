@@ -201,12 +201,18 @@ class Trip {
    * @throws Exception if you try to add a booking, but the number of maximum seats is already touched.
    */
   public function addBooking(Booking $booking) {
-     if(sizeof($this->bookings) < $this->maxSeats) { // seat available
-        array_push($this->bookings, $booking);
-     }
-     else {
-       throw new Exception("Trip::addBooking(): maximum number of seats would be passed.");
-     }
+    /*
+     * doesn' work because bookings doesn't appear to be an array...
+     */
+//      if(sizeof($this->bookings) < $this->maxSeats) { // seat available
+//         array_push($this->bookings, $booking);
+//      }
+//      else {
+//        throw new Exception("Trip::addBooking(): maximum number of seats would be passed.");
+//      }
+     /*
+      * ...............
+      */
   }
   
   /**
@@ -304,7 +310,7 @@ class Trip {
    * 
    * @return int the number of bookings
    */
-  public function getNumberOfBookings() {
+  public function getNumberOfBookings() { 
     return (int) sizeof($this->bookings);
   }
    

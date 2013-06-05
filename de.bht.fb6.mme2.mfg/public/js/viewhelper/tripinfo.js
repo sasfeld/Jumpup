@@ -12,6 +12,9 @@
  */
 
 define( [ "jquery" ], ( function($) {
+	const BOOKING_ACTION = "booktrip";
+	const PARAM_TRIP_ID = "tripId";
+	const PARAM_RECOM_PRICE = "recommendedPrice";
 	
 	/**
 	 * Create a new TripInfo view helper.
@@ -26,12 +29,32 @@ define( [ "jquery" ], ( function($) {
 	};
 	
 	TripInfo.prototype.addBody = function(content) {
-		this.accordion.appendChild("<p>Bla</p>");
+		this.accordion.append("<div>"+content+"</div>");
 	};
 	
 	TripInfo.prototype.addHeadline = function(title) {
-		this.accordion.appendChild("<h3>"+title+"</h3>");
+		this.accordion.append("<h3>"+title+"</h3>");
 	};
+	
+	TripInfo.prototype.addBookingForm = function(tripId, bodyStr, systemPrice) {
+		bodyStr += '<form action="'+BOOKING_ACTION
+			+'" method="POST">'
+			+'<input type="hidden" name="'+PARAM_TRIP_ID+'" value="'+tripId+'" />' 
+			+'Your price recommendation: <input type="text" name="'+PARAM_RECOM_PRICE+'" value="'+systemPrice+'" />' 			
+			+'<input type="submit" value="Book" />'
+			+'</form>';
+		return bodyStr;
+	};
+	
+	TripInfo.prototype.clearContents = function() {
+		this.accordion.empty();
+	}
+	
+	TripInfo.prototype.reloadAccordion = function() {
+		this.accordion.accordion({
+			collapsible: true,
+		});
+	}
 	
 	TripInfo.prototype.addTrip = function (trip) {
 		var id = trip.id;
@@ -47,8 +70,16 @@ define( [ "jquery" ], ( function($) {
 		var numberBookings = trip.numberBookings;
 		var maxSeats = trip.maxSeats;
 			
-		
-		
+		this.addHeadline("Trip from "+startPoint+" to "+endPoint);
+		var bodyStr = "<ul>" 
+			+ "<li>Driver: "+driver+"</li>"
+			+ "<li>Start date: "+startDate+"</li>"
+			+ "<li>Price: "+price+"</li>"
+			+ "<li>Current bookings: "+numberBookings+"/"+maxSeats+"</li>"
+			+ "</ul>";
+		bodyStr = this.addBookingForm(id, bodyStr, price);
+		this.addBody(bodyStr);		
+		this.reloadAccordion();
 	};
 	
 	

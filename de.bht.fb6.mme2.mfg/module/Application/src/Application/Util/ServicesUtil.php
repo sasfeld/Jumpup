@@ -50,6 +50,11 @@ class ServicesUtil {
      */
     const CLASSPATH_TRANSLATOR = 'translator';
     /**
+     * name of the doctrine entity manager service.
+     * @var String
+     */
+    const CLASSPATH_DOCTRINE_EM = 'doctrine.entitymanager.orm_default';
+    /**
      * Get the UserTable instance from the ServiceManager.
      * @see UserTable
      * @param ServiceManager $sm
@@ -88,5 +93,12 @@ class ServicesUtil {
      */
     static public function getTranslatorService(ServiceManager $sm) {
         return $sm->get(self::CLASSPATH_TRANSLATOR);
+    }
+    
+    /**
+     * Get the doctrine entity manager service/instance.
+     */
+    static  public function getDoctrineEm(ServiceManager $sm) {
+      return $sm->get(self::CLASSPATH_DOCTRINE_EM);
     }
 }

@@ -1,11 +1,21 @@
 <?php
 namespace JumpUpPassenger\Controller;
 
+use JumpUpPassenger\Exceptions\OverbookException;
+
+use JumpUpPassenger\Util\IEntitiesStore;
+
+use JumpUpPassenger\Util\Routes\IRouteStore;
+
+use JumpUpPassenger\Util\Messages\IControllerMessages;
+
 use JumpUpDriver\Models\Trip;
 
 use JumpUpPassenger\Models\Booking;
 
 use Application\Util\ExceptionUtil;
+
+
 
 /**
  *
@@ -30,6 +40,17 @@ class BookingController extends ANeedsAuthenticationController{
    */
   const POST_TRIP_RECOMM_PRICE = "recommendedPrice";
   
+  /**
+   * The error action is called when another action raises an error.
+   * Input parameters: none
+   * FlashMessenger messages: will be exported to the error view.
+   */
+  public function  errorAction() {
+     $errorMessages = $this->flashMessenger()->getCurrentErrorMessages();  
+     $messages = $this->flashMessenger()->getCurrentMessages();
+     return array("errorMessages" => $errorMessages,
+         "messages" => $messages); 
+  }
   
   /**
    * The book trip action reacts to a submit given when a user books a trip.
@@ -38,20 +59,38 @@ class BookingController extends ANeedsAuthenticationController{
    * - recommendedPrice int the recommendation (by the passenger)
    */
   public function bookTripAction() {
+    // check if user is logged in and fetch user's entity
+    $loggedInUser = $this->_checkAndRedirect();
+    
     $request = $this->getRequest();
     if($request->isPost()) {
-      $tripId = $request->getPost(self::POST_TRIP_ID);
-      $recomPrice = $request->getPost(self::POST_TRIP_RECOMM_PRICE);
+      $tripId = (int) $request->getPost(self::POST_TRIP_ID);
+      $recomPrice = (int) $request->getPost(self::POST_TRIP_RECOMM_PRICE);
       if(null !== $tripId && null !== $recomPrice) {
-        $trip = $this->_getTrip($tripid);
-        if(null !== $trip) {
-          $loggedInUser = $this->getCurrentUser();
-          $booking = new Booking(§trip, $loggedInUser, $recomPrice);
-          $this->_bookTrip($booking, $trip);
-         
+        $trip = $this->_getTrip($tripId);
+        if(null !== $trip) {         
+          $booking = new Booking($trip, $loggedInUser, $recomPrice);
+          try {
+            $this->_bookTrip($booking, $trip);
+            // @TODO inform driver via eMail, he needs to check his booking overview page
+            return array("message" => IControllerMessages::BOOKING_SUCCESS);
+          }
+          catch (OverbookException $e) {
+            $this->flashMessenger()->clearMessages();
+            $this->flashMessenger()->addErrorMessage(IControllerMessages::ERROR_BOOKING_OVERBOOKING);
+            
+          }         
+        }
+        else {
+          $this->flashMessenger()->addErrorMessage(IControllerMessages::ERROR_BOOKING_NOTRIP);
         }
       }
+      else {
+        $this->flashMessenger()->addErrorMessage(IControllerMessages::ERROR_BOOKING_REQUEST);
+      }
     }
+    // fallthrough: error
+    $this->redirect()->toRoute(IRouteStore::BOOK_ERROR);
   }
   
   /**

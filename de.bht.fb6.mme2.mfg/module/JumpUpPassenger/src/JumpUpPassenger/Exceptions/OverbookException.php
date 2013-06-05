@@ -16,7 +16,7 @@ use JumpUpDriver\Models\Trip;
  * @version    1.0
  * @since      31.05.2013
  */
-class OverbookException extends Exception {
+class OverbookException extends \Exception {
   protected $trip;
   protected $booking;
   
@@ -28,7 +28,7 @@ class OverbookException extends Exception {
   public function __construct(Trip $trip, Booking $booking) {
     $this->trip = $trip;
     $this->booking = $booking;
-    parent::construct("No more free seats available on the trip(id".$trip->getId().").");
+    parent::__construct("No more free seats available on the trip(id".$trip->getId().").");
   }
   
   /**

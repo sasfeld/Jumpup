@@ -104,21 +104,7 @@ class ViewTripsController extends ANeedsAuthenticationController{
                         'inputFields' => $inputFields);
      }
     
-    
-    /**
-     * Check authentication and if a user can be matched.
-     * @return User or redirect to the error/login page if there's no matching user for some reason
-     */
-    protected function _checkAndRedirect() {
-        if($this->_checkAuthentication()) { // authentication required, redirects to login page
-            $user = $this->getCurrentUser();
-            if(null === $user) { // user doesn't appear do be logged in
-                $this->flashMessenger()->addErrorMessage(IControllerMessages::FATAL_ERROR_NOT_AUTHENTIFICATED);
-                $this->redirect()->toRoute(IRouteStore::LOOKUP_ERROR); // break;
-            }
-            return $user; 
-        }
-    }
+  
     
     /**
      * Fetch all trips from the DB / entity manager.

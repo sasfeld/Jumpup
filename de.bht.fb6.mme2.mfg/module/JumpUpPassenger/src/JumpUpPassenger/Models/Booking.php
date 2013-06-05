@@ -23,7 +23,7 @@ class Booking {
    */
   private $id;
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string", nullable=true)
    */
   private $startPoint;
   /**
@@ -31,7 +31,7 @@ class Booking {
    */
   private $startCoordinate;
   /**
-   * @ORM\Column(type="string")
+   * @ORM\Column(type="string", nullable=true)
    */
   private $endPoint;
   /**
@@ -76,6 +76,7 @@ class Booking {
     if(null === $driver) {
       throw ExceptionUtil::throwInvalidArgument('$relatedTrip->getDriver()', 'User', 'null');
     }
+    
     if(!is_int( $passengersRecomPrice)) {
       throw ExceptionUtil::throwInvalidArgument('$passengersRecomPrice', 'int',  $passengersRecomPrice);
     }

@@ -29,7 +29,7 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	 * HandleServerResponse will be called after a successfull request. @param
 	 * data
 	 */
-	TripsController.prototype.handleServerResponse = function(data) {
+	TripsController.prototype.handleServerResponse = function(data) {		
 		// TripInfo view helper
 		var viewOptions = {
 				"accordion" :  $(REF_ACCORDION),	
@@ -57,13 +57,15 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 				if ( null != startCoord && null != endCoord ) {
 					mapCtrl.showRoute( startCoord, endCoord, waypointsArray, true );
 				}
-				// TODO build selection view for user
+				// build selection view for user
 				tripInfoView.addTrip(trip);				
 			}
 			;
 
-		}
-		;
+		};
+		
+		// activate accordion
+		tripInfoView.reloadAccordion();
 	};
 
 	/*

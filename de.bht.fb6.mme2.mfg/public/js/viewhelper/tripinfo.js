@@ -15,6 +15,7 @@ define( [ "jquery" ], ( function($) {
 	const BOOKING_ACTION = "booktrip";
 	const PARAM_TRIP_ID = "tripId";
 	const PARAM_RECOM_PRICE = "recommendedPrice";
+	var alreadyInit = false;
 	
 	/**
 	 * Create a new TripInfo view helper.
@@ -23,6 +24,7 @@ define( [ "jquery" ], ( function($) {
 	 */
 	var TripInfo = function(options) {
 		this.accordion = options.accordion || "#accordion";
+		
 		
 		// empty accordion node
 		this.accordion.empty();
@@ -51,6 +53,13 @@ define( [ "jquery" ], ( function($) {
 	}
 	
 	TripInfo.prototype.reloadAccordion = function() {
+		// destroy accordion so it goes back to its init state
+		if(!alreadyInit) {
+			alreadyInit = true;
+		}
+		else { // reset accordion
+			this.accordion.accordion("destroy");
+		}		
 		this.accordion.accordion({
 			collapsible: true,
 		});
@@ -79,7 +88,6 @@ define( [ "jquery" ], ( function($) {
 			+ "</ul>";
 		bodyStr = this.addBookingForm(id, bodyStr, price);
 		this.addBody(bodyStr);		
-		this.reloadAccordion();
 	};
 	
 	

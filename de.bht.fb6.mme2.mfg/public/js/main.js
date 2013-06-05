@@ -224,9 +224,9 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 					/*
 					 * Route information
 					 */
-					$( "#accordion" ).accordion({
-						collapsible: true
-					});
+//					$( "#accordion" ).accordion({
+//						collapsible: true
+//					});
 			};			
 			/* 
 			 * ..::------------>             <------------::..

@@ -2,7 +2,18 @@
 
 return array(
     'router' => array(
-        'routes' => array(    
+        'routes' => array(  
+            'listpassengerbookings' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/listpassbookings',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'viewBookings',
+                    ),
+                ),
+            ),
             'bookerror' => array(
                 'type'    => 'Literal',
                 'options' => array(

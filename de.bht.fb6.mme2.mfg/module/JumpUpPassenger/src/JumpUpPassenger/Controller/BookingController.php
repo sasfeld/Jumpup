@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpPassenger\Controller;
 
+use JumpUpUser\Models\User;
+
 use JumpUpPassenger\Exceptions\OverbookException;
 
 use JumpUpPassenger\Util\IEntitiesStore;
@@ -50,6 +52,27 @@ class BookingController extends ANeedsAuthenticationController{
      $messages = $this->flashMessenger()->getCurrentMessages();
      return array("errorMessages" => $errorMessages,
          "messages" => $messages); 
+  }
+  
+  /**
+   * The viewBooking actions shows each booking for the logged in user (where he's a passenger).
+   * exports: an array of booking instances for this user, accessible via "bookings" key.
+   */
+  public function viewBookingsAction() {
+    // check if user is logged in and fetch user's entity
+    $loggedInUser = $this->_checkAndRedirect();
+    
+    $bookings = $this->_getAllBookings($loggedInUser);
+    if(null !== $bookings) {
+       return array("bookings" => $bookings);
+    }
+    else { // there must be some internal error if $bookings is really null.
+      $this->flashMessenger()->clearMessages();
+      $this->flashMessenger()->addErrorMessage(IControllerMessages::ERROR_BOOKING_OVERVIEW);
+      $this->redirect()->toRoute(IRouteStore::BOOK_ERROR);
+    }
+    
+    
   }
   
   /**
@@ -114,6 +137,16 @@ class BookingController extends ANeedsAuthenticationController{
     }
   }
   
+  /**
+   * Get all bookings for the given passenger.
+   * @param User $user
+   * @return array of Booking instances
+   */
+  private function _getAllBookings(User $user) {
+    $bookingRepo = $this->em->getRepository(IEntitiesStore::BOOKING);
+    $bookings = $bookingRepo->findBy(array("passenger" => $user->getId()));
+    return $bookings;
+  }
   /**
    * Get the trip entity for a given tripid.
    * @param int $tripId - must be an integer

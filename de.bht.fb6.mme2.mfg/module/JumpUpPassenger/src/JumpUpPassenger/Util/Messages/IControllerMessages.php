@@ -32,9 +32,17 @@ interface IControllerMessages {
     const ERROR_BOOKING_OVERBOOKING = "The trip you want to book cannot be booked anymore. Please try to find another trip.";    
     const ERROR_BOOKING_REQUEST = "Internal error: illegal request. If the error occurs again, please inform the support.";
     const ERROR_BOOKING_NOTRIP = "Internal error: No matching trip found. If the error occurs again, please inform the support.";    
+    const ERROR_BOOKING_OVERVIEW = "Interal error: None booking could get fetched from the database. If the error occurs again, please inform the support.";
     /*
      * ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */     
-
+    
+    /* ..:: used in view-bookings.phtml ::../
+     * 
+     */
+    const BOOKING_STATE_PASSENGER_RECOMM = "Your recommendation was sent to the driver. He needs to accept it before you can really do the trip.";
+    /*
+     * ..:::::::::::::::::::::::::::::::::..
+     */  
    
 }

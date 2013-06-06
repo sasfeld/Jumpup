@@ -18,4 +18,9 @@ interface IEntitiesStore {
    * @var String
    */
   const TRIP = "JumpUpDriver\Models\Trip";
+  /**
+   * @see JumpUpPassenger\Models\Booking
+   * @var String
+   */
+  const BOOKING = "JumpUpPassenger\Models\Booking";
 }

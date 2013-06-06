@@ -245,7 +245,7 @@ class Booking {
    * @return the IBookingState.
    */
   public function getState() {
-    return (int) $this->state;
+    return $this->state;
   }
   
 }

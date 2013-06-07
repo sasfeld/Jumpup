@@ -14,12 +14,19 @@
 define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 		GoogleMap, $, OverviewPathStrategy) {
 	// --> hidden input fields which needs to be stored in DB
-	const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
-	const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
-	const REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
-	const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
-	const REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
-	const REF_ADDTRIP_INPUT_VIA_WAYPOINTS = 'input[name="viaWaypoints"]';
+	const
+	REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
+	const
+	REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
+	const
+	REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
+	const
+	REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
+	const
+	REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
+	const
+	REF_ADDTRIP_INPUT_VIA_WAYPOINTS = 'input[name="viaWaypoints"]';
+	var _this;
 
 	/*
 	 * Constructor function for this module. The google map will be initialized in
@@ -27,6 +34,8 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	 * exception if the map isn't loaded
 	 */
 	var MapController = function(mapsOptions, ctrlOptions) {
+		_this = this;
+		
 		try {
 			this.gmap = new GoogleMap( mapsOptions );
 			if ( null != ctrlOptions ) {
@@ -37,7 +46,8 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 			}
 		} catch ( e ) {
 			throw e;
-		};
+		}
+		;
 	};
 
 	/*
@@ -117,6 +127,10 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 		;
 	};
 
+	MapController.prototype.select = function(tripid) {
+		_this.gmap.selectByTripId( tripid );
+	};
+
 	/*
 	 * Show a single route on the map. - param start, the value of the starting
 	 * point, must be a coordinate or a valid location. - param destination, the
@@ -125,19 +139,20 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	 * locations - param multiple set true if you want several routes to be
 	 * rendered.
 	 */
-	MapController.prototype.showRoute = function(start, destination, waypoints,
-			multiple) {
+	MapController.prototype.showRoute = function(id, start, destination,
+			waypoints, multiple, callbackSelect) {
 
 		// remove rendered routes
 		if ( !multiple ) {
 			this.gmap.removeRoutes();
 		}
-		
+
 		// show new route
 		// this.gmap.showRoute( start, destination, $( "#sendBt" ),
 		// this.handleRouteResponse );
 
-		this.gmap.showRoute( start, destination, waypoints, this.handleRouteResponse );
+		this.gmap
+				.showRoute( id, start, destination, waypoints, this.handleRouteResponse, callbackSelect );
 	};
 	return MapController; // return constructor function
 } ) );

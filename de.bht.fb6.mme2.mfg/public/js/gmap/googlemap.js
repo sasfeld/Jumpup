@@ -4,6 +4,8 @@ define( [
 		"async!http://maps.google.com/maps/api/js?libraries=places&key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function(
 		$, OverviewPathStrategy) {
 
+			var _this;
+			
 	/**
 	 * @param divs
 	 *          Is a assosiativ array. Avalabile options: 'mode', 'map_canvas',
@@ -11,6 +13,8 @@ define( [
 	 */
 	var GoogleMap = function(options) {
 
+		_this = this;
+		
 		this.map_canvas = options[ 'map_canvas' ];
 		this.textbox = options[ 'textbox' ];
 		this.draggable = options[ "draggable" ] || false;
@@ -21,6 +25,7 @@ define( [
 			throw "map_canvas is required for the map.";
 
 		this.map;
+		this.idMap = new Object();
 		this.infowindow;
 		this.directionsService;
 		this.allRouteObjects = new Array();
@@ -68,6 +73,10 @@ define( [
 
 	}; // setAutocomplete()
 
+	GoogleMap.prototype.selectByTripId = function(id) {
+		_this.select( _this.idMap[id] );
+	}; // select()
+	
 	GoogleMap.prototype.select = function(i) {
 
 		// deselect all
@@ -102,8 +111,8 @@ define( [
 
 	}; // deselect()
 
-	GoogleMap.prototype.showRoute = function(startLatLng, endLatLng, waypoints,
-			callbackFnc) {
+	GoogleMap.prototype.showRoute = function(id, startLatLng, endLatLng, waypoints,
+			callbackFnc, callbackSelect) {
 
 		console.log( google.maps );
 
@@ -119,6 +128,7 @@ define( [
 		var _this = this;
 		var routeObject = new Object();
 		var i = this.allRouteObjects.length;
+		this.idMap[id] = i;
 
 		routeObject[ "display" ] = new google.maps.DirectionsRenderer( {
 			map : _this.map,
@@ -145,7 +155,8 @@ define( [
 				.addListener( routeObject[ "display" ], "directions_changed", function() {
 					// callback ( function param )
 					var directions = routeObject[ "display" ].getDirections();
-					callbackFnc( directions );
+					if(callbackFnc)
+						callbackFnc( directions );
 
 					if ( routeObject[ "polyline" ] )
 						routeObject[ "polyline" ].setPath( overviewStrategy
@@ -159,8 +170,9 @@ define( [
 		if ( routeObject[ "polyline" ] )
 			google.maps.event
 					.addListener( routeObject[ "polyline" ], "mouseover", function() {
-						console.log( "over" );
 						_this.select( i );
+						if(callbackSelect)
+							callbackSelect(id);
 					} );
 
 		// map.setCenter( new google.maps.LatLng( start ) );
@@ -169,7 +181,6 @@ define( [
 			"origin" : startLatLng,
 			"destination" : endLatLng,
 			"waypoints" : waypoints,
-			"optimizeWaypoints" : true,
 			"travelMode" : google.maps.TravelMode.DRIVING,
 			"unitSystem" : google.maps.UnitSystem.METRIC,
 		};

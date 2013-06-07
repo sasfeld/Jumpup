@@ -10,7 +10,6 @@
  * version    1.0
  * since      05.05.2013
  */
-
 define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	const REF_ACCORDION = "#accordion";
 	// stores the only existing instance

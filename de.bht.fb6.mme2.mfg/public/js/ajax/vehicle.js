@@ -10,7 +10,6 @@
  * version    1.0
  * since      05.05.2013
  */
-
 define( [ "jquery" ], ( function($) {
 	const REF_RECOMM_PRICE = '#recommended_price';
 	const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';

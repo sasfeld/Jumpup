@@ -134,6 +134,36 @@ class User {
      */
     protected $vehicles;
     
+    /**
+     * 
+     * property vehicles
+     * @var array
+     */
+//     /**
+//      * @OneToMany(targetEntity="JumpUpPassenger\Models\Booking", mappedBy="driver")
+//      */
+    protected $driverBookings;
+    
+    /**
+     * 
+     * property vehicles
+     * @var array
+     */
+//     /**
+//      * @OneToMany(targetEntity="JumpUpPassenger\Models\Booking", mappedBy="passenger")
+//      */
+    protected $passengerBookings;
+    /**
+     * 
+     * property vehicles
+     * @var array
+     */
+    /**
+     * @OneToMany(targetEntity="JumpUpDriver\Models\Trip", mappedBy="driver")
+     */
+    protected $trips;
+    
+    
     
     public function User() {
         $this->username = "";
@@ -301,7 +331,7 @@ class User {
      * @return integer
      */
     public function getConfirmation_key() {
-        return (int) $this->confirmation_key;
+        return $this->confirmation_key;
     }
     
     /**

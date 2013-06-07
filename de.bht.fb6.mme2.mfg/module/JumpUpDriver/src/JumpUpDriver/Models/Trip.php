@@ -67,7 +67,7 @@ class Trip {
    */
   private $distance; // meter
   /**
-   * @ManyToOne(targetEntity="JumpUpUser\Models\User")
+   * @ManyToOne(targetEntity="JumpUpUser\Models\User", inversedBy="trips")
    * */
   private $driver;
   /**
@@ -118,7 +118,7 @@ class Trip {
     $this->startDate = $startDate;
   }
    
-  public function  setDriver(User $user) {
+  public function  setDriver(\JumpUpUser\Models\User $user) {
     $this->driver = $user;
   }
    
@@ -126,7 +126,7 @@ class Trip {
     $this->price   = $price;
   }
    
-  public function setVehicle(Vehicle $vehicle) {
+  public function setVehicle(\JumpUpDriver\Models\Vehicle $vehicle) {
     $this->vehicle = $vehicle;
   }
    
@@ -219,7 +219,7 @@ class Trip {
    * Remove a booking within the Trip.
    * @param int $bookingId the ID to the booking which shall be removed.
    */
-  public function removeBooking(int $bookingId) {
+  public function removeBooking($bookingId) {
     $counter = 0;
     foreach ($this->bookings as $booking) {
       if($booking->getId() === $bookingId) {

@@ -143,8 +143,13 @@ class BookingController extends ANeedsAuthenticationController{
    * @return array of Booking instances
    */
   private function _getAllBookings(User $user) {
+//     $bookingRepo = $this->em->getRepository("JumpUpPassenger\Models\Booking");
+//     $tripRepo = $this->em->getRepository(IEntitiesStore::TRIP);
     $bookingRepo = $this->em->getRepository(IEntitiesStore::BOOKING);
-    $bookings = $bookingRepo->findBy(array("passenger" => $user->getId()));
+//     $bookings = $bookingRepo->findOneBy(array('passenger' => $user->getId()));
+    $bookings = $bookingRepo->findAll();
+//     $bookings = $tripRepo->findAll();
+//     $bookings = null;
     return $bookings;
   }
   /**

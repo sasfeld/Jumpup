@@ -41,6 +41,7 @@ interface IControllerMessages {
      * 
      */
     const BOOKING_STATE_PASSENGER_RECOMM = "Your recommendation was sent to the driver. He needs to accept it before you can really do the trip.";
+    const BOOKING_NO_BOOKINGS = "No bookings done";
     /*
      * ..:::::::::::::::::::::::::::::::::..
      */  

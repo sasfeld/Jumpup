@@ -15,6 +15,16 @@ define( [ "jquery" ], ( function($) {
 	const BOOKING_ACTION = "booktrip";
 	const PARAM_TRIP_ID = "tripId";
 	const PARAM_RECOM_PRICE = "recommendedPrice";
+	const PARAM_RECOM_START_POINT = "startPoint";
+	const PARAM_RECOM_START_COORD = "startCoord";
+	const PARAM_RECOM_END_POINT = "endPoint";
+	const PARAM_RECOM_END_COORD = "endCoord";
+	const TRIPS_REF_FORM = 'form[name="LookUpTripsForm"]';
+	const REF_TRIPS_START_COORD = TRIPS_REF_FORM + ' input[name="startCoord"]';
+	const REF_TRIPS_END_COORD = TRIPS_REF_FORM + ' input[name="endCoord"]';
+	const REF_TRIPS_START_POINT = TRIPS_REF_FORM + ' input[name="startPoint"]';
+	const REF_TRIPS_END_POINT = TRIPS_REF_FORM + ' input[name="endPoint"]';
+	// was the accordion already initialized? important for the destroy() function on the accordion
 	var alreadyInit = false;
 	
 	/**
@@ -24,7 +34,9 @@ define( [ "jquery" ], ( function($) {
 	 */
 	var TripInfo = function(options) {
 		this.accordion = options.accordion || "#accordion";
-		
+		this.inputStartPoint = $(REF_TRIPS_START_POINT);		
+		this.inputEndPoint = $(REF_TRIPS_END_POINT);
+		this.options = options;
 		
 		// empty accordion node
 		this.accordion.empty();
@@ -43,6 +55,10 @@ define( [ "jquery" ], ( function($) {
 			+'" method="POST">'
 			+'<input type="hidden" name="'+PARAM_TRIP_ID+'" value="'+tripId+'" />' 
 			+'Your price recommendation: <input type="text" name="'+PARAM_RECOM_PRICE+'" value="'+systemPrice+'" />' 			
+			+'<input type="hidden" name="'+PARAM_RECOM_START_POINT+'" value="'+this.inputStartPoint.val()+'" />'
+			+'<input type="hidden" name="'+PARAM_RECOM_END_POINT+'" value="'+this.inputEndPoint.val()+'" />'
+			+'<input type="hidden" name="'+PARAM_RECOM_START_COORD+'" value="'+this.options.startLatLng+'" />'
+			+'<input type="hidden" name="'+PARAM_RECOM_END_COORD+'" value="'+this.options.endLatLng+'" />'			
 			+'<input type="submit" value="Book" />'
 			+'</form>';
 		return bodyStr;

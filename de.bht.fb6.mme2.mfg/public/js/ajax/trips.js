@@ -13,7 +13,8 @@
 
 define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	const REF_ACCORDION = "#accordion";
-	var mapCtrl;
+	// stores the only existing instance
+	var _this; 
 
 	/*
 	 * Create a new TripsController. - param options an array: getTripsUrl - the
@@ -22,7 +23,17 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	 */
 	var TripsController = function(options) {
 		this.options = options;
-		mapCtrl = options.mapCtrl;
+		_this = this;
+	};
+	
+	TripsController.prototype.setStartCoord = function(location) {
+		this.startLatLng = location;
+		console.log("trips.js -> setStartCoord -> location: "+location);
+	};
+	
+	TripsController.prototype.setEndCoord = function(location) {
+		this.endLatLng = location;
+		console.log("trips.js -> setEndCoord -> location: "+location);
 	};
 
 	/*
@@ -31,8 +42,11 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	 */
 	TripsController.prototype.handleServerResponse = function(data) {		
 		// TripInfo view helper
+		var mapCtrl = _this.options.mapCtrl;
 		var viewOptions = {
 				"accordion" :  $(REF_ACCORDION),	
+				"startLatLng" : _this.startLatLng,
+				"endLatLng" : _this.endLatLng,
 			};
 		var tripInfoView = new TripInfo(viewOptions); 
 		// bad request?

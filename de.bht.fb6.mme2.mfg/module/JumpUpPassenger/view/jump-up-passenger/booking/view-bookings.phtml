@@ -17,8 +17,9 @@
     use JumpUpPassenger\Util\IBookingState;
     
  
-    if(null !== $this->bookings) {
+    if(null !== $this->bookings && (0 < sizeof($this->bookings))) {
         foreach ($this->bookings as $booking) {
+            echo $this->translate("<h3>".$booking->getStartPoint() . $booking->getEndPoint()."</h3>");
             // differ bookings states
             if ($booking->getState() === IBookingState::OFFER_FROM_PASSENGER) {
               echo $this->translate(IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM) . "<br />";
@@ -35,6 +36,9 @@
             }
             
         }
+    }
+    else { // no bookings done
+      echo $this->translate(IControllerMessages::BOOKING_NO_BOOKINGS);    
     }
     
   

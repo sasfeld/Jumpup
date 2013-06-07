@@ -107,6 +107,13 @@ class AddTripController extends ANeedsAuthenticationController {
                     $this->redirect()->toRoute(IRouteStore::ADD_TRIP_SUCCESS);
                 }
             }
+            else { // none post-request
+              if(0 === sizeof($user->getVehicles())) {
+                $this->flashMessenger()->clearMessages();
+                $this->flashMessenger()->addInfoMessage(\JumpUpDriver\Util\Messages\IControllerMessages::INFO_NO_VEHICLES);
+                $this->redirect()->toRoute(IRouteStore::ADD_VEHICLE);
+              }
+            }
              
              
             // Export the form and the input fields to the view

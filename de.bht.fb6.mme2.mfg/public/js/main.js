@@ -195,7 +195,8 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 						mapCtrl.gmap.setAutocomplete( $( REF_TRIPS_START_POINT ), function(place) {
 							validStart = place.geometry.location;
 							$( REF_TRIPS_START_POINT ).val(validStart);
-						} );
+							tripsCtrl.setStartCoord(place.geometry.location);
+						} );						
 					};
 					if ($(REF_TRIPS_END_POINT).length > 0) {
 						console.log("main.js: Binding input field for end in LookUpTrips");
@@ -203,6 +204,7 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 						mapCtrl.gmap.setAutocomplete( $( REF_TRIPS_END_POINT ), function(place) {
 							validStart = place.geometry.location;
 							$( REF_TRIPS_END_POINT ).val(validStart);
+							tripsCtrl.setEndCoord(place.geometry.location);
 						} );
 					};
 				 	/* 

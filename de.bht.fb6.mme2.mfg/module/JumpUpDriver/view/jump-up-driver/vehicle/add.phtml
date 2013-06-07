@@ -1,5 +1,19 @@
 <h1><?php echo $this->translate("Add vehicle") ?></h1>
 
+<div class="hint">
+  <?php 
+    // show infoMessages if possible
+    if(null !== $this->infoMessages && is_array($this->infoMessages)) {
+      foreach ($this->infoMessages as $infoMessage) {
+        echo "<p>".$infoMessage."</p>";
+      }
+     
+    }
+  
+  
+  ?>
+</div>
+
 <div class="form registration">
 <?php 
     /*

@@ -70,7 +70,7 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 		};
 		
 
-		try {
+		// try {
 			var mapCtrl = null;			
 			var vehicleCtrl = null;
 			/* 
@@ -235,10 +235,10 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 			/* 
 			 * ..::::::::::::::::..
 			 */	
-		} catch ( e ) {
-			console.log( 'No Map to display: ' + e );
-			//throw e;
-		};
+//		} catch ( e ) {
+//			console.log( 'No Map to display: ' + e );
+//			//throw e;
+//		};
 		/* 
 		 * ..:::::::::::::::::::::::::::::::..
 		 */			

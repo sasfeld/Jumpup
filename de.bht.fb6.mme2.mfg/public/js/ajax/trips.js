@@ -22,26 +22,29 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	 */
 	var TripsController = function(options) {
 		this.options = options;
-		mapCtrl = options.mapCtrl;
+		if ( options.mapCtrl )
+			mapCtrl = options.mapCtrl;
+		else
+			throw "Illegal Argument";
 	};
 
 	/*
 	 * HandleServerResponse will be called after a successfull request. @param
 	 * data
 	 */
-	TripsController.prototype.handleServerResponse = function(data) {		
+	TripsController.prototype.handleServerResponse = function(data) {
 		// TripInfo view helper
 		var viewOptions = {
-				"accordion" :  $(REF_ACCORDION),	
-			};
-		var tripInfoView = new TripInfo(viewOptions); 
+			"accordion" : $( REF_ACCORDION ),
+		};
+		var tripInfoView = new TripInfo( viewOptions );
 		// bad request?
 		console.log( data );
 		// inform gui
 		if ( data.trips.length > 0 ) {
 			for ( var tripIndex = 0; tripIndex < data.trips.length; tripIndex++ ) {
 				var trip = data.trips[ tripIndex ];
-				
+
 				var viaWaypoints = trip.viaWaypoints;
 
 				var waypointsArray = new Array();
@@ -58,12 +61,13 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 					mapCtrl.showRoute( startCoord, endCoord, waypointsArray, true );
 				}
 				// build selection view for user
-				tripInfoView.addTrip(trip);				
+				tripInfoView.addTrip( trip );
 			}
 			;
 
-		};
-		
+		}
+		;
+
 		// activate accordion
 		tripInfoView.reloadAccordion();
 	};

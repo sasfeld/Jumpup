@@ -35,7 +35,6 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	var MapController = function(mapsOptions, ctrlOptions) {
 		try {
 			this.gmap = new GoogleMap( mapsOptions );
-			this.gmap.mapsLoaded(); // initialize maps
 			if ( null != ctrlOptions ) {
 				this.inputStartCoord = ctrlOptions.input_start_coord
 						|| window.REF_ADDTRIP_INPUT_STARTCOORD;

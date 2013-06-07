@@ -46,5 +46,10 @@ interface IRouteStore {
      * Route to the edit vehicle.
      */    
     const EDIT_VEHICLE = "editvehicle";
+    /**
+     * Route to the action viewBookings within the BookingController.
+     * @var String
+     */
+    const BOOK_DRIVER_OVERVIEW = "listdriverbookings";
     
 }

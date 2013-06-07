@@ -119,6 +119,18 @@ class AuthNavigation extends Navigation {
                  * ..:::::::::::::::::::::::::::::::::::::::::..
                  */
                 /*
+                 * ..:: Module JumpUpDriver -> Bookings page ::..
+                 */
+                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
+                'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_DRIVER_BOOKINGS),
+                'route' => \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DRIVER_OVERVIEW,
+                ));
+                $this->_injectPage($page, $routeMatch, $router);
+                $this->addPage($page);
+                /*
+                 * ..:::::::::::::::::::::::::::::::::::::::::..
+                 */
+                /*
                  * ..:: Module JumpUpUser -> logout page ::..
                  */
                 $page = \Zend\Navigation\Page\AbstractPage::factory(array(

@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpPassenger\Controller;
 
+use JumpUpUser\Controller\ANeedsAuthenticationController;
+
 use JumpUpUser\Models\User;
 
 use JumpUpPassenger\Exceptions\OverbookException;

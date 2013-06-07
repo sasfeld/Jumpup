@@ -1,10 +1,21 @@
 <?php
-namespace JumpUpPassenger\Controller;
+namespace JumpUpUser\Controller;
 
 use \JumpUpUser\Util\Auth\CheckAuthentication;
 use \JumpUpUser\Export\IAuthenticationRequired;
 use \Zend\Mvc\Controller\AbstractActionController;
 
+/**
+ *
+ * This controller offers functionalities for all kinds of controller that work with User entities.
+ *
+ * @package    JumpUpPassenger\Controller
+ * @subpackage
+ * @copyright  Copyright (c) 2013 Sascha Feldmann (http://saschafeldmann.de)
+ * @license    GNU license
+ * @version    1.0
+ * @since      07.06.2013
+ */
 abstract class ANeedsAuthenticationController extends AbstractActionController implements IAuthenticationRequired {
 	protected $authservice;
 	protected $em;

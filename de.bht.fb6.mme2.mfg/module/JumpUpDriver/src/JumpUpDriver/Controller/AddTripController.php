@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpDriver\Controller;
 
+use JumpUpUser\Controller\ANeedsAuthenticationController;
+
 use JumpUpUser\Models\User;
 
 use JumpUpUser\Export\IAuthenticationRequired;

@@ -14,6 +14,17 @@ return array(
                             ),
                         ),
                     ),*/
+            'listdriverbookings' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/listdriverbookings',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'viewBookings',
+                    ),
+                ),
+            ),
                'driverjson' => array(
                     'type'    => 'Literal',
                     'options' => array(
@@ -192,6 +203,11 @@ return array(
                 return new \JumpUpDriver\Controller\JsonController(
                     $sm->get("doctrine.entitymanager.orm_default")
                 );
+            }, 
+           'JumpUpDriver\Controller\Booking' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                $sm = $cm->getServiceLocator();
+                return new \JumpUpDriver\Controller\BookingController(\Application\Util\ServicesUtil::getDoctrineEm($sm)
+                    );
             }, 
         ),    
         'invokables' => array(

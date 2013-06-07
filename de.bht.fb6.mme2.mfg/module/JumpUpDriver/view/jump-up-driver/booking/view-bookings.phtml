@@ -1,0 +1,49 @@
+
+<h1><?php echo $this->translate("View bookings") ?></h1>
+
+<div>
+<?php 
+    /*
+     * author: Sascha Feldmann
+     * 
+     * Render the bookings exported by the BookingController -> viewBookingsAction.
+     */
+    use JumpUpUser\Forms\RegistrationForm;
+    use JumpUpPassenger\Util\Messages\IControllerMessages;
+    
+
+    
+    use JumpUpPassenger\Util\IBookingState;
+    
+ 
+    if(null !== $this->bookings && (0 < sizeof($this->bookings))) {
+        foreach ($this->bookings as $booking) {
+            echo $this->translate("<h3>".$booking->getStartPoint() . $booking->getEndPoint()."</h3>");
+            // differ bookings states
+            if ($booking->getState() === IBookingState::OFFER_FROM_PASSENGER) {
+              echo $this->translate(IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM) . "<br />";
+              echo $this->translate("Your price recommendation: ".$booking->getPassengersRecomPrice());
+            }
+            elseif($booking->getState() === IBookingState::ACCEPT) {
+              
+            }
+            elseif($booking->getState() === IBookingState::DENY) {
+            
+            }
+            elseif($booking->getState() === IBookingState::OFFER_FROM_DRIVER) {
+            
+            }
+            
+        }
+    }
+    else { // no bookings done
+      echo $this->translate(IControllerMessages::BOOKING_NO_BOOKINGS);    
+    }
+    
+  
+  
+   
+?>
+
+</div>
+

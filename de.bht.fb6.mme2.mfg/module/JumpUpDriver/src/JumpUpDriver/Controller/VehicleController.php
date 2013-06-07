@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpDriver\Controller;
 
+use JumpUpUser\Controller\ANeedsAuthenticationController;
+
 use Zend\Stdlib\Hydrator\ClassMethods;
 
 use Zend\Form\Annotation\AnnotationBuilder;

@@ -14,18 +14,12 @@
 define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 		GoogleMap, $, OverviewPathStrategy) {
 	// --> hidden input fields which needs to be stored in DB
-	const
-	REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
-	const
-	REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
-	const
-	REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
-	const
-	REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
-	const
-	REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
-	const
-	REF_ADDTRIP_INPUT_VIA_WAYPOINTS = 'input[name="viaWaypoints"]';
+	const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
+	const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
+	const REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
+	const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
+	const REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
+	const REF_ADDTRIP_INPUT_VIA_WAYPOINTS = 'input[name="viaWaypoints"]';
 
 	/*
 	 * Constructor function for this module. The google map will be initialized in
@@ -35,7 +29,6 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	var MapController = function(mapsOptions, ctrlOptions) {
 		try {
 			this.gmap = new GoogleMap( mapsOptions );
-			this.gmap.mapsLoaded(); // initialize maps
 			if ( null != ctrlOptions ) {
 				this.inputStartCoord = ctrlOptions.input_start_coord
 						|| window.REF_ADDTRIP_INPUT_STARTCOORD;
@@ -44,7 +37,7 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 			}
 		} catch ( e ) {
 			throw e;
-		}
+		};
 	};
 
 	/*

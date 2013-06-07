@@ -27,10 +27,6 @@ define( [
 		this.geocoder;
 		this.infoWindow;
 
-		this.mapsLoaded();
-	}; // GoogleMap constructor
-
-	GoogleMap.prototype.mapsLoaded = function() {
 		this.directionsService = new google.maps.DirectionsService();
 		this.geocoder = new google.maps.Geocoder();
 		this.infowindow = new google.maps.InfoWindow();
@@ -40,7 +36,7 @@ define( [
 			center : torun,
 			zoom : 5
 		} );
-	}; // mapsLoaded()
+	}; // GoogleMap constructor
 
 	GoogleMap.prototype.removeRoutes = function() {
 

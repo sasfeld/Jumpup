@@ -2,3 +2,5 @@
 /vendor
 /.settings
 /data
+/composer.phar
+/composer.lock

@@ -204,7 +204,6 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 						mapCtrl.gmap.setAutocomplete( $( REF_TRIPS_END_POINT ), function(place) {
 							validStart = place.geometry.location;
 							$( REF_TRIPS_END_POINT ).val(validStart);
-							tripsCtrl.setEndCoord(place.geometry.location);
 						} );
 					};
 				 	/* 

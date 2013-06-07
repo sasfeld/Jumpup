@@ -78,8 +78,6 @@ define( [
 	}; // setAutocomplete()
 
 	GoogleMap.prototype.selectByTripId = function(id) {
-		console.log("\n\n\n"+id+"\n");
-		
 		if ( id )
 			_this.select( _this.idMap[ id ] );
 		else
@@ -100,7 +98,7 @@ define( [
 		this.deselect( this.selected );
 
 		this.selected = i;
-		
+
 		var routeObject = this.allRouteObjects[ i ];
 
 		if ( this.showDirectionsPanel && this.textbox && routeObject )
@@ -129,8 +127,6 @@ define( [
 
 	GoogleMap.prototype.showRoute = function(id, startLatLng, endLatLng,
 			waypoints, callbackFnc, callbackSelect) {
-
-		console.log( google.maps );
 
 		// convert waypoint array
 		if ( waypoints )
@@ -163,7 +159,7 @@ define( [
 		_this.allRouteObjects[ i ] = routeObject;
 
 		// comment when not in debug
-		var overviewStrategy = new OverviewPathStrategy();
+		// var overviewStrategy = new OverviewPathStrategy();
 
 		// direction changed
 		google.maps.event
@@ -174,10 +170,10 @@ define( [
 						callbackFnc( directions );
 
 					if ( routeObject[ "polyline" ] )
-						routeObject[ "polyline" ].setPath( overviewStrategy
-								.execute( directions.routes[ 0 ].overview_path ) );
-					// routeObject[ "polyline" ]
-					// .setPath( directions.routes[ 0 ].overview_path );
+						// routeObject[ "polyline" ].setPath( overviewStrategy
+						// .execute( directions.routes[ 0 ].overview_path ) );
+						routeObject[ "polyline" ]
+								.setPath( directions.routes[ 0 ].overview_path );
 
 				} );
 
@@ -206,7 +202,8 @@ define( [
 			}
 		} );
 
-		if ( routeObject[ "polyline" ] && !this.selected )
+		// only select when nothing is selected
+		if ( this.selectable && this.selected === undefined )
 			_this.select( i );
 
 	}; // showRoute()

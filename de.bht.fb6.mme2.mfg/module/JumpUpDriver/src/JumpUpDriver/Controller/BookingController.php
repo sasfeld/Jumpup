@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpDriver\Controller;
 
+use JumpUpPassenger\Util\IBookingState;
+
 use JumpUpUser\Controller\ANeedsAuthenticationController;
 
 use JumpUpUser\Models\User;
@@ -9,7 +11,6 @@ use JumpUpPassenger\Exceptions\OverbookException;
 
 use JumpUpPassenger\Util\IEntitiesStore;
 
-use JumpUpPassenger\Util\Routes\IRouteStore;
 
 use JumpUpPassenger\Util\Messages\IControllerMessages;
 
@@ -33,6 +34,8 @@ use Application\Util\ExceptionUtil;
  * @since      07.06.2013
  */
 class BookingController extends ANeedsAuthenticationController{
+  const POST_BOOKING_ID = RecommendationForm::FIELD_BOOKING_ID;
+  const POST_DRIVER_PRICE = RecommendationForm::FIELD_RECOMM_PRICE;
   
   /**
    * The error action is called when another action raises an error.
@@ -67,9 +70,43 @@ class BookingController extends ANeedsAuthenticationController{
     
   }
   
-  
-
-  
+  /**
+   * The doRecommendation actions updates the driver's price recommendation on an active booking.
+   * input parameters: - bookingId (the id of the depending booking)
+   *                   - price (the recommended price of the driver)
+   * exports: nothing =)
+   * because it redirects
+   */
+  public function doRecommendation() {
+    // check if user is logged in and fetch user's entity
+    $loggedInUser = $this->_checkAndRedirect();
+    if($request->isPost()) {
+      $tripId = (int) $request->getPost(self::POST_BOOKING_ID);
+      $driversRecomPrice = (int) $request->getPost(self::POST_DRIVER_PRICE);
+      if(null !== $tripId && null !== $driversRecomPrice) {
+        $booking = $this->_getBooking($loggedInUser, $bookingId);
+        if(null !== $booking) {        
+          $booking->setDriversRecomPrice($driversRecomPrice);
+          // set correct state 
+          $booking->setState(IBookingState::OFFER_FROM_DRIVER);
+          // update entity
+          $this->em->merge($booking);
+          $this->em->flush();
+        }
+        else {
+          $this->flashMessenger()->clearMessages();
+          $this->flashMessenger()->addErrorMessage(\JumpUpDriver\Util\Messages\IControllerMessages::ERROR_NO_BOOKING);
+        }
+      }
+      else {
+        $this->flashMessenger()->addErrorMessage(\JumpUpDriver\Util\Messages\IControllerMessages::ERROR_BOOKING_REQUEST);
+      }      
+    }
+    
+    // fallthrough: error
+    $this->redirect()->toRoute(\JumpUpDriver\Util\Routes\IRouteStore::BOOK_ERROR);   
+  }
+    
   /**
    * Get all bookings for the given driver.
    * @param User $user
@@ -80,5 +117,18 @@ class BookingController extends ANeedsAuthenticationController{
     return $bookings;
   }
   
+  /**
+   * Get the booking entity for a given User AND bookingId.
+   * @param User $loggedInUser
+   * @param unknown_type $bookingId
+   * @return Booking instance or null if there was no matching entity.
+   */
+  private function _getBooking(User $loggedInUser, $bookingId) {
+    $bookingRepo = $this->em->getRepository(\JumpUpPassenger\Util\IEntitiesStore::BOOKING);
+    $booking = $bookingRepo->findOneBy(array("id" => $bookingId,
+                                          "driver" => $loggedInUser->getId(),
+                                          ));
+    return $booking;
+  }
   
 }

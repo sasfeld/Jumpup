@@ -1,4 +1,8 @@
 
+
+
+
+
 <h1><?php echo $this->translate("View bookings") ?></h1>
 
 <div>
@@ -9,31 +13,52 @@
      * Render the bookings exported by the BookingController -> viewBookingsAction.
      */
     use JumpUpUser\Forms\RegistrationForm;
-    use JumpUpPassenger\Util\Messages\IControllerMessages;
-    
-
-    
+    use JumpUpDriver\Util\Messages\IControllerMessages;   
     use JumpUpPassenger\Util\IBookingState;
+    use Zend\Form\Annotation\AnnotationBuilder;
+    
+    use JumpUpDriver\Util\Routes\IRouteStore;
+    
+    
+    use JumpUpDriver\Forms\RecommendationForm;
+    use JumpUpPassenger\Models\Booking;
+    
+    
+    
+    function _getRecommForm(Booking $booking) {
+        $builder = new AnnotationBuilder();
+        $recomForm = $builder->createForm(new RecommendationForm());
+        $recomForm->setAttribute('action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DO_RECOMMENDATION);
+        $recomForm->get(RecommendationForm::FIELD_BOOKING_ID)->setValue($booking->getId());
+        return $recomForm;
+    }
+    
+    function _renderBooking(Booking $booking, $_this) {
+      echo $_this->translate("<h3>".$booking->getStartPoint() . " => " . $booking->getEndPoint()."</h3>");
+      // differ bookings states
+      if ($booking->getState() === IBookingState::OFFER_FROM_PASSENGER) {
+        echo $_this->translate(IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM) . "<br />";
+        echo $_this->translate("Passenger's price recommendation: ".$booking->getPassengersRecomPrice());
+        // show recommendation form
+        $recommForm = _getRecommForm($booking);
+        echo $_this->renderForm($recommForm);
+      }
+      elseif($booking->getState() === IBookingState::ACCEPT) {
+      
+      }
+      elseif($booking->getState() === IBookingState::DENY) {
+      
+      }
+      elseif($booking->getState() === IBookingState::OFFER_FROM_DRIVER) {
+      
+      }
+      
+    }
     
  
     if(null !== $this->bookings && (0 < sizeof($this->bookings))) {
         foreach ($this->bookings as $booking) {
-            echo $this->translate("<h3>".$booking->getStartPoint() . $booking->getEndPoint()."</h3>");
-            // differ bookings states
-            if ($booking->getState() === IBookingState::OFFER_FROM_PASSENGER) {
-              echo $this->translate(IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM) . "<br />";
-              echo $this->translate("Your price recommendation: ".$booking->getPassengersRecomPrice());
-            }
-            elseif($booking->getState() === IBookingState::ACCEPT) {
-              
-            }
-            elseif($booking->getState() === IBookingState::DENY) {
-            
-            }
-            elseif($booking->getState() === IBookingState::OFFER_FROM_DRIVER) {
-            
-            }
-            
+          _renderBooking($booking, $this);
         }
     }
     else { // no bookings done

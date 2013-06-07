@@ -14,6 +14,17 @@ return array(
                             ),
                         ),
                     ),*/
+            'driverrecommendation' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/listdriverbookings',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'doRecommendation',
+                    ),
+                ),
+            ),
             'listdriverbookings' => array(
                 'type'    => 'Literal',
                 'options' => array(

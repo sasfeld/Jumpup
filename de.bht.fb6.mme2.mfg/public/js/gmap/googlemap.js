@@ -4,8 +4,8 @@ define( [
 		"async!http://maps.google.com/maps/api/js?libraries=places&key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function(
 		$, OverviewPathStrategy) {
 
-			var _this;
-			
+	var _this;
+
 	/**
 	 * @param divs
 	 *          Is a assosiativ array. Avalabile options: 'mode', 'map_canvas',
@@ -14,7 +14,9 @@ define( [
 	var GoogleMap = function(options) {
 
 		_this = this;
-		
+
+		this.selected = undefined;
+
 		this.map_canvas = options[ 'map_canvas' ];
 		this.textbox = options[ 'textbox' ];
 		this.draggable = options[ "draggable" ] || false;
@@ -45,6 +47,8 @@ define( [
 
 	GoogleMap.prototype.removeRoutes = function() {
 
+		this.selected = undefined;
+
 		while ( this.allRouteObjects.length > 0 ) {
 			var routeObject = this.allRouteObjects.pop();
 			var display = routeObject[ "display" ];
@@ -74,18 +78,30 @@ define( [
 	}; // setAutocomplete()
 
 	GoogleMap.prototype.selectByTripId = function(id) {
-		_this.select( _this.idMap[id] );
-	}; // select()
-	
+		console.log("\n\n\n"+id+"\n");
+		
+		if ( id )
+			_this.select( _this.idMap[ id ] );
+		else
+			_this.deselect( _this.selected );
+	}; // selectByTripId()
+
+	GoogleMap.prototype.isDraggable = function() {
+		return _this.draggable;
+	}; // draggable()
+
+	GoogleMap.prototype.isSelectable = function() {
+		return _this.selectable;
+	}; // selectable()
+
 	GoogleMap.prototype.select = function(i) {
 
 		// deselect all
-		for ( var j = 0; j < this.allRouteObjects.length; ++j ) {
-			this.deselect( j );
-		}
+		this.deselect( this.selected );
 
+		this.selected = i;
+		
 		var routeObject = this.allRouteObjects[ i ];
-		console.log( routeObject );
 
 		if ( this.showDirectionsPanel && this.textbox && routeObject )
 			routeObject[ "display" ].setPanel( this.textbox );
@@ -98,21 +114,21 @@ define( [
 	}; // select()
 
 	GoogleMap.prototype.deselect = function(i) {
+		if ( i != undefined ) {
+			var routeObject = this.allRouteObjects[ i ];
 
-		var routeObject = this.allRouteObjects[ i ];
+			if ( routeObject[ "polyline" ] )
+				routeObject[ "polyline" ].setOptions( {
+					strokeOpacity : 0,
+				} );
 
-		if ( routeObject[ "polyline" ] )
-			routeObject[ "polyline" ].setOptions( {
-				strokeOpacity : 0,
-			} );
-
-		if ( routeObject[ "display" ] )
-			routeObject[ "display" ].setPanel( null );
-
+			if ( routeObject[ "display" ] )
+				routeObject[ "display" ].setPanel( null );
+		}
 	}; // deselect()
 
-	GoogleMap.prototype.showRoute = function(id, startLatLng, endLatLng, waypoints,
-			callbackFnc, callbackSelect) {
+	GoogleMap.prototype.showRoute = function(id, startLatLng, endLatLng,
+			waypoints, callbackFnc, callbackSelect) {
 
 		console.log( google.maps );
 
@@ -125,10 +141,9 @@ define( [
 				};
 			}
 
-		var _this = this;
 		var routeObject = new Object();
 		var i = this.allRouteObjects.length;
-		this.idMap[id] = i;
+		this.idMap[ id ] = i;
 
 		routeObject[ "display" ] = new google.maps.DirectionsRenderer( {
 			map : _this.map,
@@ -155,7 +170,7 @@ define( [
 				.addListener( routeObject[ "display" ], "directions_changed", function() {
 					// callback ( function param )
 					var directions = routeObject[ "display" ].getDirections();
-					if(callbackFnc)
+					if ( callbackFnc )
 						callbackFnc( directions );
 
 					if ( routeObject[ "polyline" ] )
@@ -171,8 +186,8 @@ define( [
 			google.maps.event
 					.addListener( routeObject[ "polyline" ], "mouseover", function() {
 						_this.select( i );
-						if(callbackSelect)
-							callbackSelect(id);
+						if ( callbackSelect )
+							callbackSelect( id );
 					} );
 
 		// map.setCenter( new google.maps.LatLng( start ) );
@@ -191,7 +206,7 @@ define( [
 			}
 		} );
 
-		if ( routeObject[ "polyline" ] )
+		if ( routeObject[ "polyline" ] && !this.selected )
 			_this.select( i );
 
 	}; // showRoute()

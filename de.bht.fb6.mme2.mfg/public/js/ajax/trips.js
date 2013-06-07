@@ -52,6 +52,7 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 		var tripInfoView = new TripInfo(viewOptions, mapCtrl.select); 
 		// bad request?
 		console.log( data );
+		var multiple = false;
 		// inform gui
 		if ( data.trips.length > 0 ) {
 			for ( var tripIndex = 0; tripIndex < data.trips.length; tripIndex++ ) {
@@ -70,7 +71,8 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 				}
 				// TODO get multiple routes working.
 				if ( null != startCoord && null != endCoord ) {
-					mapCtrl.showRoute( trip.id, trip.startCoord, trip.endCoord, waypointsArray, true, tripInfoView.select );
+					mapCtrl.showRoute( trip.id, trip.startCoord, trip.endCoord, waypointsArray, multiple, tripInfoView.select );
+					multiple = true;
 				}
 				// build selection view for user
 				tripInfoView.addTrip(trip);				

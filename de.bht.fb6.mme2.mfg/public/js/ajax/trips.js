@@ -69,7 +69,7 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 				}
 				// TODO get multiple routes working.
 				if ( null != startCoord && null != endCoord ) {
-					mapCtrl.showRoute( startCoord, endCoord, waypointsArray, true );
+					mapCtrl.showRoute( trip.startCoord, trip.endCoord, waypointsArray, true );
 				}
 				// build selection view for user
 				tripInfoView.addTrip(trip);				

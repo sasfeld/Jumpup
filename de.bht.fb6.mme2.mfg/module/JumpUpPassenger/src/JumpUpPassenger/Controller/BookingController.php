@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpPassenger\Controller;
 
+use JumpUpUser\Controller\ANeedsAuthenticationController;
+
 use JumpUpUser\Models\User;
 
 use JumpUpPassenger\Exceptions\OverbookException;
@@ -41,7 +43,26 @@ class BookingController extends ANeedsAuthenticationController{
    * @var String the parameter name
    */
   const POST_TRIP_RECOMM_PRICE = "recommendedPrice";
-  
+  /**
+   * POST-parameter for the startPoint (of the passenger).
+   * @var String the parameter name
+   */
+  const POST_START_POINT = "startPoint";
+  /**
+   * POST-parameter for the endPoint (of the passenger).
+   * @var String the parameter name
+   */
+  const POST_END_POINT = "endPoint";
+  /**
+   * POST-parameter for the startCoord (of the passenger).
+   * @var String the parameter name
+   */
+  const POST_START_COORD = "startCoord";
+  /**
+   * POST-parameter for the endCoord (of the passenger).
+   * @var String the parameter name
+   */
+  const POST_END_COORD = "endCoord";
   /**
    * The error action is called when another action raises an error.
    * Input parameters: none
@@ -89,10 +110,18 @@ class BookingController extends ANeedsAuthenticationController{
     if($request->isPost()) {
       $tripId = (int) $request->getPost(self::POST_TRIP_ID);
       $recomPrice = (int) $request->getPost(self::POST_TRIP_RECOMM_PRICE);
-      if(null !== $tripId && null !== $recomPrice) {
+      $startPoint = (string) $request->getPost(self::POST_START_POINT);
+      $endPoint = (string) $request->getPost(self::POST_END_POINT);
+      $startCoord =  $request->getPost(self::POST_START_COORD);
+      $endCoord = $request->getPost(self::POST_END_COORD);
+      if(null !== $tripId && null !== $recomPrice && null !== $startCoord && null !== $startPoint && null !== $endPoint && null !== $endCoord) {
         $trip = $this->_getTrip($tripId);
         if(null !== $trip) {         
           $booking = new Booking($trip, $loggedInUser, $recomPrice);
+          $booking->setStartPoint($startPoint);
+          $booking->setStartCoordinate($startCoord);
+          $booking->setEndCoordinate($endCoord);
+          $booking->setEndPoint($endPoint);
           try {
             $this->_bookTrip($booking, $trip);
             // @TODO inform driver via eMail, he needs to check his booking overview page
@@ -143,13 +172,7 @@ class BookingController extends ANeedsAuthenticationController{
    * @return array of Booking instances
    */
   private function _getAllBookings(User $user) {
-//     $bookingRepo = $this->em->getRepository("JumpUpPassenger\Models\Booking");
-//     $tripRepo = $this->em->getRepository(IEntitiesStore::TRIP);
-    $bookingRepo = $this->em->getRepository(IEntitiesStore::BOOKING);
-//     $bookings = $bookingRepo->findOneBy(array('passenger' => $user->getId()));
-    $bookings = $bookingRepo->findAll();
-//     $bookings = $tripRepo->findAll();
-//     $bookings = null;
+    $bookings = $user->getPassengerBookings();
     return $bookings;
   }
   /**

@@ -1,5 +1,7 @@
 <?php 
 namespace JumpUpUser\Models;
+use JumpUpPassenger\Models\Booking;
+
 use JumpUpDriver\Models\Vehicle;
 
 use Zend\Db\TableGateway\TableGateway;
@@ -139,9 +141,9 @@ class User {
      * property vehicles
      * @var array
      */
-//     /**
-//      * @OneToMany(targetEntity="JumpUpPassenger\Models\Booking", mappedBy="driver")
-//      */
+    /**
+     * @OneToMany(targetEntity="JumpUpPassenger\Models\Booking", mappedBy="driver")
+     */
     protected $driverBookings;
     
     /**
@@ -149,9 +151,9 @@ class User {
      * property vehicles
      * @var array
      */
-//     /**
-//      * @OneToMany(targetEntity="JumpUpPassenger\Models\Booking", mappedBy="passenger")
-//      */
+    /**
+     * @OneToMany(targetEntity="JumpUpPassenger\Models\Booking", mappedBy="passenger")
+     */
     protected $passengerBookings;
     /**
      * 
@@ -374,6 +376,20 @@ class User {
      */
     public function getLocale() {
         return $this->locale;
+    }   
+    
+     /**
+     * @return array of Booking  
+     */
+    public function getPassengerBookings() {
+        return $this->passengerBookings;
+    }   
+    
+     /**
+     * @return array of Booking  
+     */
+    public function getDriverBookings() {
+        return $this->driverBookings;
     }   
     
     /*

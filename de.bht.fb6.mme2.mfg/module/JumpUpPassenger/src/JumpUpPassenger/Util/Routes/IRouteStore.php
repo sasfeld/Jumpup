@@ -40,5 +40,10 @@ interface IRouteStore {
      * @var String
      */
     const BOOK_ERROR = "bookerror";
+    /**
+     * Route tp the viewBooking action within the BookingController. It is shown when any error occurs.
+     * @var String
+     */
+    const BOOK_PASS_OVERVIEW = "listpassengerbookings";
     
 }

@@ -38,12 +38,12 @@ class Booking {
    * @ORM\Column(type="string", nullable=true)
    */
   private $endCoordinate;
-//   /**
-//    * @ManyToOne(targetEntity="JumpUpUser\Models\User", inversedBy="driverBookings")
-//    */
+  /**
+   * @ManyToOne(targetEntity="JumpUpUser\Models\User", inversedBy="driverBookings")
+   */
   private $driver;
   /**
-   * @ManyToOne(targetEntity="JumpUpUser\Models\User")
+   * @ManyToOne(targetEntity="JumpUpUser\Models\User", inversedBy="passengerBookings")
    */
   private $passenger;
   /**

@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpDriver\Controller;
 
+use JumpUpUser\Controller\ANeedsAuthenticationController;
+
 use Zend\Stdlib\Hydrator\ClassMethods;
 
 use Zend\Form\Annotation\AnnotationBuilder;
@@ -158,6 +160,14 @@ class VehicleController extends ANeedsAuthenticationController{
      */
     public function addAction() {
         if($this->_checkAuthentication()) { // auth required
+            // check if the request was redirected by the AddTripController
+            $infoMessages = "";
+            if($this->flashMessenger()->hasInfoMessages()) {
+              $infoMessages = $this->flashMessenger()->getInfoMessages();
+              $this->flashMessenger()->clearMessages();
+              $this->flashMessenger()->addInfoMessage(IControllerMessages::INFO_NO_VEHICLES);
+            }
+          
             $vehicle = new Vehicle();
             $form = $this->_getForm();
             $form->setAttribute('action', $this->url()->fromRoute(IRouteStore::ADD_VEHICLE));
@@ -178,11 +188,17 @@ class VehicleController extends ANeedsAuthenticationController{
                         $this->em->persist($vehicle);
                         $this->em->flush(); // persist in DB
                         $this->flashMessenger()->addMessage(IControllerMessages::SUCCESS_ADD_VEHICLE);
-                        $this->redirect()->toRoute(IRouteStore::LIST_VEHICLES);
+                        $redirectRoute = IRouteStore::LIST_VEHICLES;
+                        if($this->flashMessenger()->hasInfoMessages()) {
+                          $redirectRoute = IRouteStore::ADD_TRIP;
+                          $this->flashMessenger()->clearMessages();
+                        }
+                        $this->redirect()->toRoute($redirectRoute);
                     }
                 }
             }
-            return array("form" => $form);
+            return array("form" => $form,
+                "infoMessages" => $infoMessages);
 
         }
 

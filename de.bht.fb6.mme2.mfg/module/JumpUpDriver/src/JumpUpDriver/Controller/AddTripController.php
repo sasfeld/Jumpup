@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpDriver\Controller;
 
+use JumpUpUser\Controller\ANeedsAuthenticationController;
+
 use JumpUpUser\Models\User;
 
 use JumpUpUser\Export\IAuthenticationRequired;
@@ -106,6 +108,13 @@ class AddTripController extends ANeedsAuthenticationController {
                     $this->flashMessenger()->addMessage(IControllerMessages::SUCCESS_ADD_TRIP);
                     $this->redirect()->toRoute(IRouteStore::ADD_TRIP_SUCCESS);
                 }
+            }
+            else { // none post-request
+              if(0 === sizeof($user->getVehicles())) {
+                $this->flashMessenger()->clearMessages();
+                $this->flashMessenger()->addInfoMessage(\JumpUpDriver\Util\Messages\IControllerMessages::INFO_NO_VEHICLES);
+                $this->redirect()->toRoute(IRouteStore::ADD_VEHICLE);
+              }
             }
              
              

@@ -1,5 +1,7 @@
 <?php
 namespace JumpUpPassenger\Controller;
+use JumpUpUser\Controller\ANeedsAuthenticationController;
+
 use JumpUpPassenger\Util\IEntitiesStore;
 
 use JumpUpPassenger\Util\Messages\ILabels;

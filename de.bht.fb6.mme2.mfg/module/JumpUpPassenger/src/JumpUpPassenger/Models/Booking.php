@@ -38,9 +38,9 @@ class Booking {
    * @ORM\Column(type="string", nullable=true)
    */
   private $endCoordinate;
-  /**
-   * @ManyToOne(targetEntity="JumpUpUser\Models\User")
-   */
+//   /**
+//    * @ManyToOne(targetEntity="JumpUpUser\Models\User", inversedBy="driverBookings")
+//    */
   private $driver;
   /**
    * @ManyToOne(targetEntity="JumpUpUser\Models\User")
@@ -88,6 +88,15 @@ class Booking {
     $this->passengersRecomPrice = $passengersRecomPrice;    
   }
   
+  public function setId($val) {
+//     $intVal = (int) $val;
+  
+//     if(!is_int($intVal)) {
+//       throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+//     }
+    $this->id = $val;
+  }  
+  
   public function  setStartPoint($startPoint) {
     if(!is_string($startPoint)) {
       throw ExceptionUtil::throwInvalidArgument('$startPoint', 'String', $startPoint);
@@ -131,7 +140,7 @@ class Booking {
    * A booking can only have one driver. 
    * @param User $driver the User who offers the trip.
    */
-  public function setDriver(User $driver) {
+  public function setDriver(\JumpUpUser\Models\User $driver) {
     $this->driver = $driver;
   }
   
@@ -140,7 +149,7 @@ class Booking {
    * A booking can only have one passenger.
    * @param User $passenger the User who books the trip.
    */
-  public function setPassenger(User $passenger) {
+  public function setPassenger(\JumpUpUser\Models\User $passenger) {
     $this->passenger = $passenger;
   }
   
@@ -229,7 +238,7 @@ class Booking {
    * @return int the recommended price of the driver.
    */
   public function getDriversRecomPrice() {
-    return (int) $this->driversRecomPrice;
+    return $this->driversRecomPrice;
   }
   
   /**
@@ -237,7 +246,7 @@ class Booking {
    * @return int thre recommended price of the passenger
    */
   public function getPassengersRecomPrice() {
-    return (int) $this->passengersRecomPrice;
+    return $this->passengersRecomPrice;
   }
   
   /**

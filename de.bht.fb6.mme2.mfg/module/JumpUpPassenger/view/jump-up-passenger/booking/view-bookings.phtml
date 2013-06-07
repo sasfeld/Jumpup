@@ -1,10 +1,4 @@
-use JumpUpPassenger\Util\Messages\IControllerMessages;
 
-use JumpUpPassenger\Util\Messages\IControllerMessages;
-
-use JumpUpPassenger\Util\IBookingState;
-
-use JumpUpPassenger\Util\IBookingState;
 
 <h1><?php echo $this->translate("View bookings") ?></h1>
 
@@ -16,6 +10,13 @@ use JumpUpPassenger\Util\IBookingState;
      * Render the bookings exported by the BookingController -> viewBookingsAction.
      */
     use JumpUpUser\Forms\RegistrationForm;
+    use JumpUpPassenger\Util\Messages\IControllerMessages;
+    
+
+    
+    use JumpUpPassenger\Util\IBookingState;
+    
+ 
     if(null !== $this->bookings) {
         foreach ($this->bookings as $booking) {
             // differ bookings states

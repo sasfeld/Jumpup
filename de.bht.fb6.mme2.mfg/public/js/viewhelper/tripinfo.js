@@ -113,8 +113,8 @@ define( [ "jquery" ], ( function($) {
 		var overviewPath = trip.overviewPath;
 		var numberBookings = trip.numberBookings;
 		var maxSeats = trip.maxSeats;
-		this.idMap[ id ] = length;
-		this.idMapReversed[ length++ ] = id;
+		this.idMap[ id ] = this.length;
+		this.idMapReversed[ this.length++ ] = id;
 
 		this.addHeadline( "Trip from " + startPoint + " to " + endPoint );
 		var bodyStr = "<ul>" + "<li>Driver: " + driver + "</li>"

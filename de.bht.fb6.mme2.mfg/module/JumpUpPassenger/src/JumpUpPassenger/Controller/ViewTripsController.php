@@ -1,5 +1,7 @@
 <?php
 namespace JumpUpPassenger\Controller;
+use JumpUpPassenger\Strategies\NearestRouteStrategy;
+
 use JumpUpUser\Controller\ANeedsAuthenticationController;
 
 use JumpUpPassenger\Util\IEntitiesStore;
@@ -47,7 +49,7 @@ class ViewTripsController extends ANeedsAuthenticationController{
     
     protected function _getFindTripStrategy() {
         if(!isset($this->findTripStrategy)) {
-            $strategy = new DumbRouteStrategy();
+            $strategy = new NearestRouteStrategy();
             $this->findTripStrategy = $strategy;
         }
         return $this->findTripStrategy;

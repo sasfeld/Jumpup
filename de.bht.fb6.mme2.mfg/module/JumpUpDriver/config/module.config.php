@@ -17,7 +17,7 @@ return array(
             'driverrecommendation' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/listdriverbookings',
+                    'route'    => '/driverrecommendation',
                     'defaults' => array(
                         '__NAMESPACE__' => 'JumpUpDriver\Controller',
                         'controller'    => 'Booking',

@@ -1,11 +1,6 @@
-
-
-
-
-
 <h1><?php echo $this->translate("View bookings") ?></h1>
 
-<div>
+<div id="driver_view_bookings">
 <?php 
     /*
      * author: Sascha Feldmann
@@ -16,12 +11,14 @@
     use JumpUpDriver\Util\Messages\IControllerMessages;   
     use JumpUpPassenger\Util\IBookingState;
     use Zend\Form\Annotation\AnnotationBuilder;
+    use JumpUpDriver\Util\Messages\IViewMessages;
     
     use JumpUpDriver\Util\Routes\IRouteStore;
     
     
     use JumpUpDriver\Forms\RecommendationForm;
     use JumpUpPassenger\Models\Booking;
+    use JumpUpDriver\Util\Messages\StateUtil;
     
     
     
@@ -34,7 +31,11 @@
     }
     
     function _renderBooking(Booking $booking, $_this) {
-      echo $_this->translate("<h3>".$booking->getStartPoint() . " => " . $booking->getEndPoint()."</h3>");
+      echo "<h3>" . $_this->translate($booking->getStartPoint() . " => " . $booking->getEndPoint()) .
+        " (". $_this->translate("Date") ." - ".$_this->translate(IViewMessages::BOOKING_DATE) .")</h3>";
+      echo "<div>"; // begin of accordion element content
+      // render status
+      echo "<p>".$_this->translate(IViewMessages::BOOKING_STATE).": ".$_this->translate(StateUtil::getStateLabel($booking->getState()))."</p>";
       // differ bookings states
       if ($booking->getState() === IBookingState::OFFER_FROM_PASSENGER) {
         echo $_this->translate(IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM) . "<br />";
@@ -52,14 +53,17 @@
       elseif($booking->getState() === IBookingState::OFFER_FROM_DRIVER) {
       
       }
+      echo "</div>"; // end of accordion element content
       
     }
     
  
     if(null !== $this->bookings && (0 < sizeof($this->bookings))) {
+        echo '<div id="accordion">'; // start of accordion
         foreach ($this->bookings as $booking) {
           _renderBooking($booking, $this);
         }
+        echo "</div>"; // end of accordion
     }
     else { // no bookings done
       echo $this->translate(IControllerMessages::BOOKING_NO_BOOKINGS);    
@@ -69,6 +73,5 @@
   
    
 ?>
-
 </div>
 

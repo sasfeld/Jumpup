@@ -34,8 +34,8 @@ use Application\Util\ExceptionUtil;
  * @since      07.06.2013
  */
 class BookingController extends ANeedsAuthenticationController{
-  const POST_BOOKING_ID = RecommendationForm::FIELD_BOOKING_ID;
-  const POST_DRIVER_PRICE = RecommendationForm::FIELD_RECOMM_PRICE;
+  const POST_BOOKING_ID = \JumpUpDriver\Forms\RecommendationForm::FIELD_BOOKING_ID;
+  const POST_DRIVER_PRICE = \JumpUpDriver\Forms\RecommendationForm::FIELD_RECOMM_PRICE;
   
   /**
    * The error action is called when another action raises an error.
@@ -77,13 +77,15 @@ class BookingController extends ANeedsAuthenticationController{
    * exports: nothing =)
    * because it redirects
    */
-  public function doRecommendation() {
+  public function doRecommendationAction() {
     // check if user is logged in and fetch user's entity
     $loggedInUser = $this->_checkAndRedirect();
+    
+    $request = $this->request;
     if($request->isPost()) {
-      $tripId = (int) $request->getPost(self::POST_BOOKING_ID);
+      $bookingId = (int) $request->getPost(self::POST_BOOKING_ID);
       $driversRecomPrice = (int) $request->getPost(self::POST_DRIVER_PRICE);
-      if(null !== $tripId && null !== $driversRecomPrice) {
+      if(null !== $bookingId && null !== $driversRecomPrice) {
         $booking = $this->_getBooking($loggedInUser, $bookingId);
         if(null !== $booking) {        
           $booking->setDriversRecomPrice($driversRecomPrice);

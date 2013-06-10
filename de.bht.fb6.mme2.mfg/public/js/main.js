@@ -110,7 +110,7 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 					
 					if(0 != startPointValue.length && 0 != endPointValue) {
 						console.log("main.js: showing new route");
-						mapCtrl.showRoute(startPointValue, endPointValue, null, false);
+						mapCtrl.showRoute(null, startPointValue, endPointValue, null, false);
 					};
 				}
 				

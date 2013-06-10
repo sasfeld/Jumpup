@@ -10,7 +10,6 @@
  * version    1.0
  * since      05.05.2013
  */
-
 define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	const REF_ACCORDION = "#accordion";
 	// stores the only existing instance
@@ -22,6 +21,8 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	 * controller
 	 */
 	var TripsController = function(options) {
+		_this = this;
+		
 		this.options = options;
 		_this = this;
 	};
@@ -48,9 +49,10 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 				"startLatLng" : _this.startLatLng,
 				"endLatLng" : _this.endLatLng,
 			};
-		var tripInfoView = new TripInfo(viewOptions); 
+		var tripInfoView = new TripInfo(viewOptions, mapCtrl.select); 
 		// bad request?
 		console.log( data );
+		var multiple = false;
 		// inform gui
 		if ( data.trips.length > 0 ) {
 			for ( var tripIndex = 0; tripIndex < data.trips.length; tripIndex++ ) {
@@ -69,7 +71,8 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 				}
 				// TODO get multiple routes working.
 				if ( null != startCoord && null != endCoord ) {
-					mapCtrl.showRoute( trip.startCoord, trip.endCoord, waypointsArray, true );
+					mapCtrl.showRoute( trip.id, trip.startCoord, trip.endCoord, waypointsArray, multiple, tripInfoView.select );
+					multiple = true;
 				}
 				// build selection view for user
 				tripInfoView.addTrip(trip);				

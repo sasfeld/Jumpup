@@ -14,12 +14,23 @@
 define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 		GoogleMap, $, OverviewPathStrategy) {
 	// --> hidden input fields which needs to be stored in DB
-	const REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
-	const REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
-	const REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
-	const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
-	const REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
-	const REF_ADDTRIP_INPUT_VIA_WAYPOINTS = 'input[name="viaWaypoints"]';
+	const
+	REF_ADDTRIP_INPUT_STARTCOORD_VISIBLE = 'input[name="startPoint"]';
+	const
+	REF_ADDTRIP_INPUT_ENDCOORD_VISIBLE = 'input[name="endPoint"]';
+	const
+	REF_ADDTRIP_INPUT_STARTCOORD = 'input[name="startCoordinate"]';
+	const
+	REF_ADDTRIP_INPUT_ENDCOORD = 'input[name="endCoordinate"]';
+	const
+	REF_ADDTRIP_INPUT_DURATION = 'input[name="duration"]';
+	const
+	REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
+	const
+	REF_ADDTRIP_INPUT_OVERVIEW_PATH = 'input[name="overviewPath"]';
+	const
+	REF_ADDTRIP_INPUT_VIA_WAYPOINTS = 'input[name="viaWaypoints"]';
+	var _this;
 
 	/*
 	 * Constructor function for this module. The google map will be initialized in
@@ -27,6 +38,8 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	 * exception if the map isn't loaded
 	 */
 	var MapController = function(mapsOptions, ctrlOptions) {
+		_this = this;
+
 		try {
 			this.gmap = new GoogleMap( mapsOptions );
 			if ( null != ctrlOptions ) {
@@ -37,7 +50,20 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 			}
 		} catch ( e ) {
 			throw e;
-		};
+		}
+		;
+
+		/*
+		 * fetch and store coordinate of points
+		 */
+		this.inputStartVisible = $( REF_ADDTRIP_INPUT_STARTCOORD_VISIBLE );
+		this.inputEndVisible = $( REF_ADDTRIP_INPUT_ENDCOORD_VISIBLE );
+		this.inputStartCoord = $( REF_ADDTRIP_INPUT_STARTCOORD );
+		this.inputEndCoord = $( REF_ADDTRIP_INPUT_ENDCOORD );
+		this.inputDuration = $( REF_ADDTRIP_INPUT_DURATION );
+		this.inputDistance = $( REF_ADDTRIP_INPUT_DISTANCE );
+		this.inputOverviewPath = $( REF_ADDTRIP_INPUT_OVERVIEW_PATH );
+		this.inputViaWaypoints = $( REF_ADDTRIP_INPUT_VIA_WAYPOINTS );
 	};
 
 	/*
@@ -47,16 +73,6 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	 */
 	MapController.prototype.handleRouteResponse = function(directionsResult) {
 		console.log( "Map controller -> handling route response" );
-
-		/*
-		 * fetch and store coordinate of points
-		 */
-		var inputStartCoord = $( REF_ADDTRIP_INPUT_STARTCOORD );
-		var inputEndCoord = $( REF_ADDTRIP_INPUT_ENDCOORD );
-		var inputDuration = $( REF_ADDTRIP_INPUT_DURATION );
-		var inputDistance = $( REF_ADDTRIP_INPUT_DISTANCE );
-		var inputOverviewPath = $( REF_ADDTRIP_INPUT_OVERVIEW_PATH );
-		var inputViaWaypoints = $( REF_ADDTRIP_INPUT_VIA_WAYPOINTS );
 
 		var singleRoute = directionsResult.routes[ 0 ];
 
@@ -103,18 +119,26 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 			/*
 			 * ..:: fill hidden input fields ::..
 			 */
-			inputStartCoord.val( startLatLng );
-			inputEndCoord.val( endLatLng );
-			inputDuration.val( duration );
-			inputDistance.val( distance );
-			inputOverviewPath.val( overviewString );
-			inputViaWaypoints.val( waypointsStringConcat );
+			if ( _this.gmap.isDraggable() ) {
+				_this.inputStartVisible.val( singleLeg.start_address );
+				_this.inputEndVisible.val( singleLeg.end_address );
+			}
+			_this.inputStartCoord.val( startLatLng );
+			_this.inputEndCoord.val( endLatLng );
+			_this.inputDuration.val( duration );
+			_this.inputDistance.val( distance );
+			_this.inputOverviewPath.val( overviewString );
+			_this.inputViaWaypoints.val( waypointsStringConcat );
 			/*
 			 * ..::::::::::::::::::::::::::::::..
 			 */
-			console.log( "value of input field: " + inputStartCoord.val() );
+			console.log( "value of input field: " + _this.inputStartCoord.val() );
 		}
 		;
+	};
+
+	MapController.prototype.select = function(tripid) {
+			_this.gmap.selectByTripId( tripid );
 	};
 
 	/*
@@ -125,19 +149,20 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	 * locations - param multiple set true if you want several routes to be
 	 * rendered.
 	 */
-	MapController.prototype.showRoute = function(start, destination, waypoints,
-			multiple) {
+	MapController.prototype.showRoute = function(id, start, destination,
+			waypoints, multiple, callbackSelect) {
 
 		// remove rendered routes
 		if ( !multiple ) {
 			this.gmap.removeRoutes();
 		}
-		
+
 		// show new route
 		// this.gmap.showRoute( start, destination, $( "#sendBt" ),
 		// this.handleRouteResponse );
 
-		this.gmap.showRoute( start, destination, waypoints, this.handleRouteResponse );
+		this.gmap
+				.showRoute( id, start, destination, waypoints, this.handleRouteResponse, callbackSelect );
 	};
 	return MapController; // return constructor function
 } ) );

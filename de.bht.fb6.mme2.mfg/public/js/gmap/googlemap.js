@@ -4,12 +4,18 @@ define( [
 		"async!http://maps.google.com/maps/api/js?libraries=places&key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=true" ], ( function(
 		$, OverviewPathStrategy) {
 
+	var _this;
+
 	/**
 	 * @param divs
 	 *          Is a assosiativ array. Avalabile options: 'mode', 'map_canvas',
 	 *          'textbox', 'geocoding'
 	 */
 	var GoogleMap = function(options) {
+
+		_this = this;
+
+		this.selected = undefined;
 
 		this.map_canvas = options[ 'map_canvas' ];
 		this.textbox = options[ 'textbox' ];
@@ -21,6 +27,7 @@ define( [
 			throw "map_canvas is required for the map.";
 
 		this.map;
+		this.idMap = new Object();
 		this.infowindow;
 		this.directionsService;
 		this.allRouteObjects = new Array();
@@ -39,6 +46,8 @@ define( [
 	}; // GoogleMap constructor
 
 	GoogleMap.prototype.removeRoutes = function() {
+
+		this.selected = undefined;
 
 		while ( this.allRouteObjects.length > 0 ) {
 			var routeObject = this.allRouteObjects.pop();
@@ -68,15 +77,29 @@ define( [
 
 	}; // setAutocomplete()
 
+	GoogleMap.prototype.selectByTripId = function(id) {
+		if ( id )
+			_this.select( _this.idMap[ id ] );
+		else
+			_this.deselect( _this.selected );
+	}; // selectByTripId()
+
+	GoogleMap.prototype.isDraggable = function() {
+		return _this.draggable;
+	}; // draggable()
+
+	GoogleMap.prototype.isSelectable = function() {
+		return _this.selectable;
+	}; // selectable()
+
 	GoogleMap.prototype.select = function(i) {
 
 		// deselect all
-		for ( var j = 0; j < this.allRouteObjects.length; ++j ) {
-			this.deselect( j );
-		}
+		this.deselect( this.selected );
+
+		this.selected = i;
 
 		var routeObject = this.allRouteObjects[ i ];
-		console.log( routeObject );
 
 		if ( this.showDirectionsPanel && this.textbox && routeObject )
 			routeObject[ "display" ].setPanel( this.textbox );
@@ -89,23 +112,21 @@ define( [
 	}; // select()
 
 	GoogleMap.prototype.deselect = function(i) {
+		if ( i != undefined ) {
+			var routeObject = this.allRouteObjects[ i ];
 
-		var routeObject = this.allRouteObjects[ i ];
+			if ( routeObject[ "polyline" ] )
+				routeObject[ "polyline" ].setOptions( {
+					strokeOpacity : 0,
+				} );
 
-		if ( routeObject[ "polyline" ] )
-			routeObject[ "polyline" ].setOptions( {
-				strokeOpacity : 0,
-			} );
-
-		if ( routeObject[ "display" ] )
-			routeObject[ "display" ].setPanel( null );
-
+			if ( routeObject[ "display" ] )
+				routeObject[ "display" ].setPanel( null );
+		}
 	}; // deselect()
 
-	GoogleMap.prototype.showRoute = function(startLatLng, endLatLng, waypoints,
-			callbackFnc) {
-
-		console.log( google.maps );
+	GoogleMap.prototype.showRoute = function(id, startLatLng, endLatLng,
+			waypoints, callbackFnc, callbackSelect) {
 
 		// convert waypoint array
 		if ( waypoints )
@@ -116,9 +137,9 @@ define( [
 				};
 			}
 
-		var _this = this;
 		var routeObject = new Object();
 		var i = this.allRouteObjects.length;
+		this.idMap[ id ] = i;
 
 		routeObject[ "display" ] = new google.maps.DirectionsRenderer( {
 			map : _this.map,
@@ -138,20 +159,21 @@ define( [
 		_this.allRouteObjects[ i ] = routeObject;
 
 		// comment when not in debug
-		var overviewStrategy = new OverviewPathStrategy();
+		// var overviewStrategy = new OverviewPathStrategy();
 
 		// direction changed
 		google.maps.event
 				.addListener( routeObject[ "display" ], "directions_changed", function() {
 					// callback ( function param )
 					var directions = routeObject[ "display" ].getDirections();
-					callbackFnc( directions );
+					if ( callbackFnc )
+						callbackFnc( directions );
 
 					if ( routeObject[ "polyline" ] )
-						routeObject[ "polyline" ].setPath( overviewStrategy
-								.execute( directions.routes[ 0 ].overview_path ) );
-					// routeObject[ "polyline" ]
-					// .setPath( directions.routes[ 0 ].overview_path );
+						// routeObject[ "polyline" ].setPath( overviewStrategy
+						// .execute( directions.routes[ 0 ].overview_path ) );
+						routeObject[ "polyline" ]
+								.setPath( directions.routes[ 0 ].overview_path );
 
 				} );
 
@@ -159,8 +181,9 @@ define( [
 		if ( routeObject[ "polyline" ] )
 			google.maps.event
 					.addListener( routeObject[ "polyline" ], "mouseover", function() {
-						console.log( "over" );
 						_this.select( i );
+						if ( callbackSelect )
+							callbackSelect( id );
 					} );
 
 		// map.setCenter( new google.maps.LatLng( start ) );
@@ -169,7 +192,6 @@ define( [
 			"origin" : startLatLng,
 			"destination" : endLatLng,
 			"waypoints" : waypoints,
-			"optimizeWaypoints" : true,
 			"travelMode" : google.maps.TravelMode.DRIVING,
 			"unitSystem" : google.maps.UnitSystem.METRIC,
 		};
@@ -180,7 +202,8 @@ define( [
 			}
 		} );
 
-		if ( routeObject[ "polyline" ] )
+		// only select when nothing is selected
+		if ( this.selectable && this.selected === undefined )
 			_this.select( i );
 
 	}; // showRoute()

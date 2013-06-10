@@ -26,14 +26,23 @@ define( [ "jquery" ], ( function($) {
 	const REF_TRIPS_END_POINT = TRIPS_REF_FORM + ' input[name="endPoint"]';
 	// was the accordion already initialized? important for the destroy() function on the accordion
 	var alreadyInit = false;
-	
+	var _this;
+
 	/**
 	 * Create a new TripInfo view helper.
-	 * @param options a plain old object with the following attributes:
-	 * 	- accordion : the JQuery DOM Element (NOT only the selector)
+	 * 
+	 * @param options
+	 *          a plain old object with the following attributes: - accordion :
+	 *          the JQuery DOM Element (NOT only the selector)
 	 */
-	var TripInfo = function(options) {
+	var TripInfo = function(options, callbackSelect) {
+		_this = this;
 		this.accordion = options.accordion || "#accordion";
+
+		this.idMap = new Object();
+		this.idMapReversed = new Object();
+		this.length = 0;
+		this.callbackSelect = callbackSelect;
 		this.inputStartPoint = $(REF_TRIPS_START_POINT);		
 		this.inputEndPoint = $(REF_TRIPS_END_POINT);
 		this.options = options;
@@ -41,15 +50,15 @@ define( [ "jquery" ], ( function($) {
 		// empty accordion node
 		this.accordion.empty();
 	};
-	
+
 	TripInfo.prototype.addBody = function(content) {
-		this.accordion.append("<div>"+content+"</div>");
+		this.accordion.append( "<div>" + content + "</div>" );
 	};
-	
+
 	TripInfo.prototype.addHeadline = function(title) {
-		this.accordion.append("<h3>"+title+"</h3>");
+		this.accordion.append( "<h3>" + title + "</h3>" );
 	};
-	
+
 	TripInfo.prototype.addBookingForm = function(tripId, bodyStr, systemPrice) {
 		bodyStr += '<form action="'+BOOKING_ACTION
 			+'" method="POST">'
@@ -63,25 +72,35 @@ define( [ "jquery" ], ( function($) {
 			+'</form>';
 		return bodyStr;
 	};
-	
+
 	TripInfo.prototype.clearContents = function() {
+		this.idMap = {};
+		this.idMapReversed = new Object();
+		this.length = 0;
 		this.accordion.empty();
-	}
-	
+	};
+
 	TripInfo.prototype.reloadAccordion = function() {
 		// destroy accordion so it goes back to its init state
-		if(!alreadyInit) {
+		if ( !alreadyInit ) {
 			alreadyInit = true;
+		} else { // reset accordion
+			this.accordion.accordion( "destroy" );
 		}
-		else { // reset accordion
-			this.accordion.accordion("destroy");
-		}		
-		this.accordion.accordion({
-			collapsible: true,
-		});
-	}
-	
-	TripInfo.prototype.addTrip = function (trip) {
+		this.accordion.accordion( {
+			collapsible : true,
+			activate : function(event, ui) {
+				_this.callbackSelect( _this.idMapReversed[ _this.accordion
+						.accordion( "option", "active" ) ] );
+			},
+		} );
+	};
+
+	TripInfo.prototype.select = function(tripid) {
+		_this.accordion.accordion( "option", "active", _this.idMap[ tripid ] );
+	};
+
+	TripInfo.prototype.addTrip = function(trip) {
 		var id = trip.id;
 		var startPoint = trip.startPoint;
 		var endPoint = trip.endPoint;
@@ -94,22 +113,20 @@ define( [ "jquery" ], ( function($) {
 		var overviewPath = trip.overviewPath;
 		var numberBookings = trip.numberBookings;
 		var maxSeats = trip.maxSeats;
-			
-		this.addHeadline("Trip from "+startPoint+" to "+endPoint);
-		var bodyStr = "<ul>" 
-			+ "<li>Driver: "+driver+"</li>"
-			+ "<li>Start date: "+startDate+"</li>"
-			+ "<li>Price: "+price+"</li>"
-			+ "<li>Current bookings: "+numberBookings+"/"+maxSeats+"</li>"
-			+ "</ul>";
-		bodyStr = this.addBookingForm(id, bodyStr, price);
-		this.addBody(bodyStr);		
-	};
-	
-	
-	return TripInfo;
-	
+		this.idMap[ id ] = this.length;
+		this.idMapReversed[ this.length++ ] = id;
 
-})
+		this.addHeadline( "Trip from " + startPoint + " to " + endPoint );
+		var bodyStr = "<ul>" + "<li>Driver: " + driver + "</li>"
+				+ "<li>Start date: " + startDate + "</li>" + "<li>Price: " + price
+				+ "</li>" + "<li>Current bookings: " + numberBookings + "/" + maxSeats
+				+ "</li>" + "</ul>";
+		bodyStr = this.addBookingForm( id, bodyStr, price );
+		this.addBody( bodyStr );
+	};
+
+	return TripInfo;
+
+} )
 
 );

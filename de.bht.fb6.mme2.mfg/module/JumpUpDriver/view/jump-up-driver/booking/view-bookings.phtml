@@ -19,9 +19,15 @@
     use JumpUpDriver\Forms\RecommendationForm;
     use JumpUpPassenger\Models\Booking;
     use JumpUpDriver\Util\Messages\StateUtil;
+use JumpUpDriver\Forms\BasicBookingForm;
     
     
-    
+    /**
+     * Create and reutrn a RecommendationForm for a single booking. 
+     * The bookingId will be set to a hidden input field.
+     * @param Booking $booking
+     * @return Ambigous <\Zend\Form\Form, \Zend\Form\ElementInterface, ElementInterface, \Zend\Form\FormInterface, \Zend\Form\FieldsetInterface>
+     */
     function _getRecommForm(Booking $booking) {
         $builder = new AnnotationBuilder();
         $recomForm = $builder->createForm(new RecommendationForm());
@@ -30,10 +36,35 @@
         return $recomForm;
     }
     
+    function _getDenyForm(Booking $booking) {
+    	$builder = new AnnotationBuilder();
+    	$basicForm = $builder->createForm(new BasicBookingForm());
+    	$basicForm->setAttribute('action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DENY);
+    	$basicForm->get(BasicBookingForm::FIELD_BOOKING_ID)->setValue($booking->getId());
+    	$basicForm->get(BasicBookingForm::SUBMIT)->setValue(IViewMessages::BOOKING_DENY);
+    	return $basicForm;
+    }
+    
+    function _getApplyForm(Booking $booking) {
+    	$builder = new AnnotationBuilder();
+    	$basicForm = $builder->createForm(new BasicBookingForm());
+    	$basicForm->setAttribute('action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_APPLY);
+    	$basicForm->get(BasicBookingForm::FIELD_BOOKING_ID)->setValue($booking->getId());
+    	$basicForm->get(BasicBookingForm::SUBMIT)->setValue(IViewMessages::BOOKING_APPLY);
+    	return $basicForm;
+    }
+    
     function _renderBooking(Booking $booking, $_this) {
+      $applyForm = _getApplyForm($booking);
+      $denyForm = _getDenyForm($booking);
       echo "<h3>" . $_this->translate($booking->getStartPoint() . " => " . $booking->getEndPoint()) .
-        " (". $_this->translate("Date") ." - ".$_this->translate(IViewMessages::BOOKING_DATE) .")</h3>";
-      echo "<div>"; // begin of accordion element content
+        " (". $_this->translate("Date") ." - ".$_this->translate(IViewMessages::BOOKING_DATE) .")"
+        ."</h3>";
+      echo '<div class="booking">'; // begin of accordion element content
+	  echo  $_this->renderForm($applyForm);
+	  echo  $_this->renderForm($denyForm); 
+	  // passenger information
+	  echo "<p>".$_this->translate(IViewMessages::BOOKING_PASSENGER).": ".$booking->getPassenger()->getPrename() . " " . $booking->getPassenger()->getLastname() . "</p>";
       // render status
       echo "<p>".$_this->translate(IViewMessages::BOOKING_STATE).": ".$_this->translate(StateUtil::getStateLabel($booking->getState()))."</p>";
       // differ bookings states

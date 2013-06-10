@@ -23,6 +23,9 @@ interface IViewMessages {
     const BOOKING_STATE = "State";
     const BOOKING_DATE = "Date";
     const BOOKING_DEPART_TIME = "Departure time";
+    const BOOKING_DENY = "Deny";
+    const BOOKING_APPLY = "Accept";
+    const BOOKING_PASSENGER = "Passenger";
    
     /*
      * ..:::::::::::::::::::::::::::::::::..

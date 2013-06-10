@@ -14,6 +14,28 @@ return array(
                             ),
                         ),
                     ),*/
+            'applybooking' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/applybooking',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'apply',
+                    ),
+                ),
+            ),
+            'denybooking' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/denybooking',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'deny',
+                    ),
+                ),
+            ),
             'driverrecommendation' => array(
                 'type'    => 'Literal',
                 'options' => array(

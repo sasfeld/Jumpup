@@ -54,6 +54,10 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 	const REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' input[name="priceTo"]';
 	const REF_TRIPS_BTN = TRIPS_REF_FORM + ' input[name="tripsBtn"]';
 	
+	// page JumpUpPassenger/ViewBookings
+	const PASS_BOOKINGS_REF = '#driver_view_bookings';
+	const PASS_BOOKINGS_ACCORDION = PASS_BOOKINGS_REF + ' > #accordion';
+	
 	/* 
 	 * ..:::::::::::::::::::..
 	 */	
@@ -235,6 +239,17 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 			
 			/* 
 			 * ..::::::::::::::::..
+			 */	
+			/* 
+			 * ..::------------> page: JumpUpPassenger\ViewBookings <------------::..
+			 */
+			if ($(PASS_BOOKINGS_REF).length > 0) {
+				$(PASS_BOOKINGS_ACCORDION).accordion({
+						collapsible: true,
+					});
+			};
+			/* 
+			 * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
 			 */	
 		} catch ( e ) {
 			console.log( 'No Map to display: ' + e );

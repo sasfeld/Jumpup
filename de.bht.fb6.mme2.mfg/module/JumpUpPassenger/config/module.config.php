@@ -6,7 +6,7 @@ return array(
             'dopassengerrecommendation' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/dopassrecommendation',
+                    'route'    => '/dopassengerrecommendation',
                     'defaults' => array(
                         '__NAMESPACE__' => 'JumpUpPassenger\Controller',
                         'controller'    => 'Booking',

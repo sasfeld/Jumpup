@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToOne as OneToOne;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+use JumpUpPassenger\Exceptions\InvalidBookingState;
+use JumpUpPassenger\Exceptions\InvalidBookingStateException;
 
 /**
  * @ORM\Entity
@@ -190,7 +192,7 @@ class Booking {
     
     // check state
     if($this->state !== IBookingState::OFFER_FROM_DRIVER) {
-      throw new InvalidBooingStateException(IBookingState::OFFER_FROM_DRIVER, $this->state);
+      throw new InvalidBookingStateException(IBookingState::OFFER_FROM_DRIVER, $this->state);
     }
      
     $this->passengersRecomPrice = (int) $val;

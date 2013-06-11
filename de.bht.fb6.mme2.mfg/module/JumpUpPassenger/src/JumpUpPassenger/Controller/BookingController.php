@@ -245,7 +245,7 @@ class BookingController extends ANeedsAuthenticationController {
 					// update entity
 					$this->em->merge ( $booking );
 					$this->em->flush ();
-					$redirect = IRouteStore::BOOK_DRIVER_OVERVIEW;
+					$redirect = IRouteStore::BOOK_PASS_OVERVIEW;
 				} else {
 					$this->flashMessenger ()->clearMessages ();
 					$this->flashMessenger ()->addErrorMessage ( \JumpUpPassenger\Util\Messages\IControllerMessages::ERROR_NO_BOOKING );

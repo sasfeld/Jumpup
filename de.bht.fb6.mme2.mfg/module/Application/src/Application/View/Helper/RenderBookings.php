@@ -63,7 +63,7 @@ class RenderBookings {
 			echo $_this->translate ( IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM ) . "<br />";
 			echo $_this->translate ( "Passenger's price recommendation: " . $booking->getPassengersRecomPrice () );
 			// show recommendation form
-			$recommForm = self::etRecommForm ( $booking );
+			$recommForm = self::getRecommForm ( $booking );
 			$recommForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DO_RECOMMENDATION );
 			echo $_this->renderForm ( $recommForm );
 		} elseif ($booking->getState () === IBookingState::ACCEPT) {

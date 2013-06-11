@@ -93,7 +93,7 @@ select {
  */
 .nofloat {
 	float:none;
-	display: block;	
+/* 	display: block;	 */
 	margin-bottom: 2em;
 }
 

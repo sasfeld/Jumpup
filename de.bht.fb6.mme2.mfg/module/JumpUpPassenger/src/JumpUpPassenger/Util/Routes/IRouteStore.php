@@ -45,5 +45,8 @@ interface IRouteStore {
      * @var String
      */
     const BOOK_PASS_OVERVIEW = "listpassengerbookings";
+    const BOOK_DENY = "denypassengerbooking";
+    const BOOK_APPLY = "applypassengerbooking";
+    const BOOK_DO_RECOMMENDATION = "dopassengerrecommendation";
     
 }

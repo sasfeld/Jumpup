@@ -1,5 +1,5 @@
 <?php
-namespace JumpUpDriver\Forms;
+namespace Application\Forms;
 
 use Zend\Form\Annotation;
 

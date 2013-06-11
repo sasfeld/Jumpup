@@ -18,6 +18,8 @@ use JumpUpDriver\Models\Trip;
 use JumpUpPassenger\Models\Booking;
 
 use Application\Util\ExceptionUtil;
+use Application\Forms\BasicBookingForm;
+use JumpUpPassenger\Util\IBookingState;
 
 
 
@@ -94,6 +96,72 @@ class BookingController extends ANeedsAuthenticationController{
     }
     
     
+  }
+  
+  /**
+   * The applyAction is called when the user (driver) wants to apply the booking request by another user.
+   * Input parameters: - bookingId (the id of the depending booking)
+   * exports: nothing
+   * the user will be redirect to the viewBookingsAction for an overview
+   */
+  public function applyAction() {
+  	// check if user is logged in and fetch user's entity
+  	$loggedInUser = $this->_checkAndRedirect ();
+  
+  	$request = $this->getRequest ();
+  	$bookingId = ( int ) $request->getPost ( BasicBookingForm::FIELD_BOOKING_ID );
+  	$redirect = IRouteStore::BOOK_ERROR;
+  	if (null !== $bookingId) {
+  		$booking = $this->_getBooking ( $loggedInUser, $bookingId );
+  		if (null !== $booking) {
+  			$booking->setState(IBookingState::ACCEPT);
+  			$this->em->merge($booking);
+  			$this->em->flush();
+  			// redirect to overview page
+  			$redirect = IRouteStore::BOOK_PASS_OVERVIEW;
+  		} else { // there must be some internal error if $bookings is really null.
+  			$this->flashMessenger ()->clearMessages ();
+  			$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_OVERVIEW );
+  		}
+  	}
+  	else {
+  		$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_REQUEST );
+  	}
+  	// fallthrough: error
+  	$this->redirect ()->toRoute ( $redirect );
+  }
+  
+  /**
+   * The denyAction is called when the user (driver) wants to deny the booking request by another user.
+   * Input parameters: - bookingId (the id of the depending booking)
+   * exports: nothing
+   * the user will be redirect to the viewBookingsAction for an overview
+   */
+  public function denyAction() {
+  	// check if user is logged in and fetch user's entity
+  	$loggedInUser = $this->_checkAndRedirect ();
+  
+  	$request = $this->getRequest ();
+  	$bookingId = ( int ) $request->getPost ( BasicBookingForm::FIELD_BOOKING_ID );
+  	$redirect = IRouteStore::BOOK_ERROR;
+  	if (null !== $bookingId) {
+  		$booking = $this->_getBooking ( $loggedInUser, $bookingId );
+  		if (null !== $booking) {
+  			$booking->setState(IBookingState::DENY);
+  			$this->em->merge($booking);
+  			$this->em->flush();
+  			// redirect to overview page
+  			$redirect = IRouteStore::BOOK_PASS_OVERVIEW;
+  		} else { // there must be some internal error if $bookings is really null.
+  			$this->flashMessenger ()->clearMessages ();
+  			$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_OVERVIEW );
+  		}
+  	}
+  	else {
+  		$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_REQUEST );
+  	}
+  	// fallthrough: error
+  	$this->redirect ()->toRoute ( $redirect );
   }
   
   /**
@@ -190,5 +258,24 @@ class BookingController extends ANeedsAuthenticationController{
     $trip = $tripRepo->findOneBy(array("id" => $tripId));
     return $trip;
   }
+  
+
+  /**
+   * Get the booking entity for a given User (passenger) AND bookingId.
+   *
+   * @param User $loggedInUser
+   * @param unknown_type $bookingId
+   * @return Booking instance or null if there was no matching entity.
+   */
+  private function _getBooking(User $loggedInUser, $bookingId) {
+  	$bookingRepo = $this->em->getRepository ( \JumpUpPassenger\Util\IEntitiesStore::BOOKING );
+  	$booking = $bookingRepo->findOneBy ( array (
+  			"id" => $bookingId,
+  			"passenger" => $loggedInUser->getId ()
+  	) );
+  	return $booking;
+  }
+  
+
   
 }

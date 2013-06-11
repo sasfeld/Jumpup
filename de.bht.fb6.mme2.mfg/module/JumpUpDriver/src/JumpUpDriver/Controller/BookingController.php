@@ -25,8 +25,6 @@ use JumpUpDriver\Forms\RecommendationForm;
  * @since 07.06.2013
  */
 class BookingController extends ANeedsAuthenticationController {
-	const POST_BOOKING_ID = \JumpUpDriver\Forms\RecommendationForm::FIELD_BOOKING_ID;
-	const POST_DRIVER_PRICE = \JumpUpDriver\Forms\RecommendationForm::FIELD_RECOMM_PRICE;
 	
 	/**
 	 * The error action is called when another action raises an error.
@@ -53,7 +51,7 @@ class BookingController extends ANeedsAuthenticationController {
 		$loggedInUser = $this->_checkAndRedirect ();
 		
 		$request = $this->getRequest ();
-		$bookingId = ( int ) $request->getPost ( BasicBookingForm::FIELD_BOOKING_ID );
+		$bookingId = ( int ) $request->getPost ( \Application\Forms\BasicBookingForm::FIELD_BOOKING_ID );
 		$redirect = IRouteStore::BOOK_ERROR;
 		if (null !== $bookingId) {
 			$booking = $this->_getBooking ( $loggedInUser, $bookingId );
@@ -86,7 +84,7 @@ class BookingController extends ANeedsAuthenticationController {
 		$loggedInUser = $this->_checkAndRedirect ();
 		
 		$request = $this->getRequest ();
-		$bookingId = ( int ) $request->getPost ( BasicBookingForm::FIELD_BOOKING_ID );
+		$bookingId = ( int ) $request->getPost ( \Application\Forms\BasicBookingForm::FIELD_BOOKING_ID );
 		$redirect = IRouteStore::BOOK_ERROR;
 		if (null !== $bookingId) {
 			$booking = $this->_getBooking ( $loggedInUser, $bookingId );
@@ -144,8 +142,8 @@ class BookingController extends ANeedsAuthenticationController {
 		$request = $this->request;
 		$redirect = IRouteStore::BOOK_ERROR;
 		if ($request->isPost ()) {
-			$bookingId = ( int ) $request->getPost ( RecommendationForm::FIELD_BOOKING_ID );
-			$driversRecomPrice = ( int ) $request->getPost ( RecommendationForm::FIELD_RECOMM_PRICE );
+			$bookingId = ( int ) $request->getPost ( \Application\Forms\RecommendationForm::FIELD_BOOKING_ID );
+			$driversRecomPrice = ( int ) $request->getPost ( \Application\Forms\RecommendationForm::FIELD_RECOMM_PRICE );
 			if (null !== $bookingId && null !== $driversRecomPrice) {
 				$booking = $this->_getBooking ( $loggedInUser, $bookingId );
 				if (null !== $booking) {
@@ -193,7 +191,7 @@ class BookingController extends ANeedsAuthenticationController {
 	
 	
 	/**
-	 * Get the booking entity for a given User AND bookingId.
+	 * Get the booking entity for a given User (driver) AND bookingId.
 	 * 
 	 * @param User $loggedInUser        	
 	 * @param unknown_type $bookingId        	

@@ -14,80 +14,8 @@ use JumpUpDriver\Util\Messages\StateUtil;
 use JumpUpDriver\Forms\BasicBookingForm;
 use JumpUpDriver\Models\Trip;
 use JumpUpDriver\Util\View\ICssStyles;
+use Application\View\Helper\RenderBookings;
 
-/**
- * Create and reutrn a RecommendationForm for a single booking.
- * The bookingId will be set to a hidden input field.
- *
- * @param Booking $booking        	
- * @return Ambigous <\Zend\Form\Form, \Zend\Form\ElementInterface, ElementInterface, \Zend\Form\FormInterface, \Zend\Form\FieldsetInterface>
- */
-function _getRecommForm(Booking $booking) {
-	$builder = new AnnotationBuilder ();
-	$recomForm = $builder->createForm ( new RecommendationForm () );
-	$recomForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DO_RECOMMENDATION );
-	$recomForm->get ( RecommendationForm::FIELD_BOOKING_ID )->setValue ( $booking->getId () );
-	return $recomForm;
-}
-function _getDenyForm(Booking $booking) {
-	$builder = new AnnotationBuilder ();
-	$basicForm = $builder->createForm ( new BasicBookingForm () );
-	$basicForm->setAttribute ( 'class', ICssStyles::NO_FLOAT );
-	$basicForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DENY );
-	$basicForm->get ( BasicBookingForm::FIELD_BOOKING_ID )->setValue ( $booking->getId () );
-	$basicForm->get ( BasicBookingForm::SUBMIT )->setValue ( IViewMessages::BOOKING_DENY );
-	return $basicForm;
-}
-function _getApplyForm(Booking $booking) {
-	$builder = new AnnotationBuilder ();
-	$basicForm = $builder->createForm ( new BasicBookingForm () );
-	$basicForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_APPLY );
-	$basicForm->get ( BasicBookingForm::FIELD_BOOKING_ID )->setValue ( $booking->getId () );
-	$basicForm->get ( BasicBookingForm::SUBMIT )->setValue ( IViewMessages::BOOKING_APPLY );
-	return $basicForm;
-}
-function _renderBooking(Booking $booking, $_this) {
-	$applyForm = _getApplyForm ( $booking );
-	$denyForm = _getDenyForm ( $booking );
-	echo '<li> <h4 class="' . ICssStyles::BOOKINGHEADLINE . '">#' . $booking->getId () . ' | ' . $booking->getDriver ()->getPrename () . ' ' . $booking->getDriver ()->getLastname () . ' | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</h4>';
-	if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
-		echo $_this->renderForm ( $applyForm );
-	}
-	if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
-		echo $_this->renderForm ( $denyForm );
-	}
-	else {
-		echo '<span class="nofloat">&nbsp;</span>';
-	}
-	echo "<div class=\"" . ICssStyles::BOOKING . "\">\n\t\t\t"; // begin of booking div
-	                                                            // passenger information
-	echo "<p>" . $_this->translate ( IViewMessages::BOOKING_PASSENGER ) . ": " . $booking->getPassenger ()->getPrename () . " " . $booking->getPassenger ()->getLastname () . "</p>";
-	// render status
-	echo "<p>" . $_this->translate ( IViewMessages::BOOKING_STATE ) . ": " . $_this->translate ( StateUtil::getStateLabel ( $booking->getState () ) ) . "</p>";
-	// differ bookings states
-	if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
-		echo $_this->translate ( IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM ) . "<br />";
-		echo $_this->translate ( "Passenger's price recommendation: " . $booking->getPassengersRecomPrice () );
-		// show recommendation form
-		$recommForm = _getRecommForm ( $booking );
-		echo $_this->renderForm ( $recommForm );
-	} elseif ($booking->getState () === IBookingState::ACCEPT) {
-	} elseif ($booking->getState () === IBookingState::DENY) {
-	} elseif ($booking->getState () === IBookingState::OFFER_FROM_DRIVER) {
-	}
-	echo '</div>'; // end of booking div
-	echo '</li>';
-}
-function _renderTrip(Trip $trip, $_this) {
-	echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( "Date" ) . " - " . $_this->translate ( IViewMessages::BOOKING_DATE ) . ")" . "</h3>";
-	echo '<div class="' . ICssStyles::TRIP . '">'; // begin of accordion element content
-	foreach ( $trip->getBookings () as $booking ) {
-		echo "<ul class=" . ICssStyles::BOOKING_LIST . ">";
-		_renderBooking ( $booking, $_this );
-		echo "</ul>";
-	}
-	echo "</div>"; // end of accordion element content
-}
 ?>
 
 <h1><?php echo $this->translate("View bookings") ?></h1>
@@ -98,7 +26,7 @@ function _renderTrip(Trip $trip, $_this) {
 if (null !== $this->trips && (0 < sizeof ( $this->trips ))) {
 	echo '<div id="accordion">'; // start of accordion
 	foreach ( $this->trips as $trip ) {
-		_renderTrip ( $trip, $this );
+		RenderBookings::renderTrip ( $trip, $this, RenderBookings::DRIVER);
 	}
 	echo "</div>"; // end of accordion
 } else { // no bookings done

@@ -4,6 +4,8 @@ namespace JumpUpUser\Controller;
 use \JumpUpUser\Util\Auth\CheckAuthentication;
 use \JumpUpUser\Export\IAuthenticationRequired;
 use \Zend\Mvc\Controller\AbstractActionController;
+use JumpUpUser\Util\Messages\IControllerMessages;
+use JumpUpUser\Util\Routes\IRouteStore;
 
 /**
  *
@@ -72,9 +74,11 @@ abstract class ANeedsAuthenticationController extends AbstractActionController i
         $user = $this->getCurrentUser();
         if(null === $user) { // user doesn't appear do be logged in
           $this->flashMessenger()->addErrorMessage(IControllerMessages::FATAL_ERROR_NOT_AUTHENTIFICATED);
-          $this->redirect()->toRoute(IRouteStore::LOOKUP_ERROR); // break;
+          $this->redirect()->toRoute(IRouteStore::LOGIN); // break;
         }
-        return $user;
+        else {
+        	return $user;
+        }
       }
     }
     

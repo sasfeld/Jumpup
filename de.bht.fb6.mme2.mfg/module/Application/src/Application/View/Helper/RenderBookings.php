@@ -110,16 +110,24 @@ class RenderBookings {
 	public static function renderTrip(Trip $trip, $_this, $mode) {
 		echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( "Date" ) . " - " . $_this->translate ( IViewMessages::BOOKING_DATE ) . ")" . "</h3>";
 		echo '<div class="' . ICssStyles::TRIP . '">'; // begin of accordion element content
-		foreach ( $trip->getBookings () as $booking ) {
-			echo "<ul class=" . ICssStyles::BOOKING_LIST . ">";
-			if(self::DRIVER === $mode) {
-				self::renderBookingForDriver ( $booking, $_this );
+		
+		$bookings = $trip->getBookings();
+		if(sizeof($bookings) > 0) {
+			foreach ( $bookings as $booking ) {
+				echo "<ul class=" . ICssStyles::BOOKING_LIST . ">";
+				if(self::DRIVER === $mode) {
+					self::renderBookingForDriver ( $booking, $_this );
+				}
+				else {
+					self::renderBookingForPassenger ( $booking, $_this );
+				}
+				echo "</ul>";
 			}
-			else {
-				self::renderBookingForPassenger ( $booking, $_this );
-			}
-			echo "</ul>";
 		}
+		else { // size = 0
+			echo "<p>".\Application\Util\Messages\IViewMessages::DRIVER_NO_BOOKINGS."</p>";
+		}
+		
 		echo "</div>"; // end of accordion element content
 	}
 	

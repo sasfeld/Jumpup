@@ -26,7 +26,7 @@ interface IViewMessages {
     const BOOKING_DENY = "Deny";
     const BOOKING_APPLY = "Accept";
     const BOOKING_PASSENGER = "Passenger";
-   
+   	const BOOKING_NO_TRIPS = "You haven't configured any trips yet.";
     /*
      * ..:::::::::::::::::::::::::::::::::..
     */

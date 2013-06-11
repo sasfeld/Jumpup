@@ -29,8 +29,8 @@ if (null !== $this->trips && (0 < sizeof ( $this->trips ))) {
 		RenderBookings::renderTrip ( $trip, $this, RenderBookings::DRIVER);
 	}
 	echo "</div>"; // end of accordion
-} else { // no bookings done
-	echo $this->translate ( IControllerMessages::BOOKING_NO_BOOKINGS );
+} else { // no trips
+	echo $this->translate ( IViewMessages::BOOKING_NO_TRIPS );
 }
 
 ?>

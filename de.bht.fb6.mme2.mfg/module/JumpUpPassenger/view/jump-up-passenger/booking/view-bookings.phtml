@@ -6,6 +6,17 @@ use Application\View\Helper\RenderBookings;
 
 <h1><?php echo $this->translate("View bookings") ?></h1>
 
+<div id="passenger_hints">
+<?php 
+if(null !== $this->messages) {
+	foreach ($this->messages as $message) {
+		echo "<p>".$message."</p>";
+	}
+}
+
+?>
+</div>
+
 <div id="passenger_view_bookings">
 <?php
 

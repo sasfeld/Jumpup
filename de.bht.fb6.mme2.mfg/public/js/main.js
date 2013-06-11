@@ -53,6 +53,7 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 	const REF_TRIPS_PRICE_FROM = TRIPS_REF_FORM + ' input[name="priceFrom"]';
 	const REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' input[name="priceTo"]';
 	const REF_TRIPS_BTN = TRIPS_REF_FORM + ' input[name="tripsBtn"]';
+	const REF_TRIPS_USER_ID = TRIPS_REF_FORM + ' input[name="userId"]';
 	
 	// page JumpUpPassenger/ViewBookings
 	const DRIVER_BOOKINGS_REF = '#driver_view_bookings';
@@ -190,6 +191,7 @@ require( [ "gmap/googlemap", "gmap/mapcontroller",
 				var tripsOptions = {
 					"getTripsUrl" : "tripsjson",	
 					"mapCtrl" : mapCtrl, 
+					"userId" : $(REF_TRIPS_USER_ID).val(),
 				};
 				 tripsCtrl = new TripsController(tripsOptions);		
 				/* 

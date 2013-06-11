@@ -110,16 +110,18 @@ class BookingController extends ANeedsAuthenticationController {
 	
 	/**
 	 * The viewBooking actions shows each booking for the logged in user (where he's a driver).
-	 * exports: an array of booking instances for this driver, accessible via "bookings" key.
+	 * exports: an array of trips instances for this driver, accessible via "trips" key.
+	 * 
+	 * @TODO add filter handling for the user
 	 */
 	public function viewBookingsAction() {
 		// check if user is logged in and fetch user's entity
-		$loggedInUser = $this->_checkAndRedirect ();
-		
-		$bookings = $this->_getAllBookings ( $loggedInUser );
-		if (null !== $bookings) {
+		$loggedInUser = $this->_checkAndRedirect ();		
+	
+		$trips = $this->_getAllTrips($loggedInUser);
+		if (null !== $trips) {
 			return array (
-					"bookings" => $bookings 
+					"trips" => $trips 
 			);
 		} else { // there must be some internal error if $bookings is really null.
 			$this->flashMessenger ()->clearMessages ();
@@ -177,6 +179,18 @@ class BookingController extends ANeedsAuthenticationController {
 		$bookings = $driver->getDriverBookings ();
 		return $bookings;
 	}
+	
+	/**
+	 * Get all trips for the given driver.
+	 * 
+	 * @param User $user        	
+	 * @return array of Trip instances
+	 */
+	private function _getAllTrips(User $driver) {
+		$trips = $driver->getTrips();		
+		return $trips;
+	}	
+	
 	
 	/**
 	 * Get the booking entity for a given User AND bookingId.

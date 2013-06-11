@@ -8,6 +8,7 @@ use Zend\Form\Annotation;
  *
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  * @Annotation\Name("RecommendationForm")
+ * @Annotation\Attributes({"class":"bookingbasicform"})
  */
 class BasicBookingForm {
   /**

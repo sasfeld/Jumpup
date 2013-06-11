@@ -269,6 +269,10 @@ class Trip {
   public function getVehicle() {
     return $this->vehicle;
   }
+  
+  public function getStartPoint() {
+  	return $this->startPoint;
+  }
    
   public function getEndPoint() {
     return $this->endPoint;
@@ -319,6 +323,14 @@ class Trip {
   		}	
   	}
     return (int) $appliedBookings;
+  }
+  
+  /**
+   * 
+   * @return array all the bookings (such bookings with states DENY... are included) of this trip.
+   */
+  public function getBookings() {
+  	return $this->bookings;
   }
    
    

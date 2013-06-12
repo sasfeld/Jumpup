@@ -12,7 +12,7 @@ namespace JumpUpPassenger\Exceptions;
  * @version    1.0
  * @since      31.05.2013
  */
-class InvalidBookingState extends Exception {
+class InvalidBookingStateException extends \Exception {
   /**
    * The only state that is allowed in this context.
    * @var IBookingState
@@ -27,7 +27,7 @@ class InvalidBookingState extends Exception {
   public function  __construct($allowedState, $givenState) {
     $this->allowedState = $allowedState;
     $this->givenState = $givenState;
-    parent::construct("Invalid state. The given operation is only allowed for the state ".$allowedState." . The given state was".$givenState);
+    parent::__construct("Invalid state. The given operation is only allowed for the state ".$allowedState." . The given state was".$givenState);
   }
   
   /**

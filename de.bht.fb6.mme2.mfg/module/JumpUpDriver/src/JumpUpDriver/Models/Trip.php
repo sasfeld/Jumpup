@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToOne as OneToOne;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+use JumpUpPassenger\Util\IBookingState;
 
 /**
  * @ORM\Entity
@@ -268,6 +269,10 @@ class Trip {
   public function getVehicle() {
     return $this->vehicle;
   }
+  
+  public function getStartPoint() {
+  	return $this->startPoint;
+  }
    
   public function getEndPoint() {
     return $this->endPoint;
@@ -308,10 +313,24 @@ class Trip {
   }
   /**
    * 
-   * @return int the number of bookings
+   * @return int the number of non-DENIED bookings
    */
   public function getNumberOfBookings() { 
-    return (int) sizeof($this->bookings);
+  	$appliedBookings = 0;
+  	foreach ($this->bookings as $booking) {
+  		if(IBookingState::DENY !== $booking->getState()) {
+  			$appliedBookings++;
+  		}	
+  	}
+    return (int) $appliedBookings;
+  }
+  
+  /**
+   * 
+   * @return array all the bookings (such bookings with states DENY... are included) of this trip.
+   */
+  public function getBookings() {
+  	return $this->bookings;
   }
    
    
@@ -342,7 +361,7 @@ class Trip {
         'overviewPath' => $this->getOverviewPath(),
         'viaWaypoints' => $this->getViaWaypoints(),
         'maxSeats'     => $this->maxSeats, 
-        'numberBookings' => sizeof($this->bookings),
+        'numberBookings' => $this->getNumberOfBookings(),
     );
   }
    

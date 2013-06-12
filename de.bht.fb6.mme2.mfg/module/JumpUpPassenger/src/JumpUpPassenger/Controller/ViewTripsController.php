@@ -98,6 +98,7 @@ class ViewTripsController extends ANeedsAuthenticationController{
 
             // hard-coded hidden input fields to be bind by javascript
             $inputFields = array(
+           '<input type="hidden" name="'.LookUpTripsForm::FIELD_USER_ID.'" value="'.$user->getId().'"/>',           
            '<input type="hidden" name="'.LookUpTripsForm::FIELD_START_COORD.'" />',           
            '<input type="hidden" name="'.LookUpTripsForm::FIELD_END_COORD.'" />',           
            '<input type="button" name="'.LookUpTripsForm::BUTTON.'" value="'.ILabels::LOOKUP_BUTTON.'"/>',           

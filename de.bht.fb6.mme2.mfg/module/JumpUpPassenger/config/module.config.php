@@ -3,6 +3,39 @@
 return array(
     'router' => array(
         'routes' => array(  
+            'dopassengerrecommendation' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/dopassengerrecommendation',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'doRecommendation',
+                    ),
+                ),
+            ),
+            'applypassengerbooking' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/applypassengerbooking',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'apply',
+                    ),
+                ),
+            ),
+            'denypassengerbooking' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/denypassengerbooking',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpPassenger\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'deny',
+                    ),
+                ),
+            ),
             'listpassengerbookings' => array(
                 'type'    => 'Literal',
                 'options' => array(

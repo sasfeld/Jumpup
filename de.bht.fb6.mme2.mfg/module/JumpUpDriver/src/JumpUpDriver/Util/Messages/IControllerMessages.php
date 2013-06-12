@@ -37,6 +37,23 @@ interface IControllerMessages {
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */  
+    /*
+     * ..:: used in JumpUpDriver\Controller\BookingController. ::..
+     */
+    const ERROR_BOOKING_REQUEST = "Internal error: illegal request. If the error occurs again, please inform the support.";
+    const ERROR_NO_BOOKING = "Internal error: No booking instance.";
+    /*
+     * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
+     */  
+    
+    /* ..:: used in view-bookings.phtml ::../
+     *
+    */
+    const BOOKING_STATE_PASSENGER_RECOMM = "The passenger recommended the following price. You can now apply, deny or make another decision.";
+    const BOOKING_NO_BOOKINGS = "No bookings done";
+    /*
+     * ..:::::::::::::::::::::::::::::::::..
+    */
 
    
 }

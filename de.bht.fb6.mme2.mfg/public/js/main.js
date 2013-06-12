@@ -85,6 +85,18 @@ require(
 			REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' input[name="priceTo"]';
 			const
 			REF_TRIPS_BTN = TRIPS_REF_FORM + ' input[name="tripsBtn"]';
+			const
+			REF_TRIPS_USER_ID = TRIPS_REF_FORM + ' input[name="userId"]';
+
+			// page JumpUpPassenger/ViewBookings
+			const
+			DRIVER_BOOKINGS_REF = '#driver_view_bookings';
+			const
+			DRIVER_BOOKINGS_ACCORDION = DRIVER_BOOKINGS_REF + ' > #accordion';
+			const
+			PASS_BOOKINGS_REF = '#passenger_view_bookings';
+			const
+			PASS_BOOKINGS_ACCORDION = PASS_BOOKINGS_REF + ' > #accordion';
 
 			/*
 			 * ..:::::::::::::::::::..
@@ -96,7 +108,7 @@ require(
 								$("#navigation").jMenu({
 									openClick : false,
 									ulWidth : 'auto',
-									effects : { 
+									effects : {
 										effectSpeedOpen : 400,
 										effectSpeedClose : 200,
 										effectTypeOpen : 'slide',
@@ -128,7 +140,7 @@ require(
 									 * <------------::..
 									 */
 									if ($(ADDTRIP_REF_FORM).length > 0) { // element
-																			// exists
+										// exists
 										/*
 										 * ..:: initialize mapController::..
 										 */
@@ -280,6 +292,8 @@ require(
 										var tripsOptions = {
 											"getTripsUrl" : "tripsjson",
 											"mapCtrl" : mapCtrl,
+											"userId" : $(REF_TRIPS_USER_ID)
+													.val(),
 										};
 										tripsCtrl = new TripsController(
 												tripsOptions);
@@ -373,6 +387,35 @@ require(
 
 									/*
 									 * ..::::::::::::::::..
+									 */
+									/*
+									 * ..::------------> page:
+									 * JumpUpPassenger\ViewBookings
+									 * <------------::..
+									 */
+									if ($(DRIVER_BOOKINGS_REF).length > 0) {
+										$(DRIVER_BOOKINGS_ACCORDION).accordion(
+												{
+													collapsible : true,
+												});
+									}
+									;
+									/*
+									 * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
+									 */
+									/*
+									 * ..::------------> page:
+									 * JumpUpPassenger\ViewBookings
+									 * <------------::..
+									 */
+									if ($(PASS_BOOKINGS_REF).length > 0) {
+										$(PASS_BOOKINGS_ACCORDION).accordion({
+											collapsible : true,
+										});
+									}
+									;
+									/*
+									 * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
 									 */
 								} catch (e) {
 									console.log('No Map to display: ' + e);

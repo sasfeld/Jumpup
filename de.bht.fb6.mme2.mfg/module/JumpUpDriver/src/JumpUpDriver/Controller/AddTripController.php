@@ -24,6 +24,9 @@ use JumpUpDriver\Util\Routes\IRouteStore;
 use Zend\Form\Annotation\AnnotationBuilder;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use JumpUpDriver\Forms\BasicTripForm;
+use JumpUpDriver\Util\IEntitiesStore;
+use JumpUpPassenger\Util\IBookingState;
 
 /**
  * 
@@ -37,6 +40,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 * @since      07.05.2013
  */
 class AddTripController extends ANeedsAuthenticationController {
+    
     protected $form_step1;
 
 
@@ -123,7 +127,77 @@ class AddTripController extends ANeedsAuthenticationController {
                    "fields" => $inputFields);
         }
     }
+    
+    /**
+     * This action is responsible for deleting a trip.
+     * - inputParam: tripId
+     * 
+     * exports: redirects to the booking overview page.
+     */
+    public function deleteTripAction() {
+        // check if user is logged in and fetch user's entity
+        $loggedInUser = $this->_checkAndRedirect ();
+        
+        $request = $this->getRequest();
+        $tripId = ( int ) $request->getPost ( BasicTripForm::FIELD_TRIP_ID );
+        $redirect = IRouteStore::ADD_TRIP_ERROR;
+        if(null !== $tripId) {
+            $trip = $this->_getTrip($tripId);
+            if(null !== $trip) {
+                if($this->_hasTripAppliedBookings($trip)) {
+                    $this->flashMessenger()->clearMessages();
+                    $this->flashMessenger()->addMessage(IControllerMessages::ERROR_DELETE_TRIP_ACTIVE_BOOKINGS);
+                    $redirect = IRouteStore::BOOK_DRIVER_OVERVIEW;
+                }
+                else {
+                    $this->_deleteTrip($trip);
+                    $this->flashMessenger()->addMessage(IControllerMessages::SUCCESS_DELETE_TRIP);
+                    $redirect = IRouteStore::BOOK_DRIVER_OVERVIEW;
+                }
+            }
+        }
+        $this->redirect()->toRoute($redirect);
+    }
+    
+    /** Check whether a trip has accepted bookings
+     * 
+     * @param Trip $trip
+     * @return boolean true if the given trip as accepted bookings.
+     */
+    private function _hasTripAppliedBookings(Trip $trip) {        
+        foreach ($trip->getBookings() as $booking) {
+            if(IBookingState::ACCEPT === $booking->getState()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Delet a given trip and all the belonging bookings.
+     * @param Trip $trip
+     */
+    private function _deleteTrip(Trip $trip) {
+        $em = $this->em;
+        foreach ($trip->getBookings() as $booking) {
+        	$em->remove($booking);
+        }
+        $em->remove($trip);
+        $em->flush();
+    }
+    
 
+    /**
+     * Get the trip instance from the entity manager for a given tripid.
+     * @param int $tripId
+     * @return Ambigous <object, NULL>
+     */
+    private function _getTrip($tripId) {
+        $tripRepo = $this->em->getRepository(IEntitiesStore::TRIP);
+        $trip = $tripRepo->findOneBy(array("id" => $tripId));
+        return $trip;
+    }
     /**
      * Persist (INSERT INTO) a new trip
      * @param Trip $trip
@@ -138,6 +212,7 @@ class AddTripController extends ANeedsAuthenticationController {
         $this->em->flush();
     }
 
+    
     /**
      * Bind hard-coded hidden input fields to our record class Trip.    
      * @param Trip $trip

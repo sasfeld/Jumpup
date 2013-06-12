@@ -113,6 +113,17 @@ return array(
                         ),
                     ),                   
                 ),
+                'deletetrip' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/deletetrip',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'AddTrip',
+                            'action'        => 'deleteTrip',
+                        ),
+                    ),                   
+                ),
                 'addtrip' => array(
                     'type'    => 'Literal',
                     'options' => array(

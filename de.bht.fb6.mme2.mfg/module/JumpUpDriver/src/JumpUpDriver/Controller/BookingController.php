@@ -118,8 +118,10 @@ class BookingController extends ANeedsAuthenticationController {
 	
 		$trips = $this->_getAllTrips($loggedInUser);
 		if (null !== $trips) {
+		    $messages = $this->flashMessenger()->getMessages();
 			return array (
-					"trips" => $trips 
+					"trips" => $trips,
+			        "messages" => $messages,
 			);
 		} else { // there must be some internal error if $bookings is really null.
 			$this->flashMessenger ()->clearMessages ();

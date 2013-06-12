@@ -13,6 +13,7 @@ use JumpUpDriver\Util\Messages\StateUtil;
 use Application\Forms\BasicBookingForm;
 use JumpUpDriver\Models\Trip;
 use JumpUpDriver\Util\View\ICssStyles;
+use JumpUpDriver\Forms\BasicTripForm;
 
 class RenderBookings {
 	const DRIVER = 1;
@@ -38,6 +39,14 @@ class RenderBookings {
 		$basicForm = $builder->createForm ( new BasicBookingForm () );		
 		$basicForm->get ( BasicBookingForm::FIELD_BOOKING_ID )->setValue ( $booking->getId () );
 		$basicForm->get ( BasicBookingForm::SUBMIT )->setValue ( IViewMessages::BOOKING_APPLY );
+		return $basicForm;
+	}
+	public static function getDeleteTripForm(Trip $trip) {
+		$builder = new AnnotationBuilder ();
+		$basicForm = $builder->createForm ( new \JumpUpDriver\Forms\BasicTripForm()    );		
+		$basicForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::DELETE_TRIP );
+		$basicForm->get ( BasicTripForm::FIELD_TRIP_ID )->setValue ( $trip->getId () );
+		$basicForm->get ( BasicTripForm::SUBMIT )->setValue ( IViewMessages::TRIP_DELETE );
 		return $basicForm;
 	}
 	public static function renderBookingForDriver(Booking $booking, $_this) {
@@ -109,6 +118,8 @@ class RenderBookings {
 	
 	public static function renderTrip(Trip $trip, $_this, $mode) {
 		echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( "Date" ) . " - " . $_this->translate ( IViewMessages::BOOKING_DATE ) . ")" . "</h3>";
+		$deleteForm = self::getDeleteTripForm($trip);
+		echo $_this->renderForm($deleteForm);
 		echo '<div class="' . ICssStyles::TRIP . '">'; // begin of accordion element content
 		
 		$bookings = $trip->getBookings();

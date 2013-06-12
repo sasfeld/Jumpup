@@ -59,5 +59,6 @@ interface IRouteStore {
     const BOOK_ERROR = "bookerror";
     const BOOK_DENY = "denybooking";
     const BOOK_APPLY = "applybooking";
+    const DELETE_TRIP = "deletetrip";
     
 }

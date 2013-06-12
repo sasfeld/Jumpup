@@ -105,7 +105,7 @@ require(
 			$(document)
 					.ready(
 							(function() {
-								$("#navigation").jMenu({
+								$(".navigation").jMenu({
 									openClick : false,
 									ulWidth : 'auto',
 									effects : {

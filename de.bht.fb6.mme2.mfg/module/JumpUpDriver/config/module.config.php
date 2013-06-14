@@ -14,6 +14,39 @@ return array(
                             ),
                         ),
                     ),*/
+            'applybooking' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/applybooking',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'apply',
+                    ),
+                ),
+            ),
+            'denybooking' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/denybooking',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'deny',
+                    ),
+                ),
+            ),
+            'driverrecommendation' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/driverrecommendation',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                        'controller'    => 'Booking',
+                        'action'        => 'doRecommendation',
+                    ),
+                ),
+            ),
             'listdriverbookings' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -77,6 +110,17 @@ return array(
                             '__NAMESPACE__' => 'JumpUpDriver\Controller',
                             'controller'    => 'Vehicle',
                             'action'        => 'list',
+                        ),
+                    ),                   
+                ),
+                'deletetrip' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/deletetrip',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'AddTrip',
+                            'action'        => 'deleteTrip',
                         ),
                     ),                   
                 ),

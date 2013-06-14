@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToOne as OneToOne;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+use JumpUpPassenger\Exceptions\InvalidBookingState;
+use JumpUpPassenger\Exceptions\InvalidBookingStateException;
 
 /**
  * @ORM\Entity
@@ -190,12 +192,30 @@ class Booking {
     
     // check state
     if($this->state !== IBookingState::OFFER_FROM_DRIVER) {
-      throw new InvalidBooingStateException(IBookingState::OFFER_FROM_DRIVER, $this->state);
+      throw new InvalidBookingStateException(IBookingState::OFFER_FROM_DRIVER, $this->state);
     }
      
     $this->passengersRecomPrice = (int) $val;
     // set next state
     $this->state = IBookingState::OFFER_FROM_PASSENGER;
+  }
+  
+  /**
+   * Set the state. Must be one of the keys in IBookingState.
+   * @param int $val
+   */
+  public function setState($val) {
+    $intVal = (int) $val;
+    if(!is_int($intVal)) {
+      throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+    }
+    
+    // check if $val matches one of the states
+    if($intVal !== IBookingState::ACCEPT && $intVal !== IBookingState::DENY && $intVal !== IBookingState::OFFER_FROM_DRIVER && $intVal !== IBookingState::OFFER_FROM_PASSENGER) {
+      throw ExceptionUtil::throwInvalidArgument('$val', 'IBookingState', $val);
+    }
+    
+    $this->state = $intVal;   
   }
   
   public function getTrip() {

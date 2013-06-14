@@ -18,7 +18,7 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 	/*
 	 * Create a new TripsController. - param options an array: getTripsUrl - the
 	 * url to the json endpoint for the listing of all vehicles mapCtrl - the map
-	 * controller
+	 * controller, userId the id of the current logged in user
 	 */
 	var TripsController = function(options) {
 		_this = this;
@@ -106,6 +106,9 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 		console.log( "endDate: " + endDate );
 		console.log( "priceFrom: " + priceFrom );
 		console.log( "priceTo: " + priceTo );
+		console.log( "userId: " + this.options.userId );
+		
+		var __this = this;
 
 		$.ajax( {
 			url : this.options.getTripsUrl,
@@ -116,6 +119,7 @@ define( [ "jquery", "viewhelper/tripinfo" ], ( function($, TripInfo) {
 				"endDate" : endDate,
 				"priceFrom" : priceFrom,
 				"priceTo" : priceTo,
+				"userId" : __this.options.userId,
 			},
 			dataType : 'json',
 			type : "POST",

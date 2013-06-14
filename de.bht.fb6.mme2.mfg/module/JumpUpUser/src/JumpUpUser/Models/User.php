@@ -392,6 +392,13 @@ class User {
         return $this->driverBookings;
     }   
     
+    /**
+     * @return an array of Trips which the user (driver) offers.
+     */
+    public function getTrips() {
+    	return $this->trips;
+    }
+    
     /*
      * see php doc
      */

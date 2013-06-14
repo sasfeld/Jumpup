@@ -51,5 +51,14 @@ interface IRouteStore {
      * @var String
      */
     const BOOK_DRIVER_OVERVIEW = "listdriverbookings";
+    /**
+     * Route to the action doRecommendation within the BookingController.
+     * @var String
+     */
+    const BOOK_DO_RECOMMENDATION = "driverrecommendation";
+    const BOOK_ERROR = "bookerror";
+    const BOOK_DENY = "denybooking";
+    const BOOK_APPLY = "applybooking";
+    const DELETE_TRIP = "deletetrip";
     
 }

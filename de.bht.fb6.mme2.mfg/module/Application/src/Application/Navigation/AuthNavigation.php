@@ -76,6 +76,7 @@ class AuthNavigation extends Navigation {
                 $page = \Zend\Navigation\Page\AbstractPage::factory(array(
                 'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_MANAGEPROFILE),
                 'route' => \JumpUpDriver\Util\Routes\IRouteStore::LIST_VEHICLES,
+                'class' => 'fNiv',
                 ));
                 $this->_injectPage($page, $routeMatch, $router);
                 $this->addPage($page);
@@ -150,6 +151,7 @@ class AuthNavigation extends Navigation {
                 $page = \Zend\Navigation\Page\AbstractPage::factory(array(
                 'label' => $translator->translate(\JumpUpUser\Util\Messages\ILabels::MAINNAV_REGISTER),
                 'route' => \JumpUpUser\Util\Routes\IRouteStore::REGISTER,
+                'class' => 'fNiv',
                 ));
                 $this->_injectPage($page, $routeMatch, $router);
                 $this->addPage($page);

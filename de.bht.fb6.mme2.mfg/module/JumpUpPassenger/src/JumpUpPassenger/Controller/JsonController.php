@@ -31,6 +31,7 @@ class JsonController extends AbstractRestfulController {
     const PARAM_DATE_TO = "dateTo";
     const PARAM_PRICE_FROM = "priceFrom";
     const PARAM_PRICE_TO = "priceTo";
+    const PARAM_USER_ID = "userId";
     
     protected $em;
     
@@ -38,9 +39,17 @@ class JsonController extends AbstractRestfulController {
     * Fetch all trips from the DB / entity manager.
     * @return an array of Trip.
     */
-    protected function _getAllTrips() {
+    protected function _getAllTrips($userId) {      
       $tripsRepo = $this->em->getRepository('JumpUpDriver\Models\Trip');
-      $trips = $tripsRepo->findAll();
+      // here, we look if the userId was sent by the client.      
+      if(null !== $userId) { // yes, so we can prefilter the trips
+      	 $queryBuilder = $tripsRepo->createQueryBuilder('u');
+      	 $queryBuilder->where("u.id != {$userId}");
+      	 $trips = $queryBuilder->getQuery()->getResult();
+      }
+      else { // no, so he will get all trips
+      	$trips = $tripsRepo->findAll();
+      }
       return $trips;
     }
     
@@ -95,8 +104,12 @@ class JsonController extends AbstractRestfulController {
          if(null !== $request->getPost(self::PARAM_PRICE_TO)) {
            $priceTo = $request->getPost(self::PARAM_PRICE_TO);
          }
+         $userId = null;
+         if(null !== $request->getPost(self::PARAM_USER_ID)) {
+         	$userId = (int) $request->getPost(self::PARAM_USER_ID);
+         }
          
-         $trips = $this->_getAllTrips();
+         $trips = $this->_getAllTrips($userId);
          $findStrategy = $this->_getFindTripStrategy();
 
          $matchedTrips = $findStrategy->findNearTrips($startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips);

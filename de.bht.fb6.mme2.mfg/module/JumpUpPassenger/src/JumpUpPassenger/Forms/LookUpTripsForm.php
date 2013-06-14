@@ -67,6 +67,12 @@ class LookUpTripsForm {
   const FIELD_PRICE_TO = 'priceTo';
   /**
    *
+   * name of the hard-coded form field for the user Id. Necessary for the frontend so it can check which user is requesting the trips.
+   * @var String
+   */
+  const FIELD_USER_ID = 'userId';
+  /**
+   *
    * name of the button.
    * @var String
    */

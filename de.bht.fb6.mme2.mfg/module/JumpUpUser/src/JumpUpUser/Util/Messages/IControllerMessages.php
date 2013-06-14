@@ -74,6 +74,7 @@ interface IControllerMessages {
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */
+    const FATAL_ERROR_NOT_AUTHENTIFICATED = "Please login to contiunue";
     
     /**
      * Generate the confirmation mail for the given user.

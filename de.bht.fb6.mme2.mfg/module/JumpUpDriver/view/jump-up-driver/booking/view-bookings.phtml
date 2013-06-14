@@ -1,49 +1,49 @@
+<?php
+/**
+ * This view renders the bookings for all the trip the driver offers.
+ */
+use JumpUpUser\Forms\RegistrationForm;
+use JumpUpDriver\Util\Messages\IControllerMessages;
+use JumpUpPassenger\Util\IBookingState;
+use Zend\Form\Annotation\AnnotationBuilder;
+use JumpUpDriver\Util\Messages\IViewMessages;
+use JumpUpDriver\Util\Routes\IRouteStore;
+use JumpUpDriver\Forms\RecommendationForm;
+use JumpUpPassenger\Models\Booking;
+use JumpUpDriver\Util\Messages\StateUtil;
+use JumpUpDriver\Forms\BasicBookingForm;
+use JumpUpDriver\Models\Trip;
+use JumpUpDriver\Util\View\ICssStyles;
+use Application\View\Helper\RenderBookings;
+
+?>
 
 <h1><?php echo $this->translate("View bookings") ?></h1>
 
-<div>
+<div id="driver_hints">
 <?php 
-    /*
-     * author: Sascha Feldmann
-     * 
-     * Render the bookings exported by the BookingController -> viewBookingsAction.
-     */
-    use JumpUpUser\Forms\RegistrationForm;
-    use JumpUpPassenger\Util\Messages\IControllerMessages;
-    
+if(null !== $this->messages) {
+	foreach ($this->messages as $message) {
+		echo "<p>".$message."</p>";
+	}
+}
 
-    
-    use JumpUpPassenger\Util\IBookingState;
-    
- 
-    if(null !== $this->bookings && (0 < sizeof($this->bookings))) {
-        foreach ($this->bookings as $booking) {
-            echo $this->translate("<h3>".$booking->getStartPoint() . $booking->getEndPoint()."</h3>");
-            // differ bookings states
-            if ($booking->getState() === IBookingState::OFFER_FROM_PASSENGER) {
-              echo $this->translate(IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM) . "<br />";
-              echo $this->translate("Your price recommendation: ".$booking->getPassengersRecomPrice());
-            }
-            elseif($booking->getState() === IBookingState::ACCEPT) {
-              
-            }
-            elseif($booking->getState() === IBookingState::DENY) {
-            
-            }
-            elseif($booking->getState() === IBookingState::OFFER_FROM_DRIVER) {
-            
-            }
-            
-        }
-    }
-    else { // no bookings done
-      echo $this->translate(IControllerMessages::BOOKING_NO_BOOKINGS);    
-    }
-    
-  
-  
-   
 ?>
+</div>
 
+<div id="driver_view_bookings">
+<?php
+
+if (null !== $this->trips && (0 < sizeof ( $this->trips ))) {
+	echo '<div id="accordion">'; // start of accordion
+	foreach ( $this->trips as $trip ) {
+		RenderBookings::renderTrip ( $trip, $this, RenderBookings::DRIVER);
+	}
+	echo "</div>"; // end of accordion
+} else { // no trips
+	echo $this->translate ( IViewMessages::BOOKING_NO_TRIPS );
+}
+
+?>
 </div>
 

@@ -33,6 +33,8 @@ interface IControllerMessages {
     const ERROR_BOOKING_REQUEST = "Internal error: illegal request. If the error occurs again, please inform the support.";
     const ERROR_BOOKING_NOTRIP = "Internal error: No matching trip found. If the error occurs again, please inform the support.";    
     const ERROR_BOOKING_OVERVIEW = "Interal error: None booking could get fetched from the database. If the error occurs again, please inform the support.";
+    const ERROR_NO_BOOKING = "Internal error: No booking instance.";
+	const BOOKING_ERROR_OWN_TRIP = "Your cannot book your own trip. Please let other passengers the ability to book your ride.";
     /*
      * ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */     
@@ -45,5 +47,7 @@ interface IControllerMessages {
     /*
      * ..:::::::::::::::::::::::::::::::::..
      */  
+    
+    const BOOKING_STATE_DRIVERS_RECOMM = "The driver recommended the following price. You can now accept or deny the booking definitly or make another offer. ";
    
 }

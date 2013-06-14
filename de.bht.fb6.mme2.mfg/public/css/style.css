@@ -87,4 +87,26 @@ select {
 }
 /*
 /* * ..::::::::::::::::.. */
-*
+
+/*
+ * ..:: JumpUpPassenger/view-bookings.phtml ::..
+ */
+.nofloat {
+	float:none;
+/* 	display: block;	 */
+	margin-bottom: 2em;
+}
+
+.trip {
+	border: 1px solid rgba(82, 71, 71, 0.88);
+	padding: 5px;
+}
+
+.bookinglist {
+	list-style-type: none;
+}
+
+.bookingheadline, .bookingbasicform {
+	float: left;
+}
+/* * ..::::::::::::::::::::::::::::::::::::::.. */

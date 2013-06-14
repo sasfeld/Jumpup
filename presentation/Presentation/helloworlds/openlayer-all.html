@@ -19,17 +19,20 @@
 		var road = new OpenLayers.Layer.Bing({
 			name : "Bing Road",
 			key : apiKey,
-			type : "Road"
+			type : "Road",
+			culture: "de-DE"
 		});
 		var hybrid = new OpenLayers.Layer.Bing({
 			name : "Bing Hybrid",
 			key : apiKey,
-			type : "AerialWithLabels"
+			type : "AerialWithLabels",
+			culture: "de-DE"
 		});
 		var aerial = new OpenLayers.Layer.Bing({
 			name : "Bing Aerial",
 			key : apiKey,
-			type : "Aerial"
+			type : "Aerial",
+			culture: "de-DE"
 		});
 
 		map.addLayers([ road, hybrid, aerial, new OpenLayers.Layer.Google("Google Physical", {

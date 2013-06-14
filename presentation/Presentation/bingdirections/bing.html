@@ -1,0 +1,70 @@
+<title>Bing Simplest Example</title>
+<div id="demoMap"></div>
+<div id='itineraryDiv' style="position:relative;width:400px;height:500px;background-color:rgba(255, 255, 255, 0.7);margin-top: 50px;"></div>
+<script
+	src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+<script>
+	var mapOptions = {
+		credentials : "AtwFSZv_MFUytie5xqU_qA2w9BxRclUMOwANK_LJlSTkE-v-lvQJ1_Q2vqMM-Tgm"
+	};
+	var map = new Microsoft.Maps.Map(document.getElementById("demoMap"), mapOptions);
+	Microsoft.Maps.loadModule('Microsoft.Maps.Directions', {
+		callback : directionsModuleLoaded
+	});
+
+	function directionsModuleLoaded() {
+		// Initialize the DirectionsManager
+		var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+		// Create start and end waypoints
+		var startWaypoint = new Microsoft.Maps.Directions.Waypoint({
+			address : "Trier"
+		});
+		var waypoint1 = new Microsoft.Maps.Directions.Waypoint({
+			address : "Gransee"
+		});
+		var waypoint2 = new Microsoft.Maps.Directions.Waypoint({
+			address : "Hannover"
+		});
+		var waypoint3 = new Microsoft.Maps.Directions.Waypoint({
+			address : "München"
+		});
+		var waypoint4 = new Microsoft.Maps.Directions.Waypoint({
+			address : "Köln"
+		});
+		var waypoint5 = new Microsoft.Maps.Directions.Waypoint({
+			address : "Wuppertal"
+		});
+		var waypoint6 = new Microsoft.Maps.Directions.Waypoint({
+			address : "Düsseldorf"
+		});
+		var endWaypoint = new Microsoft.Maps.Directions.Waypoint({
+			address : "Berlin"
+		});
+
+		directionsManager.addWaypoint(startWaypoint);
+		directionsManager.addWaypoint(waypoint1);
+		directionsManager.addWaypoint(waypoint2);
+		directionsManager.addWaypoint(waypoint3);
+		directionsManager.addWaypoint(waypoint4);
+		directionsManager.addWaypoint(waypoint5);
+		directionsManager.addWaypoint(waypoint6);
+		directionsManager.addWaypoint(endWaypoint);
+
+		// Set the id of the div to use to display the directions
+		directionsManager.setRenderOptions({
+			itineraryContainer : document.getElementById('itineraryDiv')
+		});
+
+		// Specify a handler for when an error occurs
+		Microsoft.Maps.Events.addHandler(directionsManager, 'directionsError', displayError);
+
+		// Calculate directions, which displays a route on the map
+		directionsManager.calculateDirections();
+
+	}
+
+	function displayError(e) {
+		alert(e.message);
+	}
+</script>

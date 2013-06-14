@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Waypoints in directions</title>
+   <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsZwdJI29OQJgyUNPbucRH_l5r_NqSuH4&sensor=false">
+    </script>
+    <script type="text/javascript">
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var map;
+
+/**
+ * Set LatLang immediatly on the map.
+ * Use google's geocoding web service to get the location.
+ */
+ function setLatLngFromGeocoding(address) {
+	  var geocoder = new google.maps.Geocoder();
+	  geocoder.geocode( { 'address': address}, function(results, status) {
+	      if (status == google.maps.GeocoderStatus.OK) { // everything is ok ;)
+	    	  console.log(results);
+	    	  map.setCenter(results[0].geometry.location);
+	      } else {
+	    	/* further possible status
+	    		google.maps.GeocoderStatus.OK zeigt an, dass die Geocodierung erfolgreich war.
+	    		google.maps.GeocoderStatus.ZERO_RESULTS zeigt an, dass die Geocodierung erfolgreich war, aber keine Ergebnisse zurückgegeben hat. Dies kann vorkommen, wenn der Geocodierung ein nicht existierender address-Wert oder ein latng-Wert eines abgelegenen Standorts übergeben wurde.
+	    		google.maps.GeocoderStatus.OVER_QUERY_LIMIT zeigt an, dass Sie Ihr Kontingent überschritten haben.
+	    		google.maps.GeocoderStatus.REQUEST_DENIED zeigt an, dass Ihre Anfrage aus einem unbekannten Grund abgelehnt wurde.
+	    		google.maps.GeocoderStatus.INVALID_REQUEST  zeigt im Allgemeinen an, dass die Anfrage, das heißt address oder latLng, fehlt.    	    	
+	    	*/
+	        alert("Geocode was not successful for the following reason: " + status);
+	      }
+	    });
+ }
+
+function initialize() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+  var mapOptions = {
+    zoom: 6,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: chicago
+  }
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  directionsDisplay.setMap(map);
+  
+  setLatLngFromGeocoding("Berlin, Germany");
+}
+
+function calcRoute() {
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+  var optimizeEl = document.getElementsByName('setOptimize')[0];
+  var highwaysEl = document.getElementsByName('setAvoidHighways')[0];
+  var tollsEl = document.getElementsByName('setAvoidTolls')[0];
+  var routeAlternativesEl = document.getElementsByName('setRouteAlternatives')[0];
+  var optimize = optimizeEl.checked;
+  var highways = highwaysEl.checked;
+  var tolls = tollsEl.checked;
+  var routeAlternatives = routeAlternativesEl.checked;
+  var mode = document.getElementById('travelMode').value;
+  var tMode = google.maps.TravelMode.TRANSIT;
+  switch (mode) {
+case "Bycycle":
+	tMode = google.maps.TravelMode.BICYCLING;
+	break;
+case "Driving":
+	tMode = google.maps.TravelMode.DRIVING;
+	break;
+case "Walking":
+	tMode = google.maps.TravelMode.WALKING;
+	break;
+default:
+	break;
+}
+
+  var waypts = [];
+  var checkboxArray = document.getElementById('waypoints');
+  for (var i = 0; i < checkboxArray.length; i++) {
+    if (checkboxArray.options[i].selected == true) {
+      waypts.push({
+          location:checkboxArray[i].value,
+          stopover:true});
+    }
+  }
+
+  var request = {
+      origin: start,
+      destination: end,
+      waypoints: waypts,
+      optimizeWaypoints: optimize,
+      travelMode: tMode,
+      // Optionen für den öffentlichen Nahvekehr, nur wenn travelMode: TRANSIT!
+      transitOptions: {    	
+          departureTime: new Date("July 10, 2013 22:00:00"),
+      },
+      unitSystem: google.maps.UnitSystem.METRIC,      
+//       unitSystem: UnitSystem.IMPERIAL,      
+      // Alternativen anbieten?
+      provideRouteAlternatives: routeAlternatives,
+      // Autobahnen vermeiden?
+//       avoidHighways: true,
+      avoidHighways: highways,
+      // Mautstrecken vermeiden?
+      avoidTolls: tolls,
+//       avoidTolls: true,
+	  // Regions-Priorität setzen, z.B. uk für englische Orte
+      region: "de",
+  };
+  // calc the total distance sum for demonstration cases
+  var distanceSum = 0;
+  var durationSum = 0; // seconds
+  
+  directionsService.route(request, function(response, status) {
+	 //INVALID_REQUEST bei einer Anfrage für öffentliche Verkehrsmittel, die Wegpunkte enthält
+	console.log("directionsService - Status: "+status);
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+      console.log(response);
+      var route = response.routes[0];
+      var summaryPanel = document.getElementById('directions_panel');
+      summaryPanel.innerHTML = '';
+      // For each route, display summary information.
+      for (var i = 0; i < route.legs.length; i++) {
+        var routeSegment = i + 1;
+        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+        distanceSum += route.legs[i].distance.value;       
+        durationSum += route.legs[i].duration.value;
+      }
+      
+      distanceSum = distanceSum / 1000;
+      durationSum = Math.floor(durationSum / 60);
+      var temp = durationSum / 60;
+      var hours = Math.floor(temp);
+      var minutes = Math.round((temp - hours) * 60) ;
+      
+      var sumPanel = document.getElementById('sum_panel');
+      
+      sumPanel.innerHTML = "<b>Gesamtstrecke: </b>" + distanceSum + " km<br />";
+      sumPanel.innerHTML += "<b>Gesamtdauer: </b>" + durationSum + " min" + " ("+ hours + ":" + minutes  + " Stunden)";
+    }
+    else if(status == google.maps.DirectionsStatus.MAX_WAYPOINTS_EXCEEDED) {
+    	alert("Die max. Anzahl von Wegpunkten (8) wurde überschritten!");
+    }
+  });  
+ 
+}
+
+// google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="map-canvas" style="float:left;width:800px;height:800px;"></div>
+    <div id="control_panel" style="float:right;width:30%;text-align:left;padding-top:20px">
+    <div style="margin:20px;border-width:2px;">
+    <b>Start:</b>
+    <select id="start">
+      <option value="Trier, Germany">Trier</option>      
+    </select>
+    <br>
+    <b>Waypoints:</b> <br>
+    <i>(Ctrl-Click for multiple selection)</i> <br>
+    <select multiple id="waypoints">
+      <option value="Stralsund, Germany">Stralsund</input>
+      <option value="Cologne, Germany">Köln</input>
+      <option value="Düsseldorf, Germany">Düsseldorf</input>
+      <option value="Wuppertal, Germany">Wuppertal</input>
+      <option value="Recklinghausen, Germany">Recklinghausen</input>
+      <option value="Münster, Germany">Münster</input>
+      <option value="Bielefeld, Germany">Bielefeld</input>
+      <option value="Osnabrück, Germany">Osnabrück</input>
+      <option value="Gransee, Germany">Gransee</input>
+      <option value="Hamburg, Germany">Hamburg</input>
+      <option value="Magdeburg, Germany">Magdeburg</input>
+      <option value="Wolfsburg, Germany">Wolfsburg</input>
+      <option value="Braunschweig, Germany">Braunschweig</input>      
+    </select>
+    <br>
+    <b>End:</b>
+    <select id="end">
+ 		<option value="Berlin, Germany">Berlin</option>      
+    </select>
+    <br />
+    <b>Reisemodus:</b>
+    <select id="travelMode">
+ 		<option value="Bycycle">Fahrrad</option>      
+ 		<option value="Public">Nahverkehr</option>      
+ 		<option value="Driving">Auto</option>      
+ 		<option value="Walking">Fuß</option>      
+    </select>
+    <br />
+    	Wegpunkte optimieren? <input type="checkbox" name="setOptimize" />
+    <br />
+    	Autobahnen meiden? <input type="checkbox" name="setAvoidHighways" />
+    <br />
+    	Mautstellen meiden? <input type="checkbox" name="setAvoidTolls" />
+    <br />
+    	Alternativen anbieten? <input type="checkbox" name="setRouteAlternatives" />
+   	<br />
+    	<input type="submit" onclick="calcRoute();">
+    </div>
+    <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
+    </div>
+    <div id="sum_panel" style="margin:20px;background-color:#FFEE77;">
+    
+    </div>
+  </body>
+</html>

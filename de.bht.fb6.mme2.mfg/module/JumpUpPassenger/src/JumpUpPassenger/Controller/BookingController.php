@@ -13,14 +13,22 @@ use JumpUpPassenger\Models\Booking;
 use Application\Util\ExceptionUtil;
 use Application\Forms\BasicBookingForm;
 use JumpUpPassenger\Util\IBookingState;
+use JumpUpPassenger\Forms\LookUpTripsForm;
+use Zend\Form\Annotation\AnnotationBuilder;
+use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\View\Helper\ViewModel;
+use Zend\Form\Form;
+use Application\Util\FormTransmitterUtil;
 
 /**
+ *
  *
  *
  * This controller handles actions that concern the booking entity.
  *
  * @package JumpUpPassenger\Controller
  * @subpackage
+ *
  *
  * @copyright Copyright (c) 2013 Sascha Feldmann (http://saschafeldmann.de)
  * @license GNU license
@@ -30,40 +38,52 @@ use JumpUpPassenger\Util\IBookingState;
 class BookingController extends ANeedsAuthenticationController {
 	/**
 	 * POST-parameter for the tripId.
-	 * 
+	 *
 	 * @var String the parameter name
 	 */
 	const POST_TRIP_ID = "tripId";
 	/**
 	 * POST-parameter for the recommendedPrice.
-	 * 
+	 *
 	 * @var String the parameter name
 	 */
 	const POST_TRIP_RECOMM_PRICE = "recommendedPrice";
 	/**
 	 * POST-parameter for the startPoint (of the passenger).
-	 * 
+	 *
 	 * @var String the parameter name
 	 */
 	const POST_START_POINT = "startPoint";
 	/**
 	 * POST-parameter for the endPoint (of the passenger).
-	 * 
+	 *
 	 * @var String the parameter name
 	 */
 	const POST_END_POINT = "endPoint";
 	/**
 	 * POST-parameter for the startCoord (of the passenger).
-	 * 
+	 *
 	 * @var String the parameter name
 	 */
 	const POST_START_COORD = "startCoord";
 	/**
 	 * POST-parameter for the endCoord (of the passenger).
-	 * 
+	 *
 	 * @var String the parameter name
 	 */
 	const POST_END_COORD = "endCoord";
+	protected $form;
+	protected function _getForm() {
+		if (! isset ( $this->form )) {
+			$lookUpForm = new LookUpTripsForm ();
+			$builder = new AnnotationBuilder ();
+			$this->form = $builder->createForm ( $lookUpForm );
+			$this->form->setHydrator ( new ClassMethods () );
+			$this->form->setAttribute ( 'action', $this->url ()->fromRoute ( IRouteStore::SHOW_TRIPS ) );
+		}
+		return $this->form;
+	}
+	
 	/**
 	 * The error action is called when another action raises an error.
 	 * Input parameters: none
@@ -178,46 +198,68 @@ class BookingController extends ANeedsAuthenticationController {
 		$redirect = IRouteStore::BOOK_ERROR;
 		if ($request->isPost ()) {
 			// @TODO use ZEND form here for validation
-			$tripId = ( int ) $request->getPost ( self::POST_TRIP_ID );
-			$recomPrice = ( int ) $request->getPost ( self::POST_TRIP_RECOMM_PRICE );
-			$startPoint = ( string ) $request->getPost ( self::POST_START_POINT );
-			$endPoint = ( string ) $request->getPost ( self::POST_END_POINT );
-			$startCoord = $request->getPost ( self::POST_START_COORD );
-			$endCoord = $request->getPost ( self::POST_END_COORD );
-			if (null !== $tripId && null !== $recomPrice && null !== $startCoord && null !== $startPoint && null !== $endPoint && null !== $endCoord) {
-				$trip = $this->_getTrip ( $tripId );
-				// user tries to book his own ride
-				if ($loggedInUser === $trip->getDriver ()) {
-					$this->flashMessenger ()->clearMessages ();
-					$this->flashMessenger ()->addErrorMessage ( IControllerMessages::BOOKING_ERROR_OWN_TRIP );
-					$redirect = IRouteStore::BOOK_ERROR;
-				} else {
-					if (null !== $trip) {
-						$booking = new Booking ( $trip, $loggedInUser, $recomPrice );
-						$booking->setStartPoint ( $startPoint );
-						$booking->setStartCoordinate ( $startCoord );
-						$booking->setEndCoordinate ( $endCoord );
-						$booking->setEndPoint ( $endPoint );
-						try {
-							$this->_bookTrip ( $booking, $trip );
-							// @TODO inform driver via eMail, he needs to check his booking overview page
-							$this->flashMessenger ()->clearMessages ();
-							$this->flashMessenger ()->addMessage ( IControllerMessages::BOOKING_SUCCESS );
-							$redirect = IRouteStore::BOOK_PASS_OVERVIEW;
-						} catch ( OverbookException $e ) {
-							$this->flashMessenger ()->clearMessages ();
-							$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_OVERBOOKING );
-						}
+			$form = $this->_getForm ();
+			$form->setData ( $request->getPost () );
+			
+			if ($form->isValid ()) {
+				$tripId = ( int ) $request->getPost ( self::POST_TRIP_ID );
+				$recomPrice = ( int ) $request->getPost ( self::POST_TRIP_RECOMM_PRICE );
+				$startPoint = ( string ) $request->getPost ( self::POST_START_POINT );
+				$endPoint = ( string ) $request->getPost ( self::POST_END_POINT );
+				$startCoord = $request->getPost ( self::POST_START_COORD );
+				$endCoord = $request->getPost ( self::POST_END_COORD );
+				if (null !== $tripId && null !== $recomPrice && null !== $startCoord && null !== $startPoint && null !== $endPoint && null !== $endCoord) {
+					$trip = $this->_getTrip ( $tripId );
+					// user tries to book his own ride
+					if ($loggedInUser === $trip->getDriver ()) {
+						$this->flashMessenger ()->clearMessages ();
+						$this->flashMessenger ()->addErrorMessage ( IControllerMessages::BOOKING_ERROR_OWN_TRIP );
+						$redirect = IRouteStore::BOOK_ERROR;
 					} else {
-						$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_NOTRIP );
+						if (null !== $trip) {
+							$booking = new Booking ( $trip, $loggedInUser, $recomPrice );
+							$booking->setStartPoint ( $startPoint );
+							$booking->setStartCoordinate ( $startCoord );
+							$booking->setEndCoordinate ( $endCoord );
+							$booking->setEndPoint ( $endPoint );
+							try {
+								$this->_bookTrip ( $booking, $trip );
+								// @TODO inform driver via eMail, he needs to check his booking overview page
+								$this->flashMessenger ()->clearMessages ();
+								$this->flashMessenger ()->addMessage ( IControllerMessages::BOOKING_SUCCESS );
+								$redirect = IRouteStore::BOOK_PASS_OVERVIEW;
+							} catch ( OverbookException $e ) {
+								$this->flashMessenger ()->clearMessages ();
+								$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_OVERBOOKING );
+							}
+						} else {
+							$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_NOTRIP );
+						}
 					}
+				} else {
+					$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_REQUEST );
 				}
-			} else {
-				$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_REQUEST );
+			}
+			else {
+				$redirect = $this->_redirectToViewTrips($form);
 			}
 		}
 		// fallthrough: error
 		$this->redirect ()->toRoute ( $redirect );
+	}
+	
+	/**
+	 * Take the fields within a form and redirect to another controller.
+	 * @param unknown $form
+	 */
+	private function _redirectToViewTrips(Form $form) {
+		$this->flashMessenger()->clearMessages();	
+		foreach ($form->getElements() as $element) {
+			$message = FormTransmitterUtil::getMessage($element);
+			
+			$this->flashMessenger()->addMessage($message);
+		}
+		return $this->redirect()->toRoute(IRouteStore::LOOKUP_TRIPS);
 	}
 	
 	/**
@@ -262,7 +304,7 @@ class BookingController extends ANeedsAuthenticationController {
 	/**
 	 * Perform a booking.
 	 * Create a booking record for the given booking.
-	 * 
+	 *
 	 * @param Booking $booking
 	 *        	the new Booking record
 	 * @param Trip $trip
@@ -285,7 +327,7 @@ class BookingController extends ANeedsAuthenticationController {
 	
 	/**
 	 * Get all bookings for the given passenger.
-	 * 
+	 *
 	 * @param User $user        	
 	 * @return array of Booking instances
 	 */
@@ -295,7 +337,7 @@ class BookingController extends ANeedsAuthenticationController {
 	}
 	/**
 	 * Get the trip entity for a given tripid.
-	 * 
+	 *
 	 * @param int $tripId
 	 *        	- must be an integer
 	 * @return s the entity with the given id or null if it doesn't exist

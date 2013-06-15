@@ -19,10 +19,12 @@ use Zend\Form\Form;
 /**
  *
  *
+ *
  * The ViewTripsController handles the rendering of routes stored in the DB.
  *
  * @package JumpUpPassenger\Controller
  * @subpackage
+ *
  *
  * @copyright Copyright (c) 2013 Sascha Feldmann (http://saschafeldmann.de)
  * @license GNU license
@@ -87,7 +89,7 @@ class ViewTripsController extends ANeedsAuthenticationController {
 	}
 	/**
 	 * Handle lookup of trips in the database.
-	 * 
+	 *
 	 * @return a form.
 	 */
 	public function lookUpAction() {
@@ -105,32 +107,50 @@ class ViewTripsController extends ANeedsAuthenticationController {
 		// GET method -> only return the input form
 		$messages = $this->flashMessenger ()->getMessages ();
 		$form = $this->_getForm ();
-		$this->_fillFormFieldsBy ($form, $messages );
+		if (null !== $messages) {
+			// fill form by transmitted form elements and filter messages
+			$messages = $this->_fillFormFieldsBy ( $form, $messages );
+		}
 		return array (
 				'form' => $form,
 				'messages' => $messages,
 				'inputFields' => $inputFields 
 		);
 	}
+	
+	/**
+	 * Fill the form fields by the transmitted messages.
+	 * @param Form $form the form to be filled.
+	 * @param array $messages an array of messages from the flashMessenger which will be decoded by the FormTransmitterUtil.
+	 * @return all other messages which are not transmitted form elements. 
+	 */
 	private function _fillFormFieldsBy(Form $form, array $messages) {
+		$otherMessages = array();
 		foreach ( $messages as $message ) {
-			if (FormTransmitterUtil::isValidMessage ( $message )) {				
+			if (FormTransmitterUtil::isValidMessage ( $message )) {
 				$decodedArray = FormTransmitterUtil::decodeMessage ( $message );
-				if(null !== $decodedArray) {
-					$elName = $decodedArray[FormTransmitterUtil::ELEMENT_NAME];
-					$elValue = $decodedArray[FormTransmitterUtil::ELEMENT_VALUE];
-					$formEl = $form->get($elName);
-					if(null !== $formEl) {
-						$formEl->setValue($elValue);
+				if (null !== $decodedArray) {
+					$elName = $decodedArray [FormTransmitterUtil::ELEMENT_NAME];
+					$elValue = $decodedArray [FormTransmitterUtil::ELEMENT_VALUE];
+					$elMessages = $decodedArray [FormTransmitterUtil::ELEMENT_MESSAGES];
+					$formEl = $form->get ( $elName );
+					if (null !== $formEl) {
+						$formEl->setValue ( $elValue );
 					}
+					if( null !== $elMessages) {
+						$formEl->setMessages($elMessages);
+					}					
 				}
+			}
+			else {
+				array_push($otherMessages, $message);
 			}
 		}
 	}
 	
 	/**
 	 * Fetch all trips from the DB / entity manager.
-	 * 
+	 *
 	 * @return an array of Trip.
 	 */
 	protected function _getAllTrips() {

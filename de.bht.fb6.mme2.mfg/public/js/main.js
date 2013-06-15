@@ -343,6 +343,12 @@ require(
 														(function() {
 															console
 																	.log("lookuptrips ... button clicked...");
+															startPoint = $(
+																	REF_TRIPS_START_POINT)
+																	.val();
+															endPoint = $(
+																	REF_TRIPS_END_POINT)
+																	.val();
 															startCoord = $(
 																	REF_TRIPS_START_COORD)
 																	.val();
@@ -364,6 +370,8 @@ require(
 															if (null != tripsCtrl) {
 																tripsCtrl
 																		.fetchTrips(
+																				startPoint,
+																				endPoint,
 																				startCoord,
 																				endCoord,
 																				startDate,

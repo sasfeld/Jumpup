@@ -19,11 +19,19 @@ define( [ "jquery" ], ( function($) {
 	const PARAM_RECOM_START_COORD = "startCoord";
 	const PARAM_RECOM_END_POINT = "endPoint";
 	const PARAM_RECOM_END_COORD = "endCoord";
+	const PARAM_DATE_FROM = "startDate";
+	const PARAM_DATE_TO = "endDate";
+	const PARAM_PRICE_FROM = "priceFrom";
+	const PARAM_PRICE_TO = "priceTo";
 	const TRIPS_REF_FORM = 'form[name="LookUpTripsForm"]';
 	const REF_TRIPS_START_COORD = TRIPS_REF_FORM + ' input[name="startCoord"]';
 	const REF_TRIPS_END_COORD = TRIPS_REF_FORM + ' input[name="endCoord"]';
 	const REF_TRIPS_START_POINT = TRIPS_REF_FORM + ' input[name="startPoint"]';
 	const REF_TRIPS_END_POINT = TRIPS_REF_FORM + ' input[name="endPoint"]';
+	const REF_TRIPS_START_DATE = TRIPS_REF_FORM + ' input[name="startDate"]';
+	const REF_TRIPS_END_DATE = TRIPS_REF_FORM + ' input[name="endDate"]';
+	const REF_TRIPS_PRICE_FROM = TRIPS_REF_FORM + ' input[name="priceFrom"]';
+	const REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' input[name="priceTo"]';
 	// was the accordion already initialized? important for the destroy() function on the accordion
 	var alreadyInit = false;
 	var _this;
@@ -45,6 +53,10 @@ define( [ "jquery" ], ( function($) {
 		this.callbackSelect = callbackSelect;
 		this.inputStartPoint = $(REF_TRIPS_START_POINT);		
 		this.inputEndPoint = $(REF_TRIPS_END_POINT);
+		this.inputDateFrom = $(REF_TRIPS_START_DATE);
+		this.inputDateTo = $(REF_TRIPS_END_DATE);
+		this.inputPriceFrom = $(REF_TRIPS_PRICE_FROM);
+		this.inputPriceTo = $(REF_TRIPS_PRICE_TO);
 		this.options = options;
 		
 		// empty accordion node
@@ -66,6 +78,10 @@ define( [ "jquery" ], ( function($) {
 			+'Your price recommendation: <input type="text" name="'+PARAM_RECOM_PRICE+'" value="'+systemPrice+'" />' 			
 			+'<input type="hidden" name="'+PARAM_RECOM_START_POINT+'" value="'+this.inputStartPoint.val()+'" />'
 			+'<input type="hidden" name="'+PARAM_RECOM_END_POINT+'" value="'+this.inputEndPoint.val()+'" />'
+			+'<input type="hidden" name="'+PARAM_DATE_FROM+'" value="'+this.inputDateFrom.val()+'" />'
+			+'<input type="hidden" name="'+PARAM_DATE_TO+'" value="'+this.inputDateTo.val()+'" />'
+			+'<input type="hidden" name="'+PARAM_PRICE_FROM+'" value="'+this.inputPriceFrom.val()+'" />'
+			+'<input type="hidden" name="'+PARAM_PRICE_TO+'" value="'+this.inputPriceTo.val()+'" />'
 			+'<input type="hidden" name="'+PARAM_RECOM_START_COORD+'" value="'+this.options.startLatLng+'" />'
 			+'<input type="hidden" name="'+PARAM_RECOM_END_COORD+'" value="'+this.options.endLatLng+'" />'			
 			+'<input type="submit" value="Book" />'

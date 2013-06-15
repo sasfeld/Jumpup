@@ -16,7 +16,6 @@ use JumpUpPassenger\Util\IBookingState;
 use JumpUpPassenger\Forms\LookUpTripsForm;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\View\Helper\ViewModel;
 use Zend\Form\Form;
 use Application\Util\FormTransmitterUtil;
 
@@ -48,30 +47,7 @@ class BookingController extends ANeedsAuthenticationController {
 	 * @var String the parameter name
 	 */
 	const POST_TRIP_RECOMM_PRICE = "recommendedPrice";
-	/**
-	 * POST-parameter for the startPoint (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_START_POINT = "startPoint";
-	/**
-	 * POST-parameter for the endPoint (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_END_POINT = "endPoint";
-	/**
-	 * POST-parameter for the startCoord (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_START_COORD = "startCoord";
-	/**
-	 * POST-parameter for the endCoord (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_END_COORD = "endCoord";
+
 	protected $form;
 	protected function _getForm() {
 		if (! isset ( $this->form )) {
@@ -204,10 +180,10 @@ class BookingController extends ANeedsAuthenticationController {
 			if ($form->isValid ()) {
 				$tripId = ( int ) $request->getPost ( self::POST_TRIP_ID );
 				$recomPrice = ( int ) $request->getPost ( self::POST_TRIP_RECOMM_PRICE );
-				$startPoint = ( string ) $request->getPost ( self::POST_START_POINT );
-				$endPoint = ( string ) $request->getPost ( self::POST_END_POINT );
-				$startCoord = $request->getPost ( self::POST_START_COORD );
-				$endCoord = $request->getPost ( self::POST_END_COORD );
+				$startPoint = ( string ) $request->getPost ( LookUpTripsForm::FIELD_START_POINT );
+				$endPoint = ( string ) $request->getPost ( LookUpTripsForm::FIELD_END_POINT );
+				$startCoord = $request->getPost (LookUpTripsForm::FIELD_START_COORD );
+				$endCoord = $request->getPost ( LookUpTripsForm::FIELD_END_COORD );
 				if (null !== $tripId && null !== $recomPrice && null !== $startCoord && null !== $startPoint && null !== $endPoint && null !== $endCoord) {
 					$trip = $this->_getTrip ( $tripId );
 					// user tries to book his own ride
@@ -240,7 +216,7 @@ class BookingController extends ANeedsAuthenticationController {
 					$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_REQUEST );
 				}
 			}
-			else {
+			else { // form is not valid
 				$redirect = $this->_redirectToViewTrips($form);
 			}
 		}
@@ -255,11 +231,10 @@ class BookingController extends ANeedsAuthenticationController {
 	private function _redirectToViewTrips(Form $form) {
 		$this->flashMessenger()->clearMessages();	
 		foreach ($form->getElements() as $element) {
-			$message = FormTransmitterUtil::getMessage($element);
-			
+			$message = FormTransmitterUtil::getMessage($element);			
 			$this->flashMessenger()->addMessage($message);
 		}
-		return $this->redirect()->toRoute(IRouteStore::LOOKUP_TRIPS);
+		return IRouteStore::LOOKUP_TRIPS;
 	}
 	
 	/**

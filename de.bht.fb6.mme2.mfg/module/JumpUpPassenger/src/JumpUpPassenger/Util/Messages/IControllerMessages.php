@@ -25,6 +25,14 @@ interface IControllerMessages {
      * ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */     
      /*
+     * ..:: used in JumpUpPassenger\Controller\JsonController. ::..
+     */
+    const ERROR_LOOKUP_VALIDATION = "Please fill in all required fields."; 
+    
+    /*
+     * ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
+     */     
+     /*
       * 
      * ..:: used in JumpUpPassenger\Controller\BookingController. ::..
      */

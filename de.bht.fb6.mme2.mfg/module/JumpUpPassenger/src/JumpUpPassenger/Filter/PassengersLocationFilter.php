@@ -56,31 +56,18 @@ class PassengersLocationFilter extends ATripFilter {
 	
 		foreach ($applyTrips as $trip) {
 			$passengerLocation = $this->_toLatLng($tripsContainer->getStartCoord());
-			$passengersDestination = $this->_toLatLng($tripsContainer->getEndCoord());
-			
-			// we use rad here, because PHP only supports rad					
-			$passLocLatRad = deg2rad($passengerLocation[self::LAT]);
-			$passLocLngRad = deg2rad($passengerLocation[self::LNG]);
-			$passDesLatRad = deg2rad($passengersDestination[self::LAT]);
-			$passDesLngRad = deg2rad($passengersDestination[self::LNG]);
-			
-			
+			$passengersDestination = $this->_toLatLng($tripsContainer->getEndCoord());			
 			$driversLocation = $this->_toLatLng($trip->getStartCoord());
 			$driversDestination = $this->_toLatLng($trip->getEndCoord());
-			$drivLocLatRad = deg2rad($driversLocation[self::LAT]);
-			$drivLocLngRad = deg2rad($driversLocation[self::LNG]);
-			$drivDesLatRad = deg2rad($driversDestination[self::LAT]);
-			$drivDesLngRad = deg2rad($driversDestination[self::LNG]);
-			
-			// ARCCOS[ SIN(Breite1)*SIN(Breite2) + COS(Breite1)*COS(Breite2)*COS(Länge2-Länge1) ]
-			$distanceLocation = self::EQUATOR_RADIUS * acos( sin($passLocLatRad) * sin($drivLocLatRad) + cos($passLocLatRad) * cos($drivLocLatRad)*cos($drivLocLngRad - $passLocLngRad));
-			$distanceDestination = self::EQUATOR_RADIUS * acos( sin($passDesLatRad) * sin($drivDesLatRad) + cos($passDesLatRad) * cos($drivDesLatRad)*cos($drivDesLngRad - $passDesLngRad));
+
+			$distanceLocation = $this->_calculateDistance($passengerLocation, $driversLocation);
+			$distanceDestination = $this->_calculateDistance($passengersDestination, $driversDestination);
 			
 			/*
 			 * passenger's location must be near to the driver's location OR any of his route waypoints.
 			 * passenger's destination must also be near to the driver's destination OR any of his route waypoints.
 			 */
-			if ($distanceLocation < $tripsContainer->getMaxDistance() && $distanceDestination < $tripsContainer->getMaxDistance()) {
+			if (($distanceLocation < $tripsContainer->getMaxDistance() || $this->_isPointNearRoute($passengerLocation, $trip->getOverviewPath(), $tripsContainer->getMaxDistance())) && ($distanceDestination < $tripsContainer->getMaxDistance()  || $this->_isPointNearRoute($passengersDestination, $trip->getOverviewPath(), $tripsContainer->getMaxDistance()))) {
 				array_push($filteredTrips, $trip);
 			}
 		}
@@ -98,6 +85,55 @@ class PassengersLocationFilter extends ATripFilter {
 		
 		$returnArray = explode(",", $cleanString);	
 		return $returnArray;	
+	}
+	
+	/**
+	 * Take the overviewPath as given in the database and convert it to an 2d-array. Elements are arrays with two elements (LAT and LNG). Use the constants above to access those.
+	 * @param String $overviewPath from the database
+	 * @return 2d-array whose elements are arrays with two elements LAT and LNG
+	 */	
+	protected function _overviewPathToLatLng($overviewPath) {
+		$latLngStrings = explode(";" , $overviewPath);
+		$returnArray = array();
+		foreach ($latLngStrings as $latLngString) {
+			if("" !== $latLngString) {
+				array_push($returnArray, $this->_toLatLng($latLngString));
+			}
+		}
+		return $returnArray;
+	}
+	
+	/**
+	 * Check whether the given point is near the driver's path.
+	 * @param array $passengerPoint
+	 * @param String $driverPath as stored in the database.
+	 */
+	protected function _isPointNearRoute($passengerPoint, $driverPath, $maxDistance) {
+		$pathLatLngArr = $this->_overviewPathToLatLng($driverPath);
+		foreach ($pathLatLngArr as $singleWaypoint) {
+			$distance = $this->_calculateDistance($passengerPoint, $singleWaypoint);
+			if($distance < $maxDistance) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Calculate the distance between two points given as coordinates.
+	 * @param array $coord1 an array with the two elements LAT and LNG. Set those via the constants above.
+	 * @param array $coord2 an array with the two elements LAT and LNG. Set those via the constants above. 
+	 * @return int the distance in kilometers between the given points
+	 */
+	protected function _calculateDistance(array $coord1, array $coord2) {
+		$point1LatRad = deg2rad($coord1[self::LAT]);
+		$point1LngRad = deg2rad($coord1[self::LNG]);
+		$point2LatRad = deg2rad($coord2[self::LAT]);
+		$point2LngRad = deg2rad($coord2[self::LNG]);
+		
+		// ARCCOS[ SIN(Breite1)*SIN(Breite2) + COS(Breite1)*COS(Breite2)*COS(Länge2-Länge1) ]
+		$distanceBetween = self::EQUATOR_RADIUS * acos( sin($point1LatRad) * sin($point2LatRad) + cos($point1LatRad) * cos($point2LatRad)*cos($point2LngRad - $point1LngRad));
+		return $distanceBetween;
 	}
 }
 

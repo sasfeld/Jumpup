@@ -53,7 +53,8 @@ class ViewTripsController extends ANeedsAuthenticationController {
 	}
 	/**
 	 *
-	 * @deprecated because we use AJAX in the frontend.
+	 * @deprecated because we use AJAX in the frontend. 
+	 * @see JsonController now!!!!
 	 *             Show results of a find trips strategy.
 	 * @return an array of trips. Those trips shall be rendered by the view / javascript / google map.
 	 */

@@ -15,6 +15,7 @@ use Zend\Form\Form;
 use Application\Util\ServicesUtil;
 use JumpUpPassenger\Util\Messages\IControllerMessages;
 use JumpUpUser\Util\IEntitiesStore;
+use JumpUpPassenger\Strategies\NearestRouteStrategy;
 
 /**
  *
@@ -67,7 +68,7 @@ class JsonController extends AbstractRestfulController {
 	}
 	protected function _getFindTripStrategy() {
 		if (! isset ( $this->findTripStrategy )) {
-			$strategy = new DumbRouteStrategy ();
+			$strategy = new NearestRouteStrategy();
 			$this->findTripStrategy = $strategy;
 		}
 		return $this->findTripStrategy;
@@ -109,28 +110,28 @@ class JsonController extends AbstractRestfulController {
 			
 			$jsonObj;
 			if ($form->isValid ()) {
-				if (null !== $request->getPost ( self::PARAM_START_COORD )) {
-					$startCoord = $request->getPost ( self::PARAM_START_COORD );
+				if (null !== $request->getPost ( LookUpTripsForm::FIELD_START_COORD )) {
+					$startCoord = $request->getPost ( LookUpTripsForm::FIELD_START_COORD );
 				}
 				$endCoord = "";
-				if (null !== $request->getPost ( self::PARAM_END_COORD )) {
-					$endCoord = $request->getPost ( self::PARAM_END_COORD );
+				if (null !== $request->getPost ( LookUpTripsForm::FIELD_END_COORD )) {
+					$endCoord = $request->getPost ( LookUpTripsForm::FIELD_END_COORD );
 				}
 				$dateFrom = "";
-				if (null !== $request->getPost ( self::PARAM_DATE_FROM )) {
-					$dateFrom = $request->getPost ( self::PARAM_DATE_FROM );
+				if (null !== $request->getPost ( LookUpTripsForm::FIELD_START_DATE )) {
+					$dateFrom = $request->getPost ( LookUpTripsForm::FIELD_START_DATE );
 				}
 				$dateTo = "";
-				if (null !== $request->getPost ( self::PARAM_DATE_TO )) {
-					$dateTo = $request->getPost ( self::PARAM_DATE_TO );
+				if (null !== $request->getPost ( LookUpTripsForm::FIELD_END_DATE )) {
+					$dateTo = $request->getPost ( LookUpTripsForm::FIELD_END_DATE );
 				}
 				$priceFrom = "";
-				if (null !== $request->getPost ( self::PARAM_PRICE_FROM )) {
-					$priceFrom = $request->getPost ( self::PARAM_PRICE_FROM );
+				if (null !== $request->getPost ( LookUpTripsForm::FIELD_PRICE_FROM )) {
+					$priceFrom = $request->getPost ( LookUpTripsForm::FIELD_PRICE_FROM );
 				}
 				$priceTo = "";
-				if (null !== $request->getPost ( self::PARAM_PRICE_TO )) {
-					$priceTo = $request->getPost ( self::PARAM_PRICE_TO );
+				if (null !== $request->getPost ( LookUpTripsForm::FIELD_PRICE_TO )) {
+					$priceTo = $request->getPost ( LookUpTripsForm::FIELD_PRICE_TO);
 				}
 				$userId = null;
 				if (null !== $request->getPost ( self::PARAM_USER_ID )) {
@@ -142,7 +143,7 @@ class JsonController extends AbstractRestfulController {
 				$findStrategy = $this->_getFindTripStrategy ();
 				
 				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger );
-				if (null !== $matchedTrips) {
+				if (null !== $matchedTrips && sizeof($matchedTrips) != 0) {
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );
 					$jsonObj = \Zend\Json\Json::encode ( $tripWrapper, true );
@@ -151,6 +152,8 @@ class JsonController extends AbstractRestfulController {
 					$jsonObj = array ( "noTrips" => true,			
 							"user" => $passenger->getPrename(),			
 							"userMessage" => $this->_getTranslator()->translate(IControllerMessages::LOOKUP_NO_TRIPS),
+							"dateFrom" => $dateFrom,
+							"dateTo" => $dateTo,
 					);
 				}
 			}

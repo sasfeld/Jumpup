@@ -21,15 +21,51 @@ use JumpUpUser\Models\User;
 class FindTripsContainer {
 	protected $trips;
 	protected $passenger;
+	protected $priceFrom;
+	protected $priceTo;
+	protected $dateFrom;
+	protected $dateTo;
 	
+	/**
+	 * @return the $priceFrom
+	 */
+	public function getPriceFrom() {
+		return $this->priceFrom;
+	}
+
+	/**
+	 * @return the $priceTo
+	 */
+	public function getPriceTo() {
+		return $this->priceTo;
+	}
+
+	/**
+	 * @return the $dateFrom
+	 */
+	public function getDateFrom() {
+		return $this->dateFrom;
+	}
+
+	/**
+	 * @return the $dateTo
+	 */
+	public function getDateTo() {
+		return $this->dateTo;
+	}
+
 	/**
 	 * Construct a new container. 
 	 * @param Trip $trip the trip to be keeped.
 	 * @param User $user the user to be keeped.
 	 */
-	public function __construct(array $trips, User $user) {
+	public function __construct(array $trips, User $user, $priceFrom, $priceTo, $dateFrom, $dateTo) {
 		$this->trips = $trips;
 		$this->passenger = $user;
+		$this->dateFrom = $dateFrom;
+		$this->dateTo = $dateTo;
+		$this->priceFrom = $priceFrom;
+		$this->priceTo = $priceTo;
 	}
 	
 	/**

@@ -83,8 +83,8 @@ class BookingController extends ANeedsAuthenticationController {
 		$loggedInUser = $this->_checkAndRedirect ();
 		
 		$bookings = $this->_getAllBookings ( $loggedInUser );
-		if (null !== $bookings) {
-			$messages = $this->flashMessenger ()->getMessages ();
+		if (null !== $bookings) {			
+			$messages = array_merge($this->flashMessenger()->getErrorMessages(), $this->flashMessenger()->getMessages());
 			return array (
 					"bookings" => $bookings,
 					"messages" => $messages 
@@ -191,7 +191,16 @@ class BookingController extends ANeedsAuthenticationController {
 						$this->flashMessenger ()->clearMessages ();
 						$this->flashMessenger ()->addErrorMessage ( IControllerMessages::BOOKING_ERROR_OWN_TRIP );
 						$redirect = IRouteStore::BOOK_ERROR;
-					} else {
+					} 
+					// user has alread booked the trip
+					elseif ($this->_hasAlreadyBooked($trip, $loggedInUser)) {
+						$this->flashMessenger ()->clearMessages ();
+						$this->flashMessenger ()->addErrorMessage ( IControllerMessages::BOOKING_ERROR_ALREADY_BOOKED );
+						// redirect to the booking overview page so the user can see his bookings
+						$redirect = IRouteStore::BOOK_PASS_OVERVIEW;
+					}
+					// everything is ok :O
+					 else {
 						if (null !== $trip) {
 							$booking = new Booking ( $trip, $loggedInUser, $recomPrice );
 							$booking->setStartPoint ( $startPoint );
@@ -207,6 +216,7 @@ class BookingController extends ANeedsAuthenticationController {
 							} catch ( OverbookException $e ) {
 								$this->flashMessenger ()->clearMessages ();
 								$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_OVERBOOKING );
+								$redirect = IRouteStore::BOOK_ERROR;
 							}
 						} else {
 							$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_NOTRIP );
@@ -222,6 +232,22 @@ class BookingController extends ANeedsAuthenticationController {
 		}
 		// fallthrough: error
 		$this->redirect ()->toRoute ( $redirect );
+	}
+	
+	/**
+	 * Check whether the given user has already performed a booking on the given trip.
+	 * @param unknown $trip
+	 * @param unknown $loggedInUser
+	 * @return boolean true if the user has already booked the trip.
+	 */
+	private function _hasAlreadyBooked(Trip $trip, User $loggedInUser) {
+		foreach ($trip->getBookings() as $booking) {
+			if($loggedInUser === $booking->getPassenger()) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**

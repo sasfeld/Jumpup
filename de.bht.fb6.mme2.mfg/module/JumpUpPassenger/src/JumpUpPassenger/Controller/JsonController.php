@@ -14,6 +14,7 @@ use JumpUpPassenger\Util\Routes\IRouteStore;
 use Zend\Form\Form;
 use Application\Util\ServicesUtil;
 use JumpUpPassenger\Util\Messages\IControllerMessages;
+use JumpUpUser\Util\IEntitiesStore;
 
 /**
  *
@@ -100,7 +101,7 @@ class JsonController extends AbstractRestfulController {
 	public function tripAction() {
 		$request = $this->getRequest ();
 		
-// 		if ($request->isPost ()) {
+		if ($request->isPost ()) {
 			$startCoord = "";
 			
 			$form = $this->_getLookUpForm ();
@@ -137,13 +138,20 @@ class JsonController extends AbstractRestfulController {
 				}
 				
 				$trips = $this->_getAllTrips ( $userId );
+				$passenger = $this->_getUser( $userId);
 				$findStrategy = $this->_getFindTripStrategy ();
 				
-				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips );
+				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger );
 				if (null !== $matchedTrips) {
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );
 					$jsonObj = \Zend\Json\Json::encode ( $tripWrapper, true );
+				}
+				else { // no matching trips
+					$jsonObj = array ( "noTrips" => true,			
+							"user" => $passenger->getPrename(),			
+							"userMessage" => $this->_getTranslator()->translate(IControllerMessages::LOOKUP_NO_TRIPS),
+					);
 				}
 			}
 			else {
@@ -154,13 +162,19 @@ class JsonController extends AbstractRestfulController {
 				 );
 			}
 			return new JsonModel ( $jsonObj );
-// 		}
+		}
 		
 		// return bad request message
 		$this->getResponse ()->setStatusCode ( 400 ); // bad request
 		return new JsonModel ( array (
 				"badRequest" => true 
 		) );
+	}
+	
+	protected function _getUser( $userId) {
+		$userRepo = $this->em->getRepository(IEntitiesStore::USER);
+		$user = $userRepo->findOneBy(array('id' => $userId));
+		return $user;
 	}
 	
 	/**

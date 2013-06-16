@@ -60,7 +60,11 @@ define(
 					console.log(data.validationMessages);
 					// @TODO show validation fails to the user...
 					alert(data.userMessage);
-				} else {
+				} else if (data.noTrips == true) {
+					console.log(data);
+					alert(data.userMessage);
+				}				
+				else {
 					// bad request?
 					console.log(data);
 					var multiple = false;

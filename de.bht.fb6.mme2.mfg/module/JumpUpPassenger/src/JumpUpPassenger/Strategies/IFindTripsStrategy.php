@@ -27,9 +27,10 @@ interface IFindTripsStrategy {
      * @param priceTo the right side of the price range
      * @param array $inTrips the array of Trip which will be used to look up for trips.
      * @param passenger User the passenger who is looking for near trips.
+     * @param distance the maximum distance the passenger wishes between his location and the driver's trip.
      * @return array of Trip the matched trips.
      */
-    function findNearTrips($location, $destination, $dateFrom, $dateTo, $priceFrom, $priceTo, array $inTrips, User $passenger);  
+    function findNearTrips($location, $destination, $dateFrom, $dateTo, $priceFrom, $priceTo, array $inTrips, User $passenger, $distance);  
 
   
     

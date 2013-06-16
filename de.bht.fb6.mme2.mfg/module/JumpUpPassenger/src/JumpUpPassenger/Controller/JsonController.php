@@ -137,12 +137,14 @@ class JsonController extends AbstractRestfulController {
 				if (null !== $request->getPost ( self::PARAM_USER_ID )) {
 					$userId = ( int ) $request->getPost ( self::PARAM_USER_ID );
 				}
+				// @TODO add to form
+				$distance = 50; // km
 				
 				$trips = $this->_getAllTrips ( $userId );
 				$passenger = $this->_getUser( $userId);
 				$findStrategy = $this->_getFindTripStrategy ();
 				
-				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger );
+				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger, $distance );
 				if (null !== $matchedTrips && sizeof($matchedTrips) != 0) {
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );

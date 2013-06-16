@@ -312,9 +312,11 @@ require(
 																$(
 																		REF_TRIPS_START_POINT)
 																		.val(
-																				validStart);
-																tripsCtrl
-																		.setStartCoord(place.geometry.location);
+																				validStart);																
+																$(
+																		REF_TRIPS_START_COORD)
+																		.val( place.geometry.location
+																				);
 															});
 										}
 										;
@@ -331,6 +333,10 @@ require(
 																		REF_TRIPS_END_POINT)
 																		.val(
 																				validStart);
+																$(
+																		REF_TRIPS_END_COORD)
+																		.val( place.geometry.location
+																				);
 															});
 										}
 										;

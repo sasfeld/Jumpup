@@ -19,13 +19,84 @@ use JumpUpUser\Models\User;
  * @since 16.06.2013
  **/
 class FindTripsContainer {
+	/**
+	 * Trips from the entity manager.
+	 * @var array of Trip entities
+	 */
 	protected $trips;
+	/**
+	 * The user who is requesting the trips.
+	 * @var User the passenger
+	 */
 	protected $passenger;
+	/**
+	 * User's desired minimum price.
+	 * @var int
+	 */
 	protected $priceFrom;
+	/**
+	 * User's desired maximum price.
+	 * @var int
+	 */
 	protected $priceTo;
+	/**
+	 * User's desired minimum date.
+	 * @var String
+	 */
 	protected $dateFrom;
+	/**
+	 * User's desired maximum date.
+	 * @var String
+	 */
 	protected $dateTo;
+	/**
+	 * Coordinates (latLng) of passenger's start location.
+	 * @var String
+	 */
+	protected $startCoord;
+	/**
+	 * Coordinates (latLng) of passenger's end location.
+	 * @var String
+	 */
+	protected $endCoord;
+	/**
+	 * Maximum desired distance to the driver's route of passenger. 
+	 * @var int
+	 */
+	protected $maxDistance;	
 	
+
+	/**
+	 * Construct a new container.
+	 * @param Trip $trip the trip to be keeped.
+	 * @param User $user the user to be keeped.
+	 */
+	public function __construct(array $trips, User $user, $priceFrom, $priceTo, $dateFrom, $dateTo, $startCoord, $endCoord, $maxDistance) {
+		$this->trips = $trips;
+		$this->passenger = $user;
+		$this->dateFrom = $dateFrom;
+		$this->dateTo = $dateTo;
+		$this->priceFrom = $priceFrom;
+		$this->priceTo = $priceTo;
+		$this->startCoord = $startCoord;
+		$this->endCoord = $endCoord;
+		$this->maxDistance = $maxDistance;
+	}
+	
+	/**
+	 * @return the $startCoord
+	 */
+	public function getStartCoord() {
+		return $this->startCoord;
+	}
+
+	/**
+	 * @return the $endCoord
+	 */
+	public function getEndCoord() {
+		return $this->endCoord;
+	}
+
 	/**
 	 * @return the $priceFrom
 	 */
@@ -52,21 +123,7 @@ class FindTripsContainer {
 	 */
 	public function getDateTo() {
 		return $this->dateTo;
-	}
-
-	/**
-	 * Construct a new container. 
-	 * @param Trip $trip the trip to be keeped.
-	 * @param User $user the user to be keeped.
-	 */
-	public function __construct(array $trips, User $user, $priceFrom, $priceTo, $dateFrom, $dateTo) {
-		$this->trips = $trips;
-		$this->passenger = $user;
-		$this->dateFrom = $dateFrom;
-		$this->dateTo = $dateTo;
-		$this->priceFrom = $priceFrom;
-		$this->priceTo = $priceTo;
-	}
+	}	
 	
 	/**
 	 * @return array the $trips
@@ -80,6 +137,13 @@ class FindTripsContainer {
 	 */
 	public function getPassenger() {
 		return $this->passenger;
+	}
+	
+	/**
+	 * @return the $maxDistance
+	 */
+	public function getMaxDistance() {
+		return $this->maxDistance;
 	}
 	
 }

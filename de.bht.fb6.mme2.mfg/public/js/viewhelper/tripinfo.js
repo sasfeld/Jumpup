@@ -23,6 +23,7 @@ define( [ "jquery" ], ( function($) {
 	const PARAM_DATE_TO = "endDate";
 	const PARAM_PRICE_FROM = "priceFrom";
 	const PARAM_PRICE_TO = "priceTo";
+	const PARAM_MAX_DISTANCE = "maxDistance";
 	const TRIPS_REF_FORM = 'form[name="LookUpTripsForm"]';
 	const REF_TRIPS_START_COORD = TRIPS_REF_FORM + ' input[name="startCoord"]';
 	const REF_TRIPS_END_COORD = TRIPS_REF_FORM + ' input[name="endCoord"]';
@@ -32,6 +33,7 @@ define( [ "jquery" ], ( function($) {
 	const REF_TRIPS_END_DATE = TRIPS_REF_FORM + ' input[name="endDate"]';
 	const REF_TRIPS_PRICE_FROM = TRIPS_REF_FORM + ' input[name="priceFrom"]';
 	const REF_TRIPS_PRICE_TO = TRIPS_REF_FORM + ' input[name="priceTo"]';
+	const REF_TRIPS_MAX_DISTANCE = TRIPS_REF_FORM + ' input[name="maxDistance"]';
 	// was the accordion already initialized? important for the destroy() function on the accordion
 	var alreadyInit = false;
 	var _this;
@@ -57,6 +59,7 @@ define( [ "jquery" ], ( function($) {
 		this.inputDateTo = $(REF_TRIPS_END_DATE);
 		this.inputPriceFrom = $(REF_TRIPS_PRICE_FROM);
 		this.inputPriceTo = $(REF_TRIPS_PRICE_TO);
+		this.inputMaxDistance = $(REF_TRIPS_MAX_DISTANCE);
 		this.options = options;
 		
 		// empty accordion node
@@ -84,6 +87,7 @@ define( [ "jquery" ], ( function($) {
 			+'<input type="hidden" name="'+PARAM_PRICE_TO+'" value="'+this.inputPriceTo.val()+'" />'
 			+'<input type="hidden" name="'+PARAM_RECOM_START_COORD+'" value="'+this.options.startLatLng+'" />'
 			+'<input type="hidden" name="'+PARAM_RECOM_END_COORD+'" value="'+this.options.endLatLng+'" />'			
+			+'<input type="hidden" name="'+PARAM_MAX_DISTANCE+'" value="'+this.inputMaxDistance.val()+'" />'			
 			+'<input type="submit" value="Book" />'
 			+'</form>';
 		return bodyStr;

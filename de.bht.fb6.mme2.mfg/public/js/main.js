@@ -87,6 +87,8 @@ require(
 			REF_TRIPS_BTN = TRIPS_REF_FORM + ' input[name="tripsBtn"]';
 			const
 			REF_TRIPS_USER_ID = TRIPS_REF_FORM + ' input[name="userId"]';
+			const
+			REF_TRIPS_MAX_DISTANCE = TRIPS_REF_FORM + ' input[name="maxDistance"]';
 
 			// page JumpUpPassenger/ViewBookings
 			const
@@ -373,6 +375,9 @@ require(
 															priceTo = $(
 																	REF_TRIPS_PRICE_TO)
 																	.val();
+															maxDistance = $(
+																	REF_TRIPS_MAX_DISTANCE)
+																	.val();
 															if (null != tripsCtrl) {
 																tripsCtrl
 																		.fetchTrips(
@@ -383,7 +388,8 @@ require(
 																				startDate,
 																				endDate,
 																				priceFrom,
-																				priceTo);
+																				priceTo,
+																				maxDistance);
 															}
 														}));
 

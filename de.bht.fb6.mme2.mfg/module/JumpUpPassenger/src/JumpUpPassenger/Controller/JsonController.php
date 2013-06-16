@@ -136,9 +136,8 @@ class JsonController extends AbstractRestfulController {
 				$userId = null;
 				if (null !== $request->getPost ( self::PARAM_USER_ID )) {
 					$userId = ( int ) $request->getPost ( self::PARAM_USER_ID );
-				}
-				// @TODO add to form
-				$distance = 50; // km
+				}				
+				$distance = (int) $request->getPost( LookUpTripsForm::FIELD_MAX_DISTANCE);
 				
 				$trips = $this->_getAllTrips ( $userId );
 				$passenger = $this->_getUser( $userId);

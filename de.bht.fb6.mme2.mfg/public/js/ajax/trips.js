@@ -49,6 +49,8 @@ define(
 			TripsController.prototype.handleServerResponse = function(data) {
 				// TripInfo view helper
 				var mapCtrl = _this.options.mapCtrl;
+				// clear map
+				mapCtrl.gmap.removeRoutes();
 				var viewOptions = {
 					"accordion" : $(REF_ACCORDION),
 					"startLatLng" : _this.startLatLng,
@@ -120,7 +122,7 @@ define(
 			 * Fetch the trips to a given id.
 			 */
 			TripsController.prototype.fetchTrips = function(startPoint, endPoint, startCoord,
-					endCoord, dateFrom, dateTo, priceFrom, priceTo) {
+					endCoord, dateFrom, dateTo, priceFrom, priceTo, maxDistance) {
 				console.log("TripsController: fetchTrips");
 				console.log("startCoord: " + startCoord);
 				console.log("endCoord: " + endCoord);
@@ -129,6 +131,7 @@ define(
 				console.log("priceFrom: " + priceFrom);
 				console.log("priceTo: " + priceTo);
 				console.log("userId: " + this.options.userId);
+				console.log("maxDistance: "+maxDistance);
 
 				var __this = this;
 
@@ -144,6 +147,7 @@ define(
 						"priceFrom" : priceFrom,
 						"priceTo" : priceTo,
 						"userId" : __this.options.userId,
+						"maxDistance" : maxDistance,
 					},
 					dataType : 'json',
 					type : "POST",

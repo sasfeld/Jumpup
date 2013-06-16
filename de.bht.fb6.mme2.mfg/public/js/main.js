@@ -299,6 +299,8 @@ require(
 										};
 										tripsCtrl = new TripsController(
 												tripsOptions);
+										
+										
 										/*
 										 * ..::::::::::::::::::::::::::::::::::..
 										 */
@@ -319,6 +321,7 @@ require(
 																		REF_TRIPS_START_COORD)
 																		.val( place.geometry.location
 																				);
+																tripsCtrl.setStartCoord(place.geometry.location);
 															});
 										}
 										;
@@ -339,6 +342,7 @@ require(
 																		REF_TRIPS_END_COORD)
 																		.val( place.geometry.location
 																				);
+																tripsCtrl.setEndCoord(place.geometry.location);
 															});
 										}
 										;

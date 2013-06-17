@@ -98,6 +98,7 @@ class AddTripController extends ANeedsAuthenticationController {
             );
             // user's vehicles
             $inputFields = $this->_appendUsersVehicles($inputFields, $user);
+            array_push($inputFields, '<input type="submit" name="'.TripForm::SUBMIT.'" value="'.IControllerMessages::ADD_TRIP_SUBMIT.'" /><br />');
 
             $request = $this->getRequest();
              

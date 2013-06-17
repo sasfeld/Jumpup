@@ -58,6 +58,9 @@ require(
 			const
 			REF_ADDTRIP_INPUT_ENDCOORD = ADDTRIP_REF_FORM
 					+ ' input[name="endCoordinate"]';
+			const
+			REF_ADDTRIP_INPUT_PRICE = ADDTRIP_REF_FORM
+			+ ' input[name="price"]';
 			// --> submit
 			const
 			REF_ADDTRIP_SUBMIT = ADDTRIP_REF_FORM + ' input[name="submit"]';
@@ -133,6 +136,7 @@ require(
 									"geocoding" : $(REF_MAP_GEOCODING)[0],
 									"directions" : $(REF_MAP_DIRECTIONS)[0],
 								};
+								
 
 								try {
 									var mapCtrl = null;
@@ -165,6 +169,8 @@ require(
 										var vehOptions = {
 											"listVehiclesUrl" : "driverjson",
 											"vehicleParam" : "vehicleId",
+//											"tooltips" : tooltips,
+											"inputPrice" : $(REF_ADDTRIP_INPUT_PRICE),
 										};
 										vehicleCtrl = new VehicleController(
 												vehOptions);
@@ -269,6 +275,9 @@ require(
 										 */
 										// $( REF_ADDTRIP_INPUT_DATE ).focus( (
 										// updateRoute ));
+										
+										
+										
 									}
 									/*
 									 * ..::------------> <------------::..

@@ -61,6 +61,12 @@ require(
 			const
 			REF_ADDTRIP_INPUT_PRICE = ADDTRIP_REF_FORM
 			+ ' input[name="price"]';
+			const
+			REF_ADDTRIP_OVERVIEW_PATH = ADDTRIP_REF_FORM
+			+ ' input[name="overviewPath"]';
+			const
+			REF_ADDTRIP_VIA_WAYPOINTS = ADDTRIP_REF_FORM
+			+ ' input[name="viaWaypoints"]';
 			// --> submit
 			const
 			REF_ADDTRIP_SUBMIT = ADDTRIP_REF_FORM + ' input[name="submit"]';
@@ -187,6 +193,12 @@ require(
 											var endPointValue = $(
 													REF_ADDTRIP_INPUT_END)
 													.val();
+											var viaWaypoints = $(REF_ADDTRIP_VIA_WAYPOINTS).val();							
+											
+											var waypointsArray = null;
+											if("" != viaWaypoints) {
+												waypointsArray = mapCtrl.toOverviewArray(viaWaypoints);
+											}
 
 											if (0 != startPointValue.length
 													&& 0 != endPointValue) {
@@ -194,12 +206,21 @@ require(
 														.log("main.js: showing new route");
 												mapCtrl.showRoute(null,
 														startPointValue,
-														endPointValue, null,
+														endPointValue, waypointsArray,
 														false);
 											}
 											;
 										}
 
+										// check whether a route shall be displayed (reconstructed)
+										
+										var startCoordDom = $(REF_ADDTRIP_INPUT_STARTCOORD);
+										var endCoordDom = $(REF_ADDTRIP_INPUT_ENDCOORD);									
+										if("" != startCoordDom.val() && "" != endCoordDom.val()) {
+											updateRoute();
+										}
+										
+										
 										/*
 										 * ..:: AutoComplete Start ::..
 										 */

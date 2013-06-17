@@ -16,6 +16,7 @@ use Application\Util\ServicesUtil;
 use JumpUpPassenger\Util\Messages\IControllerMessages;
 use JumpUpUser\Util\IEntitiesStore;
 use JumpUpPassenger\Strategies\NearestRouteStrategy;
+use JumpUpPassenger\Util\GmapCoordUtil;
 
 /**
  *
@@ -137,14 +138,17 @@ class JsonController extends AbstractRestfulController {
 				if (null !== $request->getPost ( self::PARAM_USER_ID )) {
 					$userId = ( int ) $request->getPost ( self::PARAM_USER_ID );
 				}				
-				$distance = (int) $request->getPost( LookUpTripsForm::FIELD_MAX_DISTANCE);
+				$maxDistance = (int) $request->getPost( LookUpTripsForm::FIELD_MAX_DISTANCE);
+				
+				
 				
 				$trips = $this->_getAllTrips ( $userId );
 				$passenger = $this->_getUser( $userId);
 				$findStrategy = $this->_getFindTripStrategy ();
 				
-				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger, $distance );
+				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger, $maxDistance );
 				if (null !== $matchedTrips && sizeof($matchedTrips) != 0) {
+				    $this->_calculatePriceForPassenger($startCoord, $endCoord, $matchedTrips);
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );
 					$jsonObj = \Zend\Json\Json::encode ( $tripWrapper, true );
@@ -173,6 +177,20 @@ class JsonController extends AbstractRestfulController {
 		return new JsonModel ( array (
 				"badRequest" => true 
 		) );
+	}
+	
+	/**
+	 * Calculate price for passenger depending on the distance and set it on the matched trip.
+	 * @param String $startCoord
+	 * @param String $endCoord
+	 * @param array $matchedTrips
+	 * @return void - the price will be set on each trip instance immediatly.
+	 */
+	protected function _calculatePriceForPassenger($startCoord, $endCoord, array $matchedTrips) {	     
+	    foreach ($matchedTrips as $matchedTrip) {	        
+	        $priceForTrip = GmapCoordUtil::calcPriceForPassenger($matchedTrip, $startCoord, $endCoord);; 
+	    	$matchedTrip->setPriceRecommendationForPassenger($priceForTrip);
+	    }
 	}
 	
 	protected function _getUser( $userId) {

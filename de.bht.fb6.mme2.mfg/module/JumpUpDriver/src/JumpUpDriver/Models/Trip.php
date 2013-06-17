@@ -91,8 +91,15 @@ class Trip {
    * @OneToMany(targetEntity="JumpUpPassenger\Models\Booking",mappedBy="trip")
    */
   private $bookings;
+  /**
+   * This is not an entity field. It's only for the client so we can offer a system-generated price.
+   * @var int
+   */
+  private $priceRecommendationForPassenger;
    
-  public function __construct() {
+  
+
+public function __construct() {
     // initialize bookings
     $this->bookings = array();
   }
@@ -250,6 +257,10 @@ class Trip {
     return $this->viaWaypoints;
   }
    
+  /**
+   * Get the distance (in meters)
+   * @return int
+   */
   public function getDistance() {
     return $this->distance;
   }
@@ -333,6 +344,23 @@ class Trip {
   	return $this->bookings;
   }
    
+  /**
+   * @return int the $priceRecommendationForPassenger
+   */
+  public function getPriceRecommendationForPassenger() {
+  	return $this->priceRecommendationForPassenger;
+  }
+  
+  /**
+   * Set the priceRecommendation to be presented to the passenger before he would like to book a trip.
+   * @param double $priceRecommendationForPassenger
+   */
+  public function setPriceRecommendationForPassenger($priceRecommendationForPassenger) {
+    if(!is_int($priceRecommendationForPassenger) && !is_double($priceRecommendationForPassenger)) {
+        throw ExceptionUtil::throwInvalidArgument('$priceRecommendaation', 'int', $priceRecommendationForPassenger);
+    }
+  	$this->priceRecommendationForPassenger = $priceRecommendationForPassenger;
+  }
    
   public function __toString() {
     return StringUtil::generateToString(get_class($this),
@@ -362,6 +390,7 @@ class Trip {
         'viaWaypoints' => $this->getViaWaypoints(),
         'maxSeats'     => $this->maxSeats, 
         'numberBookings' => $this->getNumberOfBookings(),
+        'priceRecommendation' => $this->getPriceRecommendationForPassenger(), 
     );
   }
    

@@ -3,6 +3,7 @@
 namespace JumpUpPassenger\Filter;
 
 use JumpUpPassenger\Filter\ATripFilter;
+use JumpUpPassenger\Util\GmapCoordUtil;
 
 /**
  *
@@ -39,10 +40,12 @@ class PriceFilter extends ATripFilter {
 		$filteredTrips = array();		
 	
 		foreach ($applyTrips as $trip) {
-			// @TODO later, the price will be depending on the passenger's location....
-			$pricePerPassenger = $trip->getPrice() / $trip->getMaxSeats();
+			// get price depending on the distance between the passenger's desired location and his desired destination.
+			$startCoord = $tripsContainer->getStartCoord();
+			$endCoord = $tripsContainer->getEndCoord();
+			$priceForPassenger = GmapCoordUtil::calcPriceForPassenger($trip, $startCoord, $endCoord);
 			
-			if ($pricePerPassenger < $tripsContainer->getPriceTo() && $pricePerPassenger > $tripsContainer->getPriceFrom()) {
+			if ($priceForPassenger <= $tripsContainer->getPriceTo() && $priceForPassenger >= $tripsContainer->getPriceFrom()) {
 				array_push($filteredTrips, $trip);
 			}
 		}

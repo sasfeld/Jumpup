@@ -3,6 +3,7 @@
 namespace JumpUpPassenger\Filter;
 
 use JumpUpPassenger\Filter\ATripFilter;
+use JumpUpPassenger\Util\GmapCoordUtil;
 
 /**
  *
@@ -24,16 +25,6 @@ class PassengersLocationFilter extends ATripFilter {
 	 */
 	const EQUATOR_RADIUS = 6378.137;
 	
-	/**
-	 * key to access the latLng array for the latitute (BREITENGRAD)
-	 * @var int
-	 */
-	const LAT = 0;
-	/**
-	 * key to access the latLng array for the longitude (LÄNGENGRAD)
-	 * @var int
-	 */
-	const LNG = 1;
 	
 	/**
 	 * Construct a new PassengersLocationFilter..
@@ -55,13 +46,13 @@ class PassengersLocationFilter extends ATripFilter {
 		$filteredTrips = array();		
 	
 		foreach ($applyTrips as $trip) {
-			$passengerLocation = $this->_toLatLng($tripsContainer->getStartCoord());
-			$passengersDestination = $this->_toLatLng($tripsContainer->getEndCoord());			
-			$driversLocation = $this->_toLatLng($trip->getStartCoord());
-			$driversDestination = $this->_toLatLng($trip->getEndCoord());
+			$passengerLocation = GmapCoordUtil::toLatLng($tripsContainer->getStartCoord());
+			$passengersDestination = GmapCoordUtil::toLatLng($tripsContainer->getEndCoord());			
+			$driversLocation = GmapCoordUtil::toLatLng($trip->getStartCoord());
+			$driversDestination = GmapCoordUtil::toLatLng($trip->getEndCoord());
 
-			$distanceLocation = $this->_calculateDistance($passengerLocation, $driversLocation);
-			$distanceDestination = $this->_calculateDistance($passengersDestination, $driversDestination);
+			$distanceLocation = GmapCoordUtil::calculateDistance($passengerLocation, $driversLocation);
+			$distanceDestination = GmapCoordUtil::calculateDistance($passengersDestination, $driversDestination);
 			
 			/*
 			 * passenger's location must be near to the driver's location OR any of his route waypoints.
@@ -74,18 +65,6 @@ class PassengersLocationFilter extends ATripFilter {
 		return $filteredTrips;
 	}
 	
-	/**
-	 * Get an latLng array for a given input string.
-	 * @param String $inputCoord as delegated by googleMaps in the frontend (looks like: "(LAT,LNG)"
-	 * @return array with two elements (LAT and LNG). access via the constant keys above
-	 */
-	protected function _toLatLng($inputCoord) {
-		$cleanString = str_replace("(", "", $inputCoord);
-		$cleanString = str_replace(")", "", $cleanString);
-		
-		$returnArray = explode(",", $cleanString);	
-		return $returnArray;	
-	}
 	
 	/**
 	 * Take the overviewPath as given in the database and convert it to an 2d-array. Elements are arrays with two elements (LAT and LNG). Use the constants above to access those.
@@ -97,7 +76,7 @@ class PassengersLocationFilter extends ATripFilter {
 		$returnArray = array();
 		foreach ($latLngStrings as $latLngString) {
 			if("" !== $latLngString) {
-				array_push($returnArray, $this->_toLatLng($latLngString));
+				array_push($returnArray, GmapCoordUtil::toLatLng($latLngString));
 			}
 		}
 		return $returnArray;
@@ -111,7 +90,7 @@ class PassengersLocationFilter extends ATripFilter {
 	protected function _isPointNearRoute($passengerPoint, $driverPath, $maxDistance) {
 		$pathLatLngArr = $this->_overviewPathToLatLng($driverPath);
 		foreach ($pathLatLngArr as $singleWaypoint) {
-			$distance = $this->_calculateDistance($passengerPoint, $singleWaypoint);
+			$distance = GmapCoordUtil::calculateDistance($passengerPoint, $singleWaypoint);
 			if($distance < $maxDistance) {
 				return true;
 			}
@@ -119,22 +98,7 @@ class PassengersLocationFilter extends ATripFilter {
 		return false;
 	}
 	
-	/**
-	 * Calculate the distance between two points given as coordinates.
-	 * @param array $coord1 an array with the two elements LAT and LNG. Set those via the constants above.
-	 * @param array $coord2 an array with the two elements LAT and LNG. Set those via the constants above. 
-	 * @return int the distance in kilometers between the given points
-	 */
-	protected function _calculateDistance(array $coord1, array $coord2) {
-		$point1LatRad = deg2rad($coord1[self::LAT]);
-		$point1LngRad = deg2rad($coord1[self::LNG]);
-		$point2LatRad = deg2rad($coord2[self::LAT]);
-		$point2LngRad = deg2rad($coord2[self::LNG]);
-		
-		// ARCCOS[ SIN(Breite1)*SIN(Breite2) + COS(Breite1)*COS(Breite2)*COS(Länge2-Länge1) ]
-		$distanceBetween = self::EQUATOR_RADIUS * acos( sin($point1LatRad) * sin($point2LatRad) + cos($point1LatRad) * cos($point2LatRad)*cos($point2LngRad - $point1LngRad));
-		return $distanceBetween;
-	}
+
 }
 
 ?>

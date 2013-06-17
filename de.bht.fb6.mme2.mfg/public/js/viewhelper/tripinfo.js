@@ -125,7 +125,8 @@ define( [ "jquery" ], ( function($) {
 		var startPoint = trip.startPoint;
 		var endPoint = trip.endPoint;
 		var startDate = trip.startDate;
-		var price = trip.price;
+		var priceForPassenger = trip.priceRecommendation; // price recommendation by the backend
+		var driversPrice = trip.price; 
 		var driver = trip.driver; // currently: prename and
 		// lastname
 		var startCoord = trip.startCoord;
@@ -138,10 +139,10 @@ define( [ "jquery" ], ( function($) {
 
 		this.addHeadline( "Trip from " + startPoint + " to " + endPoint );
 		var bodyStr = "<ul>" + "<li>Driver: " + driver + "</li>"
-				+ "<li>Start date: " + startDate + "</li>" + "<li>Price: " + price
+				+ "<li>Start date: " + startDate + "</li>" + "<li>Overall price: " + driversPrice
 				+ "</li>" + "<li>Current bookings: " + numberBookings + "/" + maxSeats
 				+ "</li>" + "</ul>";
-		bodyStr = this.addBookingForm( id, bodyStr, price );
+		bodyStr = this.addBookingForm( id, bodyStr, priceForPassenger );
 		this.addBody( bodyStr );
 	};
 

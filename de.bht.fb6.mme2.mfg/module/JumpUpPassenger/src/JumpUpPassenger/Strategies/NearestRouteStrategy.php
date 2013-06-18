@@ -8,6 +8,7 @@ use JumpUpUser\Models\User;
 use JumpUpPassenger\Filter\AlreadyBookedFilter;
 use JumpUpPassenger\Filter\MaxSeatsFilter;
 use JumpUpPassenger\Filter\PassengersLocationFilter;
+use JumpUpPassenger\Filter\PassengerHimselfFilter;
 /**
  *
  * Just for testing. This strategy just returns all trips from the DB
@@ -24,7 +25,7 @@ class NearestRouteStrategy implements  IFindTripsStrategy {
 	
 	public function __construct() {
 		// set filters
-		$this->filter = new PassengersLocationFilter(new DateFilter(new PriceFilter(new AlreadyBookedFilter(new MaxSeatsFilter()))));
+		$this->filter = new PassengersLocationFilter(new DateFilter(new PriceFilter(new AlreadyBookedFilter(new MaxSeatsFilter(new PassengerHimselfFilter())))));
 	}
 	
 	/**

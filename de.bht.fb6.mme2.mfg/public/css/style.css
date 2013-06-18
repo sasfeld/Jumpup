@@ -110,3 +110,13 @@ select {
 	float: left;
 }
 /* * ..::::::::::::::::::::::::::::::::::::::.. */
+
+ .ui-tooltip { 
+ 	position: relative;
+    max-width: 350px;
+ 	background-color: rgba(34.5%,34.5%,34.5%, 0.5);
+ 	color: #D6D6FF;
+ 	padding: 1em;
+ 	left: 500px;
+ 	top: 100px;
+  }

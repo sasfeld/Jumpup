@@ -383,7 +383,7 @@ public function __construct() {
         'endPoint' => $this->endPoint,
         'startDate' => $this->startDate,
         'price'  => $this->price,
-        'driver'  => $this->driver->getPrename() . " " . $this->driver->getLastname(),
+        'driver'  => $this->driver->toJson(),
         'startCoord' => $this->getStartCoord(),
         'endCoord' => $this->getEndCoord(),
         'overviewPath' => $this->getOverviewPath(),

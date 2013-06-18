@@ -56,15 +56,8 @@ class JsonController extends AbstractRestfulController {
 	 * @return an array of Trip.
 	 */
 	protected function _getAllTrips($userId) {
-		$tripsRepo = $this->em->getRepository ( 'JumpUpDriver\Models\Trip' );
-		// here, we look if the userId was sent by the client.
-		if (null !== $userId) { // yes, so we can prefilter the trips
-			$queryBuilder = $tripsRepo->createQueryBuilder ( 'u' );
-			$queryBuilder->where ( "u.id != {$userId}" );
-			$trips = $queryBuilder->getQuery ()->getResult ();
-		} else { // no, so he will get all trips
-			$trips = $tripsRepo->findAll ();
-		}
+		$tripsRepo = $this->em->getRepository ( 'JumpUpDriver\Models\Trip' );	
+		$trips = $tripsRepo->findAll ();	
 		return $trips;
 	}
 	protected function _getFindTripStrategy() {

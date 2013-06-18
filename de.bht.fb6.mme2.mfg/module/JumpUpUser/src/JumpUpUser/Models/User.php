@@ -410,6 +410,18 @@ class User {
             'eMail' => $this->eMail));    */
     }
     
+    /**
+     * Return an json array with elements in the form objectAttribute => attributeValue.
+     */
+    public function toJson() {
+    	return array ('id' => $this->getId(),
+    				'prename' => $this->getPrename(),
+    				'lastname' => $this->getLastname(),
+    				'eMail' => $this->getEmail(),
+    				'birthDate' => $this->getBirthDate(),
+    	);
+    }
+    
     
     
 }

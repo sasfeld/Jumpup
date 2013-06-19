@@ -13,6 +13,17 @@ return array (
                             ),
                         ),
                     ),*/
+                'showprofile' => array (
+								'type' => 'Literal',
+								'options' => array (
+										'route' => '/showprofile',
+										'defaults' => array (
+												'__NAMESPACE__' => 'JumpUpUser\Controller',
+												'controller' => 'Profile',
+												'action' => 'show' 
+										) 
+								) 
+						),
                 'changeprofile' => array (
 								'type' => 'Literal',
 								'options' => array (
@@ -136,6 +147,11 @@ return array (
 						'JumpUpUser' => __DIR__ . '/../view' 
 				) 
 		),  
+		'view_helpers' => array(
+				'invokables'=> array(
+						'renderUser' => 'JumpUpUser\Util\View\RenderUser' ,
+				)
+		),
     /*
      * ..:: doctrine ::..
      */

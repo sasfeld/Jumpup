@@ -55,6 +55,7 @@ class ServicesUtil {
      * @var String
      */
     const CLASSPATH_USERUTIL = 'JumpUpUser\Util\UserUtil';
+   
     /**
      * Get the UserTable instance from the ServiceManager.
      * @see UserTable

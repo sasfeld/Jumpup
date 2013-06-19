@@ -78,6 +78,8 @@ interface IControllerMessages {
      * ..:: used in JumpUpUser\Controllers\ProfileController. ::..
      */
     const CHANGE_PROFILE_SUCCESS = "Your profile was successfully changed.";
+    const NOT_COMPLETED_PROFILE_YET = "You haven't configured your profile yet. Please be so kind to offer your information.";
+	const ERROR_DELETING_PROFILE_PIC = "Couldn't delete the old profile picture. Please contact the support";
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */

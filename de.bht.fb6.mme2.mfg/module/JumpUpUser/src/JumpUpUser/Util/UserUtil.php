@@ -62,4 +62,19 @@ class UserUtil {
         $this->em->flush(); 
     }
     
+    /**
+     * Check whether the given user has a configured / completed profile.
+     * @param User $user
+     * @return true if the user has configured the profile properly.
+     */
+    public static function isProfileConfigured(User $user) {
+    	if(null === $user->getBirthDate() ||
+    	   null === $user->getHomeCity() ||
+    	   null === $user->getSpokenLanguages() ||
+    	   null === $user->getProfilePic()) {
+    		return false;
+    	}
+    	return true;
+    }
+    
 }

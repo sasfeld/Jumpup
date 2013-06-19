@@ -16,6 +16,7 @@ use Zend\Form\Annotation;
 * @version    1.0
 * @since      19.04.2013
  */
+
 /**
  * 
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
@@ -28,14 +29,28 @@ class ProfileForm {
      * Should be the name of the property/attribute so the data binding works.
      * @var String
      */
-    const FIELD_BIRTHDATE = 'birthDate';
+    const FIELD_BIRTHDATE = 'birthdate';
      /**
      * 
      * name of the form field for the property profilePic.
      * Should be the name of the property/attribute so the data binding works.
      * @var String
      */
-    const FIELD_PROFILE_PIC = 'profilePic';
+    const FIELD_PROFILE_PIC = 'profilepic';
+     /**
+     * 
+     * name of the form field for the property homecity.
+     * Should be the name of the property/attribute so the data binding works.
+     * @var String
+     */
+    const FIELD_HOMECITY = 'homecity';
+     /**
+     * 
+     * name of the form field for the property homecity.
+     * Should be the name of the property/attribute so the data binding works.
+     * @var String
+     */
+    const FIELD_SPOKEN_LANGS = 'spokenlanguages';
     
     
     /**
@@ -44,14 +59,28 @@ class ProfileForm {
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Birth date:"})
      */
-    public $birthDate;
+    public $birthdate;
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Home City:"})
+     */
+    public $homecity;
+    /**
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Required({"required":"true" })
+     * @Annotation\Filter({"name":"StripTags"})
+     * @Annotation\Options({"label":"Spoken languages:"})
+     */
+    public $spokenlanguages;
     /**
      * @Annotation\Type("Zend\Form\Element\File")
      * @Annotation\Required({"required":"true" })
      * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Profile pic:"})
      */
-    public $profilePic;
+    public $profilepic;
     /**
      * @Annotation\Type("Zend\Form\Element\Submit")
      * @Annotation\Attributes({"value":"Change profile"})

@@ -137,7 +137,10 @@ define( [ "jquery" ], ( function($) {
 		/* crazy shit I know, but it didn't work any other way... */
 		this.tooltipItems += prefix + "li[class=drivertooltip][id="+id+"]";
 		this.tooltipTexts[id] =  "<p>Birth data: "+driver.birthDate+"</p>"
-								+"<p>eMail: "+driver.eMail+"</p>";
+								+"<p>eMail: "+driver.eMail+"</p>"
+								+"<p>spokenLanguages: "+driver.spokenLanguages+"</p>"
+								+"<p>Home town: "+driver.homeCity+"</p>" 
+								+"<p><img src=\""+driver.pathProfilePic+"\" /></p>";								;
 		var __this = this;
 		 $( document ).tooltip({
 		      items: __this.tooltipItems,

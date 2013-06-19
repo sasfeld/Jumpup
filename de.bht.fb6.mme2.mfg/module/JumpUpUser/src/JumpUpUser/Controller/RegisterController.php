@@ -144,6 +144,7 @@ class RegisterController extends AbstractActionController
      */
     private function confirmUser(User $user) {
        $user->setConfirmation_key(0); // 0 indicates, that the user is confirmed   
+	   $user->setMemberSince(time());
        $this->em->persist($user);
        $this->em->flush();   
     }

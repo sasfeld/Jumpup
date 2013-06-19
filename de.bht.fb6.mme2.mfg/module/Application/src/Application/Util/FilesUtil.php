@@ -10,8 +10,13 @@ use JumpUpUser\Models\User;
  */
 class FilesUtil {
 	/**
+	 * The base dir for all users' files. Needs a trailing '/' so it works fine.
+	 * @var String
+	 */
+	const BASEDIR = "public/";
+	/**
 	 * Path to the users' files directory.
-	 * Should be relative to the public dir.
+	 * Should be relative to the BASEDIR.
 	 * @var String
 	 */
 	const USER_FILES_DIR = "public/pics";
@@ -66,9 +71,30 @@ class FilesUtil {
 		$filename = $file['name'];
 		$filetmpname = $file['tmp_name'];
 		$path = $destinationDir . "/".$filename;
-		echo "moving uploaded file " . $filename . " to " . $path;
 		move_uploaded_file($filetmpname, $path);		
 		return $path;
+	}
+	
+	/**
+	 * Prepare the profile pic for the given user.
+	 * @param User $user
+	 * @param float $scale the scale factor (between 0 and 1.0). Default is 1.0 which is full size.
+	 * @return String the html tag for rendering the user's profile pic.
+	 */
+	public static function prepareProfilePic(User $user, $scale = 1.0) {
+		$picPath = self::getRealPath($user);
+		return '<img src="'.$picPath.'" />';
+	}
+	
+	/**
+	 * Get the real path (the working relative path) to the given user's profile pic.
+	 * @param User $user
+	 * @return String the path
+	 */
+	public static function getRealPath(User $user) {
+		$picPath = $user->getProfilePic();
+		$picPath = str_replace(self::BASEDIR, "", $picPath);
+		return $picPath;
 	}
 }
 

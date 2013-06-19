@@ -11,11 +11,15 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Util\ServicesUtil;
 
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return new ViewModel();
+        return new ViewModel(array(
+        		"userUtil" => \JumpUpUser\Util\ServicesUtil::getUserUtil($this->getServiceLocator()),
+        		"fick" => 'bla',
+        ));
     }
 }

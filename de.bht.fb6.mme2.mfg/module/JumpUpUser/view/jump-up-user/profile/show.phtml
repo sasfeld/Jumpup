@@ -1,0 +1,31 @@
+<?php
+use JumpUpUser\Util\Messages\IViewMessages;
+?>
+<h1><?php echo $this->translate("Profile") ?></h1>
+
+<div id="profile_subnav">
+	<ul>
+		<li><a href="<?php echo $this->linkVehicle; ?>"><?php echo $this->translate(IViewMessages::LIST_VEHICLES); ?></a></li>
+		<li><a href="<?php echo $this->linkEdit; ?>"><?php echo $this->translate(IViewMessages::EDIT_PROFILE); ?></a></li>
+</div>
+
+<div id="addtrip_hints">
+<?php 
+if(null !== $this->messages) {
+	foreach ($this->messages as $message) {
+		echo "<p>".$message."</p>";
+	}
+}
+?>
+</div>
+
+<div class="profile">
+<?php    
+    if(null !== $this->user) {          
+         echo $this->renderUser($this->user, false); 
+    }
+      
+?>
+
+</div>
+

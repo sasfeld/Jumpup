@@ -26,6 +26,7 @@ use Doctrine\ORM\Mapping\OneToMany as OneToMany;
  */
 use Application\Util\String_Util;
 use Doctrine\ORM\Mapping as ORM;
+use Application\Util\FilesUtil;
 
 /**
 * @ORM\Entity 
@@ -107,14 +108,14 @@ class User {
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $birthDate;
+    protected $birthdate;
     /**
      * 
      * property memberSince
-     * @var String
+     * @var int (UNIX timestamp)
      */
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $memberSince;
     /**
@@ -172,23 +173,59 @@ class User {
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $profilePic;
+    protected $profilepic;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $homecity;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $spokenlanguages;
     
     
     
     /**
+	 * @return the $homeCity
+	 */
+	public function getHomecity() {
+		return $this->homecity;
+	}
+
+	/**
+	 * @return the $spokenLanguages
+	 */
+	public function getSpokenlanguages() {
+		return $this->spokenlanguages;
+	}
+
+	/**
+	 * @param field_type $homeCity
+	 */
+	public function setHomecity($homeCity) {
+		$this->homecity = $homeCity;
+	}
+
+	/**
+	 * @param field_type $spokenLanguages
+	 */
+	public function setSpokenlanguages($spokenLanguages) {
+		$this->spokenlanguages = $spokenLanguages;
+	}
+
+	/**
      * Get the full path to the profile pic.
 	 * @return the $profilePic
 	 */
-	public function getProfilePic() {
-		return $this->profilePic;
+	public function getProfilepic() {
+		return $this->profilepic;
 	}
 
 	/**
 	 * @param field_type $profilePic
 	 */
-	public function setProfilePic($profilePic) {
-		$this->profilePic = $profilePic;
+	public function setProfilepic($profilePic) {
+		$this->profilepic = $profilePic;
 	}
 
 	public function User() {
@@ -296,9 +333,9 @@ class User {
      * Enter description here ...
      * @param date $birthDate
      */
-    public function setBirthDate($birthDate) {      
+    public function setBirthdate($birthDate) {      
         if(null !== $birthDate) {
-            $this->birthDate = $birthDate;
+            $this->birthdate = $birthDate;
         }
     }
     
@@ -307,7 +344,7 @@ class User {
      * Enter description here ...
      * @param int $memberSince
      */
-    public function setMemberSince($memberSince) {      
+    public function setMembersince($memberSince) {      
         if(null !== $memberSince) {
             $this->memberSince = $memberSince;
         }
@@ -334,8 +371,8 @@ class User {
 /**
      * @return the birth date
      */
-    public function getBirthDate() {
-        return $this->birthDate;
+    public function getBirthdate() {
+        return $this->birthdate;
     }
     
 	/**
@@ -442,7 +479,10 @@ class User {
     				'prename' => $this->getPrename(),
     				'lastname' => $this->getLastname(),
     				'eMail' => $this->getEmail(),
-    				'birthDate' => $this->getBirthDate(),
+    				'birthDate' => $this->getBirthdate(),
+    				'homeCity' => $this->getHomecity(),
+    				'spokenLanguages' => $this->getSpokenlanguages(),
+    				'pathProfilePic' => FilesUtil::getRealPath($this),
     	);
     }
     

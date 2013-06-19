@@ -42,5 +42,10 @@ interface IRouteStore {
      * @var unknown
      */
     const CHANGE_PROFILE = "changeprofile";
+    /**
+     * Route to the showprofile action within the ProfileController.
+     * @var unknown
+     */
+    const SHOW_PROFILE = "showprofile";
     
 }

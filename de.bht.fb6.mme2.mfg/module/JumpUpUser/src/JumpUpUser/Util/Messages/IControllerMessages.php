@@ -74,6 +74,13 @@ interface IControllerMessages {
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */
+    /*
+     * ..:: used in JumpUpUser\Controllers\ProfileController. ::..
+     */
+    const CHANGE_PROFILE_SUCCESS = "Your profile was successfully changed.";
+    /*
+     * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
+     */
     const FATAL_ERROR_NOT_AUTHENTIFICATED = "Please login to contiunue";
     
     /**

@@ -105,7 +105,7 @@ class User {
      * @var String
      */
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $birthDate;
     /**
@@ -164,10 +164,34 @@ class User {
      * @OneToMany(targetEntity="JumpUpDriver\Models\Trip", mappedBy="driver")
      */
     protected $trips;
+    /**
+     *
+     * full path to the profile pic (relative to the applications main folder).
+     * @var String
+     */
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $profilePic;
     
     
     
-    public function User() {
+    /**
+     * Get the full path to the profile pic.
+	 * @return the $profilePic
+	 */
+	public function getProfilePic() {
+		return $this->profilePic;
+	}
+
+	/**
+	 * @param field_type $profilePic
+	 */
+	public function setProfilePic($profilePic) {
+		$this->profilePic = $profilePic;
+	}
+
+	public function User() {
         $this->username = "";
         $this->prename = "";
         $this->lastname = "";

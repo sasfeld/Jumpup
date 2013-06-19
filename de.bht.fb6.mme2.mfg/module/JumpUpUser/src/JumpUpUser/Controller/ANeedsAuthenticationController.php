@@ -6,6 +6,7 @@ use \JumpUpUser\Export\IAuthenticationRequired;
 use \Zend\Mvc\Controller\AbstractActionController;
 use JumpUpUser\Util\Messages\IControllerMessages;
 use JumpUpUser\Util\Routes\IRouteStore;
+use JumpUpUser\Models\User;
 
 /**
  *
@@ -88,5 +89,13 @@ abstract class ANeedsAuthenticationController extends AbstractActionController i
       }
     }
     
+    /**
+     * Save the changed user entity on the database.
+     * @param User $user
+     */
+    protected function _saveChangedUser(User $user) {
+    	$this->em->merge($user);
+    	$this->em->flush();
+    }
     
 }

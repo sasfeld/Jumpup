@@ -15,6 +15,7 @@ interface IViewMessages {
 	const HOME_CITY = "Home town";
 	const SPOKEN_LANGUAGES = "Spoken languages";
 	const PROFILE_PIC = "Profile picture";
+	const EMAIL = "EMail address";
 	/*
 	 * ..:::::::::::::::::::::::::::::::::::::::::::::..
 	*/

@@ -22,7 +22,7 @@ use JumpUpUser\Util\ServicesUtil;
  */
 abstract class ANeedsAuthenticationController extends AbstractActionController implements IAuthenticationRequired {
 	private $authservice;
-	private $em;
+	protected $em;
 	private $userService;
 	
 	/**

@@ -82,16 +82,7 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
     public function getServiceConfig()
     {
         return array(
-            'factories' => array(    
-                /*
-                 * export our user util
-                 */ 
-               'JumpUpUser\Util\UserUtil' => function($sm) {
-                    $em = $sm->get('doctrine.entitymanager.orm_default');
-                    $authService = $sm->get('AuthService');
-                    $userUtil = new UserUtil($em, $authService);
-                    return $userUtil;
-                 },
+            'factories' => array(                   
                 /*
                  * export our session-based AuthenticationStorage               
                  */

@@ -1,5 +1,15 @@
 <h2>Add trip</h2>
 
+<div id="addtrip_hints">
+<?php 
+if(null !== $this->messages) {
+	foreach ($this->messages as $message) {
+		echo "<p>".$message."</p>";
+	}
+}
+
+?>
+</div>
 
 <div id="form">
 <?php

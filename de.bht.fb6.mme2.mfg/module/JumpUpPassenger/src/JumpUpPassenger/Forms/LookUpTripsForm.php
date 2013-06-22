@@ -73,6 +73,13 @@ class LookUpTripsForm {
   const FIELD_USER_ID = 'userId';
   /**
    *
+   * name of the form field for the property maxDistance.
+   * Should be the name of the property/attribute so the data binding works.
+   * @var String
+   */
+  const FIELD_MAX_DISTANCE = 'maxDistance';
+  /**
+   *
    * name of the button.
    * @var String
    */
@@ -118,9 +125,17 @@ class LookUpTripsForm {
    * @Annotation\Type("Zend\Form\Element\Number")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
-   * @Annotation\Options({"label":"Price to"})
+   * @Annotation\Options({"label":"Price to:"})
    */
   public $priceTo;   
+ 
+  /**
+   * @Annotation\Type("Zend\Form\Element\Number")
+   * @Annotation\Required({"required":"true" })
+   * @Annotation\Filter({"name":"StripTags"})
+   * @Annotation\Options({"label":"Maximum distance:"})
+   */
+  public $maxDistance;   
  
   
 }

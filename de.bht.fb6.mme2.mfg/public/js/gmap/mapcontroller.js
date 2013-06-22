@@ -140,6 +140,25 @@ define( [ "gmap/googlemap", "jquery", "gmap/overviewPathStrategy" ], ( function(
 	MapController.prototype.select = function(tripid) {
 			_this.gmap.selectByTripId( tripid );
 	};
+	
+	/**
+	 * Get the viaWaypoints array to be handed to the googlemap for a string as it's given by the backend.
+	 * 
+	 * @param viaWaypoints the String as given by the backend
+	 * @return an array of elements that store latLng values.
+	 */
+	MapController.prototype.toOverviewArray = function(viaWaypoints) {		
+		waypointsArray = new Array();
+		if (viaWaypoints != null) {
+			waypointsArray = viaWaypoints.split(";");
+			waypointsArray.pop(); // last empty element
+			for ( var i = 0; i < waypointsArray.length; i++) {
+				waypointsArray[i] = "(" + waypointsArray[i]
+						+ ")";
+			}			
+		}
+		return waypointsArray;
+	};
 
 	/*
 	 * Show a single route on the map. - param start, the value of the starting

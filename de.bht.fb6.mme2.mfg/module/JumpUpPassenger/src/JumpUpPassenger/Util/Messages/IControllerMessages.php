@@ -25,6 +25,14 @@ interface IControllerMessages {
      * ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */     
      /*
+     * ..:: used in JumpUpPassenger\Controller\JsonController. ::..
+     */
+    const ERROR_LOOKUP_VALIDATION = "Please fill in all required fields."; 
+    
+    /*
+     * ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
+     */     
+     /*
       * 
      * ..:: used in JumpUpPassenger\Controller\BookingController. ::..
      */
@@ -35,7 +43,9 @@ interface IControllerMessages {
     const ERROR_BOOKING_OVERVIEW = "Interal error: None booking could get fetched from the database. If the error occurs again, please inform the support.";
     const ERROR_NO_BOOKING = "Internal error: No booking instance.";
 	const BOOKING_ERROR_OWN_TRIP = "Your cannot book your own trip. Please let other passengers the ability to book your ride.";
-    /*
+	const BOOKING_ERROR_ALREADY_BOOKED = "You have already booked this trip. Please check your bookings overview here.";
+	const LOOKUP_NO_TRIPS = "We are sorry but no trips where found for your desires. Please try to apply other options";
+	/*
      * ..:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */     
     

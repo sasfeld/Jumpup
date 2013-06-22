@@ -40,6 +40,11 @@ echo $this->doctype();
                             <li><a href="<?php echo $this->url(IRouteStore::SET_LANG) . '/en' ?>"><?php echo $this->translate('Set english') ?></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
+                    <div class="shortprofile">
+                    	<?php       
+                    		
+                    	echo $this->renderUser(); ?>
+                    </div>
                 </div>
             </div>
         </div>

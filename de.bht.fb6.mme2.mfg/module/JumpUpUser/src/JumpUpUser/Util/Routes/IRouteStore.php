@@ -37,5 +37,15 @@ interface IRouteStore {
      * @var String
      */
     const REGISTER = "jump-up-user";
+    /**
+     * Route to the changeprofile action within the ProfileController.
+     * @var unknown
+     */
+    const CHANGE_PROFILE = "changeprofile";
+    /**
+     * Route to the showprofile action within the ProfileController.
+     * @var unknown
+     */
+    const SHOW_PROFILE = "showprofile";
     
 }

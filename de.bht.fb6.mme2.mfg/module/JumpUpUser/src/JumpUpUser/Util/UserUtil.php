@@ -19,6 +19,7 @@ use JumpUpUser\Models\User;
 use Zend\Authentication\AuthenticationService;
 
 use Doctrine\ORM\EntityManager;
+use Application\Util\ExceptionUtil;
 
 class UserUtil {
     private $em;
@@ -54,12 +55,42 @@ class UserUtil {
     }
     
     /**
+     * Get the user entity for a given id.
+     * @param int $userId
+     * @return the user entity which can be null if there wasn't any matching user.
+     * @throws \InvalidArgumentException if the parameter isn't of type integer.
+     */
+    public function getUserById($userId) {
+    	if(!is_int($userId)) {
+    		throw ExceptionUtil::throwInvalidArgument('$userId', 'int', $userId);
+    	}
+    	$repoUser = $this->em->getRepository("JumpUpUser\Models\User");
+    	$user = $repoUser->findOneBy(array('id' => $userId));
+    	return $user;
+    }
+    
+    /**
      * Perform an update on the DB for the given user.
      * @param User $user
      */
     public function updateUser(User $user) {      
         $this->em->merge($user); // update DB
         $this->em->flush(); 
+    }
+    
+    /**
+     * Check whether the given user has a configured / completed profile.
+     * @param User $user
+     * @return true if the user has configured the profile properly.
+     */
+    public static function isProfileConfigured(User $user) {
+    	if(null === $user->getBirthDate() ||
+    	   null === $user->getHomeCity() ||
+    	   null === $user->getSpokenLanguages() ||
+    	   null === $user->getProfilePic()) {
+    		return false;
+    	}
+    	return true;
     }
     
 }

@@ -1,0 +1,23 @@
+<h1><?php echo $this->translate("Change profile") ?></h1>
+
+<div class="form profile">
+<?php 
+    /*
+     * author: Sascha Feldmann
+     * 
+     * what a nice view. we just delegate the form to our view helper object.
+     * See Application\View\Helper\RenderForm.php
+     */
+    if(null !== $this->form) { // form is exported by the controller
+        $form = $this->form;   
+         echo $this->renderForm($form); 
+    }
+    else { // a message shall be shown
+        echo $this->translate($this->message);
+    }
+  
+   
+?>
+
+</div>
+

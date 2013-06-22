@@ -75,7 +75,7 @@ class AuthNavigation extends Navigation {
                  */
                 $page = \Zend\Navigation\Page\AbstractPage::factory(array(
                 'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_MANAGEPROFILE),
-                'route' => \JumpUpDriver\Util\Routes\IRouteStore::LIST_VEHICLES,
+                'route' => \JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE,
                 'class' => 'fNiv',
                 ));
                 $this->_injectPage($page, $routeMatch, $router);

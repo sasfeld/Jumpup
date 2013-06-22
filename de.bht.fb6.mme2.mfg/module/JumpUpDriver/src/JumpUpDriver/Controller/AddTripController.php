@@ -77,54 +77,89 @@ class AddTripController extends ANeedsAuthenticationController {
      */
     public function step1Action() {
         if($this->_checkAuthentication()) { // authentication required
+            $redirect = ""; // redirection to other controllers
+            $messages = array(); // messages array to be printed on the depending view.
+            
             $user = $this->getCurrentUser();
             if(null === $user) { // user doesn't appear do be logged in
                 $this->flashMessenger()->addErrorMessage(IControllerMessages::FATAL_ERROR_NOT_AUTHENTIFICATED);
-                $this->redirect()->toRoute(IRouteStore::ADD_TRIP_ERROR);
+                $redirect = IRouteStore::ADD_TRIP_ERROR;
             }
             $trip = new Trip();
             $form = $this->getFormStep1();
             $form->setHydrator(new ClassMethods());
-            $form->bind($trip);
-             
-            // Create hard-coded inputFields
-            $inputFields = array(
-           '<input type="hidden" name="'.TripForm::FIELD_START_COORDINATE.'" />',           
-           '<input type="hidden" name="'.TripForm::FIELD_END_COORDINATE.'" />',
-           '<input type="hidden" name="'.TripForm::FIELD_DURATION.'" />',
-           '<input type="hidden" name="'.TripForm::FIELD_DISTANCE.'" />',
-           '<input type="hidden" name="'.TripForm::FIELD_OVERVIEW_PATH.'" />',
-           '<input type="hidden" name="'.TripForm::FIELD_VIA_WAYPOINTS.'" />',
-            );
-            // user's vehicles
-            $inputFields = $this->_appendUsersVehicles($inputFields, $user);
+            $form->bind($trip);             
+           
 
-            $request = $this->getRequest();
-             
+            $request = $this->getRequest();             
             if($request->isPost()) {
                 $form->setData($request->getPost());
                 if($form->isValid())  {
                     // success & user is logged in
                     $this->_bindHiddenValues($trip, $user);
-                    $this->_persistTrip($trip);
+                    $success = $this->_persistTrip($trip);
                     // show success messages and execute redirect
-                    $this->flashMessenger()->clearCurrentMessages();
-                    $this->flashMessenger()->addMessage(IControllerMessages::SUCCESS_ADD_TRIP);
-                    $this->redirect()->toRoute(IRouteStore::ADD_TRIP_SUCCESS);
+                    if($success) {
+                        $this->flashMessenger()->clearCurrentMessages();
+                        $this->flashMessenger()->addMessage(IControllerMessages::SUCCESS_ADD_TRIP);
+                        $redirect = IRouteStore::ADD_TRIP_SUCCESS;
+                    }
+                    else { // vehicle doesn't fit the user's input
+                        array_push($messages, IControllerMessages::ADD_TRIP_ERROR_MAX_SEATS);
+                     }
+                  
                 }
             }
             else { // none post-request
               if(0 === sizeof($user->getVehicles())) {
                 $this->flashMessenger()->clearMessages();
                 $this->flashMessenger()->addInfoMessage(\JumpUpDriver\Util\Messages\IControllerMessages::INFO_NO_VEHICLES);
-                $this->redirect()->toRoute(IRouteStore::ADD_VEHICLE);
+                $redirect = IRouteStore::ADD_VEHICLE;
               }
             }
              
-             
-            // Export the form and the input fields to the view
-            return array("form" => $form,
-                   "fields" => $inputFields);
+            if("" !== $redirect) { // redirect 
+                $this->redirect()->toRoute($redirect);
+            }
+            else {   // show form
+                // show form
+                // fetch already filled hidden input fields
+                $request = $this->request;
+                $startCoord = "";
+                $endCoord = "";
+                $duration = "";
+                $distance = "";
+                $overviewPath = "";
+                $viaWaypoints = "";
+                
+                if($request->isPost()) {
+                    $startCoord = $request->getPost(TripForm::FIELD_START_COORDINATE);
+                    $endCoord = $request->getPost(TripForm::FIELD_END_COORDINATE);
+                    $duration = $request->getPost(TripForm::FIELD_DURATION);
+                    $distance = $request->getPost(TripForm::FIELD_DISTANCE);
+                    $overviewPath = $request->getPost(TripForm::FIELD_OVERVIEW_PATH);
+                    $viaWaypoints = $request->getPost(TripForm::FIELD_VIA_WAYPOINTS);
+                }
+                
+                // Create hard-coded inputFields
+                $inputFields = array(
+                		'<input type="hidden" name="'.TripForm::FIELD_START_COORDINATE.'" value="'.$startCoord.'" />',
+                		'<input type="hidden" name="'.TripForm::FIELD_END_COORDINATE.'" value="'.$endCoord.'"  />',
+                		'<input type="hidden" name="'.TripForm::FIELD_DURATION.'" value="'.$duration.'"  />',
+                		'<input type="hidden" name="'.TripForm::FIELD_DISTANCE.'" value="'.$distance.'"  />',
+                		'<input type="hidden" name="'.TripForm::FIELD_OVERVIEW_PATH.'" value="'.$overviewPath.'"  />',
+                		'<input type="hidden" name="'.TripForm::FIELD_VIA_WAYPOINTS.'" value="'.$viaWaypoints.'"  />',
+                );
+                // user's vehicles
+                $inputFields = $this->_appendUsersVehicles($inputFields, $user);
+                array_push($inputFields, '<input type="submit" name="'.TripForm::SUBMIT.'" value="'.IControllerMessages::ADD_TRIP_SUBMIT.'" /><br />');
+                
+                // Export the form and the input fields to the view
+                return array(
+                        "messages" => $messages, 
+                        "form" => $form,
+                       "fields" => $inputFields);
+            }
         }
     }
     
@@ -200,16 +235,24 @@ class AddTripController extends ANeedsAuthenticationController {
     }
     /**
      * Persist (INSERT INTO) a new trip
-     * @param Trip $trip
+     * @param Trip $tripe
+     * @return boolean false if the user tries to type in more seats than the vehicle offers.
      */
     private function _persistTrip(Trip $trip) {
         $vehicleId = $this->getRequest()->getPost(TripForm::FIELD_VEHICLE);
         
         $vehicleRepo = $this->em->getRepository('JumpUpDriver\Models\Vehicle');
         $vehicle = $vehicleRepo->findOneBy(array('id' => $vehicleId));
-        $trip->setVehicle($vehicle);
-        $this->em->persist($trip);
-        $this->em->flush();
+        if(null !== $vehicle) {
+            if($trip->getMaxSeats() > $vehicle->getNumberseats() || $trip->getMaxSeats() < 0) {
+                return false;
+            }
+            $trip->setVehicle($vehicle);
+            $this->em->persist($trip);
+            $this->em->flush();
+            return true;
+        }
+        return false; // else       
     }
 
     

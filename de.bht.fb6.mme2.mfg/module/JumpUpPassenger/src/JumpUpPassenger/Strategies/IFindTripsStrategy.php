@@ -1,6 +1,8 @@
 <?php
 namespace JumpUpPassenger\Strategies;
 
+use JumpUpDriver\Models\Trip;
+use JumpUpUser\Models\User;
 /**
  * 
 * The IFindTripsStrategy is an API for all strategies, which find trips that match the user's location and destination.
@@ -24,8 +26,12 @@ interface IFindTripsStrategy {
      * @param priceFrom the left side of the price range
      * @param priceTo the right side of the price range
      * @param array $inTrips the array of Trip which will be used to look up for trips.
+     * @param passenger User the passenger who is looking for near trips.
+     * @param distance the maximum distance the passenger wishes between his location and the driver's trip.
      * @return array of Trip the matched trips.
      */
-    function findNearTrips($location, $destination, $dateFrom, $dateTo, $priceFrom, $priceTo, array $inTrips);    
+    function findNearTrips($location, $destination, $dateFrom, $dateTo, $priceFrom, $priceTo, array $inTrips, User $passenger, $distance);  
+
+  
     
 }

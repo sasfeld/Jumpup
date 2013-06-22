@@ -93,6 +93,11 @@ class TripForm {
    * @var String
    */
   const FIELD_NUMBER_SEATS = 'maxSeats';
+  /**
+   * key to the form field for the submit button.
+   * @var String
+   */
+  const SUBMIT = 'submit';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
@@ -121,7 +126,8 @@ class TripForm {
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Attributes({"addtrip_form"})
-   * @Annotation\Options({"label":"Price:","attributes":{"size":"5"}})
+   * @Annotation\Value({0})
+   * @Annotation\Options({"label":"Price:","attributes":{"size":"5"},"value":0})
    */
   public $price;  
   /**
@@ -134,11 +140,7 @@ class TripForm {
    * @Annotation\Options({"label":"Number of seats:","attributes":{"size":"5"}})
    */
   public $maxSeats;
-  /**
-   * @Annotation\Type("Zend\Form\Element\Submit")
-   * @Annotation\Attributes({"value":"Submit"})
-   */
-  public $submit;
+
   
 }
 

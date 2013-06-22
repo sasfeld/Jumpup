@@ -24,6 +24,8 @@ interface IControllerMessages {
     const INFO_NO_VEHICLES = "You haven't configured any vehicles yet. Please create a vehicle so the system can offer price recommendations.";
     const ERROR_DELETE_TRIP_ACTIVE_BOOKINGS = "There are active bookings within the trip. You can't delete the trip. Please try to cancel the bookings before.";
     const SUCCESS_DELETE_TRIP = "The trip was successfully deleted!";
+    const ADD_TRIP_SUBMIT = "Add trip";
+    const ADD_TRIP_ERROR_MAX_SEATS = "The given vehicle doesn't contain as much seats as you want to offer.";
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */  

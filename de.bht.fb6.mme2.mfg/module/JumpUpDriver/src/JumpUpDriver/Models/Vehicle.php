@@ -54,8 +54,44 @@ class Vehicle {
      * @ORM\Column(type="string", nullable=true)
      */
     protected $picpath;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $aircondition;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $actualwheel;
     
-    public function Vehicle() {
+    /**
+	 * @return the $aircondition
+	 */
+	public function getAircondition() {
+		return $this->aircondition;
+	}
+
+	/**
+	 * @return the $actualwheel
+	 */
+	public function getActualwheel() {
+		return $this->actualwheel;
+	}
+
+	/**
+	 * @param field_type $aircondition
+	 */
+	public function setAircondition($aircondition) {
+		$this->aircondition = $aircondition;
+	}
+
+	/**
+	 * @param field_type $actualwheel
+	 */
+	public function setActualwheel($actualwheel) {
+		$this->actualwheel = $actualwheel;
+	}
+
+	public function Vehicle() {
         $this->brand = "";
         $this->type = "";
         $this->legSpace = "";
@@ -195,7 +231,10 @@ class Vehicle {
                     "legspace" => $this->getLegspace(), 
                     "wastage" => $this->getWastage(), 
                     "avgspeed" => $this->getAvgspeed(), 
-                    "numberseats" => $this->getNumberSeats(), );
+                    "numberseats" => $this->getNumberSeats(),
+        			"aircondtion" => $this->getAircondition(),
+        		    "actualwheel" => $this->getActualwheel(),
+         );
     }
     
    

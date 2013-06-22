@@ -6,6 +6,8 @@ use \JumpUpUser\Export\IAuthenticationRequired;
 use \Zend\Mvc\Controller\AbstractActionController;
 use JumpUpUser\Util\Messages\IControllerMessages;
 use JumpUpUser\Util\Routes\IRouteStore;
+use JumpUpUser\Models\User;
+use JumpUpUser\Util\ServicesUtil;
 
 /**
  *
@@ -19,8 +21,9 @@ use JumpUpUser\Util\Routes\IRouteStore;
  * @since      07.06.2013
  */
 abstract class ANeedsAuthenticationController extends AbstractActionController implements IAuthenticationRequired {
-	protected $authservice;
+	private $authservice;
 	protected $em;
+	private $userService;
 	
 	/**
      *
@@ -70,17 +73,43 @@ abstract class ANeedsAuthenticationController extends AbstractActionController i
      * @return User or redirect to the error/login page if there's no matching user for some reason
      */
     protected function _checkAndRedirect() {
-      if($this->_checkAuthentication()) { // authentication required, redirects to login page
+      $auth = $this->_checkAuthentication();
+      if(true === $auth) { // authentication required, redirects to login page
         $user = $this->getCurrentUser();
         if(null === $user) { // user doesn't appear do be logged in
           $this->flashMessenger()->addErrorMessage(IControllerMessages::FATAL_ERROR_NOT_AUTHENTIFICATED);
           $this->redirect()->toRoute(IRouteStore::LOGIN); // break;
+          return;
         }
         else {
         	return $user;
         }
       }
+      else {
+      	exit;
+      	return false;
+      }
     }
     
+    /**
+     * Save the changed user entity on the database.
+     * @param User $user
+     */
+    protected function _saveChangedUser(User $user) {
+    	$this->em->merge($user);
+    	$this->em->flush();
+    }
+    
+    /**
+     * Get the UserUtil service instance by the ServiceManager.
+     * @see JumpUpUser\Util\UserUtil
+     */
+    protected function _getUserService() {
+    	if(null === $this->userService) {
+    		$sm = $this->getServiceLocator();
+    		$this->userService = ServicesUtil::getUserUtil($sm);
+    	}
+    	return $this->userService;
+    }
     
 }

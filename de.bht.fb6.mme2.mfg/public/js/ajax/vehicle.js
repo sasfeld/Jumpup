@@ -11,6 +11,10 @@
  * since      05.05.2013
  */
 define( [ "jquery" ], ( function($) {
+	var _this = undefined;
+	// where the tooltips already set?
+	var tooltipsSet = false;
+	
 	const REF_RECOMM_PRICE = '#recommended_price';
 	const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
 	const PRICE_PER_LITER = 1.6; // 1,6 € / l
@@ -19,9 +23,12 @@ define( [ "jquery" ], ( function($) {
 	 * Create a new VehicleController. - param options an array: listVehiclesUrl -
 	 * the url to the json endpoint for the listing of all vehicles ownerParam -
 	 * the key for the param containing the owner's ID
+	 * tooltips: jquery tooltips
+	 * inputPrice: jquery selected element
 	 */
 	var VehicleController = function(options) {
 		this.options = options;
+		_this = this;
 	};
 
 	/*
@@ -35,14 +42,22 @@ define( [ "jquery" ], ( function($) {
 		if ( data.vehicles.length > 0 ) {
 			var vehicle = data.vehicles[ 0 ];
 			console.log( vehicle.wastage );
-			// @TODO integrate wastage calculator
+			// @TODO integrate wastage calculator			
 			distance = $( REF_ADDTRIP_INPUT_DISTANCE ).val();
 			if ( undefined != distance ) {
-				var price = ( vehicle.wastage / 100 ) * ( distance / 1000 )
-						* PRICE_PER_LITER; // vehicle wastage
-				$( REF_RECOMM_PRICE )
-						.text( "The recommended price for your vehicle is " + price
-								+ "€. Your wastage is " + vehicle.wastage + "l / 100km." );
+				var price = Math.round( ( vehicle.wastage / 100 ) * ( distance / 1000 )
+						* PRICE_PER_LITER); // vehicle wastage
+				
+				var text = "The recommended price for your vehicle is " + price
+				+ " euro. Your wastage is " + vehicle.wastage + "l / 100km."; 
+				if(tooltipsSet) {
+					_this.options.tooltips.tooltip("destroy");
+				}
+				
+				_this.options.inputPrice.attr("title", text);								
+				_this.options.tooltips = _this.options.inputPrice.tooltip();				
+				_this.options.tooltips.tooltip( "open" );
+				tooltipsSet = true;
 			}
 			;
 		}

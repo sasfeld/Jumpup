@@ -58,6 +58,15 @@ require(
 			const
 			REF_ADDTRIP_INPUT_ENDCOORD = ADDTRIP_REF_FORM
 					+ ' input[name="endCoordinate"]';
+			const
+			REF_ADDTRIP_INPUT_PRICE = ADDTRIP_REF_FORM
+			+ ' input[name="price"]';
+			const
+			REF_ADDTRIP_OVERVIEW_PATH = ADDTRIP_REF_FORM
+			+ ' input[name="overviewPath"]';
+			const
+			REF_ADDTRIP_VIA_WAYPOINTS = ADDTRIP_REF_FORM
+			+ ' input[name="viaWaypoints"]';
 			// --> submit
 			const
 			REF_ADDTRIP_SUBMIT = ADDTRIP_REF_FORM + ' input[name="submit"]';
@@ -87,6 +96,8 @@ require(
 			REF_TRIPS_BTN = TRIPS_REF_FORM + ' input[name="tripsBtn"]';
 			const
 			REF_TRIPS_USER_ID = TRIPS_REF_FORM + ' input[name="userId"]';
+			const
+			REF_TRIPS_MAX_DISTANCE = TRIPS_REF_FORM + ' input[name="maxDistance"]';
 
 			// page JumpUpPassenger/ViewBookings
 			const
@@ -131,6 +142,7 @@ require(
 									"geocoding" : $(REF_MAP_GEOCODING)[0],
 									"directions" : $(REF_MAP_DIRECTIONS)[0],
 								};
+								
 
 								try {
 									var mapCtrl = null;
@@ -163,6 +175,8 @@ require(
 										var vehOptions = {
 											"listVehiclesUrl" : "driverjson",
 											"vehicleParam" : "vehicleId",
+//											"tooltips" : tooltips,
+											"inputPrice" : $(REF_ADDTRIP_INPUT_PRICE),
 										};
 										vehicleCtrl = new VehicleController(
 												vehOptions);
@@ -179,6 +193,12 @@ require(
 											var endPointValue = $(
 													REF_ADDTRIP_INPUT_END)
 													.val();
+											var viaWaypoints = $(REF_ADDTRIP_VIA_WAYPOINTS).val();							
+											
+											var waypointsArray = null;
+											if("" != viaWaypoints) {
+												waypointsArray = mapCtrl.toOverviewArray(viaWaypoints);
+											}
 
 											if (0 != startPointValue.length
 													&& 0 != endPointValue) {
@@ -186,12 +206,21 @@ require(
 														.log("main.js: showing new route");
 												mapCtrl.showRoute(null,
 														startPointValue,
-														endPointValue, null,
+														endPointValue, waypointsArray,
 														false);
 											}
 											;
 										}
 
+										// check whether a route shall be displayed (reconstructed)
+										
+										var startCoordDom = $(REF_ADDTRIP_INPUT_STARTCOORD);
+										var endCoordDom = $(REF_ADDTRIP_INPUT_ENDCOORD);									
+										if("" != startCoordDom.val() && "" != endCoordDom.val()) {
+											updateRoute();
+										}
+										
+										
 										/*
 										 * ..:: AutoComplete Start ::..
 										 */
@@ -267,6 +296,9 @@ require(
 										 */
 										// $( REF_ADDTRIP_INPUT_DATE ).focus( (
 										// updateRoute ));
+										
+										
+										
 									}
 									/*
 									 * ..::------------> <------------::..
@@ -297,6 +329,8 @@ require(
 										};
 										tripsCtrl = new TripsController(
 												tripsOptions);
+										
+										
 										/*
 										 * ..::::::::::::::::::::::::::::::::::..
 										 */
@@ -312,9 +346,12 @@ require(
 																$(
 																		REF_TRIPS_START_POINT)
 																		.val(
-																				validStart);
-																tripsCtrl
-																		.setStartCoord(place.geometry.location);
+																				validStart);																
+																$(
+																		REF_TRIPS_START_COORD)
+																		.val( place.geometry.location
+																				);
+																tripsCtrl.setStartCoord(place.geometry.location);
 															});
 										}
 										;
@@ -331,6 +368,11 @@ require(
 																		REF_TRIPS_END_POINT)
 																		.val(
 																				validStart);
+																$(
+																		REF_TRIPS_END_COORD)
+																		.val( place.geometry.location
+																				);
+																tripsCtrl.setEndCoord(place.geometry.location);
 															});
 										}
 										;
@@ -343,6 +385,12 @@ require(
 														(function() {
 															console
 																	.log("lookuptrips ... button clicked...");
+															startPoint = $(
+																	REF_TRIPS_START_POINT)
+																	.val();
+															endPoint = $(
+																	REF_TRIPS_END_POINT)
+																	.val();
 															startCoord = $(
 																	REF_TRIPS_START_COORD)
 																	.val();
@@ -361,15 +409,21 @@ require(
 															priceTo = $(
 																	REF_TRIPS_PRICE_TO)
 																	.val();
+															maxDistance = $(
+																	REF_TRIPS_MAX_DISTANCE)
+																	.val();
 															if (null != tripsCtrl) {
 																tripsCtrl
 																		.fetchTrips(
+																				startPoint,
+																				endPoint,
 																				startCoord,
 																				endCoord,
 																				startDate,
 																				endDate,
 																				priceFrom,
-																				priceTo);
+																				priceTo,
+																				maxDistance);
 															}
 														}));
 

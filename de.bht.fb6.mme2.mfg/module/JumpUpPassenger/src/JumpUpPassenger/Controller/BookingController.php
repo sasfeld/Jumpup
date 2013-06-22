@@ -16,7 +16,6 @@ use JumpUpPassenger\Util\IBookingState;
 use JumpUpPassenger\Forms\LookUpTripsForm;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\View\Helper\ViewModel;
 use Zend\Form\Form;
 use Application\Util\FormTransmitterUtil;
 
@@ -48,30 +47,7 @@ class BookingController extends ANeedsAuthenticationController {
 	 * @var String the parameter name
 	 */
 	const POST_TRIP_RECOMM_PRICE = "recommendedPrice";
-	/**
-	 * POST-parameter for the startPoint (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_START_POINT = "startPoint";
-	/**
-	 * POST-parameter for the endPoint (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_END_POINT = "endPoint";
-	/**
-	 * POST-parameter for the startCoord (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_START_COORD = "startCoord";
-	/**
-	 * POST-parameter for the endCoord (of the passenger).
-	 *
-	 * @var String the parameter name
-	 */
-	const POST_END_COORD = "endCoord";
+
 	protected $form;
 	protected function _getForm() {
 		if (! isset ( $this->form )) {
@@ -107,8 +83,8 @@ class BookingController extends ANeedsAuthenticationController {
 		$loggedInUser = $this->_checkAndRedirect ();
 		
 		$bookings = $this->_getAllBookings ( $loggedInUser );
-		if (null !== $bookings) {
-			$messages = $this->flashMessenger ()->getMessages ();
+		if (null !== $bookings) {			
+			$messages = array_merge($this->flashMessenger()->getErrorMessages(), $this->flashMessenger()->getMessages());
 			return array (
 					"bookings" => $bookings,
 					"messages" => $messages 
@@ -204,10 +180,10 @@ class BookingController extends ANeedsAuthenticationController {
 			if ($form->isValid ()) {
 				$tripId = ( int ) $request->getPost ( self::POST_TRIP_ID );
 				$recomPrice = ( int ) $request->getPost ( self::POST_TRIP_RECOMM_PRICE );
-				$startPoint = ( string ) $request->getPost ( self::POST_START_POINT );
-				$endPoint = ( string ) $request->getPost ( self::POST_END_POINT );
-				$startCoord = $request->getPost ( self::POST_START_COORD );
-				$endCoord = $request->getPost ( self::POST_END_COORD );
+				$startPoint = ( string ) $request->getPost ( LookUpTripsForm::FIELD_START_POINT );
+				$endPoint = ( string ) $request->getPost ( LookUpTripsForm::FIELD_END_POINT );
+				$startCoord = $request->getPost (LookUpTripsForm::FIELD_START_COORD );
+				$endCoord = $request->getPost ( LookUpTripsForm::FIELD_END_COORD );
 				if (null !== $tripId && null !== $recomPrice && null !== $startCoord && null !== $startPoint && null !== $endPoint && null !== $endCoord) {
 					$trip = $this->_getTrip ( $tripId );
 					// user tries to book his own ride
@@ -215,7 +191,16 @@ class BookingController extends ANeedsAuthenticationController {
 						$this->flashMessenger ()->clearMessages ();
 						$this->flashMessenger ()->addErrorMessage ( IControllerMessages::BOOKING_ERROR_OWN_TRIP );
 						$redirect = IRouteStore::BOOK_ERROR;
-					} else {
+					} 
+					// user has alread booked the trip
+					elseif ($this->_hasAlreadyBooked($trip, $loggedInUser)) {
+						$this->flashMessenger ()->clearMessages ();
+						$this->flashMessenger ()->addErrorMessage ( IControllerMessages::BOOKING_ERROR_ALREADY_BOOKED );
+						// redirect to the booking overview page so the user can see his bookings
+						$redirect = IRouteStore::BOOK_PASS_OVERVIEW;
+					}
+					// everything is ok :O
+					 else {
 						if (null !== $trip) {
 							$booking = new Booking ( $trip, $loggedInUser, $recomPrice );
 							$booking->setStartPoint ( $startPoint );
@@ -231,6 +216,7 @@ class BookingController extends ANeedsAuthenticationController {
 							} catch ( OverbookException $e ) {
 								$this->flashMessenger ()->clearMessages ();
 								$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_OVERBOOKING );
+								$redirect = IRouteStore::BOOK_ERROR;
 							}
 						} else {
 							$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_NOTRIP );
@@ -240,12 +226,28 @@ class BookingController extends ANeedsAuthenticationController {
 					$this->flashMessenger ()->addErrorMessage ( IControllerMessages::ERROR_BOOKING_REQUEST );
 				}
 			}
-			else {
+			else { // form is not valid
 				$redirect = $this->_redirectToViewTrips($form);
 			}
 		}
 		// fallthrough: error
 		$this->redirect ()->toRoute ( $redirect );
+	}
+	
+	/**
+	 * Check whether the given user has already performed a booking on the given trip.
+	 * @param unknown $trip
+	 * @param unknown $loggedInUser
+	 * @return boolean true if the user has already booked the trip.
+	 */
+	private function _hasAlreadyBooked(Trip $trip, User $loggedInUser) {
+		foreach ($trip->getBookings() as $booking) {
+			if($loggedInUser === $booking->getPassenger()) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -255,11 +257,10 @@ class BookingController extends ANeedsAuthenticationController {
 	private function _redirectToViewTrips(Form $form) {
 		$this->flashMessenger()->clearMessages();	
 		foreach ($form->getElements() as $element) {
-			$message = FormTransmitterUtil::getMessage($element);
-			
+			$message = FormTransmitterUtil::getMessage($element);			
 			$this->flashMessenger()->addMessage($message);
 		}
-		return $this->redirect()->toRoute(IRouteStore::LOOKUP_TRIPS);
+		return IRouteStore::LOOKUP_TRIPS;
 	}
 	
 	/**

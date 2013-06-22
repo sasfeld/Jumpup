@@ -102,7 +102,7 @@ class JsonController extends AbstractRestfulController {
 			$form = $this->_getLookUpForm ();
 			$form->setData ( $request->getPost () );
 			
-			$jsonObj;
+			$jsonObj = null;
 			if ($form->isValid ()) {
 				if (null !== $request->getPost ( LookUpTripsForm::FIELD_START_COORD )) {
 					$startCoord = $request->getPost ( LookUpTripsForm::FIELD_START_COORD );

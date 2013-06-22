@@ -14,6 +14,7 @@ use Application\Forms\BasicBookingForm;
 use JumpUpDriver\Models\Trip;
 use JumpUpDriver\Util\View\ICssStyles;
 use JumpUpDriver\Forms\BasicTripForm;
+use JumpUpUser\Controller\ProfileController;
 
 class RenderBookings {
 	const DRIVER = 1;
@@ -54,7 +55,7 @@ class RenderBookings {
 		$applyForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_APPLY );
 		$denyForm = self::getDenyForm ( $booking );
 		$denyForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DENY );
-		echo '<li> <h4 class="' . ICssStyles::BOOKINGHEADLINE . '">#' . $booking->getId () . ' | ' . $booking->getPassenger ()->getPrename () . ' ' . $booking->getPassenger ()->getLastname () . ' | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</h4>';
+		echo '<li> <h4 class="' . ICssStyles::BOOKINGHEADLINE . '">#' . $booking->getId () . ' | <a target="blank" href="'.$_this->url(\JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE).'?'.ProfileController::PARAM_USER_ID . '=' . $booking->getPassenger()->getId() . '">' .  $booking->getPassenger ()->getPrename () . ' ' . $booking->getPassenger ()->getLastname () . '</a> | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</h4>';
 		if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
 			echo $_this->renderForm ( $applyForm );
 		}
@@ -88,7 +89,8 @@ class RenderBookings {
 		$applyForm->setAttribute ( 'action', \JumpUpPassenger\Util\Routes\IRouteStore::BOOK_APPLY );
 		$denyForm = self::getDenyForm ( $booking );
 		$denyForm->setAttribute ( 'action', \JumpUpPassenger\Util\Routes\IRouteStore::BOOK_DENY );
-		echo '<h3 class="' . ICssStyles::BOOKINGHEADLINE . '">#' . $booking->getId () . ' | ' . $booking->getDriver ()->getPrename () . ' ' . $booking->getDriver ()->getLastname () . ' | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</h3>';
+		echo '<h3 class="' . ICssStyles::BOOKINGHEADLINE . '"><span>#' . $booking->getId () . ' | </span><a target="blank" href="'.$_this->url(\JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE).'?'.ProfileController::PARAM_USER_ID . '=' . $booking->getDriver()->getId() . '">'
+		 . $booking->getDriver ()->getPrename () . ' ' . $booking->getDriver ()->getLastname () . '</a><span> | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</span></h3>';
 		if ($booking->getState () === IBookingState::OFFER_FROM_DRIVER) {
 			echo $_this->renderForm ( $applyForm );
 		}
@@ -117,9 +119,9 @@ class RenderBookings {
 	}
 	
 	public static function renderTrip(Trip $trip, $_this, $mode) {
-		echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( "Date" ) . " - " . $_this->translate ( IViewMessages::BOOKING_DATE ) . ")" . "</h3>";
+		echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( "Date" ) . " - " . $_this->translate ( IViewMessages::BOOKING_DATE ) . ")";
 		$deleteForm = self::getDeleteTripForm($trip);
-		echo $_this->renderForm($deleteForm);
+		echo $_this->renderForm($deleteForm) . "</h3>";
 		echo '<div class="' . ICssStyles::TRIP . '">'; // begin of accordion element content
 		
 		$bookings = $trip->getBookings();

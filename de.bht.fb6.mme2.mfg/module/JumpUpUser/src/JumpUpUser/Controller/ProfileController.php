@@ -26,6 +26,12 @@ use JumpUpUser\Models\User;
  * @since 19.06.2013
  */
 class ProfileController extends ANeedsAuthenticationController {
+	/**
+	 * Param for the userId, used in showAction.
+	 * @var String
+	 */
+	const PARAM_USER_ID = "userId";
+	
 	private $form;
 	private function _getForm() {
 		if (! isset ( $this->form )) {
@@ -40,26 +46,54 @@ class ProfileController extends ANeedsAuthenticationController {
 	
 	/**
 	 * This action is responsible for showing the logged in user's profile.
+	 * input parameter: userId if not set, the current user's profile will be rendered
 	 * exports: messages from the flash messenger and the instance of the logged in user
 	 */
 	public function showAction() {
 		$redirect = IRouteStore::LOGIN;
-		if ($this->_checkAuthentication ()) { // authentication required
-			$loggedInUser = $this->getCurrentUser();
+		if ($this->_checkAuthentication ()) { // authentication required			
+			$paramUserId = $this->request->getQuery(self::PARAM_USER_ID);
+			
+			$user = null;
+			$linkEdit = null; // if set to null, the view shouldn't render the links
+			$linkVehicle = null;
 			$messages = $this->flashMessenger()->getMessages();
-			if(!UserUtil::isProfileConfigured($loggedInUser)) {
-				array_push($messages, IControllerMessages::NOT_COMPLETED_PROFILE_YET);
+			if(null === $paramUserId) { // show logged in user's profile				
+				$user = $this->getCurrentUser();
+				if(!UserUtil::isProfileConfigured($user)) {
+					array_push($messages, IControllerMessages::NOT_COMPLETED_PROFILE_YET);
+				}
+				$linkEdit = $this->_getLinkToProfile();
+				$linkVehicle = $this->_getLinkToVehicle();
+			}
+			else { // show profile for user with the given id
+				$user = $this->_getUser($paramUserId);
+				if(null === $user) {
+					array_push($messages, IControllerMessages::NO_PROFILE_FOUND);
+				}
 			}
 			
 			
 			return array("messages" => $messages,
-					"user" => $loggedInUser,
-					'linkVehicle' => $this->_getLinkToVehicle() ,
-					'linkEdit' => $this->_getLinkToProfile() ,
+					"user" => $user,
+					'linkVehicle' => $linkVehicle ,
+					'linkEdit' => $linkEdit,
 					);
 		}
 		$this->redirect()->toRoute($redirect);
 		
+	}
+	
+	/**
+	 * Get the user entity.
+	 * @param int $paramUserId the id of the entity
+	 * @return the user instance or null if no entity was matched.
+	 */
+	protected function _getUser($paramUserId) {
+		$userId = (int) $paramUserId;
+		$userService = $this->_getUserService();
+		$user = $userService->getUserById($userId);
+		return $user;
 	}
 	
 	/**

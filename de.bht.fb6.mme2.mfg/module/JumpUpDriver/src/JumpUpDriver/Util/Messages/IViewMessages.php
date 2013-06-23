@@ -31,6 +31,22 @@ interface IViewMessages {
    	/*
      * ..:::::::::::::::::::::::::::::::::..
     */
-
+    /* ..:: used in JumpUpDriver\view\vehicle\list.phtml ::../
+     *
+    */
+    const VEHICLE_LIST_NO_VEHICLES = "You haven't configured any vehicle yet.";
+    const VEHICLE_LIST_NO_PIC = "You havn't uploaded any vehicle pic yet.";
+	const VEHICLE_LIST_ACTUAL_WHEEL = "Actual wheel";
+	const VEHICLE_LIST_AIR_CONDITION = "Air condition";
+	const VEHICLE_LIST_LEG_SPACE = "Leg space";
+	const VEHICLE_LIST_SEATS = "Number of seats";
+	const VEHICLE_LIST_AVG_SPEED = "Average speed";
+	const VEHICLE_LIST_WASTAGE = "Wastage";
+	const VEHICLE_LIST_TYPE = "Type";
+	const VEHICLE_LIST_BRAND = "Brand";
+	const VEHICLE_LIST_CURRENT_PIC = "Current pic";
+	const VEHICLE_LIST_LINK_ADD = "Add vehicle";
+	const VEHICLE_LIST_LINK_EDIT = "Edit";
+	const VEHICLE_LIST_LINK_REMOVE = "Remove";
    
 }

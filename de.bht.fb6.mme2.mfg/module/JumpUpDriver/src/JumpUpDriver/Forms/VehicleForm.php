@@ -61,6 +61,11 @@ class VehicleForm {
    * @var unknown
    */
   const FIELD_ACTUAL_WHEEL = 'actualwheel';
+  /**
+   * Key for the file input vehiclepic.
+   * @var unknown
+   */
+  const FIELD_VEHICLE_PIC = 'vehiclepic';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
@@ -121,6 +126,13 @@ class VehicleForm {
    * })
    */
   public $actualwheel;
+  /**
+   * @Annotation\Type("Zend\Form\Element\File")
+   * @Annotation\Required({"required":"false" })
+   * @Annotation\Filter({"name":"StripTags"})
+   * @Annotation\Options({"label":"Vehicle pic:"})
+   */
+  public $vehiclepic;  
   /**
    * @Annotation\Type("Zend\Form\Element\Submit")
    * @Annotation\Attributes({"value":"Submit"})

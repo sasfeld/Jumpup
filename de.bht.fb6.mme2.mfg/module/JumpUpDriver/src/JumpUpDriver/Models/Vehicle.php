@@ -51,10 +51,6 @@ class Vehicle {
      */
     protected $avgspeed;
     /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $picpath;
-    /**
      * @ORM\Column(type="string")
      */
     protected $aircondition;
@@ -62,8 +58,31 @@ class Vehicle {
      * @ORM\Column(type="string")
      */
     protected $actualwheel;
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $vehiclepic;
     
     /**
+     * Get the full path to the vehicle pic.
+	 * @return the $vehiclepic
+	 */
+	public function getVehiclepic() {
+		return $this->vehiclepic;
+	}
+
+	/**
+	 * Set the full path to the vehicle pic.
+	 * @param String $vehiclepic
+	 */
+	public function setVehiclepic($vehiclepic) {
+		if(!is_string($vehiclepic)) {
+			throw \Application\Util\ExceptionUtil::throwInvalidArgument('$vehiclepic', 'String', $vehiclepic);
+		}
+		$this->vehiclepic = (string) $vehiclepic;
+	}
+
+	/**
 	 * @return the $aircondition
 	 */
 	public function getAircondition() {
@@ -102,7 +121,7 @@ class Vehicle {
         $intVal = (int) $val;
         
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }
         $this->id = $intVal;
     }
@@ -140,7 +159,7 @@ class Vehicle {
         $intVal = (int) $val;
         
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }
         $this->wastage = $intVal;
     }
@@ -152,7 +171,7 @@ class Vehicle {
         $intVal = (int) $val;
         
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }      
         $this->numberseats = $intVal;
         
@@ -173,19 +192,11 @@ class Vehicle {
     public function setAvgspeed($val) {
         $intVal = (int) $val;        
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }       
         $this->avgspeed = $intVal;        
     }
     
-  /**
-     * Set the path to the corresponding pic.
-     */
-    public function setPicpath($val) {
-        if(is_string($val)) {
-            $this->picpath = $val;
-        }
-    }
     
     public function getId() {
         return $this->id;
@@ -219,10 +230,7 @@ class Vehicle {
         return $this->avgspeed;
     }
     
-    public function getPicpath() {
-        return $this->picpath;
-    }  
-    
+  
     public function toJson() {
         return array("id" => $this->getId(),
                     "ownerId" => $this->getOwner()->getId(),

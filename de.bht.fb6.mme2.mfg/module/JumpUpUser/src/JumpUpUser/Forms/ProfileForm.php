@@ -77,7 +77,6 @@ class ProfileForm {
     /**
      * @Annotation\Type("Zend\Form\Element\File")
      * @Annotation\Required({"required":"true" })
-     * @Annotation\Filter({"name":"StripTags"})
      * @Annotation\Options({"label":"Profile pic:"})
      */
     public $profilepic;

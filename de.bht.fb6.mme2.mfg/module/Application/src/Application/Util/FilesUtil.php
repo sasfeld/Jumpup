@@ -147,8 +147,7 @@ class FilesUtil {
 				throw ExceptionUtil::throwInvalidArgument('$type', 'type constants in FilesUtil', $type);
 		}
 		
-		if(null !== $aimedWidth && $imgWidth > $aimedWidth) {
-			echo "resizing img...";
+		if(null !== $aimedWidth && $imgWidth > $aimedWidth) {			
 			$newHeight = ($imgHeight / $imgWidth) * $aimedWidth;	
 
 			$source = "";
@@ -196,7 +195,6 @@ class FilesUtil {
 		}
 		$strpos = strpos($path, ".");
 		$ext = substr($path, $strpos + 1, strlen($path) - $strpos  );
-		echo "extension: ".$ext;
 		switch($ext) {
 			case "jpg":
 			case "jpeg":

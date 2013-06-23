@@ -116,7 +116,7 @@ class ProfileController extends ANeedsAuthenticationController {
 	 */
 	protected function _deleteOldPic(User $user) {
 		$profilePicPath = $user->getProfilePic();
-		if(null !== $profilePicPath && is_file($profilePicPath)) {
+		if(null !== $profilePicPath && @is_file($profilePicPath)) {
 			$success = unlink($profilePicPath);
 			if(!$success) {
 				throw \Exception(IControllerMessages::ERROR_DELETING_PROFILE_PIC);
@@ -146,19 +146,26 @@ class ProfileController extends ANeedsAuthenticationController {
 				
 				if ($form->isValid ()) {	
 					$this->_deleteOldPic($loggedInUser); // only if neccessary				
-					$pathProfilePic = FilesUtil::moveUploadedFile($post[ProfileForm::FIELD_PROFILE_PIC], $loggedInUser, FilesUtil::TYPE_PROFILE_PIC);
-					$birthDate = $request->getPost ( ProfileForm::FIELD_BIRTHDATE );
-					$homeCity = $request->getPost( ProfileForm::FIELD_HOMECITY);
-					$spokenLanguages = $request->getPost( ProfileForm::FIELD_SPOKEN_LANGS);
-					$loggedInUser->setBirthdate($birthDate);
-					$loggedInUser->setProfilePic($pathProfilePic);
-					$loggedInUser->setHomeCity($homeCity);
-					$loggedInUser->setSpokenLanguages($spokenLanguages);
-					$this->_saveChangedUser($loggedInUser);
-					$redirect = IRouteStore::SHOW_PROFILE;
-					$this->flashMessenger()->clearMessages();
-					$this->flashMessenger()->addMessage(IControllerMessages::CHANGE_PROFILE_SUCCESS);
-					$this->redirect()->toRoute($redirect);
+					$profilePic = $post[ProfileForm::FIELD_PROFILE_PIC];
+					if(null !== $profilePic && FilesUtil::_getFileType($profilePic['name']) !== null) {
+						$pathProfilePic = FilesUtil::moveUploadedFile($profilePic, $loggedInUser, FilesUtil::TYPE_PROFILE_PIC);
+						$birthDate = $request->getPost ( ProfileForm::FIELD_BIRTHDATE );
+						$homeCity = $request->getPost( ProfileForm::FIELD_HOMECITY);
+						$spokenLanguages = $request->getPost( ProfileForm::FIELD_SPOKEN_LANGS);
+						$loggedInUser->setBirthdate($birthDate);
+						$loggedInUser->setProfilePic($pathProfilePic);
+						$loggedInUser->setHomeCity($homeCity);
+						$loggedInUser->setSpokenLanguages($spokenLanguages);
+						$this->_saveChangedUser($loggedInUser);
+						$redirect = IRouteStore::SHOW_PROFILE;
+						$this->flashMessenger()->clearMessages();
+						$this->flashMessenger()->addMessage(IControllerMessages::CHANGE_PROFILE_SUCCESS);
+						$this->redirect()->toRoute($redirect);
+					}
+					else {
+						array_push($messages, \JumpUpUser\Util\Messages\IControllerMessages::PROFILE_IMAGE_TYPES);
+					
+					}
 				}
 				// else: fallthrough -> form will be rendered
 			}

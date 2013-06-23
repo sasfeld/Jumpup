@@ -81,6 +81,7 @@ interface IControllerMessages {
     const NOT_COMPLETED_PROFILE_YET = "You haven't configured your profile yet. Please be so kind to offer your information.";
 	const ERROR_DELETING_PROFILE_PIC = "Couldn't delete the old profile picture. Please contact the support";
 	const NO_PROFILE_FOUND = "There was no profile found. Maybe the user doesn't exist.";
+	const PROFILE_IMAGE_TYPES = "The file type must be one of type png, jpeg or gif.";
 	/*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */

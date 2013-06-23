@@ -72,7 +72,7 @@ class Trip {
    * */
   private $driver;
   /**
-   * @ManyToOne(targetEntity="JumpUpDriver\Models\Vehicle")
+   * @ManyToOne(targetEntity="JumpUpDriver\Models\Vehicle", inversedBy="intrips")
    */
   private $vehicle;
   /**

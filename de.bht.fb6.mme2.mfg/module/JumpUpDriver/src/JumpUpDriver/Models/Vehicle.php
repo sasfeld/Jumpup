@@ -62,8 +62,20 @@ class Vehicle {
      * @ORM\Column(type="string", nullable=true)
      */
     protected $vehiclepic;
+    /**
+     * @OneToMany(targetEntity="JumpUpDriver\Models\Trip", mappedBy="vehicle")
+     */
+    protected $intrips;
     
     /**
+     * Get all the trips in which this vehicle is referenced.
+	 * @return array of Trip $intrips
+	 */
+	public function getIntrips() {
+		return $this->intrips;
+	}
+
+	/**
      * Get the full path to the vehicle pic.
 	 * @return the $vehiclepic
 	 */

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToOne as OneToOne;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+use Application\Util\FilesUtil;
 
 /**
  * @ORM\Entity
@@ -252,8 +253,9 @@ class Vehicle {
                     "wastage" => $this->getWastage(), 
                     "avgspeed" => $this->getAvgspeed(), 
                     "numberseats" => $this->getNumberSeats(),
-        			"aircondtion" => $this->getAircondition(),
+        			"aircondition" => $this->getAircondition(),
         		    "actualwheel" => $this->getActualwheel(),
+        			"pathPic"	=> FilesUtil::getRealVehiclePath($this),
          );
     }
     

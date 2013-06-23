@@ -391,6 +391,7 @@ public function __construct() {
         'maxSeats'     => $this->maxSeats, 
         'numberBookings' => $this->getNumberOfBookings(),
         'priceRecommendation' => $this->getPriceRecommendationForPassenger(), 
+    	'vehicle' => $this->getVehicle()->toJson(),
     );
   }
    

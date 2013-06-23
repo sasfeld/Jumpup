@@ -114,7 +114,7 @@ class VehicleForm {
    * @Annotation\Type("Zend\Form\Element\Radio")
    * @Annotation\Options({
    *          "label":"Air condition:",
-   *          "value_options":{"true":"yes", "false":"no"}
+   *          "value_options":{"yes":"yes", "no":"no"}
    * })
    */
   public $aircondition;
@@ -122,7 +122,7 @@ class VehicleForm {
    * @Annotation\Type("Zend\Form\Element\Radio")
    * @Annotation\Options({
    *          "label":"Actual wheel:",
-   *          "value_options":{"summer":"Summer", "winter":"Winter", "allweather":"All weather"}
+   *          "value_options":{"Summer":"Summer", "Winter":"Winter", "Allweather":"All weather"}
    * })
    */
   public $actualwheel;

@@ -46,6 +46,20 @@ class FilesUtil {
 	 * @var don't care
 	 */
 	const TYPE_VEHICLE_PIC = 1;
+	/**
+	 * Max aimed width for each profile pic.
+	 * @var int - pixels
+	 */
+	const PROFILE_PIC_MAX_WIDTH = 180;
+	/**
+	 * Max aimed width for each vehicle pic.
+	 * @var int - pixels
+	 */
+	const VEHICLE_PIC_MAX_WIDTH = 700;
+	
+	const FILE_TYPE_JPEG = "jpeg";
+	const FILE_TYPE_PNG = "png";
+	const FILE_TYPE_GIF = "gif";
 	
 	/**
 	 * Get the directory for a given user's files.
@@ -105,8 +119,127 @@ class FilesUtil {
 		$filetmpname = $file ['tmp_name'];
 		$path = $destinationDir . "/" . $filename;
 		move_uploaded_file ( $filetmpname, $path );
+		self::_resizeImage( $path, $type);
 		return $path;
 	}
+	
+	/**
+	 * Resize the image immediatly. Overwrite the existing image and replace it by the resized one.
+	 * @param String $path the path to the uploaded pic
+	 * @param class constants $type the type (PROFILE or VEHICLE pic).
+	 */
+	private static function _resizeImage($path, $type) {
+		$imgType = self::_getFileType($path);	
+		if(null === $imgType) {
+			throw ExceptionUtil::throwInvalidArgument('$path', 'file type png, gif or jpg', $path);
+		}	
+		
+		list($imgWidth, $imgHeight) = getimagesize($path);
+		$aimedWidth = null;
+		switch($type) {
+			case self::TYPE_PROFILE_PIC:
+				$aimedWidth = self::PROFILE_PIC_MAX_WIDTH;
+				break;
+			case self::TYPE_VEHICLE_PIC:
+				$aimedWidth = self::VEHICLE_PIC_MAX_WIDTH;
+				break;
+			default:
+				throw ExceptionUtil::throwInvalidArgument('$type', 'type constants in FilesUtil', $type);
+		}
+		
+		if(null !== $aimedWidth && $imgWidth > $aimedWidth) {
+			echo "resizing img...";
+			$newHeight = ($imgHeight / $imgWidth) * $aimedWidth;	
+
+			$source = "";
+			switch($imgType) {
+				case self::FILE_TYPE_GIF:
+					$source = imagecreatefromgif($path);
+					break;
+				case self::FILE_TYPE_PNG:
+					$source = imagecreatefrompng($path);
+					break;
+				case self::FILE_TYPE_JPEG:
+					$source = imagecreatefromjpeg($path);
+					break;
+				default:
+					throw ExceptionUtil::throwInvalidArgument('$type', 'type constants in FilesUtil', $type);
+			}			
+			$thumb = imagecreatetruecolor($aimedWidth, $newHeight);	   			
+			imagecopyresized($thumb, $source, 0, 0, 0, 0, $aimedWidth, $newHeight, $imgWidth, $imgHeight);
+			switch($imgType) {
+				case self::FILE_TYPE_GIF:
+					imagegif($thumb, $path);
+					break;
+				case self::FILE_TYPE_PNG:
+					imagepng($thumb, $path);
+					break;
+				case self::FILE_TYPE_JPEG:
+					imagejpeg($thumb, $path);
+					break;
+				default:
+					throw ExceptionUtil::throwInvalidArgument('$type', 'type constants in FilesUtil', $type);
+			}			
+		}
+		
+			
+	}
+	
+	/**
+	 * Get the file type from the extension (.*) for a given path.
+	 * @param String $path the path
+	 * @return one of the FILE_TYPE_CONSTANTS above or null if we don't support the given file type.
+	 */
+	public static function _getFileType($path) {
+		if(!is_string($path)) {
+			throw ExceptionUtil::throwInvalidArgument('$path', 'String', $path);
+		}
+		$strpos = strpos($path, ".");
+		$ext = substr($path, $strpos + 1, strlen($path) - $strpos  );
+		echo "extension: ".$ext;
+		switch($ext) {
+			case "jpg":
+			case "jpeg":
+				return self::FILE_TYPE_JPEG;				
+			case "png":
+				return self::FILE_TYPE_PNG;
+			case "gif":
+				return self::FILE_TYPE_GIF;
+			default:
+				return null;
+		}	
+	}
+	
+// 	/**
+// 	 * Resize the image immediatly. Overwrite the existing image and replace it by the resized one.
+// 	 * @param String $path the path to the uploaded pic
+// 	 * @param class constants $type the type (PROFILE or VEHICLE pic).
+// 	 */
+// 	private static function _resizeImage($path, $type) {
+// 		$img = new \Imagick($path);
+// 		$dimensions = $img->getimagegeometry();
+// 		$imgWidth = $dimensions['width'];
+// 		$imgHeight = $dimensions['height'];
+// 		$aimedWidth = null;
+// 		switch($type) {
+// 			case self::TYPE_PROFILE_PIC:
+// 				$aimedWidth = self::PROFILE_PIC_MAX_WIDTH;
+// 				break;
+// 			case self::TYPE_VEHICLE_PIC:
+// 				$aimedWidth = $imgWidth;
+// 				break;
+// 			default:
+// 				throw ExceptionUtil::throwInvalidArgument('$type', 'type constants in FilesUtil', $type);
+// 		}
+		
+// 		if(null !== $aimedWidth) {
+// 			$newHeight = $imgHeight / $aimedWidth;
+// 			$img->scaleimage($aimedWidth, $newHeight);
+// 			$img->writeimage($path);
+// 		}
+		
+// 		$img->destroy();		
+// 	}
 	
 	/**
 	 * Prepare the profile pic for the given user.

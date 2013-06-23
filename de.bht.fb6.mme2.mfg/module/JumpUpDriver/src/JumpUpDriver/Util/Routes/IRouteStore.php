@@ -52,6 +52,11 @@ interface IRouteStore {
      */
     const BOOK_DRIVER_OVERVIEW = "listdriverbookings";
     /**
+     * Route to the action showVehicle within the VehicleController.
+     * @var String
+     */
+    const SHOW_VEHICLE = "showvehicle";
+    /**
      * Route to the action doRecommendation within the BookingController.
      * @var String
      */

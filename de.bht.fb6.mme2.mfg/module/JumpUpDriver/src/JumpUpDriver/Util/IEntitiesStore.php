@@ -17,6 +17,11 @@ interface IEntitiesStore {
    * @see JumpUpDriver\Models\Trip
    * @var String
    */
-  const TRIP = "JumpUpDriver\Models\Trip";
+  const TRIP = 'JumpUpDriver\Models\Trip';
+  /**
+   * @see JumpUpDriver\Models\Vehicle
+   * @var String
+   */
+  const VEHICLE = 'JumpUpDriver\Models\Vehicle';
 
 }

@@ -48,5 +48,13 @@ interface IViewMessages {
 	const VEHICLE_LIST_LINK_ADD = "Add vehicle";
 	const VEHICLE_LIST_LINK_EDIT = "Edit";
 	const VEHICLE_LIST_LINK_REMOVE = "Remove";
-   
+	
+	/* ..:: used in JumpUpDriver\view\vehicle\show.phtml ::../
+	 *
+	*/
+	const SHOW_VEHICLES = "Vehicle information";
+	const VEHICLE_LIST_NO_PIC_FOR_PASSENGER = "The driver hasn't uploaded any pic yet.";
+	/*
+	 * ..::::::::::::::::::::::::::::::::::::::::::::::::::..
+	*/
 }

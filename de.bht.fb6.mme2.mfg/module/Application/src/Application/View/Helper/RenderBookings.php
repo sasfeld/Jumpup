@@ -15,6 +15,7 @@ use JumpUpDriver\Models\Trip;
 use JumpUpDriver\Util\View\ICssStyles;
 use JumpUpDriver\Forms\BasicTripForm;
 use JumpUpUser\Controller\ProfileController;
+use JumpUpDriver\Controller\VehicleController;
 
 class RenderBookings {
 	const DRIVER = 1;
@@ -101,6 +102,9 @@ class RenderBookings {
 			echo '<span class="nofloat">&nbsp;</span>';
 		}
 		echo "<div class=\"" . ICssStyles::BOOKING . "\">\n\t\t\t"; // begin of booking div
+		// render and link vehicle
+		echo "<p>" . $_this->translate ( \JumpUpPassenger\Util\Messages\IViewMessages::VEHICLE) . ': <a target="blank" href="'. $_this->url(IRouteStore::SHOW_VEHICLE) . '?'.VehicleController::PARAM_VEHICLE_ID. '=' . $booking->getTrip()->getVehicle()->getId() . '">' 
+				. $booking->getTrip()->getVehicle()->getBrand() . " " . $booking->getTrip()->getVehicle()->getType() . "</a></p>"; 
 		// render status
 		echo "<p>" . $_this->translate ( IViewMessages::BOOKING_STATE ) . ": " . $_this->translate ( StateUtil::getStateLabel ( $booking->getState () ) ) . "</p>";
 		// differ bookings states

@@ -14,6 +14,8 @@ use JumpUpDriver\Util\Routes\IRouteStore;
 use JumpUpDriver\Forms\VehicleForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Application\Util\FilesUtil;
+use Application\Util\ExceptionUtil;
+use JumpUpDriver\Util\IEntitiesStore;
 
 /**
  *
@@ -234,6 +236,48 @@ class VehicleController extends ANeedsAuthenticationController {
 					"infoMessages" => $infoMessages 
 			);
 		}
+	}
+	
+	/**
+	 * Show the information for a given vehicle.
+	 * input parameter: vehicleId
+	 * exports: a nice view
+	 */
+	public function showAction() {
+		if ($this->_checkAuthentication ()) { // authentication required			
+			$messages = array();
+			$request = $this->getRequest();
+			$vehId = (int) $request->getQuery(self::PARAM_VEHICLE_ID);
+			$vehicle = null;
+			if(null !== $vehId) {
+				$vehicle = $this->_getVehicle($vehId);
+				if(null === $vehicle) {
+					array_push($messages, IControllerMessages::VEHICLE_NOT_FOUND);
+				} 
+			}
+			else {
+				array_push($messages, IControllerMessages::VEHICLE_NO_PARAMETER);
+			}
+			
+			return array("vehicle" => $vehicle,
+						"messages" => $messages, 
+			);
+			
+		}
+	}
+	
+	/**
+	 * Get the vehicle for a given vehicle id.
+	 * @param unknown $vehId
+	 * @return the entity or null
+	 */
+	protected function _getVehicle($vehId) {
+		if(!is_int($vehId)) {
+			throw ExceptionUtil::throwInvalidArgument('$vehId', 'int', $vehId);
+		}
+		$vehRepo = $this->em->getRepository(IEntitiesStore::VEHICLE);
+		$vehicle = $vehRepo->findOneBy(array('id' => $vehId));
+		return $vehicle;
 	}
 	
 	/**

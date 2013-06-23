@@ -69,6 +69,17 @@ return array(
                         ),
                     ),                    
                 ),
+                'showvehicle' => array(
+                    'type'    => 'Literal',
+                    'options' => array(
+                        'route'    => '/showvehicle',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'JumpUpDriver\Controller',
+                            'controller'    => 'Vehicle',
+                            'action'        => 'show',
+                        ),
+                    ),                    
+                ),
                 'editvehicle' => array(
                     'type'    => 'Literal',
                     'options' => array(

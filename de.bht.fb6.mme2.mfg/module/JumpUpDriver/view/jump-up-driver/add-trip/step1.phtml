@@ -1,39 +1,37 @@
 <h2><?php echo $this->translate(JumpUpDriver\Util\Messages\IViewMessages::ADD_TRIP_STEP1); ?></h2>
 
 <div id="addtrip_hints">
-<?php 
-if(null !== $this->messages) {
-	foreach ($this->messages as $message) {
-		echo "<p>".$message."</p>";
+<?php
+if (null !== $this->messages) {
+	foreach ( $this->messages as $message ) {
+		echo "<p>" . $message . "</p>";
 	}
 }
 
 ?>
 </div>
 
-<div id="form">
+<div class="content" id="add-trip">
+	<div id="form">
 <?php
-    if(null !== $this->form) {
-        // do a rendering process
-        $form = $this->form;
-        $fields = $this->fields;
-        $renderingString = $this->renderForm()->startRendering($form)
-                              ->appendFields($fields)
-                              ->stopRendering($form);
-	    echo $renderingString;
-    }
-    else {
-        echo $this->translate($this->message);
-    }
+if (null !== $this->form) {
+	// do a rendering process
+	$form = $this->form;
+	$fields = $this->fields;
+	$renderingString = $this->renderForm ()->startRendering ( $form )->appendFields ( $fields )->stopRendering ( $form );
+	echo $renderingString;
+} else {
+	echo $this->translate ( $this->message );
+}
 ?>
 </div>
 
-<div id="recommended_price">
-</div>
+	<div id="recommended_price"></div>
 
-    <div id="map_div">
+	<div id="map_div">
       <?php // ..:: the map will be rendered here ::.. ?>
       <div id="map_canvas"></div>
-       <div id="geocoding"> </div>
-      </div>
+		<div id="geocoding"></div>
+	</div>
+</div>
 </div>

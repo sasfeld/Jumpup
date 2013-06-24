@@ -10,23 +10,24 @@ use Application\View\Helper\RenderBookings;
 <h1><?php echo $this->translate("View bookings") ?></h1>
 
 <div id="driver_hints">
-<?php 
-if(null !== $this->messages) {
-	foreach ($this->messages as $message) {
-		echo "<p>".$message."</p>";
+<?php
+if (null !== $this->messages) {
+	foreach ( $this->messages as $message ) {
+		echo "<p>" . $message . "</p>";
 	}
 }
 
 ?>
 </div>
 
-<div id="driver_view_bookings">
+<div class="content" id="view-driver-bookings">
+	<div id="driver_view_bookings">
 <?php
 
 if (null !== $this->trips && (0 < sizeof ( $this->trips ))) {
 	echo '<div id="accordion">'; // start of accordion
 	foreach ( $this->trips as $trip ) {
-		RenderBookings::renderTrip ( $trip, $this, RenderBookings::DRIVER);
+		RenderBookings::renderTrip ( $trip, $this, RenderBookings::DRIVER );
 	}
 	echo "</div>"; // end of accordion
 } else { // no trips
@@ -35,4 +36,4 @@ if (null !== $this->trips && (0 < sizeof ( $this->trips ))) {
 
 ?>
 </div>
-
+</div>

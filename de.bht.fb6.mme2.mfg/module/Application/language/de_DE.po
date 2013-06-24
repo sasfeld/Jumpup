@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 20:37+0100\n"
+"PO-Revision-Date: 2013-06-24 20:54+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -714,7 +714,7 @@ msgid ""
 "other options"
 msgstr ""
 "Es tut uns leid, aber für deine Kriterien wurden keine Fahrten gefunden. "
-"Probiere bitte andere weniger restriktive Optionen auf."
+"Probiere bitte andere weniger restriktive Optionen aus."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
 msgid ""
@@ -750,8 +750,36 @@ msgstr "Buchungsfehler"
 
 #: JumpUpPassenger\Util\Messages\IViewMessages
 msgid "Look for trips"
-msgstr "Fahrten suchen"
+msgstr "Nach Fahrten suchen"
 
 #: JumpUpPassenger\Util\Messages\IViewMessages
 msgid "Show trips"
 msgstr "Fahrten suchen"
+
+#: JumpUpPassenger\Util\Messages\ILabels
+msgid "Look up trips"
+msgstr "Fahrten suchen"
+
+#: JumpUpPassenger\Util\Messages\ILabels
+msgid "booked trips"
+msgstr "gebuchte Fahrten"
+
+#: JumpUpPassenger\Forms\LookUpTripsForm
+msgid "Date from:"
+msgstr "Datum von:"
+
+#: JumpUpPassenger\Forms\LookUpTripsForm
+msgid "Date to:"
+msgstr "Datum bis:"
+
+#: JumpUpPassenger\Forms\LookUpTripsForm
+msgid "Price from:"
+msgstr "Preis von:"
+
+#: JumpUpPassenger\Forms\LookUpTripsForm
+msgid "Price to:"
+msgstr "Preis bis:"
+
+#: JumpUpPassenger\Forms\LookUpTripsForm
+msgid "Maximum distance (km):"
+msgstr "Maximale Distanz (km):"

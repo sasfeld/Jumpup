@@ -96,13 +96,14 @@ class ViewTripsController extends ANeedsAuthenticationController {
 	public function lookUpAction() {
 		$user = $this->_checkAndRedirect ();
 		$request = $this->getRequest ();
+		$translator = $this->_getTranslator();
 		
 		// hard-coded hidden input fields to be bind by javascript
 		$inputFields = array (
 				'<input type="hidden" name="' . LookUpTripsForm::FIELD_USER_ID . '" value="' . $user->getId () . '"/>',
 				'<input type="hidden" name="' . LookUpTripsForm::FIELD_START_COORD . '" />',
 				'<input type="hidden" name="' . LookUpTripsForm::FIELD_END_COORD . '" />',
-				'<input type="button" name="' . LookUpTripsForm::BUTTON . '" value="' . ILabels::LOOKUP_BUTTON . '"/>' 
+				'<input type="button" name="' . LookUpTripsForm::BUTTON . '" value="' . $translator->translate(ILabels::LOOKUP_BUTTON) . '"/>' 
 		);
 		
 		// GET method -> only return the input form

@@ -133,7 +133,7 @@ class LookUpTripsForm {
    * @Annotation\Type("Zend\Form\Element\Number")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
-   * @Annotation\Options({"label":"Maximum distance:"})
+   * @Annotation\Options({"label":"Maximum distance (km):"})
    */
   public $maxDistance;   
  

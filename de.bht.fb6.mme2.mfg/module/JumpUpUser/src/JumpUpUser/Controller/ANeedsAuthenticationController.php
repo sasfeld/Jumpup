@@ -24,6 +24,7 @@ abstract class ANeedsAuthenticationController extends AbstractActionController i
 	private $authservice;
 	protected $em;
 	private $userService;
+	private $translator;
 	
 	/**
      *
@@ -110,6 +111,17 @@ abstract class ANeedsAuthenticationController extends AbstractActionController i
     		$this->userService = ServicesUtil::getUserUtil($sm);
     	}
     	return $this->userService;
+    }
+    
+    /**
+     * Get the Translator by the Service Manager.
+     */
+    protected function _getTranslator() {
+    	if(null == $this->translator) {
+    		$sm = $this->getServiceLocator();
+    		$this->translator = \Application\Util\ServicesUtil::getTranslatorService($sm);
+    	}
+    	return $this->translator;
     }
     
 }

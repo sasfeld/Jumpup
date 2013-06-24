@@ -1,7 +1,7 @@
 <?php
 use JumpUpUser\Util\Messages\IViewMessages;
 ?>
-<h1><?php echo $this->translate("Profile") ?></h1>
+<h2><?php echo $this->translate(IViewMessages::PROFILE_SHOW_TITLE); ?></h2>
 
 <div id="profile_subnav">
 	<ul>		
@@ -24,7 +24,7 @@ use JumpUpUser\Util\Messages\IViewMessages;
 <?php 
 if(null !== $this->messages) {
 	foreach ($this->messages as $message) {
-		echo "<p>".$message."</p>";
+		echo "<p>".$this->translate($message)."</p>";
 	}
 }
 ?>

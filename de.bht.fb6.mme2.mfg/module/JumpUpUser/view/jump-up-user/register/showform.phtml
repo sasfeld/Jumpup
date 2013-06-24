@@ -1,4 +1,4 @@
-<h1><?php echo $this->translate("Registration") ?></h1>
+<h2><?php echo $this->translate(\JumpUpUser\Util\Messages::REGISTER_TITLE); ?></h2>
 
 <div class="form registration">
 <?php 
@@ -8,7 +8,6 @@
      * what a nice view. we just delegate the form to our view helper object.
      * See Application\View\Helper\RenderForm.php
      */
-    use JumpUpUser\Forms\RegistrationForm;
     if(null !== $this->form) { // form is exported by the controller
         $form = $this->form;   
          echo $this->renderForm($form); 

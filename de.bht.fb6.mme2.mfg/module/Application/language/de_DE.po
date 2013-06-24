@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-04-30 17:36+0100\n"
+"PO-Revision-Date: 2013-06-24 18:10+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -379,3 +379,103 @@ msgstr "Abfahrtsdatum:"
 #: JumpUpDriver/src/JumpUpDriver/Forms/TripForm
 msgid "Price:"
 msgstr "Preis:"
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "Your trip was successfully added. You will find in your overview page."
+msgstr ""
+"Deine Fahrt wurde erfolgreich hinzugefügt. Die Übersicht findest du auf der "
+"Buchungsseite."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"Something went wrong. You are currently not logged in. Please login again, "
+"be sure to activate cookies and try it again."
+msgstr ""
+"Irgendwas ist schiefgelaufen. Du bist gerade nicht eingelogged. Bitte logge "
+"dich wieder ein und versichere, dass du Cookies deaktiviert hast."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"You haven't configured any vehicles yet. Please create a vehicle so the "
+"system can offer price recommendations."
+msgstr ""
+"Du hast noch keine Fahrzeuge konfiguriert. Bitte lege ein neues "
+"Fahrzeugprofil an, damit das System die Fahrpreise automatisch berechnen "
+"kann."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"There are active bookings within the trip. You can't delete the trip. Please "
+"try to cancel the bookings before."
+msgstr ""
+"Für deine Fahrt gibt es noch aktive Buchungen. Du kannst die Fahrt daher "
+"nicht löschen. Bitte versuche, die Buchungen ggf. zu löschen und wiederhole "
+"dann den Vorgang."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "The trip was successfully deleted."
+msgstr "Die Fahrt wurde erfolgreich gelöscht."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "Add trip"
+msgstr "Fahrt hinzufügen"
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "The given vehicle doesn't contain as much seats as you want to offer."
+msgstr ""
+"Das angegebene Fahrzeug hat nicht so viele Plätze wie du anbieten möchtest."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "Your vehicle was successfully added."
+msgstr "Dein Fahrzeugprofil wurde erfolgreich ins System eingetragen."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "Your vehicle was successfully edited."
+msgstr "Dein Fahrzeugprofil wurde erfolgreich geändert."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "Your vehicle was successfully removed."
+msgstr "Dein Fahrzeugprofil wurde erfolgreich gelöscht."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"Something went wrong. The way you tried to use this function doesn't work."
+msgstr ""
+"Irgendwas ist schief gelaufen. Die Art und Weise, wie du diese Funktion "
+"aufrufst, funktioniert nicht."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"We are sorry, but the vehicle is used in a trip. You can't remove it until "
+"the trip is expired."
+msgstr ""
+"Es tut uns leid, aber dein Fahrzeug-Profil wird in einer Fahrt verwendet. Du "
+"kannst es daher nicht entfernen, bis die Fahrt abgelaufen ist."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"Internal error: illegal request. If the error occurs again, please inform "
+"the support."
+msgstr ""
+"Interner Fehler: illegaler Request. Wenn der Fehler erneut auftaucht, "
+"informiere bitte den Support."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"Internal error: No booking instance. Please inform the support if the error "
+"occurs again."
+msgstr ""
+"Interner Fehler: konnte die Buchung nicht initialisieren. Bitte informiere "
+"den Support, wenn der Fehler erneut auftaucht."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "No matching vehicle found."
+msgstr "Es konnte kein passendes Fahrzeug-Profil gefunden werden."
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
+msgid ""
+"The passenger recommended the following price. You can now apply, deny or "
+"make another decision."
+msgstr ""
+"Dein Mitfahrer hat den nachfolgenden Preis vorgeschlagen. Du kannst diesen "
+"nun bestätigen, ablehnen oder ein Gegenangebot machen."

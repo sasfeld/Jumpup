@@ -11,8 +11,8 @@ if (null !== $this->messages) {
 ?>
 </div>
 
-<div class="content" id="add-trip">
-	<div id="form">
+<div class="content row" id="add-trip">
+	<div id="form" class="span2">
 <?php
 if (null !== $this->form) {
 	// do a rendering process
@@ -28,10 +28,9 @@ if (null !== $this->form) {
 
 	<div id="recommended_price"></div>
 
-	<div id="map_div">
+	<div id="map_div" class="span8">
       <?php // ..:: the map will be rendered here ::.. ?>
       <div id="map_canvas"></div>
 		<div id="geocoding"></div>
 	</div>
-</div>
 </div>

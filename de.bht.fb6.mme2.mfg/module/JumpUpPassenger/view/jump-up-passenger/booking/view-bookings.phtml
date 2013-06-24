@@ -4,20 +4,20 @@ use Application\View\Helper\RenderBookings;
 ?>
 
 
-<h1><?php echo $this->translate("View bookings") ?></h1>
+<h1><?php echo $this->translate(\JumpUpPassenger\Util\Messages\IViewMessages::VIEW_BOOKINGS_TITLE); ?></h1>
 
 <div id="passenger_hints">
 <?php 
 if(null !== $this->messages) {
 	foreach ($this->messages as $message) {
-		echo "<p>".$message."</p>";
+		echo "<p>".$this->translate(message)."</p>";
 	}
 }
 
 ?>
 </div>
 
-<div id="passenger_view_bookings">
+<div class="content">
 <?php
 
 if (null !== $this->bookings && (0 < sizeof ( $this->bookings ))) {

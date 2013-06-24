@@ -1,4 +1,4 @@
-<h2>Add trip</h2>
+<h2><?php echo $this->translate(JumpUpDriver\Util\Messages\IViewMessages::ADD_TRIP_STEP1); ?></h2>
 
 <div id="addtrip_hints">
 <?php 
@@ -34,8 +34,6 @@ if(null !== $this->messages) {
     <div id="map_div">
       <?php // ..:: the map will be rendered here ::.. ?>
       <div id="map_canvas"></div>
-      <div id="textbox">
-       Drag directions and click the map to geocode.<br>
        <div id="geocoding"> </div>
       </div>
 </div>

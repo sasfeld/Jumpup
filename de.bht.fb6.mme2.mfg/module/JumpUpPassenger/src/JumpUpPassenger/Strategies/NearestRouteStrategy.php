@@ -21,8 +21,9 @@ use JumpUpPassenger\Filter\PassengerHimselfFilter;
  * @since      07.05.2013
  */
 class NearestRouteStrategy implements  IFindTripsStrategy {
-	protected $filter;
+	protected $filter;	
 	
+
 	public function __construct() {
 		// set filters
 		$this->filter = new PassengersLocationFilter(new DateFilter(new PriceFilter(new AlreadyBookedFilter(new MaxSeatsFilter(new PassengerHimselfFilter())))));
@@ -39,5 +40,6 @@ class NearestRouteStrategy implements  IFindTripsStrategy {
 		$resultingTrips = $this->filter->filter($container);
 		return $resultingTrips;				
 	}
+	
 	
 }

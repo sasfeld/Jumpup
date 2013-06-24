@@ -96,8 +96,20 @@ class Trip {
    * @var int
    */
   private $priceRecommendationForPassenger;
+  /**
+   * This is not an entity field. It's only for the client so we can offer the passenger's location distance to the trip.
+   * @var int
+   */
+  private $distanceFromPassengersLocation;
+  /**
+   * This is not an entity field. It's only for the client so we can offer the passenger's destination distance to the trip.
+   * @var int
+   */
+  private $distanceFromPassengersDestination;
    
   
+
+
 
 public function __construct() {
     // initialize bookings
@@ -136,6 +148,34 @@ public function __construct() {
    
   public function setVehicle(\JumpUpDriver\Models\Vehicle $vehicle) {
     $this->vehicle = $vehicle;
+  }
+  
+  /**
+   * @return the $distanceFromPassengersLocation
+   */
+  public function getDistanceFromPassengersLocation() {
+  	return $this->distanceFromPassengersLocation;
+  }
+  
+  /**
+   * @return the $distanceFromPassengersDestination
+   */
+  public function getDistanceFromPassengersDestination() {
+  	return $this->distanceFromPassengersDestination;
+  }
+  
+  /**
+   * @param number $distanceFromPassengersLocation
+   */
+  public function setDistanceFromPassengersLocation($distanceFromPassengersLocation) {
+  	$this->distanceFromPassengersLocation = $distanceFromPassengersLocation;
+  }
+  
+  /**
+   * @param number $distanceFromPassengersDestination
+   */
+  public function setDistanceFromPassengersDestination($distanceFromPassengersDestination) {
+  	$this->distanceFromPassengersDestination = $distanceFromPassengersDestination;
   }
    
   /**
@@ -392,6 +432,8 @@ public function __construct() {
         'numberBookings' => $this->getNumberOfBookings(),
         'priceRecommendation' => $this->getPriceRecommendationForPassenger(), 
     	'vehicle' => $this->getVehicle()->toJson(),
+    	'distanceFromPassengersLocation' => $this->getDistanceFromPassengersLocation(),
+    	'distanceFromPassengersDestination' => $this->getDistanceFromPassengersDestination(),
     );
   }
    

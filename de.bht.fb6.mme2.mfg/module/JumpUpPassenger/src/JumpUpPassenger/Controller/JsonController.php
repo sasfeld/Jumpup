@@ -142,6 +142,7 @@ class JsonController extends AbstractRestfulController {
 				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger, $maxDistance );
 				if (null !== $matchedTrips && sizeof($matchedTrips) != 0) {
 				    $this->_calculatePriceForPassenger($startCoord, $endCoord, $matchedTrips);
+				    
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );
 					$jsonObj = \Zend\Json\Json::encode ( $tripWrapper, true );

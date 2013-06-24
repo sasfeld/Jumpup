@@ -25,6 +25,15 @@ class PassengersLocationFilter extends ATripFilter {
 	 */
 	const EQUATOR_RADIUS = 6378.137;
 	
+	/**
+	 * store the last distance of the given point in _isPointNearRoute which was within the tolerance.
+	 */
+	protected $lastDistanceNearRoute;
+	/**
+	 * store the very last distance of the given point in _isPointNearRoute which was within the tolerance.
+	 */
+	protected $veryLastDistanceNearRoute;
+	
 	
 	/**
 	 * Construct a new PassengersLocationFilter..
@@ -46,6 +55,8 @@ class PassengersLocationFilter extends ATripFilter {
 		$filteredTrips = array();		
 	
 		foreach ($applyTrips as $trip) {
+			$this->veryLastDistanceNearRoute = null;
+			$this->lastDistanceNearRoute = null;
 			$passengerLocation = GmapCoordUtil::toLatLng($tripsContainer->getStartCoord());
 			$passengersDestination = GmapCoordUtil::toLatLng($tripsContainer->getEndCoord());			
 			$driversLocation = GmapCoordUtil::toLatLng($trip->getStartCoord());
@@ -60,6 +71,25 @@ class PassengersLocationFilter extends ATripFilter {
 			 */
 			if (($distanceLocation < $tripsContainer->getMaxDistance() || $this->_isPointNearRoute($passengerLocation, $trip->getOverviewPath(), $tripsContainer->getMaxDistance())) && ($distanceDestination < $tripsContainer->getMaxDistance()  || $this->_isPointNearRoute($passengersDestination, $trip->getOverviewPath(), $tripsContainer->getMaxDistance()))) {
 				array_push($filteredTrips, $trip);
+				
+				// add distances as properties
+				$setLoc = 0;
+				$setDest = 0;
+				if($distanceLocation < $tripsContainer->getMaxDistance()) {
+					$setLoc = $distanceLocation;
+				}
+				else {
+					$setLoc = $this->lastDistanceNearRoute;
+				}
+				
+				if($distanceDestination < $tripsContainer->getMaxDistance()) {
+					$setDest = $distanceDestination;
+				}
+				else {
+					$setLoc = $this->veryLastDistanceNearRoute;
+				}
+				
+				
 			}
 		}
 		return $filteredTrips;
@@ -92,6 +122,12 @@ class PassengersLocationFilter extends ATripFilter {
 		foreach ($pathLatLngArr as $singleWaypoint) {
 			$distance = GmapCoordUtil::calculateDistance($passengerPoint, $singleWaypoint);
 			if($distance < $maxDistance) {
+				if(null === $this->lastDistanceNearRoute) {
+					$this->lastDistanceNearRoute = $distance;
+				}
+				else if(null === $this->veryLastDistanceNearRoute) {
+					$this->veryLastDistanceNearRoute = $distance;
+				}
 				return true;
 			}
 		}

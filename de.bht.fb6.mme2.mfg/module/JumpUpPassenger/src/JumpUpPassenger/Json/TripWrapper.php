@@ -5,8 +5,12 @@ class TripWrapper {
     const FIELD_NUMBER_TRIPS = "numberTrips";
     const FIELD_TRIPS = "trips";
     protected $trips;
+    protected $distanceLocationToTrip;
+    protected $distanceDestinationToTrip;
     
-    public function __construct() {
+ 
+
+	public function __construct() {
         $this->trips = array();
     }
     
@@ -17,6 +21,8 @@ class TripWrapper {
     public function setTrips(array $trips) {
         $this->trips  = $trips;
     }
+    
+  
     
     public function toJson() {
      $jsonArr = array();

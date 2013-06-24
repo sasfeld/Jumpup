@@ -1,4 +1,4 @@
-<?php 
+<?php
 use JumpUpPassenger\Util\Messages\IControllerMessages;
 use Application\View\Helper\RenderBookings;
 ?>
@@ -7,24 +7,23 @@ use Application\View\Helper\RenderBookings;
 <h2><?php echo $this->translate(\JumpUpPassenger\Util\Messages\IViewMessages::VIEW_BOOKINGS_TITLE); ?></h2>
 
 <div id="passenger_hints">
-<?php 
-if(null !== $this->messages) {
-	foreach ($this->messages as $message) {
-		echo "<p>".$this->translate(message)."</p>";
+<?php
+if (null !== $this->messages) {
+	foreach ( $this->messages as $message ) {
+		echo "<p>" . $this->translate ( message ) . "</p>";
 	}
 }
 
 ?>
 </div>
 
-<div class="content">
+<div class="content" id="view-bookings">
 <?php
 
 if (null !== $this->bookings && (0 < sizeof ( $this->bookings ))) {
 	echo '<div id="accordion">'; // start of accordion
-	foreach ( $this->bookings as $booking ) {	
-		RenderBookings::renderBookingForPassenger($booking, $this);
-		
+	foreach ( $this->bookings as $booking ) {
+		RenderBookings::renderBookingForPassenger ( $booking, $this );
 	}
 	echo "</div>"; // end of accordion
 } else { // no bookings done

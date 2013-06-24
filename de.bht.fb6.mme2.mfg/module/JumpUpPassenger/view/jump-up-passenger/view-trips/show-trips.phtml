@@ -1,17 +1,19 @@
 <h2><?php echo $this->translate(\JumpUpPassenger\Util\Messages\IViewMessages::SHOW_TRIPS_TITLE); ?></h2>
 
-<div id="form">
+<div class="content" id="show-trips">
+	<div id="form">
 <?php
-    if(null !== $this->matchedTrips) {
-        $matchedTrips = $this->matchedTrips;
+if (null !== $this->matchedTrips) {
+	$matchedTrips = $this->matchedTrips;
+	
+	foreach ( $matchedTrips as $matchedTrip ) {
+		echo $matchedTrip . "<br />";
+		// We need to call or inform our map controller in javascript from here....
+	}
+}
 
-        foreach ($matchedTrips as $matchedTrip) {
-            echo $matchedTrip . "<br />"; 
-            // We need to call or inform our map controller in javascript from here....
-        }        
-    }
-  
 ?>
+</div>
 </div>
 
 

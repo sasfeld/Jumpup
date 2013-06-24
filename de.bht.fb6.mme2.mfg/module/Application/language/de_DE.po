@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 20:15+0100\n"
+"PO-Revision-Date: 2013-06-24 20:17+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -579,6 +579,10 @@ msgstr "Der Fahrer hat bisher kein Fahrzeugbild hochgeladen."
 #: JumpUpDriver\Util\Messages\IViewMessages
 msgid "Add vehicle information"
 msgstr "Fahrzeugprofil hinzufügen"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "List vehicle information"
+msgstr "Fahrzeugprofile auflisten"
 
 #: JumpUpDriver\Forms\TripForm
 msgid "Trip date:"

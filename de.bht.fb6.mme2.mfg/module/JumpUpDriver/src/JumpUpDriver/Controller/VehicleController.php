@@ -286,7 +286,7 @@ class VehicleController extends ANeedsAuthenticationController {
 	 * @return boolean true if the vehicle is contained in any trip.
 	 */
 	protected function _isContainedInTrip (Vehicle $vehicle) {
-		if(null !== $vehicle->getIntrips() && (sizeof($vehicle->getIntrips() > 0))) {
+		if(null !== $vehicle->getIntrips() && (sizeof($vehicle->getIntrips()) > 0)) {
 			return true;
 		} 
 		return false;

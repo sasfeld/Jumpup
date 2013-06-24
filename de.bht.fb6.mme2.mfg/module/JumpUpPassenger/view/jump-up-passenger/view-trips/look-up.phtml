@@ -1,36 +1,34 @@
 <h2><?php echo $this->translate(\JumpUpPassenger\Util\Messages\IViewMessages::LOOK_UP_TITLE); ?></h2>
 
-<div id="form">
+<div class="row">
+	<div id="form" class="span3">
 <?php
-    if(null != $this->messages) {
-        foreach ($this->messages as $message) {
-            echo $this->translate($message) . "<br />";
-        }    
-    }
-    
-    if(null !== $this->form) {
-        // do a rendering process
-        $form = $this->form;
-        $fields = $this->inputFields;
-        $renderingString = $this->renderForm()->startRendering($form)
-                              ->appendFields($fields)
-                              ->stopRendering($form);
-	    echo $renderingString;       
-    } 
+if (null != $this->messages) {
+	foreach ( $this->messages as $message ) {
+		echo $this->translate ( $message ) . "<br />";
+	}
+}
+
+if (null !== $this->form) {
+	// do a rendering process
+	$form = $this->form;
+	$fields = $this->inputFields;
+	$renderingString = $this->renderForm ()->startRendering ( $form )->appendFields ( $fields )->stopRendering ( $form );
+	echo $renderingString;
+}
 ?>
 </div>
 
-<div id="map_div">
+	<div id="map_div" class="span5">
       <?php // ..:: the map will be rendered here ::.. ?>
-      <div id="map_canvas"></div>     
-</div>
+      <div id="map_canvas"></div>
+	</div>
 
-<?php 
+<?php
 /*
  * leave the following div empty! It will be filled via jquery.
  */
 ?>
-<div id="accordion" class="look-up-accordion">	
+<div id="accordion" class="span5 look-up-accordion"></div>
 </div>
-
 

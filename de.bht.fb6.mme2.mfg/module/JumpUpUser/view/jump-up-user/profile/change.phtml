@@ -1,10 +1,10 @@
-<h1><?php echo $this->translate("Change profile") ?></h1>
+<h2><?php echo $this->translate(JumpUpUser\Util\Messages\IViewMessages::PROFILE_CHANGE_TITLE) ?></h2>
 
 <div id="changeprofile_hints">
 <?php 
 if(null !== $this->messages) {
 	foreach ($this->messages as $message) {
-		echo "<p>".$message."</p>";
+		echo "<p>".$this->translate($message)."</p>";
 	}
 }
 ?>

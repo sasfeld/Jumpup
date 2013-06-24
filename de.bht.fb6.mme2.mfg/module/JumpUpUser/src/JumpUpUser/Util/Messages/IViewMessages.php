@@ -28,6 +28,36 @@ interface IViewMessages {
 	/*
 	 * ..:::::::::::::::::::::::::::::::::::::..
 	 */
+	/*
+	 * ..:: used in view\auth\login.phtml ::..
+	 */
+	const LOGIN_TITLE = "Login";
+	/*
+	 * ..:::::::::::::::::::::::::::::::::::::..
+	 */
+	/*
+	 * ..:: used in view\profile\*.phtml ::..
+	 */
+	const PROFILE_CHANGE_TITLE = "Edit profile";
+	const PROFILE_SHOW_TITLE = "Show profile";
+	/*
+	 * ..:::::::::::::::::::::::::::::::::::::..
+	 */
+	/*
+	 * ..:: used in view\register\*.phtml ::..
+	 */
+	const REGISTER_CONFIRM_TITLE = "Confirm registration";
+	const REGISTER_TITLE = "Registration";
+	/*
+	 * ..:::::::::::::::::::::::::::::::::::::..
+	 */
+	/*
+	 * ..:: used in view\success\*.phtml ::..
+	 */
+	const SUCCESS_TITLE = "Success";
+	/*
+	 * ..:::::::::::::::::::::::::::::::::::::..
+	 */
 }
 
 ?>

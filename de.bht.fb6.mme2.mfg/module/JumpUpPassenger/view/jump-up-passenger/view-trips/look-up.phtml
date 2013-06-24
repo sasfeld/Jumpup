@@ -1,10 +1,10 @@
-<h2>Find trips</h2>
+<h2><?php echo $this->translate(\JumpUpPassenger\Util\Messages\IViewMessages::LOOK_UP_TITLE); ?></h2>
 
 <div id="form">
 <?php
     if(null != $this->messages) {
         foreach ($this->messages as $message) {
-            echo $message . "<br />";
+            echo $this->translate($message) . "<br />";
         }    
     }
     
@@ -16,7 +16,6 @@
                               ->appendFields($fields)
                               ->stopRendering($form);
 	    echo $renderingString;       
-	    // @TODO autocompletion for users inputs start and end location -> binding of gmap coordinates on the hidden input fields
     } 
 ?>
 </div>
@@ -31,7 +30,7 @@
  * leave the following div empty! It will be filled via jquery.
  */
 ?>
-<div id="accordion">	
+<div id="accordion" class="look-up-accordion">	
 </div>
 
 

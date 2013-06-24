@@ -57,4 +57,32 @@ interface IViewMessages {
 	/*
 	 * ..::::::::::::::::::::::::::::::::::::::::::::::::::..
 	*/
+	/* ..:: used in view\add-trip\step1.phtml ::../
+	 *
+	*/
+	const ADD_TRIP_STEP1 = "Add trip";
+	/* ..:::::::::::::::::::::::::::::::::::::::../
+	 *
+	*/
+	/* ..:: used in view\vehicle\add.phtml ::../
+	 *
+	*/
+	const VEHICLE_ADD = "Add vehicle information";
+	/* ..:::::::::::::::::::::::::::::::::::::::../
+	 *
+	*/
+	/* ..:: used in view\vehicle\edit.phtml ::../
+	 *
+	*/
+	const VEHICLE_EDIT = "Edit vehicle information";
+	/* ..:::::::::::::::::::::::::::::::::::::::../
+	 *
+	*/
+	/* ..:: used in view\vehicle\list.phtml ::../
+	 *
+	*/
+	const VEHICLE_LIST = "List vehicle information";
+	/* ..:::::::::::::::::::::::::::::::::::::::../
+	 *
+	*/
 }

@@ -1,11 +1,11 @@
-<h1><?php echo $this->translate("Add vehicle") ?></h1>
+<h1><?php echo $this->translate(\JumpUpDriver\Util\Messages\IViewMessages::VEHICLE_ADD); ?></h1>
 
 <div class="hint">
   <?php 
     // show infoMessages if possible
     if(null !== $this->infoMessages && is_array($this->infoMessages)) {
       foreach ($this->infoMessages as $infoMessage) {
-        echo "<p>".$infoMessage."</p>";
+        echo "<p>".$this->translate($infoMessage)."</p>";
       }
      
     }
@@ -22,7 +22,6 @@
      * what a nice view. we just delegate the form to our view helper object.
      * See Application\View\Helper\RenderForm.php
      */
-    use JumpUpUser\Forms\RegistrationForm;
     if(null !== $this->form) { // form is exported by the controller
         $form = $this->form;   
          echo $this->renderForm($form); 

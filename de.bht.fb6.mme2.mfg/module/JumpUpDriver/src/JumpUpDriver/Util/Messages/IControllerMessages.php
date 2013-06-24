@@ -23,7 +23,7 @@ interface IControllerMessages {
     const FATAL_ERROR_NOT_AUTHENTIFICATED = "Something went wrong. You are currently not logged in. Please login again, be sure to activate cookies and try it again.";  
     const INFO_NO_VEHICLES = "You haven't configured any vehicles yet. Please create a vehicle so the system can offer price recommendations.";
     const ERROR_DELETE_TRIP_ACTIVE_BOOKINGS = "There are active bookings within the trip. You can't delete the trip. Please try to cancel the bookings before.";
-    const SUCCESS_DELETE_TRIP = "The trip was successfully deleted!";
+    const SUCCESS_DELETE_TRIP = "The trip was successfully deleted.";
     const ADD_TRIP_SUBMIT = "Add trip";
     const ADD_TRIP_ERROR_MAX_SEATS = "The given vehicle doesn't contain as much seats as you want to offer.";
     /*
@@ -45,7 +45,7 @@ interface IControllerMessages {
      * ..:: used in JumpUpDriver\Controller\BookingController. ::..
      */
     const ERROR_BOOKING_REQUEST = "Internal error: illegal request. If the error occurs again, please inform the support.";
-    const ERROR_NO_BOOKING = "Internal error: No booking instance.";
+    const ERROR_NO_BOOKING = "Internal error: No booking instance. Please inform the support if the error occurs again.";
     const VEHICLE_NOT_FOUND = "No matching vehicle found.";
     const VEHICLE_NO_PARAMETER = "Internal error: illegal request. If the error occurs again, please inform the support.";
     /*

@@ -70,7 +70,7 @@ class PassengersLocationFilter extends ATripFilter {
 			 * passenger's destination must also be near to the driver's destination OR any of his route waypoints.
 			 */
 			if (($distanceLocation < $tripsContainer->getMaxDistance() || $this->_isPointNearRoute($passengerLocation, $trip->getOverviewPath(), $tripsContainer->getMaxDistance())) && ($distanceDestination < $tripsContainer->getMaxDistance()  || $this->_isPointNearRoute($passengersDestination, $trip->getOverviewPath(), $tripsContainer->getMaxDistance()))) {
-				array_push($filteredTrips, $trip);
+				
 				
 				// add distances as properties
 				$setLoc = 0;
@@ -86,9 +86,12 @@ class PassengersLocationFilter extends ATripFilter {
 					$setDest = $distanceDestination;
 				}
 				else {
-					$setLoc = $this->veryLastDistanceNearRoute;
+					$setDest = $this->veryLastDistanceNearRoute;
 				}
 				
+				$trip->setDistanceFromPassengersLocation($setLoc);
+				$trip->setDistanceFromPassengersDestination($setDest);
+				array_push($filteredTrips, $trip);
 				
 			}
 		}
@@ -123,9 +126,11 @@ class PassengersLocationFilter extends ATripFilter {
 			$distance = GmapCoordUtil::calculateDistance($passengerPoint, $singleWaypoint);
 			if($distance < $maxDistance) {
 				if(null === $this->lastDistanceNearRoute) {
+					// location
 					$this->lastDistanceNearRoute = $distance;
 				}
 				else if(null === $this->veryLastDistanceNearRoute) {
+					// destination
 					$this->veryLastDistanceNearRoute = $distance;
 				}
 				return true;

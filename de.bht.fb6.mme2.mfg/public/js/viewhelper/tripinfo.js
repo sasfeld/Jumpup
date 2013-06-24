@@ -241,11 +241,16 @@ define([ "jquery" ], (function($) {
 		var vehicle = trip.vehicle;
 		this.idMap[id] = this.length;
 		this.idMapReversed[this.length++] = id;
+		var distFromPassLoc = Math.round(trip.distanceFromPassengersLocation);
+		var distFromPassDest = Math.round(trip.distanceFromPassengersDestination);
 
 		this.addHeadline("<span class=\"highlighting\">" + startPoint
 				+ "</span> to <span class=\"highlighting\">" + endPoint + "</span>");
-		var bodyStr = "<ul>" + "<li class=\"drivertooltip\" id=\"" + id
-				+ "\"><span class=\"ui-accordion-content-key\">Driver:</span>" + driver.prename + " " + driver.lastname
+		var bodyStr = "<ul>" 
+				+ "<li><span class=\"ui-accordion-content-key\">Location distance:</span>" + distFromPassLoc + "</li>"
+				+ "<li><span class=\"ui-accordion-content-key\">Destination distance:</span>" + distFromPassDest + "</li>"
+				+ "<li class=\"drivertooltip\" id=\"" + id + '\">'
+				+ "<span class=\"ui-accordion-content-key\">Driver:</span>" + driver.prename + " " + driver.lastname
 				+ "</li>" + "<li><span class=\"ui-accordion-content-key\">Start date:</span>" + startDate + "</li>"
 				+ "<li><span class=\"ui-accordion-content-key\">Overall price:</span>" + driversPrice + "</li>"
 				+ "<li><span class=\"ui-accordion-content-key\">Current bookings:</span>" + numberBookings + "/"

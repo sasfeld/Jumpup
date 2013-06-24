@@ -10,6 +10,11 @@ use Zend\View\Model\JsonModel;
 use Zend\Mvc\Controller\AbstractRestfulController;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use JumpUpUser\Util\IEntitiesStore;
+use Application\Util\ServicesUtil;
+use JumpUpDriver\Util\Messages\JsonMessages;
+use JumpUpUser\Models\User;
+use Zend\I18n\Translator\Translator;
 
 /**
  * 
@@ -60,7 +65,12 @@ class JsonController extends AbstractRestfulController {
                 $vehicleWrapper = new VehicleJsonWrapper();
                 $vehicles = $vehicleRepo->findBy(array('id' => $ownerId));
                 if(null !== $vehicles) { 
-                    $vehicleWrapper->setVehicles($vehicles);                  
+                	$driver = $this->_getUser( $ownerId);
+                    $vehicleWrapper->setVehicles($vehicles);  
+                    $translator = ServicesUtil::getTranslatorService($this->getServiceLocator());
+                    $this->_setLocale($driver, $translator);
+                    $frontendMessages = JsonMessages::getJson($translator);
+                    $vehicleWrapper->setMessages($frontendMessages);                
                     $jsonObj = \Zend\Json\Json::encode($vehicleWrapper, true); 
                                
                                      
@@ -74,6 +84,25 @@ class JsonController extends AbstractRestfulController {
        $this->getResponse()->setStatusCode(400); // bad request
        return new JsonModel(array ("badRequest" => true));
          
+    }
+    
+    protected function _getUser( $userId) {
+    	$userRepo = $this->em->getRepository(IEntitiesStore::USER);
+    	$user = $userRepo->findOneBy(array('id' => $userId));
+    	return $user;
+    }
+    
+    /**
+     * Set the user's locale if available.
+     * @param User $user
+     * @param Translator $translator
+     * @return nothing, will be set on the translator immediatly
+     */
+    protected function _setLocale(User $user, Translator $translator) {
+    	$locale = $user->getLocale();
+    	if(null !== $locale) {
+    		$translator->setLocale($locale);
+    	}
     }
    
 	/**

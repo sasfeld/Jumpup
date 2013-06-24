@@ -201,7 +201,7 @@ define([ "jquery" ], (function($) {
 		this.tooltipItems += prefix + "li[class=vehicletooltip][id=" + id + "]";
 		this.tooltipTexts[id] = "<p>"+messages.leg_space+": " + vehicle.legspace + "</p>" + "<p>"+messages.wastage+": " + vehicle.wastage
 				+ "</p>" + "<p>"+messages.avg_speed+": " + vehicle.avgspeed + "</p>" + "<p>"+messages.number_seats+": "
-				+ vehicle.numberseats + "</p>" + "<p>"+messages.number_seats+": " + vehicle.aircondition + "</p>"
+				+ vehicle.numberseats + "</p>" + "<p>"+messages.air_condition+": " + vehicle.aircondition + "</p>"
 				+ "<p>"+messages.actual_wheel+": " + vehicle.actualwheel + "</p>" + "<p><img src=\"" + vehicle.pathPic
 				+ "\" /></p>";
 		;
@@ -253,7 +253,7 @@ define([ "jquery" ], (function($) {
 		var distFromPassDest = Math.round(trip.distanceFromPassengersDestination);
 
 		this.addHeadline("<span class=\"highlighting\">" + startPoint
-				+ "</span> to <span class=\"highlighting\">" + endPoint + "</span>");
+				+ "</span> "+messages.to+" <span class=\"highlighting\">" + endPoint + "</span>");
 		var bodyStr = "<ul>" 
 				+ "<li><span class=\"ui-accordion-content-key\">"+messages.location_distance+":</span>" + distFromPassLoc + "</li>"
 				+ "<li><span class=\"ui-accordion-content-key\">"+messages.destination_distance+":</span>" + distFromPassDest + "</li>"

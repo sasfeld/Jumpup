@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 21:38+0100\n"
+"PO-Revision-Date: 2013-06-24 23:48+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -891,3 +891,39 @@ msgstr "Bisher hat niemand diese Fahrt gebucht."
 #: Application\Util\Messages\IControllerMessages
 msgid "You're prefered language was successfully changed."
 msgstr "Deine bevorzugte Sprache wurde erfolgreich gesetzt."
+
+#: JumpUpPassenger\Util\Messages\JsonMessages
+msgid "Location distance"
+msgstr "Standort-Distanz"
+
+#: JumpUpPassenger\Util\Messages\JsonMessages
+msgid "Destination distance"
+msgstr "Zielort-Distanz"
+
+#: JumpUpPassenger\Util\Messages\JsonMessages
+msgid "Driver"
+msgstr "Fahrer"
+
+#: JumpUpPassenger\Util\Messages\JsonMessages
+msgid "Start date"
+msgstr "Abfahrtsdatum"
+
+#: JumpUpPassenger\Util\Messages\JsonMessages
+msgid "Overall price"
+msgstr "Gesamtpreis"
+
+#: JumpUpPassenger\Util\Messages\JsonMessages
+msgid "Current bookings"
+msgstr "Aktuelle Buchungen"
+
+#: JumpUpPassenger\Util\Messages\JsonMessages
+msgid "Wastage (l/100km)"
+msgstr "Verbrauch (l/100km)"
+
+#: JumpUpDriver\Util\Messages\JsonMessages
+msgid "The recommended price for your vehicle is"
+msgstr "Der empfohlene Gesamtpreis für dein Fahrzeug beträgt"
+
+#: JumpUpDriver\Util\Messages\JsonMessages
+msgid "euro. Your wastage is"
+msgstr "Euro. Dein Verbrauch beträgt"

@@ -149,7 +149,7 @@ class JsonController extends AbstractRestfulController {
 				    
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );
-					$frontendMessages = JsonMessages::getJson($this->_getTranslator());					
+					$frontendMessages = \JumpUpPassenger\Util\Messages\JsonMessages::getJson($this->_getTranslator());					
 					$tripWrapper->setMessages ( $frontendMessages);
 					$jsonObj = \Zend\Json\Json::encode ( $tripWrapper, true );
 				}

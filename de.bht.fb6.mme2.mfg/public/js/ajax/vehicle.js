@@ -41,6 +41,7 @@ define( [ "jquery" ], ( function($) {
 		// inform gui
 		if ( data.vehicles.length > 0 ) {
 			var vehicle = data.vehicles[ 0 ];
+			var messages = data.messages;
 			console.log( vehicle.wastage );
 			// @TODO integrate wastage calculator			
 			distance = $( REF_ADDTRIP_INPUT_DISTANCE ).val();
@@ -48,8 +49,8 @@ define( [ "jquery" ], ( function($) {
 				var price = Math.round( ( vehicle.wastage / 100 ) * ( distance / 1000 )
 						* PRICE_PER_LITER); // vehicle wastage
 				
-				var text = "The recommended price for your vehicle is " + price
-				+ " euro. Your wastage is " + vehicle.wastage + "l / 100km."; 
+				var text = messages.recommended + " "+ price + " "
+				+ messages.recommended_your + " " + vehicle.wastage + "l / 100km."; 
 				if(tooltipsSet) {
 					_this.options.tooltips.tooltip("destroy");
 				}
@@ -65,6 +66,16 @@ define( [ "jquery" ], ( function($) {
 		// $(REF_VEHICLE_SELECTION).append('<option
 		// value'+data.vehicles[0].id+'>'+data.vehicles[0].brand+'</option>');
 	};
+	
+	/*
+	 * Error-Event method if the ajax request below fails.
+	 */
+	VehicleController.prototype.handleError = function(xhr, ajaxOptions,
+			thrownError) {
+		console.log("TripsController: handleError");
+		console.log(xhr);
+	};
+
 
 	/*
 	 * Fetch the vehicles to a given id.
@@ -78,6 +89,7 @@ define( [ "jquery" ], ( function($) {
 			dataType : 'json',
 			type : "POST",
 			success : this.handleServerResponse,
+			error : this.handleError,
 		} );
 	};
 

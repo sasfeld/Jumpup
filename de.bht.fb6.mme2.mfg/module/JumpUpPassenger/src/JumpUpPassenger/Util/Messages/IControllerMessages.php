@@ -58,6 +58,6 @@ interface IControllerMessages {
      * ..:::::::::::::::::::::::::::::::::..
      */  
     
-    const BOOKING_STATE_DRIVERS_RECOMM = "The driver recommended the following price. You can now accept or deny the booking definitly or make another offer. ";
+    const BOOKING_STATE_DRIVERS_RECOMM = "The driver recommended the following price. You can now accept or deny the booking definitly or make another offer.";
    
 }

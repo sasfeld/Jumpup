@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 20:17+0100\n"
+"PO-Revision-Date: 2013-06-24 20:37+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -647,3 +647,111 @@ msgstr "Ganzjahresreifen"
 #: JumpUpDriver\Forms\VehicleForm
 msgid "Vehicle pic:"
 msgstr "Fahrzeugbild:"
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid "Please fill in all required fields."
+msgstr "Bitte fülle alle benötigten Felder aus."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"Congratulations, you have booked the trip successfully! Please be patient "
+"and wait for the driver to handle the booking. If the driver doesn't accept "
+"your recommended price, he will make another offer. You will be informed via "
+"eMail."
+msgstr ""
+"Herzlichen Glückwunsch, du hast diese Fahrt erfolgreich gebucht! Bitte hab' "
+"ein wenig Geduld und warte auf die Bearbeitung der Buchung durch den Fahrer. "
+"Akzeptiert er deinen empfohlenen Preis nicht, wird er dir ein anderes "
+"Angebot machen. Du wirst per eMail über die weiteren Vorgänge informiert "
+"werden."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"The trip you want to book cannot be booked anymore. Please try to find "
+"another trip."
+msgstr ""
+"Die Fahrt, die du buchen wolltest, ist leider nicht mehr buchbar. Bitte sieh "
+"dich nach alternativen Fahrten um."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"Internal error: No matching trip found. If the error occurs again, please "
+"inform the support."
+msgstr ""
+"Interner Fehler: Fahrt konnte nicht gefunden werden. Wenn der Fehler erneut "
+"auftritt, informiere bitte den Support."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"Interal error: None booking could get fetched from the database. If the "
+"error occurs again, please inform the support."
+msgstr ""
+"Interner Fehler: Buchungs-Instanz konnte nicht gefetched werden. Wenn der "
+"Fehler erneut auftritt, informiere bitte den Support."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid "Internal error: No booking instance."
+msgstr "Interner Fehler: keine Buchungs-Instanz."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"Your cannot book your own trip. Please let other passengers the ability to "
+"book your ride."
+msgstr ""
+"Du kannst deine eigene Fahrt nicht buchen. Bitte lasse den anderen "
+"Mitfahrern die Möglichkeit, deine eigene Fahrt zu buchen."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"You have already booked this trip. Please check your bookings overview here."
+msgstr ""
+"Diese Fahrt hast du bereits gebucht. Bitte überprüfe nachfolgend deine "
+"Buchungen."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"We are sorry but no trips where found for your desires. Please try to apply "
+"other options"
+msgstr ""
+"Es tut uns leid, aber für deine Kriterien wurden keine Fahrten gefunden. "
+"Probiere bitte andere weniger restriktive Optionen auf."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"Your recommendation was sent to the driver. He needs to accept it before you "
+"can really do the trip."
+msgstr ""
+"Deine Empfehlung wurde an den Fahrer gesendet. Er muss sie noch akzeptieren, "
+"bevor es für dich losgehen kann."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid "No bookings done"
+msgstr "Du hast keine Buchungen getätigt."
+
+#: JumpUpPassenger\Util\Messages\IControllerMessages
+msgid ""
+"The driver recommended the following price. You can now accept or deny the "
+"booking definitly or make another offer."
+msgstr ""
+"Der Fahrer hat folgenden Preis empfohlen. Du kannst diesen nun akzeptieren, "
+"definitiv absagen oder ein Gegenangebot machen."
+
+#: JumpUpPassenger\Util\Messages\IViewMessages
+msgid "View bookings"
+msgstr "Buchungen anzeigen"
+
+#: JumpUpPassenger\Util\Messages\IViewMessages
+msgid "Book trip"
+msgstr "Fahrt buchen"
+
+#: JumpUpPassenger\Util\Messages\IViewMessages
+msgid "Booking system error"
+msgstr "Buchungsfehler"
+
+#: JumpUpPassenger\Util\Messages\IViewMessages
+msgid "Look for trips"
+msgstr "Fahrten suchen"
+
+#: JumpUpPassenger\Util\Messages\IViewMessages
+msgid "Show trips"
+msgstr "Fahrten suchen"

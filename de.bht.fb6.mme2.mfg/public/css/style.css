@@ -75,7 +75,7 @@ select {
 #map_div {
 	/*height: 100%;*/
 	margin-bottom: 2em;
-	margin-top: 2em;
+	margin-top: 1.8em;
 }
 
 #map_canvas {
@@ -83,7 +83,7 @@ select {
 	width: 30em;
 	margin: 10px;*/
 	box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.7);
-	min-height: 25em;
+	min-height: 30em;
 	min-width: 30em;
 	/*float: left;*/
 }

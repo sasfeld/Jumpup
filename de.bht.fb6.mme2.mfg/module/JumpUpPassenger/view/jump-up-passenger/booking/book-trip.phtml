@@ -1,14 +1,13 @@
 <h2><?php echo $this->translate(\JumpUpPassenger\Util\Messages\IViewMessages::BOOK_TRIP_TITLE); ?></h2>
 
-<div class="content">
-<?php 
-    if ($this->messages){
-        echo '<ul>';
-        foreach($this->messages as $message)
-        {
-            echo '<li>'.$this->translate($message).'</li>';
-        }
-        echo '</ul>';
-    }
+<div class="content" id="book-trip">
+<?php
+if ($this->messages) {
+	echo '<ul>';
+	foreach ( $this->messages as $message ) {
+		echo '<li>' . $this->translate ( $message ) . '</li>';
+	}
+	echo '</ul>';
+}
 ?>
 </div>

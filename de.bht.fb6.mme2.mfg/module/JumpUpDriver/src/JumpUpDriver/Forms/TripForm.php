@@ -118,7 +118,7 @@ class TripForm {
    * @Annotation\Type("Zend\Form\Element\Date")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
-   * @Annotation\Options({"label":"Date:"})
+   * @Annotation\Options({"label":"Trip date:"})
    */
   public $startDate;
   /**
@@ -127,7 +127,7 @@ class TripForm {
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Attributes({"addtrip_form"})
    * @Annotation\Value({0})
-   * @Annotation\Options({"label":"Price:","attributes":{"size":"5"},"value":0})
+   * @Annotation\Options({"label":"Price (€):","attributes":{"size":"5"},"value":0})
    */
   public $price;  
   /**

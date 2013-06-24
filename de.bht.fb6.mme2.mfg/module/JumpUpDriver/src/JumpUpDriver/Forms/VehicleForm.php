@@ -86,7 +86,7 @@ class VehicleForm {
    * @Annotation\Type("Zend\Form\Element\Number")
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
-   * @Annotation\Options({"label":"Wastage (l / 100km):"})
+   * @Annotation\Options({"label":"Wastage (l/100km):"})
    */
   public $wastage;
   /**
@@ -122,7 +122,7 @@ class VehicleForm {
    * @Annotation\Type("Zend\Form\Element\Radio")
    * @Annotation\Options({
    *          "label":"Actual wheel:",
-   *          "value_options":{"Summer":"Summer", "Winter":"Winter", "Allweather":"All weather"}
+   *          "value_options":{"Summer":"Summer", "Winter":"Winter", "all-seasion tires":"all-seasion tires"}
    * })
    */
   public $actualwheel;

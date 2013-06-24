@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 18:10+0100\n"
+"PO-Revision-Date: 2013-06-24 20:15+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -519,3 +519,127 @@ msgstr "Du hast noch kein Fahrzeugprofil hinzugefügt."
 #: JumpUpDriver\Util\Messages\IViewMessages
 msgid "You havn't uploaded any vehicle pic yet."
 msgstr "Du hast noch kein Fahrzeugbild upgeloadet."
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Actual wheel"
+msgstr "Aktuelle Bereifung"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Air condition"
+msgstr "Klimaanlage"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Leg space"
+msgstr "Beinfreiheit"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Number of seats"
+msgstr "Anzahl der Sitzplätze"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Average speed (km/h)"
+msgstr "Durchschnittsgeschwindigkeit (km/h)"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Wastage (lt/100km)"
+msgstr "Verbrauch (lt/100km)"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Type"
+msgstr "Modell"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Brand"
+msgstr "Marke"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Current pic"
+msgstr "Aktuelles Bild"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Add vehicle"
+msgstr "Fahrzeugprofil hinzufügen"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Edit"
+msgstr "Editieren"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Remove"
+msgstr "Entfernen"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Vehicle information"
+msgstr "Fahrzeuginformationen"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "The driver hasn't uploaded any pic yet."
+msgstr "Der Fahrer hat bisher kein Fahrzeugbild hochgeladen."
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Add vehicle information"
+msgstr "Fahrzeugprofil hinzufügen"
+
+#: JumpUpDriver\Forms\TripForm
+msgid "Trip date:"
+msgstr "Datum der Fahrt:"
+
+#: JumpUpDriver\Forms\TripForm
+msgid "Price (€):"
+msgstr "Preis (€):"
+
+#: JumpUpDriver\Forms\TripForm
+msgid "Number of seats:"
+msgstr "Anzahl der Sitzplätze:"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Brand:"
+msgstr "Marke:"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Type:"
+msgstr "Modell:"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Wastage (l/100km):"
+msgstr "Verbrauch (l/100km):"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Leg space:"
+msgstr "Beinfreiheit:"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Average speed (km/h):"
+msgstr "Durchschnittsgeschwindigkeit (km/h):"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Air condition:"
+msgstr "Klimaanlage:"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "yes"
+msgstr "ja"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "no"
+msgstr "nein"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Actual wheel:"
+msgstr "Aktuelle Bereifung:"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Summer"
+msgstr "Sommer"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Winter"
+msgstr "Winter"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "all-seasion tires"
+msgstr "Ganzjahresreifen"
+
+#: JumpUpDriver\Forms\VehicleForm
+msgid "Vehicle pic:"
+msgstr "Fahrzeugbild:"

@@ -40,8 +40,8 @@ interface IViewMessages {
 	const VEHICLE_LIST_AIR_CONDITION = "Air condition";
 	const VEHICLE_LIST_LEG_SPACE = "Leg space";
 	const VEHICLE_LIST_SEATS = "Number of seats";
-	const VEHICLE_LIST_AVG_SPEED = "Average speed";
-	const VEHICLE_LIST_WASTAGE = "Wastage";
+	const VEHICLE_LIST_AVG_SPEED = "Average speed (km/h)";
+	const VEHICLE_LIST_WASTAGE = "Wastage (lt/100km)";
 	const VEHICLE_LIST_TYPE = "Type";
 	const VEHICLE_LIST_BRAND = "Brand";
 	const VEHICLE_LIST_CURRENT_PIC = "Current pic";

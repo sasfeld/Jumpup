@@ -51,11 +51,14 @@ define(
 				var mapCtrl = _this.options.mapCtrl;
 				// clear map
 				mapCtrl.gmap.removeRoutes();
+				var messages = data.messages;
 				var viewOptions = {
 					"accordion" : $(REF_ACCORDION),
 					"startLatLng" : _this.startLatLng,
 					"endLatLng" : _this.endLatLng,
+					"messages" : messages,
 				};
+				
 				var tripInfoView = new TripInfo(viewOptions, mapCtrl.select);
 
 				if (data.validationFail == true) {
@@ -96,7 +99,8 @@ define(
 								multiple = true;
 							}
 							// build selection view for user
-							tripInfoView.addTrip(trip);
+							
+							tripInfoView.addTrip(trip)
 						}
 						;
 

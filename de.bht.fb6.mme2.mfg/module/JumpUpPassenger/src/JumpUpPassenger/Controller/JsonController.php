@@ -17,6 +17,9 @@ use JumpUpPassenger\Util\Messages\IControllerMessages;
 use JumpUpUser\Util\IEntitiesStore;
 use JumpUpPassenger\Strategies\NearestRouteStrategy;
 use JumpUpPassenger\Util\GmapCoordUtil;
+use JumpUpDriver\Util\Messages\JsonMessages;
+use JumpUpUser\Models\User;
+use Zend\I18n\Translator\Translator;
 
 /**
  *
@@ -131,12 +134,13 @@ class JsonController extends AbstractRestfulController {
 				if (null !== $request->getPost ( self::PARAM_USER_ID )) {
 					$userId = ( int ) $request->getPost ( self::PARAM_USER_ID );
 				}				
-				$maxDistance = (int) $request->getPost( LookUpTripsForm::FIELD_MAX_DISTANCE);
-				
+				$maxDistance = (int) $request->getPost( LookUpTripsForm::FIELD_MAX_DISTANCE);				
 				
 				
 				$trips = $this->_getAllTrips ( $userId );
 				$passenger = $this->_getUser( $userId);
+				// set locale if available
+				$this->_setLocale($passenger, $this->_getTranslator());
 				$findStrategy = $this->_getFindTripStrategy ();
 				
 				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger, $maxDistance );
@@ -145,6 +149,8 @@ class JsonController extends AbstractRestfulController {
 				    
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );
+					$frontendMessages = JsonMessages::getJson($this->_getTranslator());					
+					$tripWrapper->setMessages ( $frontendMessages);
 					$jsonObj = \Zend\Json\Json::encode ( $tripWrapper, true );
 				}
 				else { // no matching trips
@@ -171,6 +177,19 @@ class JsonController extends AbstractRestfulController {
 		return new JsonModel ( array (
 				"badRequest" => true 
 		) );
+	}
+	
+	/**
+	 * Set the user's locale if available.
+	 * @param User $user
+	 * @param Translator $translator
+	 * @return nothing, will be set on the translator immediatly
+	 */
+	protected function _setLocale(User $user, Translator $translator) {
+		$locale = $user->getLocale();
+		if(null !== $locale) {
+			$translator->setLocale($locale);
+		}
 	}
 	
 	/**

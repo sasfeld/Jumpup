@@ -105,9 +105,10 @@ define([ "jquery" ], (function($) {
 	};
 
 	TripInfo.prototype.addBookingForm = function(tripId, bodyStr, systemPrice) {
+		var messages = this.options.messages;
 		bodyStr += '<form action="' + BOOKING_ACTION + '" method="POST">' + '<input type="hidden" name="'
 				+ PARAM_TRIP_ID + '" value="' + tripId + '" />'
-				+ 'Your price recommendation: <input type="text" name="' + PARAM_RECOM_PRICE + '" value="'
+				+ messages.price_recom +': <input type="text" name="' + PARAM_RECOM_PRICE + '" value="'
 				+ systemPrice + '" />' + '<input type="hidden" name="' + PARAM_RECOM_START_POINT + '" value="'
 				+ this.inputStartPoint.val() + '" />' + '<input type="hidden" name="' + PARAM_RECOM_END_POINT
 				+ '" value="' + this.inputEndPoint.val() + '" />' + '<input type="hidden" name="' + PARAM_DATE_FROM
@@ -118,7 +119,7 @@ define([ "jquery" ], (function($) {
 				+ PARAM_RECOM_START_COORD + '" value="' + this.options.startLatLng + '" />'
 				+ '<input type="hidden" name="' + PARAM_RECOM_END_COORD + '" value="' + this.options.endLatLng + '" />'
 				+ '<input type="hidden" name="' + PARAM_MAX_DISTANCE + '" value="' + this.inputMaxDistance.val()
-				+ '" />' + '<input type="submit" value="Book" />' + '</form>';
+				+ '" />' + '<input type="submit" value="'+messages.book+'" />' + '</form>';
 		return bodyStr;
 	};
 
@@ -152,6 +153,7 @@ define([ "jquery" ], (function($) {
 	 * Build a jquery UI tooltip for the given driver.
 	 */
 	TripInfo.prototype.buildTooltip = function(id, driver) {
+		var messages = this.options.messages;		
 		var prefix = "";
 		if ("" != this.tooltipItems) {
 			prefix = ", ";
@@ -159,8 +161,8 @@ define([ "jquery" ], (function($) {
 
 		/* crazy shit I know, but it didn't work any other way... */
 		this.tooltipItems += prefix + "li[class=drivertooltip][id=" + id + "]";
-		this.tooltipTexts[id] = "<p>Birth data: " + driver.birthDate + "</p>" + "<p>eMail: " + driver.eMail + "</p>"
-				+ "<p>spokenLanguages: " + driver.spokenLanguages + "</p>" + "<p>Home town: " + driver.homeCity
+		this.tooltipTexts[id] = "<p>"+messages.birth_date+": " + driver.birthDate + "</p>" + "<p>"+messages.email+": " + driver.eMail + "</p>"
+				+ "<p>"+messages.spoken_langs+": " + driver.spokenLanguages + "</p>" + "<p>"+messages.home_town+": " + driver.homeCity
 				+ "</p>" + "<p><img src=\"" + driver.pathProfilePic + "\" /></p>";
 		;
 		var __this = this;
@@ -189,6 +191,7 @@ define([ "jquery" ], (function($) {
 	 * Build a jquery UI tooltip for the given vehicle.
 	 */
 	TripInfo.prototype.buildVehicleTooltip = function(id, vehicle) {
+		var messages = this.options.messages;
 		var prefix = "";
 		if ("" != this.tooltipItems) {
 			prefix = ", ";
@@ -196,10 +199,10 @@ define([ "jquery" ], (function($) {
 
 		/* crazy shit I know, but it didn't work any other way... */
 		this.tooltipItems += prefix + "li[class=vehicletooltip][id=" + id + "]";
-		this.tooltipTexts[id] = "<p>Leg space: " + vehicle.legspace + "</p>" + "<p>Wastage: " + vehicle.wastage
-				+ "</p>" + "<p>Average speed: " + vehicle.avgspeed + "</p>" + "<p>Number of seats: "
-				+ vehicle.numberseats + "</p>" + "<p>Air condition: " + vehicle.aircondition + "</p>"
-				+ "<p>Actual wheels: " + vehicle.actualwheel + "</p>" + "<p><img src=\"" + vehicle.pathPic
+		this.tooltipTexts[id] = "<p>"+messages.leg_space+": " + vehicle.legspace + "</p>" + "<p>"+messages.wastage+": " + vehicle.wastage
+				+ "</p>" + "<p>"+messages.avg_speed+": " + vehicle.avgspeed + "</p>" + "<p>"+messages.number_seats+": "
+				+ vehicle.numberseats + "</p>" + "<p>"+messages.number_seats+": " + vehicle.aircondition + "</p>"
+				+ "<p>"+messages.actual_wheel+": " + vehicle.actualwheel + "</p>" + "<p><img src=\"" + vehicle.pathPic
 				+ "\" /></p>";
 		;
 		var __this = this;
@@ -223,7 +226,12 @@ define([ "jquery" ], (function($) {
 		});
 	};
 
+	/**
+	 * Render one incoming trip.
+	 * @param trip the returned trip.
+	 */
 	TripInfo.prototype.addTrip = function(trip) {
+		var messages = this.options.messages;
 		var id = trip.id;
 		var startPoint = trip.startPoint;
 		var endPoint = trip.endPoint;
@@ -238,7 +246,7 @@ define([ "jquery" ], (function($) {
 		var overviewPath = trip.overviewPath;
 		var numberBookings = trip.numberBookings;
 		var maxSeats = trip.maxSeats;
-		var vehicle = trip.vehicle;
+		var vehicle = trip.vehicle;		
 		this.idMap[id] = this.length;
 		this.idMapReversed[this.length++] = id;
 		var distFromPassLoc = Math.round(trip.distanceFromPassengersLocation);
@@ -247,15 +255,15 @@ define([ "jquery" ], (function($) {
 		this.addHeadline("<span class=\"highlighting\">" + startPoint
 				+ "</span> to <span class=\"highlighting\">" + endPoint + "</span>");
 		var bodyStr = "<ul>" 
-				+ "<li><span class=\"ui-accordion-content-key\">Location distance:</span>" + distFromPassLoc + "</li>"
-				+ "<li><span class=\"ui-accordion-content-key\">Destination distance:</span>" + distFromPassDest + "</li>"
+				+ "<li><span class=\"ui-accordion-content-key\">"+messages.location_distance+":</span>" + distFromPassLoc + "</li>"
+				+ "<li><span class=\"ui-accordion-content-key\">"+messages.destination_distance+":</span>" + distFromPassDest + "</li>"
 				+ "<li class=\"drivertooltip\" id=\"" + id + '\">'
-				+ "<span class=\"ui-accordion-content-key\">Driver:</span>" + driver.prename + " " + driver.lastname
-				+ "</li>" + "<li><span class=\"ui-accordion-content-key\">Start date:</span>" + startDate + "</li>"
-				+ "<li><span class=\"ui-accordion-content-key\">Overall price:</span>" + driversPrice + "</li>"
-				+ "<li><span class=\"ui-accordion-content-key\">Current bookings:</span>" + numberBookings + "/"
+				+ "<span class=\"ui-accordion-content-key\">"+messages.driver+":</span>" + driver.prename + " " + driver.lastname
+				+ "</li>" + "<li><span class=\"ui-accordion-content-key\">"+messages.start_date+":</span>" + startDate + "</li>"
+				+ "<li><span class=\"ui-accordion-content-key\">"+messages.overall_price+":</span>" + driversPrice + "</li>"
+				+ "<li><span class=\"ui-accordion-content-key\">"+messages.current_bookings+":</span>" + numberBookings + "/"
 				+ maxSeats + "</li>" + "<li class=\"vehicletooltip\" id=\"" + (id + 100)
-				+ "\"><span class=\"ui-accordion-content-key\">Vehicle:</span>" + vehicle.brand + " " + vehicle.type
+				+ "\"><span class=\"ui-accordion-content-key\">"+messages.vehicle+":</span>" + vehicle.brand + " " + vehicle.type
 				+ "</li> " + "</ul>";
 		bodyStr = this.addBookingForm(id, bodyStr, priceForPassenger);
 		this.addBody(bodyStr);

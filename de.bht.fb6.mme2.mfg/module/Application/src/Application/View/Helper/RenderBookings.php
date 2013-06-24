@@ -14,6 +14,7 @@ use JumpUpDriver\Util\View\ICssStyles;
 use JumpUpDriver\Forms\BasicTripForm;
 use JumpUpUser\Controller\ProfileController;
 use JumpUpDriver\Controller\VehicleController;
+use JumpUpDriver\Util\Routes\IRouteStore;
 
 class RenderBookings {
 	const DRIVER = 1;

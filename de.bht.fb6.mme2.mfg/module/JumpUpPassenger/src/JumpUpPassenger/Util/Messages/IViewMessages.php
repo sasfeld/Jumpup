@@ -25,6 +25,12 @@ interface IViewMessages {
    const BOOKING_ERROR = "Booking system error";
    	/*
      * ..:::::::::::::::::::::::::::::::::..
+    /* ..:: used in application\Util\View\Helper\RenderBookings.php ::../
+     *
+    */
+	const VEHICLE = "Vehicle";
+   	/*
+     * ..:::::::::::::::::::::::::::::::::..
     */
     /* ..:: used in view-trips\.*.phtml ::../
      *

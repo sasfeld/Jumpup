@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 20:54+0100\n"
+"PO-Revision-Date: 2013-06-24 21:18+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -753,6 +753,10 @@ msgid "Look for trips"
 msgstr "Nach Fahrten suchen"
 
 #: JumpUpPassenger\Util\Messages\IViewMessages
+msgid "Vehicle"
+msgstr "Fahrzeug"
+
+#: JumpUpPassenger\Util\Messages\IViewMessages
 msgid "Show trips"
 msgstr "Fahrten suchen"
 
@@ -783,3 +787,71 @@ msgstr "Preis bis:"
 #: JumpUpPassenger\Forms\LookUpTripsForm
 msgid "Maximum distance (km):"
 msgstr "Maximale Distanz (km):"
+
+#: JumpUpUser\Util\Messages\IControllerMessages
+msgid "Your profile was successfully changed."
+msgstr "Dein Profil wurde erfolgreich geändert."
+
+#: JumpUpUser\Util\Messages\IControllerMessages
+msgid ""
+"You haven't configured your profile yet. Please be so kind to offer your "
+"information."
+msgstr ""
+"Du hast dein Profil noch nicht konfiguriert. Bitte nimm' dir die Zeit und "
+"reichere es mit Informationen an."
+
+#: JumpUpUser\Util\Messages\IControllerMessages
+msgid "Couldn't delete the old profile picture. Please contact the support."
+msgstr ""
+"Das alte Profilbild konnte nicht gelöscht werden. Bitte kontaktiere bei "
+"Bedarf den Support."
+
+#: JumpUpUser\Util\Messages\IControllerMessages
+msgid "There was no profile found. Maybe the user doesn't exist."
+msgstr ""
+"Es konnte kein Profil gefunden wurden. Eventuell existiert der Benutzer "
+"nicht."
+
+#: JumpUpUser\Util\Messages\IControllerMessages
+msgid "The file type must be one of type png, jpeg or gif."
+msgstr "Die Datei muss eines der folgenden Formate haben: png, jpeg oder gif."
+
+#: JumpUpUser\Util\Messages\IControllerMessages
+msgid "Please login to continue."
+msgstr "Logge dich ein um fortzufahren."
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Home town"
+msgstr "Heimatort"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Birth date"
+msgstr "Geburtsdatum"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Spoken languages"
+msgstr "gesprochene Sprachen"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Profile picture"
+msgstr "Profilbild"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "EMail address"
+msgstr "EMail-Adresse"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Configure vehicles"
+msgstr "Fahrzeuge verwalten"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Edit profile"
+msgstr "Profil bearbeiten"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Show profile"
+msgstr "Profil anzeigen"
+
+#: JumpUpUser\Util\Messages\IViewMessages
+msgid "Success"
+msgstr "Erfolg"

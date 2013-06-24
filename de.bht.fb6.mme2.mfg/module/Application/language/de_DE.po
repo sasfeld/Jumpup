@@ -479,3 +479,43 @@ msgid ""
 msgstr ""
 "Dein Mitfahrer hat den nachfolgenden Preis vorgeschlagen. Du kannst diesen "
 "nun bestätigen, ablehnen oder ein Gegenangebot machen."
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "State"
+msgstr "Status"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Date"
+msgstr "Datum"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Departure time"
+msgstr "Abfahrtszeit"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Deny"
+msgstr "Ablehnen"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Accept"
+msgstr "Akzeptieren"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Passenger"
+msgstr "Passagier"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "You haven't configured any trips yet."
+msgstr "Du hast noch keine Fahrten hinzugefügt."
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Delete"
+msgstr "Entfernen"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "You haven't configured any vehicle yet."
+msgstr "Du hast noch kein Fahrzeugprofil hinzugefügt."
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "You havn't uploaded any vehicle pic yet."
+msgstr "Du hast noch kein Fahrzeugbild upgeloadet."

@@ -127,7 +127,7 @@ class TripForm {
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Attributes({"addtrip_form"})
    * @Annotation\Value({0})
-   * @Annotation\Options({"label":"Price (€):","attributes":{"size":"5"},"value":0})
+   * @Annotation\Options({"label":"Price (euro):","attributes":{"size":"5"},"value":0})
    */
   public $price;  
   /**

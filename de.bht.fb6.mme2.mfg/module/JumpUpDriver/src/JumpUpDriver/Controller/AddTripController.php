@@ -91,6 +91,7 @@ class AddTripController extends ANeedsAuthenticationController {
             $form->bind($trip);             
            
 
+            $translator = $this->_getTranslator();
             $request = $this->getRequest();             
             if($request->isPost()) {
                 $form->setData($request->getPost());
@@ -152,7 +153,7 @@ class AddTripController extends ANeedsAuthenticationController {
                 );
                 // user's vehicles
                 $inputFields = $this->_appendUsersVehicles($inputFields, $user);
-                array_push($inputFields, '<input type="submit" name="'.TripForm::SUBMIT.'" value="'.IControllerMessages::ADD_TRIP_SUBMIT.'" /><br />');
+                array_push($inputFields, '<input type="submit" name="'.TripForm::SUBMIT.'" value="'.$translator->translate(IControllerMessages::ADD_TRIP_SUBMIT).'" /><br />');
                 
                 // Export the form and the input fields to the view
                 return array(
@@ -288,7 +289,7 @@ class AddTripController extends ANeedsAuthenticationController {
      */
     private function _appendUsersVehicles(array $inputFields, User $user) {
         array_push($inputFields, '<select name="'.TripForm::FIELD_VEHICLE.'">');
-        array_push($inputFields, '<option>--- Please choose ---</option>');
+        array_push($inputFields, '<option>--- '.$this->_getTranslator()->translate(IControllerMessages::ADD_TRIP_VEHICLE_CHOOSE). '---</option>');
         $vehicleRepo = $this->em->getRepository('JumpUpDriver\Models\Vehicle');
         $vehicles = $vehicleRepo->findBy(array('owner' => $user->getId()));
         if(null !== $vehicles) {

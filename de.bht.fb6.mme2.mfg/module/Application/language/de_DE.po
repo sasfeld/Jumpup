@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 21:24+0100\n"
+"PO-Revision-Date: 2013-06-24 21:38+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -421,6 +421,10 @@ msgid "Add trip"
 msgstr "Fahrt hinzufügen"
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
+msgid "Please choose"
+msgstr "Bitte auswählen"
+
+#: JumpUpDriver\Util\Messages\IControllerMessages
 msgid "The given vehicle doesn't contain as much seats as you want to offer."
 msgstr ""
 "Das angegebene Fahrzeug hat nicht so viele Plätze wie du anbieten möchtest."
@@ -589,8 +593,8 @@ msgid "Trip date:"
 msgstr "Datum der Fahrt:"
 
 #: JumpUpDriver\Forms\TripForm
-msgid "Price (€):"
-msgstr "Preis (€):"
+msgid "Price (euro):"
+msgstr "Preis (euro):"
 
 #: JumpUpDriver\Forms\TripForm
 msgid "Number of seats:"
@@ -647,6 +651,10 @@ msgstr "Ganzjahresreifen"
 #: JumpUpDriver\Forms\VehicleForm
 msgid "Vehicle pic:"
 msgstr "Fahrzeugbild:"
+
+#: JumpUpDriver\Util\Messages\ILabels
+msgid "Show driver's booking"
+msgstr "Buchungen anzeigen"
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
 msgid "Please fill in all required fields."
@@ -875,3 +883,11 @@ msgstr "Profilbild:"
 #: JumpUpUser\Forms\ProfileForm
 msgid "Change profile"
 msgstr "Profil ändern"
+
+#: Application\Util\Messages\IViewMessages
+msgid "Nobody has booked this trip yet."
+msgstr "Bisher hat niemand diese Fahrt gebucht."
+
+#: Application\Util\Messages\IControllerMessages
+msgid "You're prefered language was successfully changed."
+msgstr "Deine bevorzugte Sprache wurde erfolgreich gesetzt."

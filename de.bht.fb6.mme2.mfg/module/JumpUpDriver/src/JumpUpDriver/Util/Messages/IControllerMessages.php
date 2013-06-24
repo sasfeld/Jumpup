@@ -26,6 +26,7 @@ interface IControllerMessages {
     const SUCCESS_DELETE_TRIP = "The trip was successfully deleted.";
     const ADD_TRIP_SUBMIT = "Add trip";
     const ADD_TRIP_ERROR_MAX_SEATS = "The given vehicle doesn't contain as much seats as you want to offer.";
+	const ADD_TRIP_VEHICLE_CHOOSE = "Please choose";
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */  

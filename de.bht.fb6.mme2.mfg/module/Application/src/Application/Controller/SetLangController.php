@@ -7,6 +7,7 @@ use JumpUpUser\Util\Auth\CheckAuthentication;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Application\Util\ServicesUtil;
+use Application\Util\Messages\IControllerMessages;
 
 /**
 * 
@@ -79,7 +80,7 @@ class SetLangController extends AbstractActionController {
             $loggendInUser = $this->_getUserUtil()->getCurrentUser();
             $loggendInUser->setLocale($localStr);
             $this->_getUserUtil()->updateUser($loggendInUser); // perform DB update
-            $this->flashMessenger()->addMessage("You're prefered language was successfully changed.");
+            $this->flashMessenger()->addMessage(IControllerMessages::LANGUAGE_CHANGED_SUCCESS);
             $this->redirect()->toRoute(\JumpUpUser\Util\Routes\IRouteStore::LOGIN);
         }
         else { // @TODO

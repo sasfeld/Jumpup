@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 21:18+0100\n"
+"PO-Revision-Date: 2013-06-24 21:24+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -855,3 +855,23 @@ msgstr "Profil anzeigen"
 #: JumpUpUser\Util\Messages\IViewMessages
 msgid "Success"
 msgstr "Erfolg"
+
+#: JumpUpUser\Forms\ProfileForm
+msgid "Birth date:"
+msgstr "Geburtsdatum:"
+
+#: JumpUpUser\Forms\ProfileForm
+msgid "Home City:"
+msgstr "Heimatort:"
+
+#: JumpUpUser\Forms\ProfileForm
+msgid "Spoken languages:"
+msgstr "Gesprochene Sprachen:"
+
+#: JumpUpUser\Forms\ProfileForm
+msgid "Profile pic:"
+msgstr "Profilbild:"
+
+#: JumpUpUser\Forms\ProfileForm
+msgid "Change profile"
+msgstr "Profil ändern"

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToOne as OneToOne;
 use Doctrine\ORM\Mapping\OneToMany as OneToMany;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
+use Application\Util\FilesUtil;
 
 /**
  * @ORM\Entity
@@ -51,11 +52,78 @@ class Vehicle {
      */
     protected $avgspeed;
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $aircondition;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $actualwheel;
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $picpath;
+    protected $vehiclepic;
+    /**
+     * @OneToMany(targetEntity="JumpUpDriver\Models\Trip", mappedBy="vehicle")
+     */
+    protected $intrips;
     
-    public function Vehicle() {
+    /**
+     * Get all the trips in which this vehicle is referenced.
+	 * @return array of Trip $intrips
+	 */
+	public function getIntrips() {
+		return $this->intrips;
+	}
+
+	/**
+     * Get the full path to the vehicle pic.
+	 * @return the $vehiclepic
+	 */
+	public function getVehiclepic() {
+		return $this->vehiclepic;
+	}
+
+	/**
+	 * Set the full path to the vehicle pic.
+	 * @param String $vehiclepic
+	 */
+	public function setVehiclepic($vehiclepic) {
+		if(!is_string($vehiclepic)) {
+			throw \Application\Util\ExceptionUtil::throwInvalidArgument('$vehiclepic', 'String', $vehiclepic);
+		}
+		$this->vehiclepic = (string) $vehiclepic;
+	}
+
+	/**
+	 * @return the $aircondition
+	 */
+	public function getAircondition() {
+		return $this->aircondition;
+	}
+
+	/**
+	 * @return the $actualwheel
+	 */
+	public function getActualwheel() {
+		return $this->actualwheel;
+	}
+
+	/**
+	 * @param field_type $aircondition
+	 */
+	public function setAircondition($aircondition) {
+		$this->aircondition = $aircondition;
+	}
+
+	/**
+	 * @param field_type $actualwheel
+	 */
+	public function setActualwheel($actualwheel) {
+		$this->actualwheel = $actualwheel;
+	}
+
+	public function Vehicle() {
         $this->brand = "";
         $this->type = "";
         $this->legSpace = "";
@@ -66,7 +134,7 @@ class Vehicle {
         $intVal = (int) $val;
         
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }
         $this->id = $intVal;
     }
@@ -104,7 +172,7 @@ class Vehicle {
         $intVal = (int) $val;
         
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }
         $this->wastage = $intVal;
     }
@@ -116,7 +184,7 @@ class Vehicle {
         $intVal = (int) $val;
         
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }      
         $this->numberseats = $intVal;
         
@@ -137,19 +205,11 @@ class Vehicle {
     public function setAvgspeed($val) {
         $intVal = (int) $val;        
         if(!is_int($intVal)) {
-           throw ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
+           throw \Application\Util\ExceptionUtil::throwInvalidArgument('$val', 'int', $val);
         }       
         $this->avgspeed = $intVal;        
     }
     
-  /**
-     * Set the path to the corresponding pic.
-     */
-    public function setPicpath($val) {
-        if(is_string($val)) {
-            $this->picpath = $val;
-        }
-    }
     
     public function getId() {
         return $this->id;
@@ -183,10 +243,7 @@ class Vehicle {
         return $this->avgspeed;
     }
     
-    public function getPicpath() {
-        return $this->picpath;
-    }  
-    
+  
     public function toJson() {
         return array("id" => $this->getId(),
                     "ownerId" => $this->getOwner()->getId(),
@@ -195,7 +252,11 @@ class Vehicle {
                     "legspace" => $this->getLegspace(), 
                     "wastage" => $this->getWastage(), 
                     "avgspeed" => $this->getAvgspeed(), 
-                    "numberseats" => $this->getNumberSeats(), );
+                    "numberseats" => $this->getNumberSeats(),
+        			"aircondition" => $this->getAircondition(),
+        		    "actualwheel" => $this->getActualwheel(),
+        			"pathPic"	=> FilesUtil::getRealVehiclePath($this),
+         );
     }
     
    

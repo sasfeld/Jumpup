@@ -4,9 +4,20 @@ use JumpUpUser\Util\Messages\IViewMessages;
 <h1><?php echo $this->translate("Profile") ?></h1>
 
 <div id="profile_subnav">
-	<ul>
-		<li><a href="<?php echo $this->linkVehicle; ?>"><?php echo $this->translate(IViewMessages::LIST_VEHICLES); ?></a></li>
-		<li><a href="<?php echo $this->linkEdit; ?>"><?php echo $this->translate(IViewMessages::EDIT_PROFILE); ?></a></li>
+	<ul>		
+		<?php 
+		$linkVehicle = $this->linkVehicle;
+		if(null !== $linkVehicle) {
+			$linkText = $this->translate(IViewMessages::LIST_VEHICLES);
+			echo "<li><a href=\"{$linkVehicle}\">{$linkText}</a></li>\n\t\t\t";
+		}
+		$linkEdit = $this->linkEdit;
+		if(null !== $linkEdit) {
+			$linkText = $this->translate(IViewMessages::EDIT_PROFILE);
+			echo "<li><a href=\"{$linkEdit}\">{$linkText}</a></li>\n\t\t";
+		}
+		?>
+	</ul>
 </div>
 
 <div id="addtrip_hints">

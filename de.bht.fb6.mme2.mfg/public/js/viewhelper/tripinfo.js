@@ -67,6 +67,9 @@ define( [ "jquery" ], ( function($) {
 		this.tooltipItems = "";
 		this.tooltipTexts = new Array();
 		
+		this.vehTooltipItems = "";
+		this.vehTooltipTexts = new Array();
+		
 		// empty accordion node
 		this.accordion.empty();
 	};
@@ -161,6 +164,44 @@ define( [ "jquery" ], ( function($) {
 		    }
 		    });
 	};
+	
+	/**
+	 * Build a jquery UI tooltip for the given vehicle.
+	 */
+	TripInfo.prototype.buildVehicleTooltip = function(id, vehicle) {
+		var prefix = "";
+		if("" != this.tooltipItems) {
+			prefix = ", ";
+		}
+		
+		/* crazy shit I know, but it didn't work any other way... */
+		this.tooltipItems += prefix + "li[class=vehicletooltip][id="+id+"]";
+		this.tooltipTexts[id] =  "<p>Leg space: "+vehicle.legspace+"</p>"
+		+"<p>Wastage: "+vehicle.wastage+"</p>"
+		+"<p>Average speed: "+vehicle.avgspeed+"</p>"
+		+"<p>Number of seats: "+vehicle.numberseats+"</p>" 
+		+"<p>Air condition: "+vehicle.aircondition+"</p>" 
+		+"<p>Actual wheels: "+vehicle.actualwheel+"</p>" 
+		+"<p><img src=\""+vehicle.pathPic+"\" /></p>";								;
+		var __this = this;
+		$( document ).tooltip({
+			items: __this.tooltipItems,
+			position: { 
+				my: "right-5 center",
+				at: "right center" },
+				content: function() {
+					var $this = $(this);
+					var id = $this.attr("id");					
+					
+					if(undefined != id) {
+						return __this.tooltipTexts[id];		       
+					}
+					else {
+						return "no chance...";
+					};
+				}
+		});
+	};
 
 	TripInfo.prototype.addTrip = function(trip) {
 		var id = trip.id;
@@ -175,6 +216,7 @@ define( [ "jquery" ], ( function($) {
 		var overviewPath = trip.overviewPath;
 		var numberBookings = trip.numberBookings;
 		var maxSeats = trip.maxSeats;
+		var vehicle = trip.vehicle;
 		this.idMap[ id ] = this.length;
 		this.idMapReversed[ this.length++ ] = id;
 
@@ -182,11 +224,12 @@ define( [ "jquery" ], ( function($) {
 		var bodyStr = "<ul>" + "<li class=\"drivertooltip\" id=\""+id+"\">Driver:" + driver.prename + " " + driver.lastname + "</li>"
 				+ "<li>Start date: " + startDate + "</li>" + "<li>Overall price: " + driversPrice
 				+ "</li>" + "<li>Current bookings: " + numberBookings + "/" + maxSeats
-				+ "</li>" + "</ul>";
+				+ "</li>" + "<li class=\"vehicletooltip\" id=\""+(id + 100)+"\">Vehicle: " + vehicle.brand + " " + vehicle.type + "</li> "+ "</ul>";
 		bodyStr = this.addBookingForm( id, bodyStr, priceForPassenger );
 		this.addBody( bodyStr );
 		
 		this.buildTooltip(id, driver);
+		this.buildVehicleTooltip(id + 100, vehicle);
 	};
 
 	return TripInfo;

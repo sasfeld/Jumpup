@@ -66,7 +66,11 @@ class RenderUser extends AbstractHelper {
 		if (null !== $user) {			
 			$retString .= "<ul>";
 			$retString .= "<li>" . $user->getPrename () . " " . $user->getLastname () . "</li>";
-			if (! $minimal) {
+			if (! $minimal) {				
+				$eMail = $user->getEmail();
+				if (null !== $eMail && "" !== $eMail) { // only render if configured
+					$retString .= "<li>" . $translator->translate ( IViewMessages::EMAIL ) . ": <a href=\"mailto:\"".$eMail.'\">' . $eMail . "</a></li>";
+				}
 				$birthDate = $user->getBirthDate ();
 				if (null !== $birthDate && "" !== $birthDate) { // only render if configured
 					$retString .= "<li>" . $translator->translate ( IViewMessages::BIRTH_DATE ) . ": " . $birthDate . "</li>";
@@ -84,9 +88,10 @@ class RenderUser extends AbstractHelper {
 					$profilePicHtml = FilesUtil::prepareProfilePic ( $user );
 					$retString .= "<li>" . $translator->translate ( IViewMessages::PROFILE_PIC ) . ": " . $profilePicHtml . "</li>";
 				}
-			}			
+			}	
+			$retString .= "</ul>";
 		}
-		$retString .= "</ul>";
+	
 		
 		return $retString;
 	}

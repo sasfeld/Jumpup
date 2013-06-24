@@ -1,43 +1,48 @@
 <h1><?php echo $this->translate("List vehicles") ?></h1>
 
 <div class="form registration">
-<?php 
-    /*
-     * author: Sascha Feldmann
-     * 
-     * what a nice view. we just delegate the form to our view helper object.
-     * See Application\View\Helper\RenderForm.php
-     */
-    use JumpUpUser\Forms\RegistrationForm;
-    if(null !== $this->messages) {
-        foreach ($this->messages as $message) {
-            echo $this->translate($message) . "<br />";
-        }
-    }
-    
-    $addUrl = $this->addUrl;
-    echo "<a href=\"${addUrl}\">Add vehicle</a><br /><br />";
-    if(null !== $this->vehicles) { // form is exported by the controller
-        if(0 == sizeof($this->vehicles)) {
-            echo $this->translate("No vehicles.");
-        }        
-        foreach ($this->vehicles as $vehicle) {
-            $removeUrl = $this->removeUrl . "?".$this->identifierParam."=".$vehicle->getId();
-            $editUrl = $this->editUrl . "?".$this->identifierParam."=".$vehicle->getId();
-            
-            echo "brand: ".$vehicle->getBrand(). "<br />";
-            echo "type: ".$vehicle->getType(). "<br />";
-            echo "wastage (l/100km): ".$vehicle->getWastage(). "<br />";
-            echo "avg speed (km/h): ".$vehicle->getAvgspeed(). "<br />";
-            echo "seats: ".$vehicle->getNumberseats(). "<br />";
-            echo "leg space: ".$vehicle->getLegspace(). "<br />";
-            echo "<a href=\"${removeUrl}\">Remove</a>";
-            echo "<a href=\"${editUrl}\">Edit</a>";
-            echo "<br /><br />";
-        }
-    } 
-  
-   
+<?php
+/*
+ * author: Sascha Feldmann what a nice view. we just delegate the form to our view helper object. See Application\View\Helper\RenderForm.php
+ */
+use Application\Util\FilesUtil;
+use JumpUpDriver\Util\Messages\IViewMessages;
+if (null !== $this->messages) {
+	foreach ( $this->messages as $message ) {
+		echo $this->translate ( $message ) . "<br />";
+	}
+}
+
+$addUrl = $this->addUrl;
+echo "<a href=\"${addUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_ADD)."</a><br /><br />";
+if (null !== $this->vehicles) { // form is exported by the controller
+	if (0 == sizeof ( $this->vehicles )) {
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_NO_VEHICLES );
+	}
+	foreach ( $this->vehicles as $vehicle ) {
+		$removeUrl = $this->removeUrl . "?" . $this->identifierParam . "=" . $vehicle->getId ();
+		$editUrl = $this->editUrl . "?" . $this->identifierParam . "=" . $vehicle->getId ();
+		
+		echo $this->translate(IViewMessages::VEHICLE_LIST_BRAND) . ": " . $vehicle->getBrand () . "<br />";
+		echo $this->translate(IViewMessages::VEHICLE_LIST_TYPE) . ": " . $vehicle->getType () . "<br />";
+		echo $this->translate(IViewMessages::VEHICLE_LIST_WASTAGE) .": " . $vehicle->getWastage () . "<br />";
+		echo $this->translate(IViewMessages::VEHICLE_LIST_AVG_SPEED).": " . $vehicle->getAvgspeed () . "<br />";
+		echo $this->translate(IViewMessages::VEHICLE_LIST_SEATS). ": " . $vehicle->getNumberseats () . "<br />";
+		echo $this->translate(IViewMessages::VEHICLE_LIST_LEG_SPACE).": " . $vehicle->getLegspace () . "<br />";
+		echo $this->translate(IViewMessages::VEHICLE_LIST_AIR_CONDITION).": " . $vehicle->getAircondition () . "<br />";
+		echo $this->translate(IViewMessages::VEHICLE_LIST_ACTUAL_WHEEL).": " . $vehicle->getActualwheel () . "<br />";
+		if (null !== $vehicle->getVehiclepic ()) {
+			echo $this->translate(IViewMessages::VEHICLE_LIST_CURRENT_PIC) . ": " . FilesUtil::prepareVehiclePic ( $vehicle ) . "<br />";
+		}
+		else {
+			echo $this->translate(IViewMessages::VEHICLE_LIST_NO_PIC);
+		}
+		echo "<a href=\"${removeUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_REMOVE)."</a>";
+		echo "<a href=\"${editUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_EDIT)."</a>";
+		echo "<br /><br />";
+	}
+}
+
 ?>
 
 </div>

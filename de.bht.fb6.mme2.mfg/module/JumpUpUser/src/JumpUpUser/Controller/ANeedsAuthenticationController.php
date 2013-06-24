@@ -7,6 +7,7 @@ use \Zend\Mvc\Controller\AbstractActionController;
 use JumpUpUser\Util\Messages\IControllerMessages;
 use JumpUpUser\Util\Routes\IRouteStore;
 use JumpUpUser\Models\User;
+use JumpUpUser\Util\ServicesUtil;
 
 /**
  *
@@ -20,8 +21,9 @@ use JumpUpUser\Models\User;
  * @since      07.06.2013
  */
 abstract class ANeedsAuthenticationController extends AbstractActionController implements IAuthenticationRequired {
-	protected $authservice;
+	private $authservice;
 	protected $em;
+	private $userService;
 	
 	/**
      *
@@ -96,6 +98,18 @@ abstract class ANeedsAuthenticationController extends AbstractActionController i
     protected function _saveChangedUser(User $user) {
     	$this->em->merge($user);
     	$this->em->flush();
+    }
+    
+    /**
+     * Get the UserUtil service instance by the ServiceManager.
+     * @see JumpUpUser\Util\UserUtil
+     */
+    protected function _getUserService() {
+    	if(null === $this->userService) {
+    		$sm = $this->getServiceLocator();
+    		$this->userService = ServicesUtil::getUserUtil($sm);
+    	}
+    	return $this->userService;
     }
     
 }

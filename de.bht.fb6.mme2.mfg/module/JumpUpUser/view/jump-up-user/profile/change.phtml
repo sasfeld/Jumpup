@@ -1,5 +1,15 @@
 <h1><?php echo $this->translate("Change profile") ?></h1>
 
+<div id="changeprofile_hints">
+<?php 
+if(null !== $this->messages) {
+	foreach ($this->messages as $message) {
+		echo "<p>".$message."</p>";
+	}
+}
+?>
+</div>
+
 <div class="form profile">
 <?php 
     /*

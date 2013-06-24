@@ -37,7 +37,7 @@ interface IControllerMessages {
     const SUCCESS_EDIT_VEHICLE = "Your vehicle was successfully edited.";
     const SUCCESS_DELETE_VEHICLE = "Your vehicle was successfully removed.";
     const DELETE_VEHICLE_NO_ID = "Something went wrong. The way you tried to use this function doesn't work.";
-
+	const DELETE_VEHICLE_IS_IN_TRIP = "We are sorry, but the vehicle is used in a trip. You can't remove it until the trip is expired.";
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */  
@@ -46,6 +46,8 @@ interface IControllerMessages {
      */
     const ERROR_BOOKING_REQUEST = "Internal error: illegal request. If the error occurs again, please inform the support.";
     const ERROR_NO_BOOKING = "Internal error: No booking instance.";
+    const VEHICLE_NOT_FOUND = "No matching vehicle found.";
+    const VEHICLE_NO_PARAMETER = "Internal error: illegal request. If the error occurs again, please inform the support.";
     /*
      * ..::::::::::::::::::::::::::::::::::::::::::::::::::::::::..
      */  

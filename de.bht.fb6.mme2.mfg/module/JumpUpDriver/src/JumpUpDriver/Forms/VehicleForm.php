@@ -51,6 +51,21 @@ class VehicleForm {
    * @var String
    */
   const FIELD_AVG_SPEED = 'avg_speed';
+  /**
+   * Key for the radio input aircondtion
+   * @var unknown
+   */
+  const FIELD_AIRCONDITION = 'aircondition';
+  /**
+   * Key for the radio input actualwheel.
+   * @var unknown
+   */
+  const FIELD_ACTUAL_WHEEL = 'actualwheel';
+  /**
+   * Key for the file input vehiclepic.
+   * @var unknown
+   */
+  const FIELD_VEHICLE_PIC = 'vehiclepic';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
@@ -94,7 +109,30 @@ class VehicleForm {
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Options({"label":"Average speed (km/h):","attributes":{"size":"5"}})
    */
-  public $avgspeed;  
+  public $avgspeed;    
+  /**
+   * @Annotation\Type("Zend\Form\Element\Radio")
+   * @Annotation\Options({
+   *          "label":"Air condition:",
+   *          "value_options":{"yes":"yes", "no":"no"}
+   * })
+   */
+  public $aircondition;
+  /**
+   * @Annotation\Type("Zend\Form\Element\Radio")
+   * @Annotation\Options({
+   *          "label":"Actual wheel:",
+   *          "value_options":{"Summer":"Summer", "Winter":"Winter", "Allweather":"All weather"}
+   * })
+   */
+  public $actualwheel;
+  /**
+   * @Annotation\Type("Zend\Form\Element\File")
+   * @Annotation\Required({"required":"false" })
+   * @Annotation\Filter({"name":"StripTags"})
+   * @Annotation\Options({"label":"Vehicle pic:"})
+   */
+  public $vehiclepic;  
   /**
    * @Annotation\Type("Zend\Form\Element\Submit")
    * @Annotation\Attributes({"value":"Submit"})

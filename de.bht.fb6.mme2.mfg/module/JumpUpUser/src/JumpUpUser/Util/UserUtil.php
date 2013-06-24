@@ -19,6 +19,7 @@ use JumpUpUser\Models\User;
 use Zend\Authentication\AuthenticationService;
 
 use Doctrine\ORM\EntityManager;
+use Application\Util\ExceptionUtil;
 
 class UserUtil {
     private $em;
@@ -51,6 +52,21 @@ class UserUtil {
           }
       }
       return null;
+    }
+    
+    /**
+     * Get the user entity for a given id.
+     * @param int $userId
+     * @return the user entity which can be null if there wasn't any matching user.
+     * @throws \InvalidArgumentException if the parameter isn't of type integer.
+     */
+    public function getUserById($userId) {
+    	if(!is_int($userId)) {
+    		throw ExceptionUtil::throwInvalidArgument('$userId', 'int', $userId);
+    	}
+    	$repoUser = $this->em->getRepository("JumpUpUser\Models\User");
+    	$user = $repoUser->findOneBy(array('id' => $userId));
+    	return $user;
     }
     
     /**

@@ -72,7 +72,7 @@ class Trip {
    * */
   private $driver;
   /**
-   * @ManyToOne(targetEntity="JumpUpDriver\Models\Vehicle")
+   * @ManyToOne(targetEntity="JumpUpDriver\Models\Vehicle", inversedBy="intrips")
    */
   private $vehicle;
   /**
@@ -391,6 +391,7 @@ public function __construct() {
         'maxSeats'     => $this->maxSeats, 
         'numberBookings' => $this->getNumberOfBookings(),
         'priceRecommendation' => $this->getPriceRecommendationForPassenger(), 
+    	'vehicle' => $this->getVehicle()->toJson(),
     );
   }
    

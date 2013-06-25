@@ -70,76 +70,118 @@ class AuthNavigation extends Navigation {
         if(null !== $routeMatch) {
             if(CheckAuthentication::isAuthorized($this->_authService, "")) {
                 // show pages within the authentication area
+            	$pageTab1 = \Zend\Navigation\Page\AbstractPage::factory(array(
+            			'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_TAB1),
+            			'route' =>  \JumpUpDriver\Util\Routes\IRouteStore::ADD_TRIP,
+            			'class' => 'fNiv',
+            	));
+            	$this->_injectPage($pageTab1, $routeMatch, $router);
+            	$this->addPage($pageTab1);
+            	
+            	/*
+            	 * ..:: Module JumpUpDriver -> addtrip page ::..
+            	*/
+            	$pageTab1_addTrip = \Zend\Navigation\Page\AbstractPage::factory(array(
+            			'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_ADDTRIP),
+            			'route' => \JumpUpDriver\Util\Routes\IRouteStore::ADD_TRIP,
+            	));
+            	$this->_injectPage($pageTab1_addTrip, $routeMatch, $router);
+            	$pageTab1->addPage($pageTab1_addTrip);
+            	/*
+            	 * ..:::::::::::::::::::::::::::::::::::::::::..
+            	*/
+            	
+            	/*
+            	 * ..:: Module JumpUpDriver -> Bookings page ::..
+            	*/
+            	$pageTab1_bookings = \Zend\Navigation\Page\AbstractPage::factory(array(
+            			'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_DRIVER_BOOKINGS),
+            			'route' => \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DRIVER_OVERVIEW,
+            	));
+            	$this->_injectPage($pageTab1_bookings, $routeMatch, $router);
+            	$pageTab1->addPage($pageTab1_bookings);
+            	/*
+            	 * ..:::::::::::::::::::::::::::::::::::::::::..
+            	*/            	
+            	$pageTab2 = \Zend\Navigation\Page\AbstractPage::factory(array(
+            			'label' =>  $translator->translate(\JumpUpPassenger\Util\Messages\ILabels::MAINNAV_TAB2),
+            			'route' =>  \JumpUpPassenger\Util\Routes\IRouteStore::LOOKUP_TRIPS,
+            			'class' => 'fNiv',
+            	));
+            	$this->_injectPage($pageTab2, $routeMatch, $router);
+            	$this->addPage($pageTab2);
+            	
+            	/*
+            	 * ..:: Module JumpUpPassenger -> LookUpTrips page ::..
+            	*/
+            	$pageTab2_lookup = \Zend\Navigation\Page\AbstractPage::factory(array(
+            			'label' =>  $translator->translate(\JumpUpPassenger\Util\Messages\ILabels::MAINNAV_LOOKUP_TRIPS),
+            			'route' => \JumpUpPassenger\Util\Routes\IRouteStore::LOOKUP_TRIPS,
+            	));
+            	$this->_injectPage($pageTab2_lookup, $routeMatch, $router);
+            	$pageTab2->addPage($pageTab2_lookup);
+            	/*
+            	 * ..:::::::::::::::::::::::::::::::::::::::::..
+            	*/
+            	/*
+            	 * ..:: Module JumpUpPassenger -> Bookings page ::..
+            	*/
+            	$pageTab2_bookings = \Zend\Navigation\Page\AbstractPage::factory(array(
+            			'label' =>  $translator->translate(\JumpUpPassenger\Util\Messages\ILabels::MAINNAV_PASSENGER_BOOKINGS),
+            			'route' => \JumpUpPassenger\Util\Routes\IRouteStore::BOOK_PASS_OVERVIEW,
+            	));
+            	$this->_injectPage($pageTab2_bookings, $routeMatch, $router);
+            	$pageTab2->addPage($pageTab2_bookings);
+            	/*
+            	 * ..:::::::::::::::::::::::::::::::::::::::::..
+            	*/
+            	
+            	$pageTab3 = \Zend\Navigation\Page\AbstractPage::factory(array(
+            			'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_TAB3),
+            			'route' => \JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE,
+            			'class' => 'fNiv',
+            	));
+            	$this->_injectPage($pageTab3, $routeMatch, $router);
+            	$this->addPage($pageTab3);
+            	
                 /*
-                 * ..:: Module JumpUpDriver -> list vehicles page ::..
+                 * ..:: Module JumpUpUser -> profile page ::..
                  */
-                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
+                $pageTab3_profile = \Zend\Navigation\Page\AbstractPage::factory(array(
                 'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_MANAGEPROFILE),
                 'route' => \JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE,
                 'class' => 'fNiv',
                 ));
-                $this->_injectPage($page, $routeMatch, $router);
-                $this->addPage($page);
+                $this->_injectPage($pageTab3_profile, $routeMatch, $router);
+                $pageTab3->addPage($pageTab3_profile);
                 /*
                  * ..::::::::::::::::::::::::::::::::::::::::::::::::..
-                 */
+                 */  
+                             
                 /*
-                 * ..:: Module JumpUpDriver -> addtrip page ::..
+                 * ..:: Module JumpUpDriver -> vehicles page ::..
                  */
-                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
-                'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_ADDTRIP),
-                'route' => \JumpUpDriver\Util\Routes\IRouteStore::ADD_TRIP,
+                $pageTab3_vehicles = \Zend\Navigation\Page\AbstractPage::factory(array(
+                'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_TAB3_VEHICLES),
+                'route' => \JumpUpDriver\Util\Routes\IRouteStore::LIST_VEHICLES,
+                'class' => 'fNiv',
                 ));
-                $this->_injectPage($page, $routeMatch, $router);
-                $this->addPage($page);
+                $this->_injectPage($pageTab3_vehicles, $routeMatch, $router);
+                $pageTab3->addPage($pageTab3_vehicles);
                 /*
-                 * ..:::::::::::::::::::::::::::::::::::::::::..
-                 */
-                /*
-                 * ..:: Module JumpUpPassenger -> LookUpTrips page ::..
-                 */
-                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
-                'label' =>  $translator->translate(\JumpUpPassenger\Util\Messages\ILabels::MAINNAV_LOOKUP_TRIPS),
-                'route' => \JumpUpPassenger\Util\Routes\IRouteStore::LOOKUP_TRIPS,
-                ));
-                $this->_injectPage($page, $routeMatch, $router);
-                $this->addPage($page);
-                /*
-                 * ..:::::::::::::::::::::::::::::::::::::::::..
-                 */
-                /*
-                 * ..:: Module JumpUpPassenger -> Bookings page ::..
-                 */
-                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
-                'label' =>  $translator->translate(\JumpUpPassenger\Util\Messages\ILabels::MAINNAV_PASSENGER_BOOKINGS),
-                'route' => \JumpUpPassenger\Util\Routes\IRouteStore::BOOK_PASS_OVERVIEW,
-                ));
-                $this->_injectPage($page, $routeMatch, $router);
-                $this->addPage($page);
-                /*
-                 * ..:::::::::::::::::::::::::::::::::::::::::..
-                 */
-                /*
-                 * ..:: Module JumpUpDriver -> Bookings page ::..
-                 */
-                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
-                'label' =>  $translator->translate(\JumpUpDriver\Util\Messages\ILabels::MAINNAV_DRIVER_BOOKINGS),
-                'route' => \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DRIVER_OVERVIEW,
-                ));
-                $this->_injectPage($page, $routeMatch, $router);
-                $this->addPage($page);
-                /*
-                 * ..:::::::::::::::::::::::::::::::::::::::::..
-                 */
+                 * ..::::::::::::::::::::::::::::::::::::::::::::::::..
+                 */               
+               
+               
                 /*
                  * ..:: Module JumpUpUser -> logout page ::..
                  */
-                $page = \Zend\Navigation\Page\AbstractPage::factory(array(
+                $pageTab4 = \Zend\Navigation\Page\AbstractPage::factory(array(
                 'label' =>  $translator->translate(\JumpUpUser\Util\Messages\ILabels::MAINNAV_LOGOUT),
                 'route' => \JumpUpUser\Util\Routes\IRouteStore::LOGOUT,
                 ));
-                $this->_injectPage($page, $routeMatch, $router);
-                $this->addPage($page);
+                $this->_injectPage($pageTab4, $routeMatch, $router);
+                $this->addPage($pageTab4);
                 /*
                  * ..:::::::::::::::::::::::::::::::::::::::::..
                  */

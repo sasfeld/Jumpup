@@ -16,4 +16,6 @@ interface ILabels {
     const MAINNAV_LOOKUP_TRIPS = "Look up trips";
     const LOOKUP_BUTTON = "Look for trips";    
     const MAINNAV_PASSENGER_BOOKINGS = "booked trips";
+
+	const MAINNAV_TAB2 = "Other trips";
 }

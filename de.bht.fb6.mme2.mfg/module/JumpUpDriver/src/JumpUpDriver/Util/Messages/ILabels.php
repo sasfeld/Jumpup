@@ -16,4 +16,8 @@ interface ILabels {
     const MAINNAV_ADDTRIP = "Add a trip";    
     const MAINNAV_MANAGEPROFILE = "Edit profile";  
     const MAINNAV_DRIVER_BOOKINGS = "View bookings";  
+    
+    const MAINNAV_TAB1 = "Own trips";
+    const MAINNAV_TAB3 = "Community";
+    const MAINNAV_TAB3_VEHICLES = "Manage vehicles";
 }

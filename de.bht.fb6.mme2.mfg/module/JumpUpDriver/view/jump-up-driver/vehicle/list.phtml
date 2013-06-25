@@ -14,7 +14,7 @@ if (null !== $this->messages) {
 }
 
 $addUrl = $this->addUrl;
-echo "<a href=\"${addUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_ADD)."</a><br /><br />";
+echo "<a href=\"${addUrl}\">" . $this->translate ( IViewMessages::VEHICLE_LIST_LINK_ADD ) . "</a><br /><br />";
 if (null !== $this->vehicles) { // form is exported by the controller
 	if (0 == sizeof ( $this->vehicles )) {
 		echo $this->translate ( IViewMessages::VEHICLE_LIST_NO_VEHICLES );
@@ -23,22 +23,21 @@ if (null !== $this->vehicles) { // form is exported by the controller
 		$removeUrl = $this->removeUrl . "?" . $this->identifierParam . "=" . $vehicle->getId ();
 		$editUrl = $this->editUrl . "?" . $this->identifierParam . "=" . $vehicle->getId ();
 		
-		echo $this->translate(IViewMessages::VEHICLE_LIST_BRAND) . ": " . $vehicle->getBrand () . "<br />";
-		echo $this->translate(IViewMessages::VEHICLE_LIST_TYPE) . ": " . $vehicle->getType () . "<br />";
-		echo $this->translate(IViewMessages::VEHICLE_LIST_WASTAGE) .": " . $vehicle->getWastage () . "<br />";
-		echo $this->translate(IViewMessages::VEHICLE_LIST_AVG_SPEED).": " . $vehicle->getAvgspeed () . "<br />";
-		echo $this->translate(IViewMessages::VEHICLE_LIST_SEATS). ": " . $vehicle->getNumberseats () . "<br />";
-		echo $this->translate(IViewMessages::VEHICLE_LIST_LEG_SPACE).": " . $vehicle->getLegspace () . "<br />";
-		echo $this->translate(IViewMessages::VEHICLE_LIST_AIR_CONDITION).": " . $vehicle->getAircondition () . "<br />";
-		echo $this->translate(IViewMessages::VEHICLE_LIST_ACTUAL_WHEEL).": " . $vehicle->getActualwheel () . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_BRAND ) . ": " . $vehicle->getBrand () . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_TYPE ) . ": " . $vehicle->getType () . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_WASTAGE ) . ": " . $vehicle->getWastage () . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_AVG_SPEED ) . ": " . $vehicle->getAvgspeed () . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_SEATS ) . ": " . $vehicle->getNumberseats () . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_LEG_SPACE ) . ": " . $vehicle->getLegspace () . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_AIR_CONDITION ) . ": " . $this->translate ( $vehicle->getAircondition () ) . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_ACTUAL_WHEEL ) . ": " . $this->translate ( $vehicle->getActualwheel () ) . "<br />";
 		if (null !== $vehicle->getVehiclepic ()) {
-			echo $this->translate(IViewMessages::VEHICLE_LIST_CURRENT_PIC) . ": " . FilesUtil::prepareVehiclePic ( $vehicle ) . "<br />";
+			echo $this->translate ( IViewMessages::VEHICLE_LIST_CURRENT_PIC ) . ": " . FilesUtil::prepareVehiclePic ( $vehicle ) . "<br />";
+		} else {
+			echo $this->translate ( IViewMessages::VEHICLE_LIST_NO_PIC );
 		}
-		else {
-			echo $this->translate(IViewMessages::VEHICLE_LIST_NO_PIC);
-		}
-		echo "<a href=\"${removeUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_REMOVE)."</a> ";
-		echo "<a href=\"${editUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_EDIT)."</a>";
+		echo "<a href=\"${removeUrl}\">" . $this->translate ( IViewMessages::VEHICLE_LIST_LINK_REMOVE ) . "</a> ";
+		echo "<a href=\"${editUrl}\">" . $this->translate ( IViewMessages::VEHICLE_LIST_LINK_EDIT ) . "</a>";
 		echo "<br /><br />";
 	}
 }

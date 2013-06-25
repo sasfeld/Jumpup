@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-24 23:48+0100\n"
+"PO-Revision-Date: 2013-06-25 10:16+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -38,16 +38,8 @@ msgstr "Willkommen zu dem %sZend Framework 2%s"
 
 #: ../view/application/index/index.phtml:3
 #, php-format
-msgid ""
-"Congratulations! You have successfully installed the %sZF2 Skeleton "
-"Application%s. You are currently running Zend Framework version %s. This "
-"skeleton can serve as a simple starting point for you to begin building your "
-"application on ZF2."
-msgstr ""
-"Herzlichen Glückwunsch! Sie haben die %sZF2 Skeleton Application%s "
-"erfolgreich installiert und benutzen gerade die Version %s des Zend "
-"Frameworks. Dieses Gerüst kann Ihnen als Einstiegspunkt, für Ihre weitere "
-"Entwicklung, basierend auf dem Zend Framework 2, dienen."
+msgid "Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2."
+msgstr "Herzlichen Glückwunsch! Sie haben die %sZF2 Skeleton Application%s erfolgreich installiert und benutzen gerade die Version %s des Zend Frameworks. Dieses Gerüst kann Ihnen als Einstiegspunkt, für Ihre weitere Entwicklung, basierend auf dem Zend Framework 2, dienen."
 
 #: ../view/application/index/index.phtml:4
 msgid "Fork Zend Framework 2 on GitHub"
@@ -59,19 +51,8 @@ msgstr "Folge der Entwicklung"
 
 #: ../view/application/index/index.phtml:11
 #, php-format
-msgid ""
-"Zend Framework 2 is under active development. If you are interested in "
-"following the development of ZF2, there is a special ZF2 portal on the "
-"official Zend Framework website which provides links to the ZF2 %swiki%s, "
-"%sdev blog%s, %sissue tracker%s, and much more. This is a great resource for "
-"staying up to date with the latest developments!"
-msgstr ""
-"Das Zend Framework 2 wird z.Z. aktiv weiterentwickelt.  Sollten Sie daran "
-"interessiert sein, die Entwicklung von ZF2 zu verfolgen, so bietet Ihnen die "
-"offizielle Webseite einen eigens für das Zend Framework 2 eingerichteten "
-"Bereich, auf der Sie Verlinkungen zum ZF2 %sWiki%s, %sEntwickler Blog%s, "
-"einem %sFehlerverfolgungssystem%s und noch vielem mehr finden. Dieser "
-"Bereich ist eine hervorragende Quelle um stets aktuell zu bleiben."
+msgid "Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!"
+msgstr "Das Zend Framework 2 wird z.Z. aktiv weiterentwickelt.  Sollten Sie daran interessiert sein, die Entwicklung von ZF2 zu verfolgen, so bietet Ihnen die offizielle Webseite einen eigens für das Zend Framework 2 eingerichteten Bereich, auf der Sie Verlinkungen zum ZF2 %sWiki%s, %sEntwickler Blog%s, einem %sFehlerverfolgungssystem%s und noch vielem mehr finden. Dieser Bereich ist eine hervorragende Quelle um stets aktuell zu bleiben."
 
 #: ../view/application/index/index.phtml:12
 msgid "ZF2 Development Portal"
@@ -83,16 +64,8 @@ msgstr "Entdecken Sie Module"
 
 #: ../view/application/index/index.phtml:17
 #, php-format
-msgid ""
-"The community is working on developing a community site to serve as a "
-"repository and gallery for ZF2 modules. The project is available %son GitHub"
-"%s. The site is currently live and currently contains a list of some of the "
-"modules already available for ZF2."
-msgstr ""
-"Die Community arbeitet momentan an einer Community Seite, welche als Galerie "
-"für ZF2 Module dient. Dieses Projekt ist %sauf GitHub%s verfügbar. Die "
-"Webseite ist bereits Online und enthält eine Liste mit schon "
-"veröffentlichten Modulen für das Zend Framework 2."
+msgid "The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2."
+msgstr "Die Community arbeitet momentan an einer Community Seite, welche als Galerie für ZF2 Module dient. Dieses Projekt ist %sauf GitHub%s verfügbar. Die Webseite ist bereits Online und enthält eine Liste mit schon veröffentlichten Modulen für das Zend Framework 2."
 
 #: ../view/application/index/index.phtml:18
 msgid "Explore ZF2 Modules"
@@ -104,18 +77,8 @@ msgstr "Hilfe &amp; Support"
 
 #: ../view/application/index/index.phtml:23
 #, php-format
-msgid ""
-"If you need any help or support while developing with ZF2, you may reach us "
-"via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or "
-"feedback you may have regarding the beta releases. Alternatively, you may "
-"subscribe and post questions to the %smailing lists%s."
-msgstr ""
-"Sollten Sie Hilfe jeglicher Art bei der Entwicklung mit dem Zend Framework 2 "
-"benötigen, kontaktieren Sie uns doch einfach über das IRC: %s#zftalk on "
-"Freenode%s. Wir freuen uns darauf, Ihnen bei Ihren Fragen zu helfen oder "
-"aber auch Ihre Meinung bezüglich der Beta Versionen zu hören. Alternativ "
-"können Sie auch die %smailing lists%s abonnieren und Ihre Fragen dort "
-"stellen."
+msgid "If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We'd love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s."
+msgstr "Sollten Sie Hilfe jeglicher Art bei der Entwicklung mit dem Zend Framework 2 benötigen, kontaktieren Sie uns doch einfach über das IRC: %s#zftalk on Freenode%s. Wir freuen uns darauf, Ihnen bei Ihren Fragen zu helfen oder aber auch Ihre Meinung bezüglich der Beta Versionen zu hören. Alternativ können Sie auch die %smailing lists%s abonnieren und Ihre Fragen dort stellen."
 
 #: ../view/application/index/index.phtml:24
 msgid "Ping us on IRC"
@@ -156,15 +119,11 @@ msgstr "Es trat ein 404 Fehler auf"
 
 #: ../view/error/404.phtml:10
 msgid "The requested controller was unable to dispatch the request."
-msgstr ""
-"Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
+msgstr "Der angeforderte Controller war nicht in der Lage die Anfrage zu verarbeiten."
 
 #: ../view/error/404.phtml:13
-msgid ""
-"The requested controller could not be mapped to an existing controller class."
-msgstr ""
-"Der angeforderte Controller konnte keiner Controller Klasse zugeordnet "
-"werden."
+msgid "The requested controller could not be mapped to an existing controller class."
+msgstr "Der angeforderte Controller konnte keiner Controller Klasse zugeordnet werden."
 
 #: ../view/error/404.phtml:16
 msgid "The requested controller was not dispatchable."
@@ -176,9 +135,7 @@ msgstr "Für die angeforderte URL konnte keine Übereinstimmung gefunden werden.
 
 #: ../view/error/404.phtml:22
 msgid "We cannot determine at this time why a 404 was generated."
-msgstr ""
-"Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 "
-"Fehler aufgetreten ist."
+msgstr "Zu diesem Zeitpunkt ist es uns nicht möglich zu bestimmen, warum ein 404 Fehler aufgetreten ist."
 
 #: ../view/error/404.phtml:34
 msgid "Controller"
@@ -194,18 +151,12 @@ msgid "Exception"
 msgstr "Ausnahme"
 
 #: JumpUpUser/src/JumpUpUser/Filters/RegistrationFormFilter:46
-msgid ""
-"The username may only contain alphanumeric characters. It must begin with "
-"letter."
-msgstr ""
-"Der Benutzername darf nur alphanumerische Zeichen enthalten. Er muss mit "
-"einem Buchstaben beginnen."
+msgid "The username may only contain alphanumeric characters. It must begin with letter."
+msgstr "Der Benutzername darf nur alphanumerische Zeichen enthalten. Er muss mit einem Buchstaben beginnen."
 
 #: JumpUpUser/src/JumpUpUser/Filters/RegistrationFormFilter:47
-msgid ""
-"The username's length must be a mimimum of %s and a maximum of %s characters"
-msgstr ""
-"Der Benutzernamer muss mind. aus %s, max. aber aus %s Zeichen bestehen."
+msgid "The username's length must be a mimimum of %s and a maximum of %s characters"
+msgstr "Der Benutzernamer muss mind. aus %s, max. aber aus %s Zeichen bestehen."
 
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:33
 msgid "Username"
@@ -252,21 +203,16 @@ msgid "The password must contain at least on special character."
 msgstr "Das Passwort muss mind. ein Sonderzeichen enthalten."
 
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
-msgid ""
-"The password's length must be a mimimum of %s and a maximum of %s characters"
-msgstr ""
-"Dass Passwort muss mind. aus %s, max. aber aus %s Zeichen und mind. 1 "
-"Sonderzeichen bestehen"
+msgid "The password's length must be a mimimum of %s and a maximum of %s characters"
+msgstr "Dass Passwort muss mind. aus %s, max. aber aus %s Zeichen und mind. 1 Sonderzeichen bestehen"
 
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
 msgid "Please fill in an eMail adress."
 msgstr "Gib bitte eine eMail-Adresse ein."
 
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
-msgid ""
-"The DNS configuration for the given hostname doesn't offer an MX record."
-msgstr ""
-"Die DNS-Konfiguration des angebenen Hostnamen weist keinen MX-Record auf."
+msgid "The DNS configuration for the given hostname doesn't offer an MX record."
+msgstr "Die DNS-Konfiguration des angebenen Hostnamen weist keinen MX-Record auf."
 
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
 msgid "The eMail adress must be in the form xy@hostname.tld ."
@@ -281,12 +227,8 @@ msgid "This user already exists. Please choose another username."
 msgstr "Dieser Benutzername ist schon vergeben. Bitte nimm einen anderen."
 
 #: JumpUpUser/view/jump-up-user/register/showform.phtml
-msgid ""
-"You were successfully registered! Please check your eMails to confirm the "
-"account."
-msgstr ""
-"Du wurdest erfolgreich registriert. Bitte überprüfe deine eMails, da du den "
-"Account noch aktivieren musst."
+msgid "You were successfully registered! Please check your eMails to confirm the account."
+msgstr "Du wurdest erfolgreich registriert. Bitte überprüfe deine eMails, da du den Account noch aktivieren musst."
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
 msgid "Hello"
@@ -297,11 +239,8 @@ msgid "We are glad to have you now aboard the greatest car pooling community."
 msgstr "Cool, dich hier auf jumpup an Bord zu haben!"
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
-msgid ""
-"Before you can use your account, we have to check if your eMail is correct."
-msgstr ""
-"Bevor du deinen Account nutzen kannst, musst du nur noch deine eMail-Adresse "
-"bestätigen."
+msgid "Before you can use your account, we have to check if your eMail is correct."
+msgstr "Bevor du deinen Account nutzen kannst, musst du nur noch deine eMail-Adresse bestätigen."
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/ConcreteControllerMessages:
 msgid "Please click on the confirmation link below"
@@ -324,20 +263,12 @@ msgid "jumup.me | Please confirm your registration"
 msgstr "jumup.me | Bitte bestätige deine Registrierung"
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
-msgid ""
-"The confirmation wasn't successfull. Maybe the user doesn't exist or the "
-"confirmation key is wrong. Please contact the support."
-msgstr ""
-"Die Bestätigung war nicht erfolgreich. Vielleicht existiert der Benutzer "
-"nicht oder der Bestätigungskey ist falsch. Bitte kontaktiere den Support."
+msgid "The confirmation wasn't successfull. Maybe the user doesn't exist or the confirmation key is wrong. Please contact the support."
+msgstr "Die Bestätigung war nicht erfolgreich. Vielleicht existiert der Benutzer nicht oder der Bestätigungskey ist falsch. Bitte kontaktiere den Support."
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
-msgid ""
-"You were successfully confirmed. You can now log in with using your "
-"credentials and have fun!"
-msgstr ""
-"Du wurdest erfolgreich bestätigt. Du kannst dich nun mit deinen Zugangsdaten "
-"einloggen und loslegen!"
+msgid "You were successfully confirmed. You can now log in with using your credentials and have fun!"
+msgstr "Du wurdest erfolgreich bestätigt. Du kannst dich nun mit deinen Zugangsdaten einloggen und loslegen!"
 
 #: JumpUpUser/view/jump-up-user/register/confirm.phtml
 msgid "Confirmation"
@@ -348,13 +279,8 @@ msgid "Add a trip"
 msgstr "Neue Fahrt anlegen"
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
-msgid ""
-"You aren't confirmed yet. Please check your eMails for the confirmation link "
-"before you try to login."
-msgstr ""
-"Du wurdest noch nicht bestätigt. Bitte überprüfe deine eMails, um die "
-"Bestätigung erfolgreich abzuschließen. Erst dann kannst du auch wirklich "
-"loslegen."
+msgid "You aren't confirmed yet. Please check your eMails for the confirmation link before you try to login."
+msgstr "Du wurdest noch nicht bestätigt. Bitte überprüfe deine eMails, um die Bestätigung erfolgreich abzuschließen. Erst dann kannst du auch wirklich loslegen."
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
 msgid "You've been successfully logged out."
@@ -382,35 +308,19 @@ msgstr "Preis:"
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
 msgid "Your trip was successfully added. You will find in your overview page."
-msgstr ""
-"Deine Fahrt wurde erfolgreich hinzugefügt. Die Übersicht findest du auf der "
-"Buchungsseite."
+msgstr "Deine Fahrt wurde erfolgreich hinzugefügt. Die Übersicht findest du auf der Buchungsseite."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"Something went wrong. You are currently not logged in. Please login again, "
-"be sure to activate cookies and try it again."
-msgstr ""
-"Irgendwas ist schiefgelaufen. Du bist gerade nicht eingelogged. Bitte logge "
-"dich wieder ein und versichere, dass du Cookies deaktiviert hast."
+msgid "Something went wrong. You are currently not logged in. Please login again, be sure to activate cookies and try it again."
+msgstr "Irgendwas ist schiefgelaufen. Du bist gerade nicht eingelogged. Bitte logge dich wieder ein und versichere, dass du Cookies deaktiviert hast."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"You haven't configured any vehicles yet. Please create a vehicle so the "
-"system can offer price recommendations."
-msgstr ""
-"Du hast noch keine Fahrzeuge konfiguriert. Bitte lege ein neues "
-"Fahrzeugprofil an, damit das System die Fahrpreise automatisch berechnen "
-"kann."
+msgid "You haven't configured any vehicles yet. Please create a vehicle so the system can offer price recommendations."
+msgstr "Du hast noch keine Fahrzeuge konfiguriert. Bitte lege ein neues Fahrzeugprofil an, damit das System die Fahrpreise automatisch berechnen kann."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"There are active bookings within the trip. You can't delete the trip. Please "
-"try to cancel the bookings before."
-msgstr ""
-"Für deine Fahrt gibt es noch aktive Buchungen. Du kannst die Fahrt daher "
-"nicht löschen. Bitte versuche, die Buchungen ggf. zu löschen und wiederhole "
-"dann den Vorgang."
+msgid "There are active bookings within the trip. You can't delete the trip. Please try to cancel the bookings before."
+msgstr "Für deine Fahrt gibt es noch aktive Buchungen. Du kannst die Fahrt daher nicht löschen. Bitte versuche, die Buchungen ggf. zu löschen und wiederhole dann den Vorgang."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
 msgid "The trip was successfully deleted."
@@ -426,8 +336,7 @@ msgstr "Bitte auswählen"
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
 msgid "The given vehicle doesn't contain as much seats as you want to offer."
-msgstr ""
-"Das angegebene Fahrzeug hat nicht so viele Plätze wie du anbieten möchtest."
+msgstr "Das angegebene Fahrzeug hat nicht so viele Plätze wie du anbieten möchtest."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
 msgid "Your vehicle was successfully added."
@@ -442,47 +351,28 @@ msgid "Your vehicle was successfully removed."
 msgstr "Dein Fahrzeugprofil wurde erfolgreich gelöscht."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"Something went wrong. The way you tried to use this function doesn't work."
-msgstr ""
-"Irgendwas ist schief gelaufen. Die Art und Weise, wie du diese Funktion "
-"aufrufst, funktioniert nicht."
+msgid "Something went wrong. The way you tried to use this function doesn't work."
+msgstr "Irgendwas ist schief gelaufen. Die Art und Weise, wie du diese Funktion aufrufst, funktioniert nicht."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"We are sorry, but the vehicle is used in a trip. You can't remove it until "
-"the trip is expired."
-msgstr ""
-"Es tut uns leid, aber dein Fahrzeug-Profil wird in einer Fahrt verwendet. Du "
-"kannst es daher nicht entfernen, bis die Fahrt abgelaufen ist."
+msgid "We are sorry, but the vehicle is used in a trip. You can't remove it until the trip is expired."
+msgstr "Es tut uns leid, aber dein Fahrzeug-Profil wird in einer Fahrt verwendet. Du kannst es daher nicht entfernen, bis die Fahrt abgelaufen ist."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"Internal error: illegal request. If the error occurs again, please inform "
-"the support."
-msgstr ""
-"Interner Fehler: illegaler Request. Wenn der Fehler erneut auftaucht, "
-"informiere bitte den Support."
+msgid "Internal error: illegal request. If the error occurs again, please inform the support."
+msgstr "Interner Fehler: illegaler Request. Wenn der Fehler erneut auftaucht, informiere bitte den Support."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"Internal error: No booking instance. Please inform the support if the error "
-"occurs again."
-msgstr ""
-"Interner Fehler: konnte die Buchung nicht initialisieren. Bitte informiere "
-"den Support, wenn der Fehler erneut auftaucht."
+msgid "Internal error: No booking instance. Please inform the support if the error occurs again."
+msgstr "Interner Fehler: konnte die Buchung nicht initialisieren. Bitte informiere den Support, wenn der Fehler erneut auftaucht."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
 msgid "No matching vehicle found."
 msgstr "Es konnte kein passendes Fahrzeug-Profil gefunden werden."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
-msgid ""
-"The passenger recommended the following price. You can now apply, deny or "
-"make another decision."
-msgstr ""
-"Dein Mitfahrer hat den nachfolgenden Preis vorgeschlagen. Du kannst diesen "
-"nun bestätigen, ablehnen oder ein Gegenangebot machen."
+msgid "The passenger recommended the following price. You can now apply, deny or make another decision."
+msgstr "Dein Mitfahrer hat den nachfolgenden Preis vorgeschlagen. Du kannst diesen nun bestätigen, ablehnen oder ein Gegenangebot machen."
 
 #: JumpUpDriver\Util\Messages\IViewMessages
 msgid "State"
@@ -545,8 +435,8 @@ msgid "Average speed (km/h)"
 msgstr "Durchschnittsgeschwindigkeit (km/h)"
 
 #: JumpUpDriver\Util\Messages\IViewMessages
-msgid "Wastage (lt/100km)"
-msgstr "Verbrauch (lt/100km)"
+msgid "Wastage (l/100km)"
+msgstr "Verbrauch (l/100km)"
 
 #: JumpUpDriver\Util\Messages\IViewMessages
 msgid "Type"
@@ -661,88 +551,48 @@ msgid "Please fill in all required fields."
 msgstr "Bitte fülle alle benötigten Felder aus."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"Congratulations, you have booked the trip successfully! Please be patient "
-"and wait for the driver to handle the booking. If the driver doesn't accept "
-"your recommended price, he will make another offer. You will be informed via "
-"eMail."
-msgstr ""
-"Herzlichen Glückwunsch, du hast diese Fahrt erfolgreich gebucht! Bitte hab' "
-"ein wenig Geduld und warte auf die Bearbeitung der Buchung durch den Fahrer. "
-"Akzeptiert er deinen empfohlenen Preis nicht, wird er dir ein anderes "
-"Angebot machen. Du wirst per eMail über die weiteren Vorgänge informiert "
-"werden."
+msgid "Congratulations, you have booked the trip successfully! Please be patient and wait for the driver to handle the booking. If the driver doesn't accept your recommended price, he will make another offer. You will be informed via eMail."
+msgstr "Herzlichen Glückwunsch, du hast diese Fahrt erfolgreich gebucht! Bitte hab' ein wenig Geduld und warte auf die Bearbeitung der Buchung durch den Fahrer. Akzeptiert er deinen empfohlenen Preis nicht, wird er dir ein anderes Angebot machen. Du wirst per eMail über die weiteren Vorgänge informiert werden."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"The trip you want to book cannot be booked anymore. Please try to find "
-"another trip."
-msgstr ""
-"Die Fahrt, die du buchen wolltest, ist leider nicht mehr buchbar. Bitte sieh "
-"dich nach alternativen Fahrten um."
+msgid "The trip you want to book cannot be booked anymore. Please try to find another trip."
+msgstr "Die Fahrt, die du buchen wolltest, ist leider nicht mehr buchbar. Bitte sieh dich nach alternativen Fahrten um."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"Internal error: No matching trip found. If the error occurs again, please "
-"inform the support."
-msgstr ""
-"Interner Fehler: Fahrt konnte nicht gefunden werden. Wenn der Fehler erneut "
-"auftritt, informiere bitte den Support."
+msgid "Internal error: No matching trip found. If the error occurs again, please inform the support."
+msgstr "Interner Fehler: Fahrt konnte nicht gefunden werden. Wenn der Fehler erneut auftritt, informiere bitte den Support."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"Interal error: None booking could get fetched from the database. If the "
-"error occurs again, please inform the support."
-msgstr ""
-"Interner Fehler: Buchungs-Instanz konnte nicht gefetched werden. Wenn der "
-"Fehler erneut auftritt, informiere bitte den Support."
+msgid "Interal error: None booking could get fetched from the database. If the error occurs again, please inform the support."
+msgstr "Interner Fehler: Buchungs-Instanz konnte nicht gefetched werden. Wenn der Fehler erneut auftritt, informiere bitte den Support."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
 msgid "Internal error: No booking instance."
 msgstr "Interner Fehler: keine Buchungs-Instanz."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"Your cannot book your own trip. Please let other passengers the ability to "
-"book your ride."
-msgstr ""
-"Du kannst deine eigene Fahrt nicht buchen. Bitte lasse den anderen "
-"Mitfahrern die Möglichkeit, deine eigene Fahrt zu buchen."
+msgid "Your cannot book your own trip. Please let other passengers the ability to book your ride."
+msgstr "Du kannst deine eigene Fahrt nicht buchen. Bitte lasse den anderen Mitfahrern die Möglichkeit, deine eigene Fahrt zu buchen."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"You have already booked this trip. Please check your bookings overview here."
-msgstr ""
-"Diese Fahrt hast du bereits gebucht. Bitte überprüfe nachfolgend deine "
-"Buchungen."
+msgid "You have already booked this trip. Please check your bookings overview here."
+msgstr "Diese Fahrt hast du bereits gebucht. Bitte überprüfe nachfolgend deine Buchungen."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"We are sorry but no trips where found for your desires. Please try to apply "
-"other options"
-msgstr ""
-"Es tut uns leid, aber für deine Kriterien wurden keine Fahrten gefunden. "
-"Probiere bitte andere weniger restriktive Optionen aus."
+msgid "We are sorry but no trips where found for your desires. Please try to apply other options"
+msgstr "Es tut uns leid, aber für deine Kriterien wurden keine Fahrten gefunden. Probiere bitte andere weniger restriktive Optionen aus."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"Your recommendation was sent to the driver. He needs to accept it before you "
-"can really do the trip."
-msgstr ""
-"Deine Empfehlung wurde an den Fahrer gesendet. Er muss sie noch akzeptieren, "
-"bevor es für dich losgehen kann."
+msgid "Your recommendation was sent to the driver. He needs to accept it before you can really do the trip."
+msgstr "Deine Empfehlung wurde an den Fahrer gesendet. Er muss sie noch akzeptieren, bevor es für dich losgehen kann."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
 msgid "No bookings done"
 msgstr "Du hast keine Buchungen getätigt."
 
 #: JumpUpPassenger\Util\Messages\IControllerMessages
-msgid ""
-"The driver recommended the following price. You can now accept or deny the "
-"booking definitly or make another offer."
-msgstr ""
-"Der Fahrer hat folgenden Preis empfohlen. Du kannst diesen nun akzeptieren, "
-"definitiv absagen oder ein Gegenangebot machen."
+msgid "The driver recommended the following price. You can now accept or deny the booking definitly or make another offer."
+msgstr "Der Fahrer hat folgenden Preis empfohlen. Du kannst diesen nun akzeptieren, definitiv absagen oder ein Gegenangebot machen."
 
 #: JumpUpPassenger\Util\Messages\IViewMessages
 msgid "View bookings"
@@ -801,24 +651,16 @@ msgid "Your profile was successfully changed."
 msgstr "Dein Profil wurde erfolgreich geändert."
 
 #: JumpUpUser\Util\Messages\IControllerMessages
-msgid ""
-"You haven't configured your profile yet. Please be so kind to offer your "
-"information."
-msgstr ""
-"Du hast dein Profil noch nicht konfiguriert. Bitte nimm' dir die Zeit und "
-"reichere es mit Informationen an."
+msgid "You haven't configured your profile yet. Please be so kind to offer your information."
+msgstr "Du hast dein Profil noch nicht konfiguriert. Bitte nimm' dir die Zeit und reichere es mit Informationen an."
 
 #: JumpUpUser\Util\Messages\IControllerMessages
 msgid "Couldn't delete the old profile picture. Please contact the support."
-msgstr ""
-"Das alte Profilbild konnte nicht gelöscht werden. Bitte kontaktiere bei "
-"Bedarf den Support."
+msgstr "Das alte Profilbild konnte nicht gelöscht werden. Bitte kontaktiere bei Bedarf den Support."
 
 #: JumpUpUser\Util\Messages\IControllerMessages
 msgid "There was no profile found. Maybe the user doesn't exist."
-msgstr ""
-"Es konnte kein Profil gefunden wurden. Eventuell existiert der Benutzer "
-"nicht."
+msgstr "Es konnte kein Profil gefunden wurden. Eventuell existiert der Benutzer nicht."
 
 #: JumpUpUser\Util\Messages\IControllerMessages
 msgid "The file type must be one of type png, jpeg or gif."
@@ -927,3 +769,4 @@ msgstr "Der empfohlene Gesamtpreis für dein Fahrzeug beträgt"
 #: JumpUpDriver\Util\Messages\JsonMessages
 msgid "euro. Your wastage is"
 msgstr "Euro. Dein Verbrauch beträgt"
+

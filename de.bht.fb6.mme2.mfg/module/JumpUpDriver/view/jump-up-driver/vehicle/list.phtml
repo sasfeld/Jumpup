@@ -37,7 +37,7 @@ if (null !== $this->vehicles) { // form is exported by the controller
 		else {
 			echo $this->translate(IViewMessages::VEHICLE_LIST_NO_PIC);
 		}
-		echo "<a href=\"${removeUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_REMOVE)."</a>";
+		echo "<a href=\"${removeUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_REMOVE)."</a> ";
 		echo "<a href=\"${editUrl}\">".$this->translate(IViewMessages::VEHICLE_LIST_LINK_EDIT)."</a>";
 		echo "<br /><br />";
 	}

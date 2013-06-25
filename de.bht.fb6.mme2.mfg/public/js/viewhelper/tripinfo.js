@@ -254,7 +254,7 @@ define([ "jquery" ], (function($) {
 
 		this.addHeadline("<span class=\"highlighting\">" + startPoint
 				+ "</span> "+messages.to+" <span class=\"highlighting\">" + endPoint + "</span>");
-		var bodyStr = "<ul>" 
+		var bodyStr = "<ul class=\"bookinglist\">" 
 				+ "<li><span class=\"ui-accordion-content-key\">"+messages.location_distance+":</span>" + distFromPassLoc + "</li>"
 				+ "<li><span class=\"ui-accordion-content-key\">"+messages.destination_distance+":</span>" + distFromPassDest + "</li>"
 				+ "<li class=\"drivertooltip\" id=\"" + id + '\">'

@@ -421,7 +421,7 @@ public function __construct() {
     return array ('id' => $this->id,
         'startPoint' => $this->startPoint,
         'endPoint' => $this->endPoint,
-        'startDate' => $this->startDate,
+        'startDate' => $this->getStartDate(),
         'price'  => $this->price,
         'driver'  => $this->driver->toJson(),
         'startCoord' => $this->getStartCoord(),

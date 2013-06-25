@@ -1,6 +1,7 @@
 <?php
 namespace JumpUpPassenger\Json;
 
+use Application\Util\IntlUtil;
 class TripWrapper {
     const FIELD_NUMBER_TRIPS = "numberTrips";
     const FIELD_TRIPS = "trips";
@@ -33,6 +34,10 @@ class TripWrapper {
     }
     
     public function setTrips(array $trips) {
+    	foreach ($trips as $trip) {
+    		$formattedDate = IntlUtil::strToDeDate($trip->getStartDate());
+    		$trip->setStartDate($formattedDate);
+    	}
         $this->trips  = $trips;
     }
     

@@ -15,6 +15,7 @@ use JumpUpDriver\Forms\BasicTripForm;
 use JumpUpUser\Controller\ProfileController;
 use JumpUpDriver\Controller\VehicleController;
 use JumpUpDriver\Util\Routes\IRouteStore;
+use Application\Util\IntlUtil;
 
 class RenderBookings {
 	const DRIVER = 1;
@@ -122,11 +123,11 @@ class RenderBookings {
 	}
 	
 	public static function renderTrip(Trip $trip, $_this, $mode) {
-		echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( "Date" ) . " - " . $_this->translate ( IViewMessages::BOOKING_DATE ) . ")";
-		$deleteForm = self::getDeleteTripForm($trip);
-		echo $_this->renderForm($deleteForm) . "</h3>";
+		echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( IViewMessages::BOOKING_DATE ) . ": ".IntlUtil::strToDeDate($trip->getStartDate()) . ")"
+			. "</h3>";
 		echo '<div class="' . ICssStyles::TRIP . '">'; // begin of accordion element content
-		
+		$deleteForm = self::getDeleteTripForm($trip);	
+		echo $_this->renderForm($deleteForm);
 		$bookings = $trip->getBookings();
 		if(sizeof($bookings) > 0) {
 			foreach ( $bookings as $booking ) {
@@ -141,7 +142,7 @@ class RenderBookings {
 			}
 		}
 		else { // size = 0
-			echo "<p>".\Application\Util\Messages\IViewMessages::DRIVER_NO_BOOKINGS."</p>";
+			echo "<p>".$_this->translate(\Application\Util\Messages\IViewMessages::DRIVER_NO_BOOKINGS)."</p>";
 		}
 		
 		echo "</div>"; // end of accordion element content

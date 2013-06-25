@@ -15,11 +15,11 @@ use Zend\I18n\Translator\Translator;
 * @since      24.06.2013
  */
 class JsonMessages {
-	const LOOK_UP_LOCATION_DISTANCE = "Location distance";
-	const LOOK_UP_DESTINATION_DISTANCE = "Destination distance";
+	const LOOK_UP_LOCATION_DISTANCE = "Location distance (km)";
+	const LOOK_UP_DESTINATION_DISTANCE = "Destination distance (km)";
 	const LOOK_UP_DRIVER = "Driver";
 	const LOOK_UP_START_DATE = "Start date";
-	const LOOK_UP_OVERALL_PRICE = "Overall price";
+	const LOOK_UP_OVERALL_PRICE = "Overall price (euro)";
 	const LOOK_UP_CURRENT_BOOKINGS = "Current bookings";
 	const LOOK_UP_VEHICLE = "Vehicle";
 	const LOOK_UP_LEG_SPACE = "Leg space";
@@ -32,7 +32,7 @@ class JsonMessages {
 	const LOOK_UP_SPOKEN_LANGS = "Spoken languages";
 	const LOOK_UP_EMAIL = "eMail";
 	const LOOK_UP_HOME_TOWN = "Home town";
-	const LOOK_UP_PRICE_RECOM = "Your price recommendation";
+	const LOOK_UP_PRICE_RECOM = "Your price recommendation (euro)";
 	const LOOK_UP_BOOK = "Book";
 	const LOOK_UP_TO = "to";
 	

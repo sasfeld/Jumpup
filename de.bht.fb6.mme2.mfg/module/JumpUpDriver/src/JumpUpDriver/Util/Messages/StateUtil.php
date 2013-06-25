@@ -28,9 +28,9 @@ class StateUtil {
   public static function getStateLabel($state) {
     switch ($state) {
       case IBookingState::ACCEPT:
-        return "accepted";
+        return "accepted - booked";
       case IBookingState::DENY:
-        return "denied";
+        return "denied - canceled";
       case IBookingState::OFFER_FROM_DRIVER:
         return "offer from driver";
       case IBookingState::OFFER_FROM_PASSENGER:

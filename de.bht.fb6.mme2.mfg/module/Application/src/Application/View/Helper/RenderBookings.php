@@ -106,9 +106,11 @@ class RenderBookings {
 		echo "<p>" . $_this->translate ( \JumpUpPassenger\Util\Messages\IViewMessages::VEHICLE) . ': <a target="blank" href="'. $_this->url(IRouteStore::SHOW_VEHICLE) . '?'.VehicleController::PARAM_VEHICLE_ID. '=' . $booking->getTrip()->getVehicle()->getId() . '">' 
 				. $booking->getTrip()->getVehicle()->getBrand() . " " . $booking->getTrip()->getVehicle()->getType() . "</a></p>"; 
 		// render status
+		echo "<p>" . $_this->translate( \JumpUpDriver\Util\Messages\IViewMessages::BOOKING_DATE) . ": " . IntlUtil::strToDeDate($booking->getTrip()->getStartDate())."</p>";
 		echo "<p>" . $_this->translate ( IViewMessages::BOOKING_STATE ) . ": " . $_this->translate ( StateUtil::getStateLabel ( $booking->getState () ) ) . "</p>";
 		// differ bookings states
 		if ($booking->getState () === IBookingState::OFFER_FROM_DRIVER) {
+		
 			echo $_this->translate ( \JumpUpPassenger\Util\Messages\IControllerMessages::BOOKING_STATE_DRIVERS_RECOMM ) . "<br />";
 			echo $_this->translate ( "Driver's price recommendation: " . $booking->getDriversRecomPrice () );
 			// show recommendation form

@@ -9,12 +9,15 @@ body {
 
 .navigation.jMenu {
 	width: 100%;
-	margin-top: 2.9em;
 }
 
-@media ( max-width : 979px) {
+@media ( min-width : 980px) {
 	.navigation.jMenu {
-		margin-top: 0em;
+		margin-top: 2.9em;
+	}
+	
+	#page-content {
+		margin-top: 3em;
 	}
 }
 

@@ -1,6 +1,21 @@
+* {
+	outline-style: none;
+}
+
 body {
 	padding-top: 60px;
 	padding-bottom: 40px;
+}
+
+.navigation.jMenu {
+	width: 100%;
+	margin-top: 2.9em;
+}
+
+@media ( max-width : 979px) {
+	.navigation.jMenu {
+		margin-top: 0em;
+	}
 }
 
 #form {
@@ -11,6 +26,10 @@ label span {
 	margin-top: 0.2em;
 	float: left;
 	min-width: 15em;
+}
+
+#add-vehicle span {
+	min-width: 17.8em;
 }
 
 .highlighting {
@@ -72,6 +91,11 @@ select {
 	font-size: 1.5em;
 }
 
+input[type="radio"] {
+	margin-right: 1em;
+	margin-top: -0.1em;
+}
+
 #map_div {
 	/*height: 100%;*/
 	margin-bottom: 2em;
@@ -101,7 +125,7 @@ select {
 }
 
 .visible {
-	visibility: visible, display:          block
+	visibility: visible, display:              block
 }
 /*
 /* * ..::::::::::::::::.. */

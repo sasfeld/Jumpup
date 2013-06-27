@@ -119,14 +119,14 @@ require(
 								$(".navigation").jMenu({
 									openClick : false,
 									ulWidth : 'auto',
-									effects : {
-										effectSpeedOpen : 400,
-										effectSpeedClose : 200,
-										effectTypeOpen : 'slide',
-										effectTypeClose : 'hide',
-										effectOpen : 'easeOutBounce',
-										effectClose : 'easeOutBounce'
-									},
+//									effects : {
+//										effectSpeedOpen : 400,
+//										effectSpeedClose : 200,
+//										effectTypeOpen : 'slide',
+//										effectTypeClose : 'hide',
+//										effectOpen : 'easeOutBounce',
+//										effectClose : 'easeOutBounce'
+//									},
 									TimeBeforeOpening : 100,
 									TimeBeforeClosing : 100,
 									animatedText : false,

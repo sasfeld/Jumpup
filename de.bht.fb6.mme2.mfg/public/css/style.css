@@ -7,6 +7,10 @@ body {
 	padding-bottom: 40px;
 }
 
+footer {
+	padding-left: 10px;
+}
+
 .navigation.jMenu {
 	width: 100%;
 	margin-top: 0.4em;
@@ -159,10 +163,10 @@ input[type="radio"] {
 .ui-tooltip {
 	position: relative;
 	max-width: 350px;
-	background-color: rgba(34.5%, 34.5%, 34.5%, 0.5);
+	background-color: rgba(34.5%, 34.5%, 34.5%, 0.9);
 	color: #D6D6FF;
 	padding: 1em;
-	left: 500px;
+	left: 100px;
 	top: 100px;
 }
 

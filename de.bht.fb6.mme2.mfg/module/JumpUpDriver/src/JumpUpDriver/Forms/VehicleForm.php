@@ -122,7 +122,7 @@ class VehicleForm {
    * @Annotation\Type("Zend\Form\Element\Radio")
    * @Annotation\Options({
    *          "label":"Actual wheel:",
-   *          "value_options":{"Summer":"Summer", "Winter":"Winter", "all-seasion tires":"all-seasion tires"}
+   *          "value_options":{"Summer":"Summer", "Winter":"Winter", "all-season tires":"all-season tires"}
    * })
    */
   public $actualwheel;

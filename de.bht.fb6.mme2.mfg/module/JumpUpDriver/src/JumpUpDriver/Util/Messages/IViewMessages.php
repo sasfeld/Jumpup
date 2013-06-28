@@ -29,6 +29,7 @@ interface IViewMessages {
    	const BOOKING_NO_TRIPS = "You haven't configured any trips yet.";
     const TRIP_DELETE = "Delete";
     const BOOKING_DRIVER = "Driver";
+    const BOOKING_PASSENGER_PRICE_RECOM = "Passenger's price recommendation (euro)";
    	/*
      * ..:::::::::::::::::::::::::::::::::..
     */

@@ -26,7 +26,7 @@ class RecommendationForm {
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Attributes({"recomm_form"})
-   * @Annotation\Options({"label":"Your recommendation:","attributes":{"size":"5"}})
+   * @Annotation\Options({"label":"Your recommendation (euro):","attributes":{"size":"5"}})
    */
   public $price; 
   /**

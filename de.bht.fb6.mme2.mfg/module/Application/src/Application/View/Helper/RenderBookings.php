@@ -56,23 +56,21 @@ class RenderBookings {
 		$applyForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_APPLY );
 		$denyForm = self::getDenyForm ( $booking );
 		$denyForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DENY );
-		echo '<li> <h4 class="' . ICssStyles::BOOKINGHEADLINE . '">#' . $booking->getId () . ' | <a target="blank" href="'.$_this->url(\JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE).'?'.ProfileController::PARAM_USER_ID . '=' . $booking->getPassenger()->getId() . '">' .  $booking->getPassenger ()->getPrename () . ' ' . $booking->getPassenger ()->getLastname () . '</a> | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</h4>';
+		echo '<li> <h4 class="' . ICssStyles::BOOKINGHEADLINE . '">#' . $booking->getId () . ' | <a target="_blank" href="'.$_this->url(\JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE).'?'.ProfileController::PARAM_USER_ID . '=' . $booking->getPassenger()->getId() . '">' .  $booking->getPassenger ()->getPrename () . ' ' . $booking->getPassenger ()->getLastname () . '</a> | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</h4>';
 		if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
 			echo $_this->renderForm ( $applyForm );
 		}
 		if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
 			echo $_this->renderForm ( $denyForm );
 		}
-		else {
-			echo '<span class="nofloat">&nbsp;</span>';
-		}
+
 		echo "<div class=\"" . ICssStyles::BOOKING . "\">\n\t\t\t"; // begin of booking div
 		// render status
 		echo "<p>" . $_this->translate ( IViewMessages::BOOKING_STATE ) . ": " . $_this->translate ( StateUtil::getStateLabel ( $booking->getState () ) ) . "</p>";
 		// differ bookings states
 		if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
 			echo $_this->translate ( IControllerMessages::BOOKING_STATE_PASSENGER_RECOMM ) . "<br />";
-			echo $_this->translate ( "Passenger's price recommendation: " . $booking->getPassengersRecomPrice () );
+			echo $_this->translate ( \JumpUpDriver\Util\Messages\IViewMessages::BOOKING_PASSENGER_PRICE_RECOM ). ": ". $booking->getPassengersRecomPrice () ;
 			// show recommendation form
 			$recommForm = self::getRecommForm ( $booking );
 			$recommForm->setAttribute ( 'action', \JumpUpDriver\Util\Routes\IRouteStore::BOOK_DO_RECOMMENDATION );
@@ -90,29 +88,28 @@ class RenderBookings {
 		$applyForm->setAttribute ( 'action', \JumpUpPassenger\Util\Routes\IRouteStore::BOOK_APPLY );
 		$denyForm = self::getDenyForm ( $booking );
 		$denyForm->setAttribute ( 'action', \JumpUpPassenger\Util\Routes\IRouteStore::BOOK_DENY );
-		echo '<h3 class="' . ICssStyles::BOOKINGHEADLINE . '"><span>#' . $booking->getId () . ' | </span><a target="blank" href="'.$_this->url(\JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE).'?'.ProfileController::PARAM_USER_ID . '=' . $booking->getDriver()->getId() . '">'
-		 . $booking->getDriver ()->getPrename () . ' ' . $booking->getDriver ()->getLastname () . '</a><span> | ' . $booking->getStartPoint () . ' => ' . $booking->getEndPoint () . '</span></h3>';
+		echo '<h3 class="' . ICssStyles::TRIPHEADLINE . '"><span>#' . $booking->getId () . ' | </span><span class="highlighting">'
+		 . $booking->getDriver ()->getPrename () . ' ' . $booking->getDriver ()->getLastname () . '</span><span> | <span class="highlighting">' . $booking->getStartPoint () . '</span> => <span class="highlighting">' . $booking->getEndPoint () . '</span></h3>';
+		
+		echo "<div class=\"" . ICssStyles::BOOKING . "\">\n\t\t\t"; // begin of booking div
+		// render driver
+		echo "<p>". $_this->translate(IViewMessages::BOOKING_DRIVER) . ": " . '<a target="_blank" href="'.$_this->url(\JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE).'?'.ProfileController::PARAM_USER_ID . '=' . $booking->getDriver()->getId() . '">' . $booking->getDriver ()->getPrename () . ' ' . $booking->getDriver ()->getLastname () . "</a></p>";
+		// render and link vehicle
+		echo "<p>" . $_this->translate ( \JumpUpPassenger\Util\Messages\IViewMessages::VEHICLE) . ': <a target="_blank" href="'. $_this->url(IRouteStore::SHOW_VEHICLE) . '?'.VehicleController::PARAM_VEHICLE_ID. '=' . $booking->getTrip()->getVehicle()->getId() . '">' 
+				. $booking->getTrip()->getVehicle()->getBrand() . " " . $booking->getTrip()->getVehicle()->getType() . "</a></p>"; 
+		// render status
+		echo "<p>" . $_this->translate( \JumpUpDriver\Util\Messages\IViewMessages::BOOKING_DATE) . ": " . IntlUtil::strToDeDate($booking->getTrip()->getStartDate())."</p>";
+		echo "<p>" . $_this->translate ( IViewMessages::BOOKING_STATE ) . ": " . $_this->translate ( StateUtil::getStateLabel ( $booking->getState () ) ) . "</p>";
 		if ($booking->getState () === IBookingState::OFFER_FROM_DRIVER) {
 			echo $_this->renderForm ( $applyForm );
 		}
 		if ($booking->getState () === IBookingState::OFFER_FROM_DRIVER) {
 			echo $_this->renderForm ( $denyForm );
 		}
-		else {
-			echo '<span class="nofloat">&nbsp;</span>';
-		}
-		echo "<div class=\"" . ICssStyles::BOOKING . "\">\n\t\t\t"; // begin of booking div
-		// render and link vehicle
-		echo "<p>" . $_this->translate ( \JumpUpPassenger\Util\Messages\IViewMessages::VEHICLE) . ': <a target="blank" href="'. $_this->url(IRouteStore::SHOW_VEHICLE) . '?'.VehicleController::PARAM_VEHICLE_ID. '=' . $booking->getTrip()->getVehicle()->getId() . '">' 
-				. $booking->getTrip()->getVehicle()->getBrand() . " " . $booking->getTrip()->getVehicle()->getType() . "</a></p>"; 
-		// render status
-		echo "<p>" . $_this->translate( \JumpUpDriver\Util\Messages\IViewMessages::BOOKING_DATE) . ": " . IntlUtil::strToDeDate($booking->getTrip()->getStartDate())."</p>";
-		echo "<p>" . $_this->translate ( IViewMessages::BOOKING_STATE ) . ": " . $_this->translate ( StateUtil::getStateLabel ( $booking->getState () ) ) . "</p>";
 		// differ bookings states
 		if ($booking->getState () === IBookingState::OFFER_FROM_DRIVER) {
-		
 			echo $_this->translate ( \JumpUpPassenger\Util\Messages\IControllerMessages::BOOKING_STATE_DRIVERS_RECOMM ) . "<br />";
-			echo $_this->translate ( "Driver's price recommendation: " . $booking->getDriversRecomPrice () );
+			echo $_this->translate ( \JumpUpPassenger\Util\Messages\IViewMessages::BOOKING_DRIVER_PRICE_RECOM) . ": " . $booking->getDriversRecomPrice () ;
 			// show recommendation form
 			$recommForm = self::getRecommForm ( $booking );
 			$recommForm->setAttribute ( 'action', \JumpUpPassenger\Util\Routes\IRouteStore::BOOK_DO_RECOMMENDATION );

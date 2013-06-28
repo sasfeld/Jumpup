@@ -467,6 +467,7 @@ require(
 									 * <------------::..
 									 */
 									if ($(PASS_BOOKINGS_REF).length > 0) {
+										console.log("Passenger\Viewbookings: I'm here...");
 										$(PASS_BOOKINGS_ACCORDION).accordion({
 											collapsible : true,
 										});

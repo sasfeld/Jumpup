@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-28 12:57+0100\n"
+"PO-Revision-Date: 2013-06-28 15:44+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -573,6 +573,10 @@ msgid "Remove"
 msgstr "Entfernen"
 
 #: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Passenger's price recommendation (euro)"
+msgstr "Preisangebot vom Mitfahrer (euro)"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
 msgid "Vehicle information"
 msgstr "Fahrzeuginformationen"
 
@@ -792,6 +796,10 @@ msgstr "Fahrzeug"
 msgid "Show trips"
 msgstr "Fahrten suchen"
 
+#: JumpUpPassenger\Util\Messages\IViewMessages
+msgid "Driver's price recommendation (euro)"
+msgstr "Preisvorschlag vom Fahrer (euro)"
+
 #: JumpUpPassenger\Util\Messages\ILabels
 msgid "Look up trips"
 msgstr "Fahrten suchen"
@@ -983,3 +991,10 @@ msgstr "akzeptiert - gebucht"
 #: JumpUpDriver\Util\StateUtil
 msgid "denied - canceled"
 msgstr "abgelehnt - storniert"
+
+#: Application\Forms\RecommendationForm
+msgid "Your recommendation (euro):"
+msgstr "Deine Empfehlung (euro):"
+
+msgid "Authentication successful."
+msgstr "Anmeldung erfolgreich. Viel Spaß ;)"

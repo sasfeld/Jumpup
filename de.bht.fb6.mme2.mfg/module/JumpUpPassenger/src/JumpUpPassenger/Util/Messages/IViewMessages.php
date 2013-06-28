@@ -29,6 +29,7 @@ interface IViewMessages {
      *
     */
 	const VEHICLE = "Vehicle";
+	const BOOKING_DRIVER_PRICE_RECOM  = "Driver's price recommendation (euro)";
    	/*
      * ..:::::::::::::::::::::::::::::::::..
     */

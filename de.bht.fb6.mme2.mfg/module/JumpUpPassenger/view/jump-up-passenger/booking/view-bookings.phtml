@@ -10,7 +10,7 @@ use Application\View\Helper\RenderBookings;
 <?php
 if (null !== $this->messages) {
 	foreach ( $this->messages as $message ) {
-		echo "<p>" . $this->translate ( message ) . "</p>";
+		echo "<p>" . $this->translate ( $message ) . "</p>";
 	}
 }
 
@@ -18,6 +18,7 @@ if (null !== $this->messages) {
 </div>
 
 <div class="content" id="view-passenger-bookings">
+	<div id="passenger_view_bookings">
 <?php
 
 if (null !== $this->bookings && (0 < sizeof ( $this->bookings ))) {
@@ -31,5 +32,6 @@ if (null !== $this->bookings && (0 < sizeof ( $this->bookings ))) {
 }
 
 ?>
+</div>
 </div>
 

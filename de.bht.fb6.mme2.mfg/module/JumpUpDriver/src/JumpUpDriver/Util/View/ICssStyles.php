@@ -30,6 +30,7 @@ interface ICssStyles {
 	const BOOKINGHEADLINE = "bookingheadline";
 	const BOOKINGBASICFORM = "bookingbasicform";	
 	const BOOKING_LIST = "bookinglist"; 
+	const TRIPHEADLINE = "";
 	/*
 	 * ..:::::::::::::::::::::::::::::::::..
 	*/

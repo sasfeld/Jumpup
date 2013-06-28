@@ -21,6 +21,10 @@ footer {
 }
 
 @media ( min-width : 980px) {
+	.flag {
+		float: right;
+	}
+	
 	.navigation.jMenu {
 		margin-top: 2.9em;
 	}

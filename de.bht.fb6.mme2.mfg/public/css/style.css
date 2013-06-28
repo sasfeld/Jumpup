@@ -31,11 +31,6 @@ footer {
 	#page-content {
 		margin-top: 6em;
 	}
-	.flag_first {
-		/* always right possible? */
-		/*margin-left: 10em;*/
-		
-	}
 }
 
 #form {
@@ -72,6 +67,12 @@ label span {
 	box-shadow: 0 0 7px black;
 	background-color: rgba(34.5%, 34.5%, 34.5%, 0.95);
 	border: 2px solid white;
+}
+
+.key-value--key {
+	float: left;
+	min-width: 20em;
+	font: bold 14px "Helvetica Neue", Sans-Serif;
 }
 
 .ui-tooltip-key {

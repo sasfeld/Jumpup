@@ -13,7 +13,7 @@ use Application\View\Helper\RenderBookings;
 <?php
 if (null !== $this->messages) {
 	foreach ( $this->messages as $message ) {
-		echo "<p>" . $message . "</p>";
+		echo "<p>" . $this->translate($message) . "</p>";
 	}
 }
 

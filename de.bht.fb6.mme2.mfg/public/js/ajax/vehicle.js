@@ -17,7 +17,11 @@ define( [ "jquery" ], ( function($) {
 	
 	const REF_RECOMM_PRICE = '#recommended_price';
 	const REF_ADDTRIP_INPUT_DISTANCE = 'input[name="distance"]';
-	const PRICE_PER_LITER = 1.6; // 1,6 € / l
+	const PRICE_PER_DIESEL_LT = 1.42;
+	const PRICE_PER_PETROL_92 = 1.58;
+	const PRICE_PER_LITER_DEFAULT = 1.58;
+	const PRICE_PER_PETROL_95 = 1.62;
+	const PRICE_PER_PETROL_98 = 1.63;	
 
 	/*
 	 * Create a new VehicleController. - param options an array: listVehiclesUrl -
@@ -46,11 +50,33 @@ define( [ "jquery" ], ( function($) {
 			// @TODO integrate wastage calculator			
 			distance = $( REF_ADDTRIP_INPUT_DISTANCE ).val();
 			if ( undefined != distance ) {
+				var pricePerLt = PRICE_PER_LITER_DEFAULT;
+				if(undefined != vehicle.engineType) {
+					switch (vehicle.engineType) {
+					case "Diesel":
+						pricePerLt = PRICE_PER_DIESEL_LT;
+						break;
+					case "Petrol 92":
+						pricePerLt = PRICE_PER_PETROL_92;
+						break;
+					case "Petrol 95":
+						pricePerLt = PRICE_PER_PETROL_95; 
+						break;
+					case "Petrol 98":
+						pricePerLt = PRICE_PER_PETROL_98; 
+						break;
+					default:
+						pricePerLt = PRICE_PER_LITER_DEFAULT;
+						break;
+					};
+				}
 				var price = Math.round( ( vehicle.wastage / 100 ) * ( distance / 1000 )
-						* PRICE_PER_LITER); // vehicle wastage
+						* pricePerLt); // vehicle wastage
 				
 				var text = messages.recommended + " "+ price + " "
-				+ messages.recommended_your + " " + vehicle.wastage + "l / 100km."; 
+				+ messages.recommended_your + 	" " + vehicle.wastage + "l / 100km (" + vehicle.engineType + "). "
+				+ messages.calculation + ": (" + vehicle.wastage / 100 + "l ) * " + distance / 1000 + " km * " + 
+				pricePerLt + " euro"; 
 				if(tooltipsSet) {
 					_this.options.tooltips.tooltip("destroy");
 				}

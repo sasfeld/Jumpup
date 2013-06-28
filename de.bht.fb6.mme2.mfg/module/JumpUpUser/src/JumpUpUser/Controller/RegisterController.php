@@ -177,6 +177,8 @@ class RegisterController extends AbstractActionController
         
         $transport = new Sendmail();
         $transport->send($mail);
+        
+        
     }
     
     

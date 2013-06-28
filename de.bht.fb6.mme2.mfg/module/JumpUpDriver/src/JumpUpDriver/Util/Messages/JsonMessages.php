@@ -17,6 +17,7 @@ use Zend\I18n\Translator\Translator;
 class JsonMessages {
 	const VEHICLE_RECOMMENDED_PRICE = "The recommended price for your vehicle is";
 	const VEHICLE_RECOMMENDED_YOUR = "euro. Your wastage is";
+	const VEHICLE_CALCULATION = "Calculation formula:";
 	/**
 	 * Get an array which can be used to send a json representation of the translated messages to the frontend.
 	 * @param Translator $translator
@@ -24,7 +25,8 @@ class JsonMessages {
 	 */
 	public static function getJson(Translator $translator) {
 		return array('recommended' => $translator->translate(self::VEHICLE_RECOMMENDED_PRICE),
-					'recommended_your' => $translator->translate(self::VEHICLE_RECOMMENDED_YOUR),					
+					'recommended_your' => $translator->translate(self::VEHICLE_RECOMMENDED_YOUR),	
+					'calculation' => $translator->translate(self::VEHICLE_CALCULATION), 				
 				
 		);
 	}

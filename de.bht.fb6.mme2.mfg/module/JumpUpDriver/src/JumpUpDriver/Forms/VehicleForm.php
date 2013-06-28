@@ -66,6 +66,11 @@ class VehicleForm {
    * @var unknown
    */
   const FIELD_VEHICLE_PIC = 'vehiclepic';
+  /**
+   * Key for the radio input engine type.
+   * @var unknown
+   */
+  const FIELD_ENGINE_TYPE = 'enginetype';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")
@@ -126,6 +131,14 @@ class VehicleForm {
    * })
    */
   public $actualwheel;
+  /**
+   * @Annotation\Type("Zend\Form\Element\Radio")
+   * @Annotation\Options({
+   *          "label":"Engine type:",
+   *          "value_options":{"Diesel":"Diesel", "Petrol 92":"Petrol 92", "Petrol 95":"Petrol 95", "Petrol 98":"Petrol 98", "Gas":"Gas"}
+   * })
+   */
+  public $enginetype;
   /**
    * @Annotation\Type("Zend\Form\Element\File")
    * @Annotation\Required({"required":"false" })

@@ -67,8 +67,26 @@ class Vehicle {
      * @OneToMany(targetEntity="JumpUpDriver\Models\Trip", mappedBy="vehicle")
      */
     protected $intrips;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $enginetype;
     
     /**
+	 * @return the $enginetype
+	 */
+	public function getEnginetype() {
+		return $this->enginetype;
+	}
+
+	/**
+	 * @param field_type $enginetype
+	 */
+	public function setEnginetype($enginetype) {
+		$this->enginetype = $enginetype;
+	}
+
+	/**
      * Get all the trips in which this vehicle is referenced.
 	 * @return array of Trip $intrips
 	 */
@@ -256,6 +274,7 @@ class Vehicle {
         			"aircondition" => $this->getAircondition(),
         		    "actualwheel" => $this->getActualwheel(),
         			"pathPic"	=> FilesUtil::getRealVehiclePath($this),
+        			"engineType" => $this->getEnginetype(),
          );
     }
     

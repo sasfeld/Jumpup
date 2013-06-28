@@ -10,6 +10,7 @@ use JumpUpUser\Models\UserTable;
 use Zend\I18n\Translator\Translator;
 
 use Zend\Validator\AbstractValidator;
+use JumpUpUser\Models\User;
 
 /**
  * 
@@ -53,6 +54,7 @@ class UserExists extends AbstractDbValueValidator {
         $repoUser = $this->entityManager->getRepository("JumpUpUser\Models\User");
         $user = $repoUser->findOneBy(array('username' => $value));
 
+     
         if(null !== $user) {
             $this->error(self::USER_ALDREADY_EXISTS); // track error message
             return false; // user already exits -> validation fails

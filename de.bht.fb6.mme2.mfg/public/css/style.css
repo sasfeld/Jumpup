@@ -247,3 +247,13 @@ input[type="radio"] {
 	background-color: #eee;
 	opacity: 1;
 }
+
+.userlink {
+	color: #999;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+}
+
+.userlink:hover, .userlink:active {
+	color: white;
+	text-decoration: none;
+}

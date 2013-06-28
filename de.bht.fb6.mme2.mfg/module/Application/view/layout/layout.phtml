@@ -50,7 +50,7 @@ echo $this->doctype ();
 				<nav><?php echo $this->navigation('navigation')->menu(); ?></nav>
 
 				<div class="shortprofile">
-                    	<?php echo "<a href=\"".$this->url(\JumpUpUser\Util\Routes\IRouteStore::CHANGE_PROFILE)."\">".$this->renderUser()."</a>"; ?>
+                    	<?php echo "<a  class=\"userlink\" href=\"".$this->url(\JumpUpUser\Util\Routes\IRouteStore::CHANGE_PROFILE)."\">".$this->renderUser()."</a>"; ?>
                     </div>
 			</div>
 		</div>

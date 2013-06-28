@@ -30,6 +30,7 @@ footer {
 	.flag_first {
 		/* always right possible? */
 		/*margin-left: 10em;*/
+		
 	}
 }
 
@@ -55,6 +56,35 @@ label span {
 	color: #68b604;
 }
 
+.tooltip-highlight {
+	border-bottom: 1px dashed;
+}
+
+.ui-tooltip {
+	padding: 10px 20px;
+	color: white;
+	border-radius: 20px;
+	max-width: 400px;
+	box-shadow: 0 0 7px black;
+	background-color: rgba(34.5%, 34.5%, 34.5%, 0.95);
+	border: 2px solid white;
+}
+
+.ui-tooltip-key {
+	font: bold 14px "Helvetica Neue", Sans-Serif;
+	text-transform: uppercase;
+	float: left;
+	min-width: 14.5em;
+}
+
+/* .ui-tooltip { */
+/* 	position: relative; */
+
+/* 	color: #D6D6FF; */
+/* 	padding: 1em; */
+/* 	left: 100px; */
+/* 	top: 100px; */
+/* } */
 .zf-green {
 	color: #68b604;
 }
@@ -144,7 +174,7 @@ input[type="radio"] {
 }
 
 .visible {
-	visibility: visible, display:                block
+	visibility: visible, display:                   block
 }
 /*
 /* * ..::::::::::::::::.. */
@@ -180,15 +210,6 @@ input[type="radio"] {
 	float: left;
 }
 /* * ..::::::::::::::::::::::::::::::::::::::.. */
-.ui-tooltip {
-	position: relative;
-	max-width: 350px;
-	background-color: rgba(34.5%, 34.5%, 34.5%, 0.9);
-	color: #D6D6FF;
-	padding: 1em;
-	left: 100px;
-	top: 100px;
-}
 
 /*
  * short profile div in layout.phtml

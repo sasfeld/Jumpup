@@ -9,8 +9,10 @@ use JumpUpUser\Util\Messages\IViewMessages;
 use Application\Util\FilesUtil;
 use JumpUpUser\Util\UserUtil;
 use JumpUpUser\Util\ServicesUtil;
+use Application\Util\IntlUtil;
 
 /**
+ *
  *
  *
  *
@@ -24,7 +26,9 @@ use JumpUpUser\Util\ServicesUtil;
  *
  *
  *
+ *
  * @subpackage
+ *
  *
  *
  *
@@ -57,51 +61,49 @@ class RenderUser extends AbstractHelper {
 		
 		// if the user is null, try to fetch it from the UserUtil
 		if (null === $user) {
-			$userUtil = $this->_getUserUtil();
+			$userUtil = $this->_getUserUtil ();
 			$user = $userUtil->getCurrentUser ();
 		}
 		
 		$retString = "";
 		// show user's info if an instance was fetched
-		if (null !== $user) {			
-			$retString .= "<ul>";
-			$retString .= "<li>" . $user->getPrename () . " " . $user->getLastname () . "</li>";
-			if (! $minimal) {				
-				$eMail = $user->getEmail();
+		if (null !== $user) {
+			$retString .= "<ul class=\"no-list-indicator\">";
+			$retString .= "<li><span class=\"key-value--key\">" . $user->getPrename () . " " . $user->getLastname () . "</span><br/></li>";
+			if (! $minimal) {
+				$eMail = $user->getEmail ();
 				if (null !== $eMail && "" !== $eMail) { // only render if configured
-					$retString .= "<li>" . $translator->translate ( IViewMessages::EMAIL ) . ": <a href=\"mailto:\"".$eMail.'\">' . $eMail . "</a></li>";
+					$retString .= "<li><span class=\"key-value--key\">" . $translator->translate ( IViewMessages::EMAIL ) . ":</span><a href=\"mailto:\"" . $eMail . '\">' . $eMail . "</a></li>";
 				}
+				
 				$birthDate = $user->getBirthDate ();
 				if (null !== $birthDate && "" !== $birthDate) { // only render if configured
-					$retString .= "<li>" . $translator->translate ( IViewMessages::BIRTH_DATE ) . ": " . $birthDate . "</li>";
+					$retString .= "<li><span class=\"key-value--key\">" . $translator->translate ( IViewMessages::BIRTH_DATE ) . ":</span>" . IntlUtil::strToDeDate ( $birthDate ) . "</li>";
 				}
 				$spokenLanguages = $user->getSpokenLanguages ();
 				if (null !== $spokenLanguages && "" !== $spokenLanguages) { // only render if configured
-					$retString .= "<li>" . $translator->translate ( IViewMessages::SPOKEN_LANGUAGES ) . ": " . $spokenLanguages . "</li>";
+					$retString .= "<li><span class=\"key-value--key\">" . $translator->translate ( IViewMessages::SPOKEN_LANGUAGES ) . ":</span>" . $spokenLanguages . "</li>";
 				}
 				$homeCity = $user->getHomeCity ();
 				if (null !== $homeCity && "" !== $homeCity) { // only render if configured
-					$retString .= "<li>" . $translator->translate ( IViewMessages::HOME_CITY ) . ": " . $homeCity . "</li>";
+					$retString .= "<li><span class=\"key-value--key\">" . $translator->translate ( IViewMessages::HOME_CITY ) . ":</span>" . $homeCity . "</li>";
 				}
 				$profilePic = $user->getProfilePic ();
 				if (null !== $profilePic && "" !== $profilePic) { // only render if configured
 					$profilePicHtml = FilesUtil::prepareProfilePic ( $user );
-					$retString .= "<li>" . $translator->translate ( IViewMessages::PROFILE_PIC ) . ": " . $profilePicHtml . "</li>";
+					$retString .= "<li><span class=\"key-value--key\">" . $translator->translate ( IViewMessages::PROFILE_PIC ) . ":</span>" . $profilePicHtml . "</li>";
 				}
-			}	
+			}
 			$retString .= "</ul>";
 		}
-	
 		
 		return $retString;
 	}
 	private function _getViewHelper($plugin) {
 		return $this->getView ()->getHelperPluginManager ()->get ( $plugin );
 	}
-	
 	private function _getUserUtil() {
-		return $this->view->getHelperPluginManager()->getServiceLocator()->get(ServicesUtil::CLASSPATH_USERUTIL);
-		
+		return $this->view->getHelperPluginManager ()->getServiceLocator ()->get ( ServicesUtil::CLASSPATH_USERUTIL );
 	}
 }
 

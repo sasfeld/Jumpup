@@ -161,11 +161,11 @@ define([ "jquery" ], (function($) {
 
 		/* crazy shit I know, but it didn't work any other way... */
 		this.tooltipItems += prefix + "li[class=drivertooltip][id=" + id + "]";
-		this.tooltipTexts[id] = "<p><span class=\"ui-tooltip-key\">" + messages.birth_date + ":</span>"
+		this.tooltipTexts[id] = "<div class=\"driver-tooltip\"><p><span class=\"ui-tooltip-key\">" + messages.birth_date + ":</span>"
 				+ driver.birthDate + "</p>" + "<p><span class=\"ui-tooltip-key\">" + messages.email + ":</span>"
 				+ driver.eMail + "</p>" + "<p><span class=\"ui-tooltip-key\">" + messages.spoken_langs + ":</span>"
 				+ driver.spokenLanguages + "</p>" + "<p><span class=\"ui-tooltip-key\">" + messages.home_town
-				+ ":</span>" + driver.homeCity + "</p>" + "<p><img src=\"" + driver.pathProfilePic + "\" /></p>";
+				+ ":</span>" + driver.homeCity + "</p>" + "<p><img src=\"" + driver.pathProfilePic + "\" /></p></div>";
 		;
 		var __this = this;
 		$(document).tooltip({
@@ -178,6 +178,12 @@ define([ "jquery" ], (function($) {
 				var $this = $(this);
 				var id = $this.attr("id");
 
+				// if (id >= 100) {
+				// $this.addClass("vehicle-tooltip");
+				// } else {
+				// $this.addClass("driver-tooltip");
+				// }
+
 				console.log("_buildToolTip: " + id);
 				if (undefined != id) {
 					return __this.tooltipTexts[id];
@@ -185,10 +191,6 @@ define([ "jquery" ], (function($) {
 					return "no chance...";
 				}
 				;
-			},
-			using : function(position, feedback) {
-				$(this).css(position);
-				$("<div>").addClass("arrow").addClass(feedback.vertical).addClass(feedback.horizontal).appendTo(this);
 			},
 		});
 	};
@@ -205,14 +207,14 @@ define([ "jquery" ], (function($) {
 
 		/* crazy shit I know, but it didn't work any other way... */
 		this.tooltipItems += prefix + "li[class=vehicletooltip][id=" + id + "]";
-		this.tooltipTexts[id] = "<p><span class=\"ui-tooltip-key\">" + messages.leg_space + ":</span>"
+		this.tooltipTexts[id] = "<div class=\"vehicle-tooltip\"><p><span class=\"ui-tooltip-key\">" + messages.leg_space + ":</span>"
 				+ vehicle.legspace + "</p>" + "<p><span class=\"ui-tooltip-key\">" + messages.wastage + ":</span>"
 				+ vehicle.wastage + "</p>" + "<p><span class=\"ui-tooltip-key\">" + messages.avg_speed + ":</span>"
 				+ vehicle.avgspeed + "</p>" + "<p><span class=\"ui-tooltip-key\">" + messages.number_seats + ":</span>"
 				+ vehicle.numberseats + "</p>" + "<p><span class=\"ui-tooltip-key\">" + messages.air_condition
 				+ ":</span>" + vehicle.aircondition + "</p>" + "<p><span class=\"ui-tooltip-key\">"
 				+ messages.actual_wheel + ":</span>" + vehicle.actualwheel + "</p>" + "<p><img src=\""
-				+ vehicle.pathPic + "\" /></p>";
+				+ vehicle.pathPic + "\" /></p></div>";
 		;
 		var __this = this;
 		$(document).tooltip({
@@ -225,16 +227,18 @@ define([ "jquery" ], (function($) {
 				var $this = $(this);
 				var id = $this.attr("id");
 
+				// if (id >= 100) {
+				// $this.addClass("vehicle-tooltip");
+				// } else {
+				// $this.addClass("driver-tooltip");
+				// }
+
 				if (undefined != id) {
 					return __this.tooltipTexts[id];
 				} else {
 					return "no chance...";
 				}
 				;
-			},
-			using : function(position, feedback) {
-				$(this).css(position);
-				$("<div>").addClass("arrow").addClass(feedback.vertical).addClass(feedback.horizontal).appendTo(this);
 			},
 		});
 	};

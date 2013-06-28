@@ -21,16 +21,14 @@ footer {
 }
 
 @media ( min-width : 980px) {
+	.flag {
+		float: right;
+	}
 	.navigation.jMenu {
 		margin-top: 2.9em;
 	}
 	#page-content {
 		margin-top: 6em;
-	}
-	.flag_first {
-		/* always right possible? */
-		/*margin-left: 10em;*/
-		
 	}
 }
 
@@ -68,6 +66,12 @@ label span {
 	box-shadow: 0 0 7px black;
 	background-color: rgba(34.5%, 34.5%, 34.5%, 0.95);
 	border: 2px solid white;
+}
+
+.key-value--key {
+	float: left;
+	min-width: 20em;
+	font: bold 14px "Helvetica Neue", Sans-Serif;
 }
 
 .ui-tooltip-key {
@@ -242,4 +246,14 @@ input[type="radio"] {
 .ui-accordion-header-active {
 	background-color: #eee;
 	opacity: 1;
+}
+
+.userlink {
+	color: #999;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+}
+
+.userlink:hover, .userlink:active {
+	color: white;
+	text-decoration: none;
 }

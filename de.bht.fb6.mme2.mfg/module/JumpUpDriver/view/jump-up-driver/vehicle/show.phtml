@@ -18,16 +18,17 @@ if (null !== $this->messages) {
 <div class="vehicleview">
 <?php
 if (null !== $this->vehicle) {
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_BRAND ) . ": " . $vehicle->getBrand () . "<br />";
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_TYPE ) . ": " . $vehicle->getType () . "<br />";
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_WASTAGE ) . ": " . $vehicle->getWastage () . "<br />";
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_AVG_SPEED ) . ": " . $vehicle->getAvgspeed () . "<br />";
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_SEATS ) . ": " . $vehicle->getNumberseats () . "<br />";
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_LEG_SPACE ) . ": " . $vehicle->getLegspace () . "<br />";
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_AIR_CONDITION ) . ": " . $vehicle->getAircondition () . "<br />";
-	echo $this->translate ( IViewMessages::VEHICLE_LIST_ACTUAL_WHEEL ) . ": " . $vehicle->getActualwheel () . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_BRAND ) . ":</span>" . $vehicle->getBrand () . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_TYPE ) . ":</span>" . $vehicle->getType () . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_WASTAGE ) . ":</span>" . $vehicle->getWastage () . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_AVG_SPEED ) . ":</span>" . $vehicle->getAvgspeed () . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_SEATS ) . ":</span>" . $vehicle->getNumberseats () . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_LEG_SPACE ) . ":</span>" . $vehicle->getLegspace () . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_AIR_CONDITION ) . ":</span>" . $this->translate ( $vehicle->getAircondition () ) . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_ACTUAL_WHEEL ) . ":</span>" . $this->translate ( $vehicle->getActualwheel () ) . "<br />";
+	echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_ENGINE_TYPE ) . ":</span>" . $this->translate ( $vehicle->getEnginetype () ) . "<br />";
 	if (null !== $vehicle->getVehiclepic ()) {
-		echo $this->translate ( IViewMessages::VEHICLE_LIST_CURRENT_PIC ) . ": " . FilesUtil::prepareVehiclePic ( $vehicle ) . "<br />";
+		echo "<span class=\"key-value--key\">" . $this->translate ( IViewMessages::VEHICLE_LIST_CURRENT_PIC ) . ":</span>" . FilesUtil::prepareVehiclePic ( $vehicle ) . "<br />";
 	} else {
 		echo $this->translate ( IViewMessages::VEHICLE_LIST_NO_PIC_FOR_PASSENGER );
 	}

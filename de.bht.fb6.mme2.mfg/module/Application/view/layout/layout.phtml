@@ -30,6 +30,14 @@ echo $this->doctype ();
 
     </head>
 <body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -40,9 +48,11 @@ echo $this->doctype ();
 				<div class="nav-collapse collapse flag">
 					<ul class="nav">
 						<li><a class="flag flag_first"
-							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/de' ?>"><img src="img/de.png"/> </a></li>
+							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/de' ?>"><img
+								src="img/de.png" /> </a></li>
 						<li><a class="flag"
-							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/en' ?>"><img src="img/en.png"/></a></li>
+							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/en' ?>"><img
+								src="img/en.png" /></a></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
@@ -60,8 +70,9 @@ echo $this->doctype ();
         </div>
 	<!-- /container -->
 	<hr>
-	<footer>
-		<p>&copy; <?php echo date('Y') ?> by Martin Schultz &amp; Sascha Feldmann. <?php echo $this->translate('All rights reserved.') ?></p>
+	<footer class="row">
+		<p class="span12">&copy; <?php echo date('Y') ?> by Martin Schultz &amp; Sascha Feldmann. <?php echo $this->translate('All rights reserved.') ?>
+		<div class="fb-like span1" data-href="https://www.facebook.com/Everseek" data-send="false" data-layout="button_count" data-width="150" data-show-faces="true" data-font="segoe ui"></div></p>
 	</footer>
         <?php echo $this->inlineScript()?>
     </body>

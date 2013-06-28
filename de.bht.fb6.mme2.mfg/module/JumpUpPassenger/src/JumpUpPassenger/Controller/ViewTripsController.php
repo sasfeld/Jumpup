@@ -15,8 +15,10 @@ use Zend\Form\Annotation\AnnotationBuilder;
 use JumpUpPassenger\Forms\LookUpTripsForm;
 use Application\Util\FormTransmitterUtil;
 use Zend\Form\Form;
+use JumpUpUser\Util\UserUtil;
 
 /**
+ *
  *
  *
  *
@@ -24,6 +26,7 @@ use Zend\Form\Form;
  *
  * @package JumpUpPassenger\Controller
  * @subpackage
+ *
  *
  *
  * @copyright Copyright (c) 2013 Sascha Feldmann (http://saschafeldmann.de)
@@ -53,9 +56,9 @@ class ViewTripsController extends ANeedsAuthenticationController {
 	}
 	/**
 	 *
-	 * @deprecated because we use AJAX in the frontend. 
+	 * @deprecated because we use AJAX in the frontend.
 	 * @see JsonController now!!!!
-	 *             Show results of a find trips strategy.
+	 *      Show results of a find trips strategy.
 	 * @return an array of trips. Those trips shall be rendered by the view / javascript / google map.
 	 */
 	public function showTripsAction() {
@@ -95,39 +98,47 @@ class ViewTripsController extends ANeedsAuthenticationController {
 	 */
 	public function lookUpAction() {
 		$user = $this->_checkAndRedirect ();
-		$request = $this->getRequest ();
-		$translator = $this->_getTranslator();
-		
-		// hard-coded hidden input fields to be bind by javascript
-		$inputFields = array (
-				'<input type="hidden" name="' . LookUpTripsForm::FIELD_USER_ID . '" value="' . $user->getId () . '"/>',
-				'<input type="hidden" name="' . LookUpTripsForm::FIELD_START_COORD . '" />',
-				'<input type="hidden" name="' . LookUpTripsForm::FIELD_END_COORD . '" />',
-				'<input type="button" name="' . LookUpTripsForm::BUTTON . '" value="' . $translator->translate(ILabels::LOOKUP_BUTTON) . '"/>' 
-		);
-		
-		// GET method -> only return the input form
-		$messages = $this->flashMessenger ()->getMessages ();
-		$form = $this->_getForm ();
-		if (null !== $messages) {
-			// fill form by transmitted form elements and filter messages
-			$messages = $this->_fillFormFieldsBy ( $form, $messages );
+		if (! UserUtil::isProfileConfigured ( $user )) { // profile isn't configured yet
+			$redirect = \JumpUpUser\Util\Routes\IRouteStore::SHOW_PROFILE;
+			$this->redirect()->toRoute($redirect);
+		} else { // profile is configured
+			$request = $this->getRequest ();
+			$translator = $this->_getTranslator ();
+			
+			// hard-coded hidden input fields to be bind by javascript
+			$inputFields = array (
+					'<input type="hidden" name="' . LookUpTripsForm::FIELD_USER_ID . '" value="' . $user->getId () . '"/>',
+					'<input type="hidden" name="' . LookUpTripsForm::FIELD_START_COORD . '" />',
+					'<input type="hidden" name="' . LookUpTripsForm::FIELD_END_COORD . '" />',
+					'<input type="button" name="' . LookUpTripsForm::BUTTON . '" value="' . $translator->translate ( ILabels::LOOKUP_BUTTON ) . '"/>' 
+			);
+			
+			// GET method -> only return the input form
+			$messages = $this->flashMessenger ()->getMessages ();
+			$form = $this->_getForm ();
+			if (null !== $messages) {
+				// fill form by transmitted form elements and filter messages
+				$messages = $this->_fillFormFieldsBy ( $form, $messages );
+			}
+			return array (
+					'form' => $form,
+					'messages' => $messages,
+					'inputFields' => $inputFields 
+			);
 		}
-		return array (
-				'form' => $form,
-				'messages' => $messages,
-				'inputFields' => $inputFields 
-		);
 	}
 	
 	/**
 	 * Fill the form fields by the transmitted messages.
-	 * @param Form $form the form to be filled.
-	 * @param array $messages an array of messages from the flashMessenger which will be decoded by the FormTransmitterUtil.
-	 * @return all other messages which are not transmitted form elements. 
+	 * 
+	 * @param Form $form
+	 *        	the form to be filled.
+	 * @param array $messages
+	 *        	an array of messages from the flashMessenger which will be decoded by the FormTransmitterUtil.
+	 * @return all other messages which are not transmitted form elements.
 	 */
 	private function _fillFormFieldsBy(Form $form, array $messages) {
-		$otherMessages = array();
+		$otherMessages = array ();
 		foreach ( $messages as $message ) {
 			if (FormTransmitterUtil::isValidMessage ( $message )) {
 				$decodedArray = FormTransmitterUtil::decodeMessage ( $message );
@@ -139,13 +150,12 @@ class ViewTripsController extends ANeedsAuthenticationController {
 					if (null !== $formEl) {
 						$formEl->setValue ( $elValue );
 					}
-					if( null !== $elMessages) {
-						$formEl->setMessages($elMessages);
-					}					
+					if (null !== $elMessages) {
+						$formEl->setMessages ( $elMessages );
+					}
 				}
-			}
-			else {
-				array_push($otherMessages, $message);
+			} else {
+				array_push ( $otherMessages, $message );
 			}
 		}
 	}

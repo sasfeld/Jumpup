@@ -125,7 +125,7 @@ class RenderBookings {
 	}
 	
 	public static function renderTrip(Trip $trip, $_this, $mode) {
-		echo "<h3>" . $_this->translate ( $trip->getStartPoint () . " => " . $trip->getEndPoint () ) . " (" . $_this->translate ( IViewMessages::BOOKING_DATE ) . ": ".IntlUtil::strToDeDate($trip->getStartDate()) . ")"
+		echo "<h3><span class=\"highlighting\">" . $_this->translate ( $trip->getStartPoint () . "</span> => <span class=\"highlighting\">" . $trip->getEndPoint () ) . "</span> (" . $_this->translate ( IViewMessages::BOOKING_DATE ) . ": ".IntlUtil::strToDeDate($trip->getStartDate()) . ")"
 			. "</h3>";
 		echo '<div class="' . ICssStyles::TRIP . '">'; // begin of accordion element content
 		$deleteForm = self::getDeleteTripForm($trip);	

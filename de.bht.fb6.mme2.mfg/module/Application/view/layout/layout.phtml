@@ -37,9 +37,8 @@ echo $this->doctype ();
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('JumpUp.Me') ?></a>
-				<div class="nav-collapse collapse">
+				<div class="nav-collapse collapse flag">
 					<ul class="nav">
-						<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
 						<li><a class="flag flag_first"
 							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/de' ?>"><img src="img/de.png"/> </a></li>
 						<li><a class="flag"
@@ -51,7 +50,7 @@ echo $this->doctype ();
 				<nav><?php echo $this->navigation('navigation')->menu(); ?></nav>
 
 				<div class="shortprofile">
-                    	<?php echo $this->renderUser (); ?>
+                    	<?php echo "<a  class=\"userlink\" href=\"".$this->url(\JumpUpUser\Util\Routes\IRouteStore::CHANGE_PROFILE)."\">".$this->renderUser()."</a>"; ?>
                     </div>
 			</div>
 		</div>

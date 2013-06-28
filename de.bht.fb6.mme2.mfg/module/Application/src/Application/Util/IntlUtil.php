@@ -27,7 +27,7 @@ class IntlUtil {
 			throw ExceptionUtil::throwInvalidArgument('$str', 'string', $str);
 		}
 		
-		$datum_de = date("d.m.Y ", strtotime($str));
+		$datum_de = trim(date("d.m.Y ", strtotime($str)));
 		return $datum_de;
 	}
 }

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-28 16:16+0100\n"
+"PO-Revision-Date: 2013-06-28 18:39+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -32,9 +32,8 @@ msgid "All rights reserved."
 msgstr "Alle Rechte vorbehalten."
 
 #: ../view/application/index/index.phtml:2
-#, php-format
-msgid "Welcome to %sZend Framework 2%s"
-msgstr "Willkommen zu dem %sZend Framework 2%s"
+msgid "Hey, Welcome to our all new Platform."
+msgstr "Hey, Willkommen zu unserer komplett neuen Platform."
 
 #: ../view/application/index/index.phtml:3
 #, php-format
@@ -211,6 +210,10 @@ msgstr ""
 msgid "Username"
 msgstr "Benutzername"
 
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:33
+msgid "Username:"
+msgstr "Benutzername:"
+
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
 msgid "Prename"
 msgstr "Vorname"
@@ -224,6 +227,10 @@ msgid "Password"
 msgstr "Passwort"
 
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
+msgid "Password:"
+msgstr "Passwort:"
+
+#: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:
 msgid "Repeat password"
 msgstr "Passwort wiederholen"
 
@@ -234,6 +241,9 @@ msgstr "eMail-Adresse"
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:47
 msgid "Submit"
 msgstr "Absenden"
+
+msgid "Remember Me:"
+msgstr "Angemeldet bleiben:"
 
 #: JumpUpUser/src/JumpUpUser/Forms/RegistrationForm:41
 msgid "Please fill in an username."
@@ -358,7 +368,7 @@ msgstr ""
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/IControllerMessages:
 msgid "You've been successfully logged out."
-msgstr "Du wurdest erfolgreich ausgelogged."
+msgstr "Du wurdest erfolgreich abgemeldet."
 
 #: JumpUpUser/src/JumpUpUser/Utils/Messages/ILabels:
 msgid "Registration"
@@ -388,10 +398,10 @@ msgstr ""
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
 msgid ""
-"Something went wrong. You are currently not logged in. Please login again, "
-"be sure to activate cookies and try it again."
+"Something went wrong. You are currently not logged in. Please  again, be "
+"sure to activate cookies and try it again."
 msgstr ""
-"Irgendwas ist schiefgelaufen. Du bist gerade nicht eingelogged. Bitte logge "
+"Irgendwas ist schiefgelaufen. Du bist gerade nicht angemeldet. Bitte melde "
 "dich wieder ein und versichere, dass du Cookies deaktiviert hast."
 
 #: JumpUpDriver\Util\Messages\IControllerMessages
@@ -862,7 +872,7 @@ msgstr "Die Datei muss eines der folgenden Formate haben: png, jpeg oder gif."
 
 #: JumpUpUser\Util\Messages\IControllerMessages
 msgid "Please login to continue."
-msgstr "Logge dich ein um fortzufahren."
+msgstr "Melde dich an um fortzufahren."
 
 #: JumpUpUser\Util\Messages\IViewMessages
 msgid "Home town"
@@ -1008,3 +1018,9 @@ msgid ""
 msgstr ""
 "Diese eMail-Adresse existiert schon. Benutze bitte die Passwort vergessen - "
 "Funktion, um das Passwort wiederherzustellen."
+
+msgid "Login"
+msgstr "Anmelden"
+
+msgid "Logout"
+msgstr "Abmelden"

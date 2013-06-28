@@ -61,7 +61,7 @@ class LoginForm {
     public $password;
      /**
      * @Annotation\Type("Zend\Form\Element\Checkbox")
-     * @Annotation\Options({"label":"Remember Me ?:"})
+     * @Annotation\Options({"label":"Remember Me:"})
      */
     public $rememberme;    
     /**

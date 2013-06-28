@@ -63,9 +63,7 @@ class RenderBookings {
 		if ($booking->getState () === IBookingState::OFFER_FROM_PASSENGER) {
 			echo $_this->renderForm ( $denyForm );
 		}
-		else {
-			echo '<span class="nofloat">&nbsp;</span>';
-		}
+
 		echo "<div class=\"" . ICssStyles::BOOKING . "\">\n\t\t\t"; // begin of booking div
 		// render status
 		echo "<p>" . $_this->translate ( IViewMessages::BOOKING_STATE ) . ": " . $_this->translate ( StateUtil::getStateLabel ( $booking->getState () ) ) . "</p>";

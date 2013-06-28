@@ -884,7 +884,7 @@ msgstr "Geburtsdatum"
 
 #: JumpUpUser\Util\Messages\IViewMessages
 msgid "Spoken languages"
-msgstr "gesprochene Sprachen"
+msgstr "Gesprochene Sprachen"
 
 #: JumpUpUser\Util\Messages\IViewMessages
 msgid "Profile picture"

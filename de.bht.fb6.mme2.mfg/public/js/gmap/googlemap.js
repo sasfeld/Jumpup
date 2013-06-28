@@ -54,7 +54,7 @@ define( [
 			var display = routeObject[ "display" ];
 			var polyline = routeObject[ "polyline" ];
 
-			if ( display && !this.showDirectionsPanel ) {
+			if ( display ) {
 				display.setMap( null );
 				display.setPanel( null );
 			}

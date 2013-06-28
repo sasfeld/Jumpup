@@ -72,6 +72,11 @@ label span {
 	float: left;
 	min-width: 20em;
 	font: bold 14px "Helvetica Neue", Sans-Serif;
+	padding-top: 0.1em;
+}
+
+.profile .key-value--key {
+	min-width: 13em;
 }
 
 .ui-tooltip-key {
@@ -197,7 +202,7 @@ input[type="radio"] {
 	margin-bottom: 2em;
 }
 
-.trip, .booking {
+.trip,.booking {
 	border: 1px solid rgba(82, 71, 71, 0.88);
 	padding: 5px;
 }
@@ -223,10 +228,6 @@ input[type="radio"] {
 	margin-left: 0.5em;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of git@groupelite.de:mfg_ss2013.git
 /* * ..::::::::::::::::::::::::::::::::::::::.. */
 
 /*
@@ -235,8 +236,8 @@ input[type="radio"] {
 .shortprofile {
 	float: right;
 	font-weight: bold;
-	padding-top: 1em;
-	padding-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.2em;
 }
 
 /*

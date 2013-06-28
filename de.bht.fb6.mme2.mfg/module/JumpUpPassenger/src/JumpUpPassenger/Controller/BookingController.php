@@ -172,8 +172,7 @@ class BookingController extends ANeedsAuthenticationController {
 		
 		$request = $this->getRequest ();
 		$redirect = IRouteStore::BOOK_ERROR;
-		if ($request->isPost ()) {
-			// @TODO use ZEND form here for validation
+		if ($request->isPost ()) {			
 			$form = $this->_getForm ();
 			$form->setData ( $request->getPost () );
 			

@@ -48,6 +48,7 @@ interface IViewMessages {
 	const VEHICLE_LIST_LINK_ADD = "Add vehicle";
 	const VEHICLE_LIST_LINK_EDIT = "Edit";
 	const VEHICLE_LIST_LINK_REMOVE = "Remove";
+	const VEHICLE_LIST_ENGINE_TYPE = "Engine type";
 	
 	/* ..:: used in JumpUpDriver\view\vehicle\show.phtml ::../
 	 *

@@ -66,6 +66,7 @@ class JsonController extends AbstractRestfulController {
                 $vehicles = $vehicleRepo->findBy(array('id' => $ownerId));
                 if(null !== $vehicles) { 
                 	$driver = $this->_getUser( $ownerId);
+                	
                     $vehicleWrapper->setVehicles($vehicles);  
                     $translator = ServicesUtil::getTranslatorService($this->getServiceLocator());
                     $this->_setLocale($driver, $translator);

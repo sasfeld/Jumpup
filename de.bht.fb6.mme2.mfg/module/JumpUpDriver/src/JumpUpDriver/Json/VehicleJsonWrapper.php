@@ -18,7 +18,7 @@ class VehicleJsonWrapper {
         return $this->vehicles;
     }
     
-    public function setVehicles(array $vehicles) {
+    public function setVehicles(array $vehicles) {    	
         $this->vehicles = $vehicles;
     }
     

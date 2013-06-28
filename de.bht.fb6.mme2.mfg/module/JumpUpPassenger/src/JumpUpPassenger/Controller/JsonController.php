@@ -106,6 +106,7 @@ class JsonController extends AbstractRestfulController {
 			$form->setData ( $request->getPost () );
 			
 			$jsonObj = null;
+			$translator = $this->_getTranslator();
 			if ($form->isValid ()) {
 				if (null !== $request->getPost ( LookUpTripsForm::FIELD_START_COORD )) {
 					$startCoord = $request->getPost ( LookUpTripsForm::FIELD_START_COORD );
@@ -140,7 +141,7 @@ class JsonController extends AbstractRestfulController {
 				$trips = $this->_getAllTrips ( $userId );
 				$passenger = $this->_getUser( $userId);
 				// set locale if available
-				$this->_setLocale($passenger, $this->_getTranslator());
+				$this->_setLocale($passenger, $translator);
 				$findStrategy = $this->_getFindTripStrategy ();
 				
 				$matchedTrips = $findStrategy->findNearTrips ( $startCoord, $endCoord, $dateFrom, $dateTo, $priceFrom, $priceTo, $trips, $passenger, $maxDistance );
@@ -149,14 +150,22 @@ class JsonController extends AbstractRestfulController {
 				    
 					$tripWrapper = new TripWrapper ();
 					$tripWrapper->setTrips ( $matchedTrips );
-					$frontendMessages = \JumpUpPassenger\Util\Messages\JsonMessages::getJson($this->_getTranslator());					
+					// Transmitt translated messages to the AJAX frontend
+					$frontendMessages = \JumpUpPassenger\Util\Messages\JsonMessages::getJson($translator);					
 					$tripWrapper->setMessages ( $frontendMessages);
+					// translate vehicle fields
+					foreach ($matchedTrips as $matchedTrip) {
+						$vehicle = $matchedTrip->getVehicle();
+						$vehicle->setAircondition($translator->translate($vehicle->getAircondition()));
+						$vehicle->setActualwheel($translator->translate($vehicle->getActualwheel()));
+						$vehicle->setEnginetype($translator->translate($vehicle->getEnginetype()));
+					}
 					$jsonObj = \Zend\Json\Json::encode ( $tripWrapper, true );
 				}
 				else { // no matching trips
 					$jsonObj = array ( "noTrips" => true,			
 							"user" => $passenger->getPrename(),			
-							"userMessage" => $this->_getTranslator()->translate(IControllerMessages::LOOKUP_NO_TRIPS),
+							"userMessage" => $translator->translate(IControllerMessages::LOOKUP_NO_TRIPS),
 							"dateFrom" => $dateFrom,
 							"dateTo" => $dateTo,
 					);
@@ -166,7 +175,7 @@ class JsonController extends AbstractRestfulController {
 				$validationMessages = $this->_getValidationMessages($form);
 				$jsonObj = array ( "validationFail" => true,
 								   "validationMessages" => $validationMessages,
-								   "userMessage" => $this->_getTranslator()->translate(IControllerMessages::ERROR_LOOKUP_VALIDATION), 
+								   "userMessage" => $translator->translate(IControllerMessages::ERROR_LOOKUP_VALIDATION), 
 				 );
 			}
 			return new JsonModel ( $jsonObj );

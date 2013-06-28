@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-27 22:45+0100\n"
+"PO-Revision-Date: 2013-06-28 12:07+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -575,6 +575,26 @@ msgstr "Entfernen"
 #: JumpUpDriver\Util\Messages\IViewMessages
 msgid "Vehicle information"
 msgstr "Fahrzeuginformationen"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Engine type"
+msgstr "Motortyp"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Petrol 92"
+msgstr "Normalbenzin 92"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Petrol 95"
+msgstr "Super 95"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Petrol 98"
+msgstr "Superbenzin 98"
+
+#: JumpUpDriver\Util\Messages\IViewMessages
+msgid "Gas"
+msgstr "Auto-Gas"
 
 #: JumpUpDriver\Util\Messages\IViewMessages
 msgid "The driver hasn't uploaded any pic yet."

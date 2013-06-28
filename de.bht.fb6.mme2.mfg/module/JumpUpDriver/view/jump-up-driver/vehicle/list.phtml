@@ -31,6 +31,7 @@ if (null !== $this->vehicles) { // form is exported by the controller
 		echo $this->translate ( IViewMessages::VEHICLE_LIST_LEG_SPACE ) . ": " . $vehicle->getLegspace () . "<br />";
 		echo $this->translate ( IViewMessages::VEHICLE_LIST_AIR_CONDITION ) . ": " . $this->translate ( $vehicle->getAircondition () ) . "<br />";
 		echo $this->translate ( IViewMessages::VEHICLE_LIST_ACTUAL_WHEEL ) . ": " . $this->translate ( $vehicle->getActualwheel () ) . "<br />";
+		echo $this->translate ( IViewMessages::VEHICLE_LIST_ENGINE_TYPE) . ": " . $this->translate ( $vehicle->getEnginetype() ) . "<br />";
 		if (null !== $vehicle->getVehiclepic ()) {
 			echo $this->translate ( IViewMessages::VEHICLE_LIST_CURRENT_PIC ) . ": " . FilesUtil::prepareVehiclePic ( $vehicle ) . "<br />";
 		} else {

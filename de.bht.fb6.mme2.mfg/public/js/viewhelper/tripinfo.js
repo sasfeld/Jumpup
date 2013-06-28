@@ -119,7 +119,7 @@ define([ "jquery" ], (function($) {
 				+ PARAM_RECOM_START_COORD + '" value="' + this.options.startLatLng + '" />'
 				+ '<input type="hidden" name="' + PARAM_RECOM_END_COORD + '" value="' + this.options.endLatLng + '" />'
 				+ '<input type="hidden" name="' + PARAM_MAX_DISTANCE + '" value="' + this.inputMaxDistance.val()
-				+ '" />' + '<input type="submit" value="'+messages.book+'" />' + '</form>';
+				+ '" />' + '<input class="booking_submit_button" type="submit" value="'+messages.book+'" />' + '</form>';
 		return bodyStr;
 	};
 

@@ -40,10 +40,10 @@ echo $this->doctype ();
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-						<li><a
-							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/de' ?>"><?php echo $this->translate('Set german') ?></a></li>
-						<li><a
-							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/en' ?>"><?php echo $this->translate('Set english') ?></a></li>
+						<li><a class="flag flag_first"
+							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/de' ?>"><img src="img/de.png"/> </a></li>
+						<li><a class="flag"
+							href="<?php echo $this->url(IRouteStore::SET_LANG) . '/en' ?>"><img src="img/en.png"/></a></li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->

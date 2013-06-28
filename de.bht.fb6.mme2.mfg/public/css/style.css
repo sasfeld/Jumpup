@@ -16,18 +16,29 @@ footer {
 	margin-top: 0.4em;
 }
 
+.flag {
+	padding: .3em !important;
+}
+
 @media ( min-width : 980px) {
 	.navigation.jMenu {
 		margin-top: 2.9em;
 	}
-	
 	#page-content {
 		margin-top: 6em;
+	}
+	.flag_first {
+		/* always right possible? */
+		/*margin-left: 10em;*/
 	}
 }
 
 #form {
 	min-width: 15em;
+}
+
+input {
+	margin-right: 10px
 }
 
 label span {
@@ -133,7 +144,7 @@ input[type="radio"] {
 }
 
 .visible {
-	visibility: visible, display:              block
+	visibility: visible, display:                block
 }
 /*
 /* * ..::::::::::::::::.. */
@@ -154,6 +165,15 @@ input[type="radio"] {
 
 .bookinglist,.shortprofile ul {
 	list-style-type: none;
+}
+
+.bookinglist {
+	margin-bottom: 1.4em;
+}
+
+.booking_submit_button {
+	margin-top: -0.65em;
+	margin-left: 0.5em;
 }
 
 .bookingheadline,.bookingbasicform {

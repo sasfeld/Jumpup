@@ -154,6 +154,7 @@ class AddTripController extends ANeedsAuthenticationController {
                 // user's vehicles
                 $inputFields = $this->_appendUsersVehicles($inputFields, $user);
                 array_push($inputFields, '<input type="submit" name="'.TripForm::SUBMIT.'" value="'.$translator->translate(IControllerMessages::ADD_TRIP_SUBMIT).'" /><br />');
+                array_push($inputFields, '<input type="hidden" name="'.TripForm::USERID.'" value="'.$user->getId().'" />');
                 
                 // Export the form and the input fields to the view
                 return array(

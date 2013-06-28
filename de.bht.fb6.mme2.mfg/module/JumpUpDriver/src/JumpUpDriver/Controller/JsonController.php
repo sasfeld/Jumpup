@@ -33,6 +33,11 @@ class JsonController extends AbstractRestfulController {
      * @var String
      */
     const PARAM_VEHICLE_ID = "vehicleId";
+     /**
+     * Key to the parameter name containing the userId.
+     * @var String
+     */
+    const PARAM_USER_ID = "userId";
     protected $em;
 	
 	/**
@@ -60,16 +65,22 @@ class JsonController extends AbstractRestfulController {
         
          if($request->isPost()) {
            if(null !== $request->getPost(self::PARAM_VEHICLE_ID)) {
-                $ownerId = $request->getPost(self::PARAM_VEHICLE_ID);
+                $vehicleId = $request->getPost(self::PARAM_VEHICLE_ID);
+                $ownerId = $request->getPost(self::PARAM_USER_ID);
                 $vehicleRepo = $this->em->getRepository('JumpUpDriver\Models\Vehicle');
                 $vehicleWrapper = new VehicleJsonWrapper();
-                $vehicles = $vehicleRepo->findBy(array('id' => $ownerId));
+                $vehicles = $vehicleRepo->findBy(array('id' => $vehicleId));
                 if(null !== $vehicles) { 
-                	$driver = $this->_getUser( $ownerId);
-                	
+                	$driver = $this->_getUser( $ownerId);  
+                	            	
                     $vehicleWrapper->setVehicles($vehicles);  
                     $translator = ServicesUtil::getTranslatorService($this->getServiceLocator());
                     $this->_setLocale($driver, $translator);
+                    foreach ( $vehicles as $vehicle) {
+                    	$oldVal = $vehicle->getEnginetype();
+                    	$newVal = $translator->translate($oldVal);
+                    	$vehicle->setEnginetype($newVal);
+                    }
                     $frontendMessages = JsonMessages::getJson($translator);
                     $vehicleWrapper->setMessages($frontendMessages);                
                     $jsonObj = \Zend\Json\Json::encode($vehicleWrapper, true); 

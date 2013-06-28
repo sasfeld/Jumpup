@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZendSkeletonApplication\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-07-05 23:45-0700\n"
-"PO-Revision-Date: 2013-06-28 12:07+0100\n"
+"PO-Revision-Date: 2013-06-28 12:57+0100\n"
 "Last-Translator: Sascha Feldmann <sascha.feldmann@gmx.de>\n"
 "Language-Team: ZF Contributors <zf-devteam@zend.com>\n"
 "Language: de_DE\n"
@@ -963,6 +963,10 @@ msgstr "Der empfohlene Gesamtpreis für dein Fahrzeug beträgt"
 #: JumpUpDriver\Util\Messages\JsonMessages
 msgid "euro. Your wastage is"
 msgstr "Euro. Dein Verbrauch beträgt"
+
+#: JumpUpDriver\Util\Messages\JsonMessages
+msgid "Calculation formula"
+msgstr "Rechenformel"
 
 #: JumpUpDriver\Util\StateUtil
 msgid "offer from passenger"

@@ -106,11 +106,13 @@ define( [ "jquery" ], ( function($) {
 	/*
 	 * Fetch the vehicles to a given id.
 	 */
-	VehicleController.prototype.fetchVehicles = function(vehicleId) {
+	VehicleController.prototype.fetchVehicles = function(vehicleId, userId) {
+		console.log('fetchVehicles: userId '+userId);
 		$.ajax( {
 			url : this.options.listVehiclesUrl,
 			data : {
 				"vehicleId" : vehicleId,
+				"userId" : userId,
 			},
 			dataType : 'json',
 			type : "POST",

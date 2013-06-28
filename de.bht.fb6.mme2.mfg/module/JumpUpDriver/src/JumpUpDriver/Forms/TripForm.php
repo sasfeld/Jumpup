@@ -98,6 +98,7 @@ class TripForm {
    * @var String
    */
   const SUBMIT = 'submit';
+  const USERID = 'userId';
   
   /**
    * @Annotation\Type("Zend\Form\Element\Text")

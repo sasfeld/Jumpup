@@ -290,8 +290,9 @@ require(
 															console
 																	.log('veh id: '
 																			+ vehId);
+															userId = $("input[name=\"userId\"]").val();
 															vehicleCtrl
-																	.fetchVehicles(vehId);
+																	.fetchVehicles(vehId, userId);
 														}));
 
 										/*

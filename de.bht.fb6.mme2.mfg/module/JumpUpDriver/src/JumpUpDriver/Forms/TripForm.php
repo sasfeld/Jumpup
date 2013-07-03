@@ -136,7 +136,7 @@ class TripForm {
    * @Annotation\Required({"required":"true" })
    * @Annotation\Filter({"name":"StripTags"})
    * @Annotation\Attributes({"addtrip_form"})
-   * @Annotation\Validator({"name":"GreaterThan","options":{"min":"1"}})
+   * @Annotation\Validator({"name":"GreaterThan","options":{"min":"0"}})
    * @Annotation\Validator({"name":"LessThan","options":{"max":"8"}})
    * @Annotation\Options({"label":"Number of seats:","attributes":{"size":"5"}})
    */

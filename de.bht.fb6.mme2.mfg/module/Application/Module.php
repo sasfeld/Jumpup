@@ -31,7 +31,8 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         
-        $this->_setLangSelection($e);                
+        $this->_setLangSelection($e);
+        $this->_setPhpSettings();
     }
     
     /**
@@ -51,8 +52,24 @@ class Module
             }
         }
     }
-    
 
+    /**
+     * Configure PHP settings for the lifetime of this request.
+     */
+    protected function _setPhpSettings()
+    {
+        $config = $this->getConfig();
+
+        $this->_setExecutionTimeout($config['application']['php']['php_time_limit']);
+    }
+
+    /**
+     * @param $executionTimeout
+     */
+    protected function _setExecutionTimeout($executionTimeout)
+    {
+        set_time_limit($executionTimeout);
+    }
 
     public function getConfig()
     {

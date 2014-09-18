@@ -24,6 +24,11 @@ use Application\Util\ExceptionUtil;
 class UserUtil {
     private $em;
     private $authService;
+
+    /**
+     * @var
+     */
+    protected $_currentUser;
     
     /**
      * We need to construct the AuthService here.
@@ -41,16 +46,19 @@ class UserUtil {
 	 *
      * @param EntityManager $em
      * @param AuthenticationService $authService
+     * @return \JumpUpUser\Models\User | null
      */
     public function getCurrentUser() {
-      if($this->authService->hasIdentity()) {
-          $currentUser = $this->authService->getIdentity();
-          $repoUser = $this->em->getRepository("JumpUpUser\Models\User");
-          $user = $repoUser->findOneBy(array('username' => $currentUser));
-          if(null !== $user) {
-              return $user;
+      if ($this->authService->hasIdentity()) {
+          if(null === $this->_currentUser) {
+              $currentUser = $this->authService->getIdentity();
+              $repoUser = $this->em->getRepository("JumpUpUser\Models\User");
+              $this->_currentUser = $repoUser->findOneBy(array('username' => $currentUser));
           }
+
+          return $this->_currentUser;
       }
+
       return null;
     }
     

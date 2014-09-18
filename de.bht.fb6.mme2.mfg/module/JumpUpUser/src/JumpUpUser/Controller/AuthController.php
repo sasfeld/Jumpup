@@ -20,6 +20,7 @@ use JumpUpUser\Models\LoginDumb;
 use JumpUpUser\Util\ServicesUtil;
 use Zend\Mvc\Controller\AbstractActionController;
 use JumpUpUser\Util\Exception_Util;
+
 /**
  *
  * The AuthController instance handles the login action and authentication storage.
@@ -32,7 +33,8 @@ use JumpUpUser\Util\Exception_Util;
  * @version    1.0
  * @since      19.04.2013
  */
-class AuthController extends AbstractActionController {
+class AuthController extends AbstractActionController
+{
     protected $form;
     protected $storage;
     protected $authservice;
@@ -43,8 +45,9 @@ class AuthController extends AbstractActionController {
      *
      * Fetch the translator instance
      */
-    public function getTranslatorService() {
-        if(!isset($this->translator)) {
+    public function getTranslatorService()
+    {
+        if (!isset($this->translator)) {
             $this->translator = ServicesUtil::getTranslatorService($this->getServiceLocator());
         }
         return $this->translator;
@@ -55,7 +58,7 @@ class AuthController extends AbstractActionController {
      */
     public function getAuthService()
     {
-        if(!isset($this->authservice)) {
+        if (!isset($this->authservice)) {
             $this->authservice = ServicesUtil::getAuthService($this->getServiceLocator());
         }
         return $this->authservice;
@@ -66,7 +69,7 @@ class AuthController extends AbstractActionController {
      */
     public function getSessionStorage()
     {
-        if(!isset($this->storage)) {
+        if (!isset($this->storage)) {
             $this->storage = ServicesUtil::getSessionStorageService($this->getServiceLocator());
         }
         return $this->storage;
@@ -78,11 +81,11 @@ class AuthController extends AbstractActionController {
      */
     public function getForm()
     {
-        if(!isset($this->form)) {
+        if (!isset($this->form)) {
             $loginForm = new LoginForm();
             $builder = new AnnotationBuilder();
             $this->form = $builder->createForm($loginForm);
-            $this->form->setAttribute('action', $this->url()->fromRoute(IRouteStore::LOGIN).'/authenticate');
+            $this->form->setAttribute('action', $this->url()->fromRoute(IRouteStore::LOGIN) . '/authenticate');
         }
         return $this->form;
     }
@@ -93,21 +96,18 @@ class AuthController extends AbstractActionController {
     public function loginAction()
     {
         // login already performed?
-        if($this->getAuthService()->hasIdentity()) {
+        if ($this->getAuthService()->hasIdentity()) {
             return $this->redirect()->toRoute(IRouteStore::LOGIN_SUCCESS);
-        }
-        else { // export login form
+        } else { // export login form
             $form = $this->getForm();
-            return array(               
+            return array(
                 'form' => $form,
                 'messages' => $this->flashMessenger()->getMessages(),
             );
         }
 
     }
-     
 
-     
 
     /**
      * Authenticate action which redirects to login action.
@@ -117,40 +117,42 @@ class AuthController extends AbstractActionController {
         $form = $this->getForm();
         $redirect = IRouteStore::LOGIN;
 
+        /**
+         * @var \Zend\Http\Request $request
+         */
         $request = $this->getRequest();
-        if($request->isPost()) { // authenticate user
+        if ($request->isPost()) { // authenticate user
 
             $form->setData($request->getPost());
 
-            if($form->isValid()) {
+            if ($form->isValid()) {
                 $this->getAuthService()->getAdapter()
-                ->setIdentity($request->getPost(LoginForm::FIELD_USERNAME))
-                ->setCredential($request->getPost(LoginForm::FIELD_PASSWORD));
+                    ->setIdentity($request->getPost(LoginForm::FIELD_USERNAME))
+                    ->setCredential($request->getPost(LoginForm::FIELD_PASSWORD));
                 $result = $this->getAuthService()->authenticate();
-                foreach($result->getMessages() as $message) {
+                foreach ($result->getMessages() as $message) {
                     // save session-based message
                     $this->flashMessenger()->addMessage($this->getTranslatorService()->translate($message));
                 }
-                if($result->isValid()) { // successful authentication
+                if ($result->isValid()) { // successful authentication
                     // check confirmation state
                     $user = $this->_getCurrentUser();
-                    if(null !== $user) {
-                        if(0 === $user->getConfirmation_key()) {
+                    if (null !== $user) {
+                        if (0 === $user->getConfirmation_key()) {
                             $redirect = IRouteStore::LOGIN_SUCCESS;
                             // save username on the client
-                            if(1 == $request->getPost(LoginForm::FIELD_REMEMBER_ME)) {
+                            if (1 == $request->getPost(LoginForm::FIELD_REMEMBER_ME)) {
                                 $this->getSessionStorage()->setRememberMe(1);
                                 // set storage again
                                 // write in cookie
                                 $this->getAuthService()->setStorage($this->getSessionStorage());
                             }
                             $this->getAuthService()->getStorage()->write($request->getPost(LoginForm::FIELD_USERNAME));
-                        }
-                        else { // user isn't confirmed yet
-                            $this->_forgetUser();                 
-                            $this->flashMessenger()->clearCurrentMessages();           
+                        } else { // user isn't confirmed yet
+                            $this->_forgetUser();
+                            $this->flashMessenger()->clearCurrentMessages();
                             $this->flashMessenger()->addMessage(IControllerMessages::NOT_CONFIRMED_YET);
-                        }                       
+                        }
                     }
 
                 }
@@ -159,8 +161,9 @@ class AuthController extends AbstractActionController {
         // redirect to login action
         $this->redirect()->toRoute($redirect);
     }
-    
-    private function _forgetUser() {
+
+    private function _forgetUser()
+    {
         $this->getSessionStorage()->forgetMe();
         $this->getAuthService()->clearIdentity();
     }
@@ -170,7 +173,7 @@ class AuthController extends AbstractActionController {
      */
     public function logoutAction()
     {
-        $this->_forgetUser();           
+        $this->_forgetUser();
         $this->flashmessenger()->addMessage(IControllerMessages::SUCCESS_LOGGING_OUT);
         return $this->redirect()->toRoute(IRouteStore::LOGIN);
     }
@@ -178,8 +181,10 @@ class AuthController extends AbstractActionController {
     /**
      * Fetch the current logged in user.
      * Enter description here ...
+     * @return \JumpUpUser\Models\User
      */
-    protected function _getCurrentUser() {
+    protected function _getCurrentUser()
+    {
         $userUtil = \JumpUpUser\Util\ServicesUtil::getUserUtil($this->getServiceLocator());
         return $userUtil->getCurrentUser();
     }

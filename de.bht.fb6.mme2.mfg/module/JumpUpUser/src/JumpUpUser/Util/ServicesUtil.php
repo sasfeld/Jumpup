@@ -100,6 +100,7 @@ class ServicesUtil {
 	/**
      * Get the translator instance.
      * @see
+     * @return \JumpUpUser\Util\UserUtil
      */
     static public function getUserUtil(ServiceManager $sm) {
         return $sm->get(self::CLASSPATH_USERUTIL);

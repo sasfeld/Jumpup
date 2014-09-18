@@ -42,6 +42,12 @@ return array(
              ),
          ),
      ),*/
+    'application'   =>  array(
+        'php'   =>  array(
+            // max. execution time in seconds
+            'php_time_limit'    =>  60,
+        ),
+    ),
     'router' => array(
         'routes' => array(
             'setlang' => array(

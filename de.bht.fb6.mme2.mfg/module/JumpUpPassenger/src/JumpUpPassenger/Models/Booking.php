@@ -16,6 +16,7 @@ use JumpUpPassenger\Exceptions\InvalidBookingStateException;
 
 /**
  * @ORM\Entity
+ * @Table(name="booking")
  */
 class Booking {
   /**

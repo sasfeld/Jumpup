@@ -29,7 +29,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Application\Util\FilesUtil;
 
 /**
-* @ORM\Entity 
+* @ORM\Entity
+* @Table(name="user")
 */
 class User {    
      /**     

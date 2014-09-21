@@ -23,6 +23,7 @@ use JumpUpPassenger\Util\IBookingState;
 
 /**
  * @ORM\Entity
+ * @Table(name="trip")
  */
 class Trip {
   /**

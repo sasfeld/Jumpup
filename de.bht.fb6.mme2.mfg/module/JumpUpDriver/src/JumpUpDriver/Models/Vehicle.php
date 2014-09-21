@@ -15,6 +15,7 @@ use Application\Util\FilesUtil;
 
 /**
  * @ORM\Entity
+ * @Table(name="vehicle")
  */
 class Vehicle {
     /**     

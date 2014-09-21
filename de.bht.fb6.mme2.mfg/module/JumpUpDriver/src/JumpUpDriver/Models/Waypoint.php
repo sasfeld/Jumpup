@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne as ManyToOne;
 
 /**
-* @ORM\Entity 
+* @ORM\Entity
+* @Table(name="waypoint")
 */
 class Waypoint {
     /**     

@@ -44,4 +44,27 @@ project and you should be ready to go!
 
 Database
 --------
+When using mysql, configure the database connectivity in the application/config/autoload/local.php . This file contains all your local configurations with private data, so never push it to the repository!
+
+return array(
+    /*
+      * doctrine configuration goes here.
+      */
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\Mysqli\Driver',
+                'params' => array(
+                    'charset' => 'utf8',
+                    'path'    =>  'data/db.sqlite',
+                    'host'     => 'localhost',
+                    'user'	   => 'username',
+                    'password' => 'password',
+                    'dbname'   => 'dbname',
+                )
+            )
+        )
+    )
+);
+
 

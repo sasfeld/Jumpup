@@ -46,6 +46,7 @@ Database
 --------
 When using mysql, configure the database connectivity in the application/config/autoload/local.php . This file contains all your local configurations with private data, so never push it to the repository!
 
+```php
 return array(
     /*
       * doctrine configuration goes here.
@@ -66,5 +67,6 @@ return array(
         )
     )
 );
+```
 
 

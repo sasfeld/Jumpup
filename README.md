@@ -1,6 +1,11 @@
 JumpUp.me Application
 =======================
 
+Warning
+------------
+
+This software project is not maintained anymore. It was replaced by an Java EE web and service application that you can find here: https://github.com/JumpUpMe
+
 Introduction
 ------------
 
